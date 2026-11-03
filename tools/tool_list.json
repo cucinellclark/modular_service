@@ -593,6 +593,18 @@
    "notes": "Not on PATH; own venv under runtime/antismash-7-1-0-1. Core dumped on the dev host (2026-11-02), like diamond; verify on compute nodes.",
    "version_cmd": "timeout 60 /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash --version 2>&1 | tail -3",
    "help_cmd": "timeout 60 /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash --help 2>&1"
+  },
+  {
+   "id": "ivar",
+   "binary": "ivar",
+   "category": "variants",
+   "nfcore": [
+    "ivar/trim",
+    "ivar/consensus",
+    "ivar/variants"
+   ],
+   "version_cmd": "ivar version",
+   "help_cmd": "ivar trim 2>&1; ivar consensus 2>&1; ivar variants 2>&1"
   }
  ]
 }

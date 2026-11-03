@@ -117,7 +117,16 @@ lines). Chain several commands explicitly with `&&`. The command runs in the ste
 - **Gather**: a collection feeding a `cardinality: many` port is collected into one list, so that step
   runs once.
 - `module_version` (optional) pins the descriptor major version. A mismatch blocks validation.
+- **Automatic converters**: if an edge's type (or a required attribute such as `sorted`) doesn't match but one
+  available converter module fixes it (`types/types.yaml` `converters`, e.g. reads -> FASTA, SAM -> sorted BAM),
+  validation inserts that step (marked `"auto": true`) and reports it as a note. `--no-auto-convert` disables this.
+- Input sources: `paired_end_libs`, `single_end_libs`, `srr_ids`, `srr_libs`, `wsid(s)`, `files`, `genome_ids`,
+  `genome_group`, `feature_group`, `feature_ids` (`fig|...`), `fasta_data`, `database_file`
+  (`"<registry id>:<file key>"`, e.g. `artic_v4.1:reference`), and `fixture` (tests).
 - `template` (curated templates only): `label`/`category` for the picker, and `expose`, the `step.params.<id>`
   entries a template-picker UI shows (every other parameter keeps its value or default). `links` copies one
   parameter's value to another when the template is filled (e.g. Bracken uses the Kraken2 database); a linked
-  target may not also be exposed. Fill with `modpipe instantiate`, list with `modpipe list-templates --json`.
+  target may not also be exposed. `optional: {"<step>": {label, default, bypass: {"<output port>": "<ref>"}}}`
+  lets users switch steps off with `"<step>.enabled": false`. A disabled step's outputs are dropped from list inputs and
+  pipeline outputs, or rewired via `bypass` (e.g. primer trimming off -> use the untrimmed BAM).
+  Fill with `modpipe instantiate`, list with `modpipe list-templates --json`.

@@ -15,7 +15,7 @@ import sys
 
 from .executors import ExecutionError, LocalExecutor, SnakemakeExecutor
 from .materialize import Materializer, StagingError
-from .pipeline import Validator
+from .pipeline import Validator, auto_convert
 from .util import read_yaml, repo_path
 
 
@@ -75,7 +75,7 @@ def _parse_time(path):
 def run_pipeline(ts, mods, dbs, pipeline, rundir, executor="snakemake", cores=None, mem_gb=None,
                  resume=False, dry_run=False, where="pipeline", keep_intermediates=False):
     rundir = os.path.abspath(rundir)
-    iss, plan = Validator(ts, mods, dbs).validate(pipeline, where=where)
+    pipeline, iss, plan = auto_convert(Validator(ts, mods, dbs), pipeline, where=where)
     iss.report(sys.stderr)
     if not iss.ok:
         raise RunError(f"pipeline is invalid ({len(iss.errors)} errors)")

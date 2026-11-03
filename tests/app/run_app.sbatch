@@ -21,15 +21,29 @@ for d in /vol/bvbrc/production/application-backend /vol/blastdb/bvbrc-service /v
     [[ -d $d ]] && BINDS+=(-B "$d")
 done
 for s in /disks/tmp /scratch/tmp /tmp; do [[ -d $s && -w $s ]] && { SCRATCH=$s; break; }; done
-WD=$SCRATCH/$USER/modpipe-app/$(basename "$PARAMS" .params.json)-$SLURM_JOB_ID
+WD=$SCRATCH/$USER/modpipe-app/$(basename "$(dirname "$PARAMS")")-$(basename "$PARAMS" .json)-$SLURM_JOB_ID
 mkdir -p "$WD"; BINDS+=(-B "$SCRATCH")
 echo "node=$(hostname) params=$PARAMS work=$WD"
 cd "$WD"
-singularity exec --env KB_INTERACTIVE=1,P3_ALLOCATED_CPU=$SLURM_CPUS_PER_TASK,P3_ALLOCATED_MEMORY=${SLURM_MEM_PER_NODE}M,MODPIPE_HOME=$REPO \
+# Auth: a token file from the UI API (MODPIPE_TOKEN_FILE) is passed via SINGULARITYENV_* (never on a command line);
+# otherwise KB_INTERACTIVE=1 makes AppScript use ~/.patric_token.
+ENVS="P3_ALLOCATED_CPU=$SLURM_CPUS_PER_TASK,P3_ALLOCATED_MEMORY=${SLURM_MEM_PER_NODE}M,MODPIPE_HOME=$REPO"
+if [[ -n ${MODPIPE_TOKEN_FILE:-} && -r $MODPIPE_TOKEN_FILE ]]; then
+    export SINGULARITYENV_P3_AUTH_TOKEN=$(cat "$MODPIPE_TOKEN_FILE")
+    export SINGULARITYENV_KB_AUTH_TOKEN=$SINGULARITYENV_P3_AUTH_TOKEN
+else
+    ENVS="KB_INTERACTIVE=1,$ENVS"
+fi
+singularity exec --env "$ENVS" \
     "${BINDS[@]}" "$SIF" bash -c "export PERL5LIB=/opt/p3/deployment/lib:\$PERL5LIB; \
     perl $REPO/service-scripts/App-ModularPipeline.pl xx $REPO/app_specs/ModularPipeline.json $PARAMS" < /dev/null
 rc=$?
 echo "exit=$rc"
-cp work/pipeline_run.json "$REPO/tests/app/logs/$(basename "$PARAMS" .params.json)-$SLURM_JOB_ID.pipeline_run.json" 2>/dev/null
+if [[ -n ${MODPIPE_TOKEN_FILE:-} ]]; then
+    cp work/pipeline_run.json "$(dirname "$PARAMS")/pipeline_run.json" 2>/dev/null
+    rm -f "$MODPIPE_TOKEN_FILE"
+else
+    cp work/pipeline_run.json "$REPO/tests/app/logs/$(basename "$PARAMS" .params.json)-$SLURM_JOB_ID.pipeline_run.json" 2>/dev/null
+fi
 rm -rf "$WD"
 exit $rc

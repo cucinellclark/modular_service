@@ -64,7 +64,7 @@ def _safe(name):
 
 class Materializer:
     def __init__(self, ts, mods, dbs, pipeline, plan, rundir, cores, mem_gb, container=None, fixtures_index=None):
-        self.ts, self.mods, self.dbs = ts, mods, dbs
+        self.ts, self.mods, self.dbs = ts, mods, dbs   # dbs: DatabaseRegistry
         self.p, self.plan, self.rundir = pipeline, plan, os.path.abspath(rundir)
         self.cores, self.mem_gb, self.container = cores, mem_gb, container
         fi = fixtures_index or repo_path("tests", "fixtures", "data", "fixtures_index.json")
@@ -152,6 +152,11 @@ class Materializer:
                 items.append((None, self._value(t, attrs, path=self._localize(f, dest))))
             for gid in src.get("genome_ids") or []:
                 items.append((str(gid), self._value(t, attrs, path=self._genome_fasta(gid, dest))))
+            if src.get("database_file"):                     # "<registry id>:<file key>", e.g. artic_v4.1:reference
+                dbid, _, key = src["database_file"].partition(":")
+                e = self.dbs.get(dbid) or {}
+                base = repo_path(e["path"]) if e.get("location") == "repo_fixture" else e.get("path", "")
+                items.append((None, self._value(t, attrs, path=self._localize(os.path.join(base, (e.get("files") or {}).get(key, "")), dest))))
             unsupported = set(src) & {"srr_ids", "srr_libs", "genome_group", "feature_group", "feature_ids", "fasta_data"}
             if unsupported:
                 raise StagingError(f"inputs.{name}: source {sorted(unsupported)} not supported by the runner yet")

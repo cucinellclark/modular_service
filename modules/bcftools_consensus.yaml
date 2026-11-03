@@ -1,0 +1,17 @@
+schema: modpipe/module/v1
+id: bcftools_consensus
+version: 1
+label: "bcftools consensus: apply variants to a reference"
+description: Builds a consensus sequence by applying the VCF's variants to the reference.
+category: variants
+tool: {id: bcftools, binary: bcftools, version: "1.13"}
+inputs:
+  - {id: variants, type: variants.vcf, requires: {compression: bgzip, indexed: true}}
+  - {id: reference, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - {id: consensus, type: sequences.dna.contigs, path: consensus.fa}
+resources: {cpu: 1, memory: 4G, runtime: 1h}
+command: bcftools consensus -f {{ inputs.reference | q }} {{ inputs.variants.vcf | q }} > {{ outputs.consensus }}
+tests:
+  discovery_runs: [bcftools_consensus]
+provenance: {nfcore: [bcftools/consensus]}

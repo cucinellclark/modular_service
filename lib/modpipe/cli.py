@@ -10,6 +10,8 @@
   modpipe list-templates [--json]           curated pipelines (pipelines/*.json) with inputs and exposed params
   modpipe instantiate <template> [--inputs F] [--params F] [--out F]
                                             fill a curated template (pipelines/<template>.json)
+  modpipe serve [--host H] [--port P] [--origin URL ...]
+                                            prototype API for the BV-BRC-Web ModularPipeline form
   modpipe run <pipeline.json> --workdir DIR [--executor snakemake|local] [--cores N] [--mem 64G]
                                             [--resume] [--dry-run]   execute (inside the BV-BRC container)
 """
@@ -17,7 +19,7 @@ import argparse
 import json
 import sys
 
-from .pipeline import Validator, load_pipeline
+from .pipeline import Validator, auto_convert, load_pipeline
 from .registry import DatabaseRegistry, ModuleRegistry
 from .types import TypeSystem
 
@@ -49,15 +51,20 @@ def cmd_lint(a):
     return 1 if nerr else 0
 
 
-def _validate(path):
+def _validate(path, auto=True):
     ts, dbs, mods = _ctx()
     p = load_pipeline(path)
-    iss, plan = Validator(ts, mods, dbs).validate(p, where=path)
+    v = Validator(ts, mods, dbs)
+    if auto:
+        p, iss, plan = auto_convert(v, p, where=path)
+    else:
+        iss, plan = v.validate(p, where=path)
+    plan["pipeline"] = p
     return iss, plan
 
 
 def cmd_validate(a):
-    iss, plan = _validate(a.pipeline)
+    iss, plan = _validate(a.pipeline, auto=not a.no_auto_convert)
     if a.json:
         print(json.dumps({"ok": iss.ok, "errors": iss.errors, "warnings": iss.warnings, "plan": plan}, indent=1, default=str))
     else:
@@ -152,6 +159,12 @@ def cmd_compatible(a):
     return 0
 
 
+def cmd_serve(a):
+    from .api import serve
+    serve(a.host, a.port, a.origin or ["http://localhost:3000"])
+    return 0
+
+
 def cmd_list_templates(a):
     import glob
     import os
@@ -169,6 +182,8 @@ def cmd_list_templates(a):
             spec.update({"key": e, "module": m.id if m else None})
             exposed.append(spec)
         rows.append({"template": os.path.basename(f)[:-5], "label": t.get("label"), "category": t.get("category"),
+                     "optional_steps": {k: {"label": v.get("label", k), "default": v.get("default", True),
+                                            "module": p["steps"][k]["module"]} for k, v in (t.get("optional") or {}).items()},
                      "description": p.get("description"),
                      "inputs": {k: {"type": v["type"], "collection": bool(v.get("collection"))} for k, v in p["inputs"].items()},
                      "outputs": sorted(p.get("outputs") or {}), "exposed_params": exposed,
@@ -230,6 +245,7 @@ def main(argv=None):
     s = sub.add_parser("validate")
     s.add_argument("pipeline")
     s.add_argument("--json", action="store_true")
+    s.add_argument("--no-auto-convert", action="store_true", help="report fixable type mismatches instead of inserting converters")
     s.set_defaults(fn=cmd_validate)
     s = sub.add_parser("plan")
     s.add_argument("pipeline")
@@ -256,6 +272,11 @@ def main(argv=None):
     s.add_argument("--dry-run", action="store_true", help="stage inputs and write job scripts/Snakefile only")
     s.add_argument("--keep-intermediates", action="store_true", help="also list every step output in the manifest")
     s.set_defaults(fn=cmd_run)
+    s = sub.add_parser("serve")
+    s.add_argument("--host", default="127.0.0.1")
+    s.add_argument("--port", type=int, default=8765)
+    s.add_argument("--origin", action="append", help="allowed CORS origin (repeatable; default http://localhost:3000)")
+    s.set_defaults(fn=cmd_serve)
     s = sub.add_parser("list-templates")
     s.add_argument("--json", action="store_true")
     s.set_defaults(fn=cmd_list_templates)

@@ -1,0 +1,25 @@
+schema: modpipe/module/v1
+id: multiqc
+version: 1
+label: "MultiQC: combine QC reports into one"
+description: >-
+  Collects QC outputs from any steps (fastp/fastqc/QUAST/samtools/Bracken/... reports) into a single HTML report.
+  Each input is placed in its own folder named after its label, keeping the file names MultiQC recognises.
+category: reporting
+tool: {id: multiqc, binary: multiqc, version: "1.25"}
+inputs:
+  - {id: reports, type: report, cardinality: many, description: "Reports (fastp JSON, FastQC zip, samtools stats, ...)"}
+  - {id: tables, type: table, cardinality: many, required: false, description: "QC tables (e.g. QUAST report.tsv)"}
+outputs:
+  - {id: report, type: report.html, path: multiqc/multiqc_report.html}
+  - {id: data, type: report.text, path: multiqc/multiqc_report_data/multiqc_general_stats.txt, required: false}
+parameters:
+  - {id: title, type: string, default: "Modular pipeline QC", pattern: "[A-Za-z0-9 _.,()-]{1,80}", label: "Report title"}
+resources: {cpu: 1, memory: 4G, runtime: 1h}
+command: |
+  mkdir -p qc
+  {% for r in inputs.reports %}&& mkdir -p qc/{{ loop.index }}_{{ r.label | replace('/', '_') | q }} && ln -s {{ r | q }} qc/{{ loop.index }}_{{ r.label | replace('/', '_') | q }}/{{ r | basename | q }}{% endfor %}
+  {% for r in (inputs.tables or []) %}&& mkdir -p qc/t{{ loop.index }}_{{ r.label | replace('/', '_') | q }} && ln -s {{ r | q }} qc/t{{ loop.index }}_{{ r.label | replace('/', '_') | q }}/{{ r | basename | q }}{% endfor %}
+  && multiqc --force --dirs --title {{ params.title | q }} -n multiqc_report.html -o multiqc qc
+notes: "--title also renames the report file, so the name is pinned with -n (found in the first e2e run)."
+provenance: {bvbrc_invocations: [run_rnaseq.py, stats_snakefile], nfcore: [multiqc]}

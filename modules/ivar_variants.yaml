@@ -1,0 +1,24 @@
+schema: modpipe/module/v1
+id: ivar_variants
+version: 1
+label: "iVar variants: per-site variant frequencies"
+description: Calls SNVs/indels with frequencies from samtools mpileup (amplicon data, low-frequency variants).
+category: variants
+tool: {id: ivar, binary: ivar, version: 1.3.1}
+inputs:
+  - {id: alignment, type: alignment.reads.bam, requires: {sorted: coordinate}}
+  - {id: reference, type: sequences.dna, requires: {compression: none}}
+  - {id: annotation, type: annotation.gff, required: false, description: "GFF3 for amino-acid effects (-g)"}
+outputs:
+  - {id: variants, type: table.tsv.variant_frequencies, path: variants.tsv}
+parameters:
+  - {id: min_frequency, type: float, default: 0.03, min: 0, max: 1, label: "Minimum variant frequency (-t)"}
+  - {id: min_quality, type: int, default: 20, min: 0, label: "Minimum base quality (-q)"}
+  - {id: min_depth, type: int, default: 0, min: 0, label: "Minimum depth (-m)"}
+resources: {cpu: 1, memory: 4G, runtime: 1h}
+command: |
+  cp {{ inputs.reference | q }} ref.fa &&
+  samtools mpileup -aa -A -d 0 -B -Q 0 --reference ref.fa {{ inputs.alignment.bam | q }}
+  | ivar variants -p variants -r ref.fa -t {{ params.min_frequency }} -q {{ params.min_quality }} -m {{ params.min_depth }}
+  {% if inputs.annotation %}-g {{ inputs.annotation | q }}{% endif %}
+provenance: {bvbrc_invocations: [sars2-compute-ivar-vaf.pl]}

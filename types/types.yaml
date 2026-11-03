@@ -243,6 +243,7 @@ types:
   database.subsystems:          {kind: directory, registry_only: true}
   database.rast_workflows:      {kind: directory, registry_only: true}
   database.seedtk:              {kind: directory, registry_only: true}
+  database.primer_scheme:       {kind: directory, registry_only: true, description: "amplicon primer BED + reference (files: bed, reference)"}
   index:                        {abstract: true}
   index.bwa:                    {kind: prefix, description: ".amb/.ann/.bwt/.pac/.sa"}
   index.bowtie2:                {kind: prefix, description: ".1-4.bt2 / .rev.1-2.bt2 (or .bt2l)"}

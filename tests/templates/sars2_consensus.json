@@ -1,0 +1,1 @@
+{"inputs": {"samples": {"source": {"fixture": "sarscov2_samples"}, "collection": true}, "reference": {"fixture": "sarscov2_genome"}}, "params": {"primertrim.params.primers": "artic_v3"}}

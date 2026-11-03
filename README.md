@@ -31,6 +31,7 @@ docs/
   SERVICE.md                   the BV-BRC service: params, input staging, preflight, upload, testing
   DEPLOYMENT.md                make deploy-service layout, data-root lookup, going live
   SECURITY.md                  shell-injection hardening: quoting rule, patterns, identifier validation
+  UI.md                        test UI: BV-BRC-Web ModularPipeline form + modpipe API (bin/modpipe serve)
   ADDING_A_MODULE.md           how to add a new tool module
   OPEN_QUESTIONS.md            decisions still needed
   PREPROCESSING.md             one-time/recurring harvesting of tool metadata
@@ -40,12 +41,12 @@ types/
   wstypes.yaml                 type <-> BV-BRC workspace type mapping (+ observed production quirks)
 resources/
   databases.yaml               installed reference-database registry (paths, binds, versions, status)
-modules/                       45 module descriptors (v1): read QC, assembly, mapping, variants, taxonomy, annotation, typing, expression, homology, phylogeny
-pipelines/                     16 curated templates (modpipe list-templates); test inputs in tests/templates/
+modules/                       51 module descriptors (v1): read QC, assembly, mapping, variants, taxonomy, annotation, typing, expression, homology, phylogeny
+pipelines/                     17 curated templates (modpipe list-templates); test inputs in tests/templates/
 app_specs/ModularPipeline.json BV-BRC app spec
 service-scripts/App-ModularPipeline.pl  BV-BRC Perl shell (AppScript): preflight, staging, run, upload
 lib/modpipe/                   engine (Python): types, registries, templates, pipeline validation, CLI
-bin/modpipe                    CLI entry point (lint | validate | plan | run | instantiate | list-modules | show | compatible)
+bin/modpipe                    CLI entry point (lint | validate | plan | run | instantiate | serve | list-modules | list-templates | show | compatible)
 reference/
   app_specs/                   snapshot of /opt/p3/deployment/services/app_service/app_specs (from container)
   app_specs_summary.txt        one-line-per-service parameter summary
@@ -113,10 +114,10 @@ Validation runs on the host (Python 3.11, PyYAML, Jinja2) and in the container (
 
 | Category | Modules |
 |---|---|
-| read QC / host removal | fastp, trim_galore, fastqc, filtlong, hostile |
+| read QC / host removal | fastp, trim_galore, fastqc, filtlong, hostile; reports: multiqc |
 | assembly / polishing | spades, megahit, flye, unicycler, racon, pilon; QC: quast |
-| mapping | bwa_mem, minimap2, hisat2, kma (gene databases: CARD, VFDB) |
-| variants | bcftools_call, freebayes, snippy |
+| mapping | bwa_mem, minimap2, hisat2, kma (gene databases: CARD, VFDB); ivar_trim (primers); samtools_coverage |
+| variants / consensus | bcftools_call, freebayes, snippy, ivar_variants, ivar_consensus, bcftools_consensus |
 | taxonomy | kraken2, bracken |
 | SARS-CoV-2 / typing | freyja_variants, freyja_demix, pangolin, mlst |
 | annotation | prodigal, trnascan, minced, amrfinder, vigor4, genomad, checkv |
@@ -127,5 +128,5 @@ Validation runs on the host (Python 3.11, PyYAML, Jinja2) and in the container (
 
 Templates (`bin/modpipe list-templates`): wgs_assembly_qc, multi_sample_assembly, clean_assembly,
 long_read_assembly, polished_long_read_assembly, hybrid_assembly, isolate_assembly_characterization, variant_calling,
-taxonomic_profile, sars2_wastewater, rnaseq_expression, viral_genome_annotation, mobile_elements, protein_search,
+taxonomic_profile, sars2_wastewater, sars2_consensus, rnaseq_expression, viral_genome_annotation, mobile_elements, protein_search,
 align_and_tree, protein_phylogeny.

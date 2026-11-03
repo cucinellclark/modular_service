@@ -1,0 +1,23 @@
+schema: modpipe/module/v1
+id: ivar_consensus
+version: 1
+label: "iVar consensus: call a consensus genome from an alignment"
+description: Majority-rule consensus from samtools mpileup; low-depth positions become N.
+category: variants
+tool: {id: ivar, binary: ivar, version: 1.3.1}
+inputs:
+  - {id: alignment, type: alignment.reads.bam, requires: {sorted: coordinate}}
+outputs:
+  - {id: consensus, type: sequences.dna.contigs, path: consensus.fa}
+  - {id: quality, type: report.text, path: consensus.qual.txt}
+parameters:
+  - {id: min_depth, type: int, default: 10, min: 1, label: "Minimum depth to call a base (-m)"}
+  - {id: min_frequency, type: float, default: 0.75, min: 0, max: 1, label: "Minimum allele frequency (-t)"}
+  - {id: min_quality, type: int, default: 20, min: 0, label: "Minimum base quality (-q)"}
+  - {id: sample_name, type: string, default: "", pattern: "[A-Za-z0-9_.-]{0,64}", label: "FASTA header name (empty = sample label)"}
+resources: {cpu: 1, memory: 4G, runtime: 1h}
+command: |
+  samtools mpileup -aa -A -d 0 -Q 0 {{ inputs.alignment.bam | q }}
+  | ivar consensus -p consensus -m {{ params.min_depth }} -t {{ params.min_frequency }} -q {{ params.min_quality }} -n N
+  -i {{ (params.sample_name or inputs.alignment.label) | q }}
+provenance: {bvbrc_invocations: [sars2-onecodex.pl]}

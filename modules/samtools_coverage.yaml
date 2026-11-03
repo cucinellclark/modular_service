@@ -1,0 +1,21 @@
+schema: modpipe/module/v1
+id: samtools_coverage
+version: 1
+label: "samtools: coverage, depth and alignment statistics"
+description: Per-contig coverage summary, per-position depth, and samtools stats (MultiQC-compatible) for a sorted BAM.
+category: mapping
+tool: {id: samtools, binary: samtools, version: "1.13"}
+inputs:
+  - {id: alignment, type: alignment.reads.bam, requires: {sorted: coordinate}}
+outputs:
+  - {id: coverage, type: table.tsv, path: coverage.tsv, description: "samtools coverage: per-contig breadth, mean depth"}
+  - {id: depth, type: coverage.depth, path: depth.tsv, when: "params.per_position_depth"}
+  - {id: stats, type: report.text, path: samtools.stats}
+parameters:
+  - {id: per_position_depth, type: bool, default: false, label: "Also write per-position depth (large for big genomes)"}
+resources: {cpu: 2, memory: 4G, runtime: 2h}
+command: |
+  samtools coverage {{ inputs.alignment.bam | q }} > {{ outputs.coverage }}
+  && samtools stats -@ {{ cpu }} {{ inputs.alignment.bam | q }} > {{ outputs.stats }}
+  {% if params.per_position_depth %}&& samtools depth -a {{ inputs.alignment.bam | q }} > {{ outputs.depth }}{% endif %}
+provenance: {nfcore: [samtools/coverage, samtools/stats, samtools/depth]}

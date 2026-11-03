@@ -253,9 +253,19 @@ sub stage_inputs
         }
         $new{files} = \@files if @files;
         $new{fixture} = $src->{fixture} if $src->{fixture};       # test runs only
-        if ($src->{feature_ids})
+        $new{database_file} = $src->{database_file} if $src->{database_file};   # registry file, resolved by modpipe
+        if (my $fids = $src->{feature_ids})
         {
-            die "Input $name: feature_ids sources are not supported yet (use a feature group)\n";
+            my $aa = $type =~ /^sequences\.protein/;
+            my $seqs = $aa ? $api->retrieve_protein_feature_sequence($fids) : $api->retrieve_nucleotide_feature_sequence($fids);
+            my @missing = grep { !$seqs->{$_} } @$fids;
+            die "Input $name: no sequence for feature(s) @missing\n" if @missing;
+            my $f = "$dir/feature_ids." . ($aa ? "faa" : "ffn");
+            open(my $fh, ">", $f) or die "Cannot write $f: $!";
+            print $fh ">$_\n$seqs->{$_}\n" foreach @$fids;
+            close($fh);
+            push(@files, $f);
+            $new{files} = \@files;
         }
         %new or die "Input $name: nothing to stage from source " . encode_json($src) . "\n";
         $in->{source} = \%new;

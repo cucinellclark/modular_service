@@ -8,10 +8,10 @@ from .util import Issues, fmt_runtime, parse_memory_gb, read_json
 
 PIPELINE_SCHEMA = "modpipe/pipeline/v1"
 TOP_KEYS = {"schema", "name", "description", "inputs", "outputs", "steps", "template"}
-STEP_KEYS = {"module", "in", "params", "module_version", "description"}
+STEP_KEYS = {"module", "in", "params", "module_version", "description", "auto"}
 INPUT_KEYS = {"type", "source", "collection", "attributes", "description", "label"}
 SOURCE_KEYS = {"paired_end_libs", "single_end_libs", "srr_ids", "srr_libs", "wsid", "wsids", "files",
-               "genome_ids", "genome_group", "feature_group", "feature_ids", "fasta_data", "fixture"}
+               "genome_ids", "genome_group", "feature_group", "feature_ids", "fasta_data", "fixture", "database_file"}
 
 # Names that become directory names, Snakefile rule names and workspace paths.
 NAME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{0,63}$")
@@ -102,6 +102,16 @@ class Validator:
                     iss.error(w, "paired reads need paired_end_libs, srr_ids/srr_libs (or fixture)")
                 if ts.is_a(t, "reads.short.single") and "paired_end_libs" in src:
                     iss.error(w, "single-end type but paired_end_libs given")
+                if "database_file" in src:
+                    dbid, _, key = str(src["database_file"]).partition(":")
+                    e = self.dbs.get(dbid)
+                    if not e:
+                        iss.error(w, f"database_file: unknown database {dbid!r}")
+                    elif key not in (e.get("files") or {}):
+                        iss.error(w, f"database_file: {dbid} has no file {key!r} (files: {sorted(e.get('files') or {})})")
+                for fid in src.get("feature_ids") or []:
+                    if not re.match(r"^fig\|\d+\.\d+\.[a-z_]+\.\d+$", str(fid)):
+                        iss.error(w, f"bad feature id {fid!r} (expected a BV-BRC patric_id like fig|1206109.14.peg.1)")
                 for gid in src.get("genome_ids") or []:
                     if not GENOME_ID_RE.match(str(gid)):
                         iss.error(w, f"bad genome id {gid!r} (expected e.g. 1206109.14)")
@@ -206,9 +216,13 @@ class Validator:
                         continue
                     if not ts.is_a(b.type, port["type"]):
                         conv = ts.converters_between(b.type, port["type"])
+                        fix = self._fixer(b, port)
+                        if fix:
+                            plan.setdefault("fixable", []).append({"step": sid, "port": pid, "ref": r, **fix})
                         hint = f"; converter available: {', '.join(c['module'] for c in conv)}" if conv else ""
                         iss.error(pw, f"type mismatch: {r} is {b.type}, {m.id}.{pid} needs {port['type']}{hint}")
                         continue
+                    attr_problem = False
                     for a, v in (port.get("requires") or {}).items():
                         have = b.attrs.get(a)
                         if a == "compression" and v == "none":
@@ -216,7 +230,12 @@ class Validator:
                         if have is None:
                             iss.warn(pw, f"{m.id}.{pid} requires {a}={v}; {r} does not declare {a}")
                         elif have != v:
+                            attr_problem = True
                             iss.error(pw, f"{m.id}.{pid} requires {a}={v}, but {r} has {a}={have}")
+                    if attr_problem:
+                        fix = self._fixer(b, port)
+                        if fix:
+                            plan.setdefault("fixable", []).append({"step": sid, "port": pid, "ref": r, **fix})
                     if b.conditional:
                         iss.warn(pw, f"{r} is a conditional output (has `when:`); it may not exist")
                     input_types.setdefault(pid, b.type)
@@ -308,8 +327,20 @@ class Validator:
                     iss.error(f"outputs.{name}", f"{r} is never produced with these parameters")
         tmpl = p.get("template") or {}
         for k in tmpl:
-            if k not in ("expose", "links", "label", "category", "description"):
+            if k not in ("expose", "links", "label", "category", "description", "optional"):
                 iss.error("template", f"unknown key {k!r}")
+        for step, o in (tmpl.get("optional") or {}).items():
+            if step not in steps:
+                iss.error("template.optional", f"{step!r} is not a step")
+            elif not isinstance(o, dict) or not isinstance(o.get("default", True), bool):
+                iss.error("template.optional", f"{step!r}: expected {{label, default: true|false, bypass: {{...}}}}")
+            else:
+                m = self.mods.get(steps[step].get("module"))
+                for port, ref in (o.get("bypass") or {}).items():
+                    if m and port not in m.outputs:
+                        iss.error("template.optional", f"{step}.bypass: module {m.id} has no output {port!r}")
+                    if not isinstance(ref, str) or ref.split(".", 1)[0] == step:
+                        iss.error("template.optional", f"{step}.bypass.{port}: must reference another step or input")
         for target, source in (tmpl.get("links") or {}).items():
             for e in (target, source):
                 parts = str(e).split(".")
@@ -334,6 +365,28 @@ class Validator:
 
         plan["resources"] = self._resources(plan, deps, iss)
         return iss, plan
+
+    def _fixer(self, b, port):
+        """A single available converter module that turns binding `b` into something `port` accepts."""
+        ts = self.ts
+        for c in ts.converters:
+            if c.get("status") != "available" or not ts.is_a(b.type, c["from"]):
+                continue
+            m = self.mods.get(c["module"])
+            if m is None:
+                continue
+            ins = [pid for pid, p in m.inputs.items() if p.get("required", True)]
+            if len(ins) != 1 or not ts.is_a(b.type, m.inputs[ins[0]]["type"]):
+                continue
+            for oid, op in m.outputs.items():
+                ot = op["type"] if op.get("type_from") is None else c["to"]
+                if not ts.is_a(ot, port["type"]):
+                    continue
+                attrs = {**ts.fixed_attributes(ot), **(op.get("attributes") or {})}
+                if all(attrs.get(a) == v for a, v in (port.get("requires") or {}).items()
+                       if not (a == "compression" and v == "none")):
+                    return {"module": m.id, "in_port": ins[0], "out_port": oid}
+        return None
 
     def _resolve(self, r, bindings, steps, iss, w):
         if not isinstance(r, str):
@@ -393,6 +446,37 @@ class Validator:
         if any(st.get("scatter") and not st.get("scatter_size") for st in plan["steps"].values()):
             iss.warn("resources", "collection size unknown at validation time; runtime assumes 1 item per collection")
         return out
+
+
+def auto_convert(validator, p, where="pipeline", max_rounds=4):
+    """Validate; where an edge can be fixed by one available converter module, insert that step and re-validate.
+    Returns (pipeline, issues, plan); inserted steps are reported as warnings and marked "auto": true."""
+    import copy
+    p = copy.deepcopy(p)
+    notes = []
+    for _ in range(max_rounds):
+        iss, plan = validator.validate(p, where=where)
+        fixes = plan.get("fixable") or []
+        if not fixes:
+            break
+        made = {}
+        for f in fixes:
+            key = (f["ref"], f["module"])
+            if key not in made:
+                base = f"{f['module']}_{f['ref'].replace('$inputs.', 'in_').replace('.', '_')}"[:60]
+                sid, n = base, 2
+                while sid in p["steps"]:
+                    sid, n = f"{base}_{n}", n + 1
+                p["steps"][sid] = {"module": f["module"], "in": {f["in_port"]: f["ref"]}, "auto": True}
+                made[key] = f"{sid}.{f['out_port']}"
+                notes.append(f"inserted converter step {sid!r} ({f['module']}) for {f['ref']} -> {f['step']}.{f['port']}")
+            step_in = p["steps"][f["step"]]["in"]
+            v = step_in[f["port"]]
+            step_in[f["port"]] = [made[key] if x == f["ref"] else x for x in v] if isinstance(v, list) else made[key]
+    for n in notes:
+        iss.warn("auto-converter", n)
+    plan["auto_converters"] = notes
+    return p, iss, plan
 
 
 def bindings_for(r, bindings):

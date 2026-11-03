@@ -1,0 +1,115 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "SARS-CoV-2 amplicon consensus genomes",
+  "description": "Per sample: fastp -> BWA-MEM vs MN908947.3 -> iVar primer trimming -> iVar consensus + iVar variants + samtools coverage -> Pangolin lineage; MultiQC summary over all samples.",
+  "inputs": {
+    "samples": {
+      "type": "reads.short.paired",
+      "collection": true,
+      "source": {
+        "paired_end_libs": [
+          {
+            "sample_id": "S1",
+            "read1": "/user@bvbrc/home/reads/S1_R1.fastq.gz",
+            "read2": "/user@bvbrc/home/reads/S1_R2.fastq.gz"
+          }
+        ]
+      }
+    },
+    "reference": {
+      "type": "sequences.dna.contigs",
+      "source": {
+        "database_file": "artic_v4.1:reference"
+      }
+    }
+  },
+  "steps": {
+    "trim": {
+      "module": "fastp",
+      "in": {
+        "reads": "$inputs.samples"
+      }
+    },
+    "map": {
+      "module": "bwa_mem",
+      "in": {
+        "reads": "trim.trimmed_reads",
+        "reference": "$inputs.reference"
+      }
+    },
+    "primertrim": {
+      "module": "ivar_trim",
+      "in": {
+        "alignment": "map.alignment"
+      }
+    },
+    "consensus": {
+      "module": "ivar_consensus",
+      "in": {
+        "alignment": "primertrim.trimmed"
+      }
+    },
+    "variants": {
+      "module": "ivar_variants",
+      "in": {
+        "alignment": "primertrim.trimmed",
+        "reference": "$inputs.reference"
+      }
+    },
+    "coverage": {
+      "module": "samtools_coverage",
+      "in": {
+        "alignment": "primertrim.trimmed"
+      }
+    },
+    "lineage": {
+      "module": "pangolin",
+      "in": {
+        "genomes": "consensus.consensus"
+      }
+    },
+    "summary": {
+      "module": "multiqc",
+      "in": {
+        "reports": [
+          "trim.report_json",
+          "coverage.stats"
+        ]
+      }
+    }
+  },
+  "outputs": {
+    "consensus": "consensus.consensus",
+    "variants": "variants.variants",
+    "coverage": "coverage.coverage",
+    "lineage": "lineage.lineages",
+    "qc_summary": "summary.report"
+  },
+  "template": {
+    "label": "SARS-CoV-2 amplicon consensus (iVar + Pangolin)",
+    "category": "typing",
+    "expose": [
+      "primertrim.params.primers",
+      "consensus.params.min_depth",
+      "consensus.params.min_frequency",
+      "variants.params.min_frequency"
+    ],
+    "optional": {
+      "lineage": {
+        "label": "Pangolin lineage",
+        "default": true
+      },
+      "summary": {
+        "label": "MultiQC summary",
+        "default": true
+      },
+      "primertrim": {
+        "label": "Trim amplicon primers (iVar)",
+        "default": true,
+        "bypass": {
+          "trimmed": "map.alignment"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"inputs": {"samples": {"source": {"fixture": "sarscov2_samples"}, "collection": true}, "reference": {"fixture": "sarscov2_genome"}}, "params": {"primertrim.enabled": false, "consensus.params.min_depth": 3}, "template": "sars2_consensus"}

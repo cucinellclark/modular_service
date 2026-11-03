@@ -2,19 +2,93 @@
   "schema": "modpipe/pipeline/v1",
   "name": "Isolate assembly and characterization",
   "description": "fastp -> SPAdes -> QUAST, then on the contigs: Prodigal genes/proteins, AMRFinderPlus AMR genes, and MLST typing.",
-  "inputs": {"reads": {"type": "reads.short.paired", "source": {"paired_end_libs": [{"read1": "/user@bvbrc/home/reads/S_R1.fastq.gz", "read2": "/user@bvbrc/home/reads/S_R2.fastq.gz"}]}}},
-  "steps": {
-    "trim":     {"module": "fastp", "in": {"reads": "$inputs.reads"}},
-    "assemble": {"module": "spades", "in": {"reads": "trim.trimmed_reads"}, "params": {"mode": "isolate"}},
-    "qc":       {"module": "quast", "in": {"contigs": "assemble.contigs"}},
-    "genes":    {"module": "prodigal", "in": {"contigs": "assemble.contigs"}},
-    "amr":      {"module": "amrfinder", "in": {"contigs": "assemble.contigs"}},
-    "typing":   {"module": "mlst", "in": {"contigs": "assemble.contigs"}}
+  "inputs": {
+    "reads": {
+      "type": "reads.short.paired",
+      "source": {
+        "paired_end_libs": [
+          {
+            "read1": "/user@bvbrc/home/reads/S_R1.fastq.gz",
+            "read2": "/user@bvbrc/home/reads/S_R2.fastq.gz"
+          }
+        ]
+      }
+    }
   },
-  "outputs": {"contigs": "assemble.contigs", "qc_report": "qc.report", "qc_metrics": "qc.metrics",
-              "proteins": "genes.proteins", "genes_gff": "genes.gff", "amr_genes": "amr.hits", "mlst": "typing.profile",
-              "trim_report": "trim.report_html"},
-  "template": {"label": "Assemble and characterize an isolate (AMR, MLST)", "category": "assembly",
-               "expose": ["assemble.params.mode", "amr.params.organism", "typing.params.scheme",
-                          "trim.params.qualified_quality_phred", "qc.params.min_contig"]}
+  "steps": {
+    "trim": {
+      "module": "fastp",
+      "in": {
+        "reads": "$inputs.reads"
+      }
+    },
+    "assemble": {
+      "module": "spades",
+      "in": {
+        "reads": "trim.trimmed_reads"
+      },
+      "params": {
+        "mode": "isolate"
+      }
+    },
+    "qc": {
+      "module": "quast",
+      "in": {
+        "contigs": "assemble.contigs"
+      }
+    },
+    "genes": {
+      "module": "prodigal",
+      "in": {
+        "contigs": "assemble.contigs"
+      }
+    },
+    "amr": {
+      "module": "amrfinder",
+      "in": {
+        "contigs": "assemble.contigs"
+      }
+    },
+    "typing": {
+      "module": "mlst",
+      "in": {
+        "contigs": "assemble.contigs"
+      }
+    }
+  },
+  "outputs": {
+    "contigs": "assemble.contigs",
+    "qc_report": "qc.report",
+    "qc_metrics": "qc.metrics",
+    "proteins": "genes.proteins",
+    "genes_gff": "genes.gff",
+    "amr_genes": "amr.hits",
+    "mlst": "typing.profile",
+    "trim_report": "trim.report_html"
+  },
+  "template": {
+    "label": "Assemble and characterize an isolate (AMR, MLST)",
+    "category": "assembly",
+    "expose": [
+      "assemble.params.mode",
+      "amr.params.organism",
+      "typing.params.scheme",
+      "trim.params.qualified_quality_phred",
+      "qc.params.min_contig"
+    ],
+    "optional": {
+      "genes": {
+        "label": "Predict genes and proteins (Prodigal)",
+        "default": true
+      },
+      "amr": {
+        "label": "Screen for AMR genes (AMRFinderPlus)",
+        "default": true
+      },
+      "typing": {
+        "label": "MLST typing",
+        "default": true
+      }
+    }
+  }
 }

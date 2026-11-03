@@ -25,7 +25,8 @@ UI can preview it.
 | `genome_ids` | modpipe (`p3-genome-fasta --contig`) | local FASTA per genome |
 | `feature_group` | `P3DataAPI` protein/nucleotide sequences, chosen by the input type | local FASTA |
 | `fasta_data` | written to a file | local FASTA |
-| `feature_ids` | not yet supported | |
+| `feature_ids` | `P3DataAPI::retrieve_protein/nucleotide_feature_sequence` | local FASTA |
+| `database_file` | modpipe (registry `files`, e.g. `artic_v4.1:reference`) | local file |
 
 Read inputs are checked for pairing: a paired type with single-end libraries fails early, and vice versa.
 

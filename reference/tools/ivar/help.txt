@@ -1,0 +1,53 @@
+# /usr/bin/ivar cmd: ivar trim 2>&1; ivar consensus 2>&1; ivar variants 2>&1
+Usage: ivar trim -i <input.bam> -b <primers.bed> -p <prefix> [-m <min-length>] [-q <min-quality>] [-s <sliding-window-width>]
+
+Input Options    Description
+           -i    (Required) Sorted bam file, with aligned reads, to trim primers and quality
+           -b    BED file with primer sequences and positions. If no BED file is specified, only quality trimming will be done.
+           -f    [EXPERIMENTAL] Primer pair information file containing left and right primer names for the same amplicon separated by a tab
+                 If provided, reads that do not fall within atleat one amplicon will be ignored prior to primer trimming.
+           -x    Primer position offset (Default: 0). Reads that occur at the specified offset positions relative to primer positions will also be trimmed.
+           -m    Minimum length of read to retain after trimming (Default: 30)
+           -q    Minimum quality threshold for sliding window to pass (Default: 20)
+           -s    Width of sliding window (Default: 4)
+           -e    Include reads with no primers. By default, reads with no primers are excluded
+           -k    Keep reads to allow for reanalysis: keep reads which would be dropped by
+                 alignment length filter or primer requirements, but mark them QCFAIL
+
+Output Options   Description
+           -p    (Required) Prefix for the output BAM file
+Usage: samtools mpileup -aa -A -d 0 -Q 0 <input.bam> | ivar consensus -p <prefix> 
+
+Note : samtools mpileup output must be piped into `ivar consensus`
+
+Input Options    Description
+           -q    Minimum quality score threshold to count base (Default: 20)
+           -t    Minimum frequency threshold(0 - 1) to call consensus. (Default: 0)
+                 Frequently used thresholds | Description
+                 ---------------------------|------------
+                                          0 | Majority or most common base
+                                        0.2 | Bases that make up atleast 20% of the depth at a position
+                                        0.5 | Strict or bases that make up atleast 50% of the depth at a position
+                                        0.9 | Strict or bases that make up atleast 90% of the depth at a position
+                                          1 | Identical or bases that make up 100% of the depth at a position. Will have highest ambiguities
+           -m    Minimum depth to call consensus(Default: 10)
+           -k    If '-k' flag is added, regions with depth less than minimum depth will not be added to the consensus sequence. Using '-k' will override any option specified using -n 
+           -n    (N/-) Character to print in regions with less than minimum coverage(Default: N)
+
+Output Options   Description
+           -p    (Required) Prefix for the output fasta file and quality file
+           -i    (Optional) Name of fasta header. By default, the prefix is used to create the fasta header in the following format, Consensus_<prefix>_threshold_<frequency-threshold>_quality_<minimum-quality>
+Usage: samtools mpileup -aa -A -d 0 -B -Q 0 --reference [<reference-fasta] <input.bam> | ivar variants -p <prefix> [-q <min-quality>] [-t <min-frequency-threshold>] [-m <minimum depth>] [-r <reference-fasta>] [-g GFF file]
+
+Note : samtools mpileup output must be piped into ivar variants
+
+Input Options    Description
+           -q    Minimum quality score threshold to count base (Default: 20)
+           -t    Minimum frequency threshold(0 - 1) to call variants (Default: 0.03)
+           -m    Minimum read depth to call variants (Default: 0)
+           -r    Reference file used for alignment. This is used to translate the nucleotide sequences and identify intra host single nucleotide variants
+           -g    A GFF file in the GFF3 format can be supplied to specify coordinates of open reading frames (ORFs). In absence of GFF file, amino acid translation will not be done.
+
+Output Options   Description
+           -p    (Required) Prefix for the output tsv variant file
+

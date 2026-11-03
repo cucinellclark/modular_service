@@ -292,7 +292,7 @@ class TestCuratedTemplates(unittest.TestCase):
         self.assertGreaterEqual(len(names), 9)
         for n in names:
             with self.subTest(template=n):
-                tp = os.path.join(tdir, f"{n}.json")
+                tp = os.path.join(tdir, f"{n}.json")   # _variant_*.json files are extra cases, not required
                 self.assertTrue(os.path.exists(tp), f"missing tests/templates/{n}.json")
                 with open(tp) as f:
                     t = json.load(f)

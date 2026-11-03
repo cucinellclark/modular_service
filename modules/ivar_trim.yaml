@@ -1,0 +1,26 @@
+schema: modpipe/module/v1
+id: ivar_trim
+version: 1
+label: "iVar trim: remove amplicon primers (sorted, indexed BAM)"
+description: Soft-clips primer sequences and low-quality ends from reads of an amplicon (e.g. ARTIC) library, then sorts and indexes.
+category: mapping
+tool: {id: ivar, binary: ivar, version: 1.3.1}
+inputs:
+  - {id: alignment, type: alignment.reads.bam, requires: {sorted: coordinate}}
+outputs:
+  - id: trimmed
+    type: alignment.reads.bam
+    parts: {bam: trimmed.sorted.bam, index: trimmed.sorted.bam.bai}
+    attributes: {sorted: coordinate, indexed: true}
+  - {id: log, type: report.text, path: ivar_trim.log}
+parameters:
+  - {id: primers, type: database, db_type: database.primer_scheme, default: artic_v4.1, label: "Primer scheme"}
+  - {id: min_length, type: int, default: 30, min: 1, label: "Minimum read length after trimming (-m)"}
+  - {id: min_quality, type: int, default: 20, min: 0, label: "Sliding-window quality threshold (-q)"}
+  - {id: include_no_primer, type: bool, default: true, label: "Keep reads without a primer (-e; needed for tagmentation libraries)"}
+resources: {cpu: 2, memory: 4G, runtime: 2h}
+command: |
+  ivar trim -i {{ inputs.alignment.bam | q }} -b {{ db_files.primers.bed | q }} -p trimmed
+  -m {{ params.min_length }} -q {{ params.min_quality }} {% if params.include_no_primer %}-e{% endif %} > {{ outputs.log }}
+  && samtools sort -@ {{ cpu }} -o {{ outputs.trimmed.bam }} trimmed.bam && samtools index {{ outputs.trimmed.bam }} && rm -f trimmed.bam
+provenance: {bvbrc_invocations: [sars2-onecodex.pl], nfcore: []}

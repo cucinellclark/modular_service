@@ -325,6 +325,54 @@ databases:
     version: "2022-01-18"
     status: unverified
 
+
+  # ------------------------------------------------------------------ amplicon primer schemes (SARS-CoV-2)
+  - id: artic_v3
+    type: database.primer_scheme
+    path: /opt/p3/deployment/lib/Bio/P3/SARS2Assembly/primer_schemes/nCoV-2019/V3
+    location: container
+    files: {bed: nCoV-2019.scheme.bed, reference: nCoV-2019.reference.fasta}
+    description: "SARS-CoV-2 ARTIC V3 primer scheme (BED) + matching MN908947.3 reference, as used by BV-BRC SARS2Assembly"
+    used_by: [App-SARS2Assembly, App-SARS2Wastewater]
+    tools: [ivar]
+    status: unverified
+  - id: artic_v4.1
+    type: database.primer_scheme
+    path: /opt/p3/deployment/lib/Bio/P3/SARS2Assembly/primer_schemes/nCoV-2019/V4.1
+    location: container
+    files: {bed: SARS-CoV-2.primer.bed, reference: SARS-CoV-2.reference.fasta}
+    description: "SARS-CoV-2 ARTIC V4.1 primer scheme (BED) + matching MN908947.3 reference, as used by BV-BRC SARS2Assembly"
+    used_by: [App-SARS2Assembly, App-SARS2Wastewater]
+    tools: [ivar]
+    status: unverified
+  - id: artic_v5.3.2
+    type: database.primer_scheme
+    path: /opt/p3/deployment/lib/Bio/P3/SARS2Assembly/primer_schemes/nCoV-2019/V5.3.2
+    location: container
+    files: {bed: SARS-CoV-2.primer.bed, reference: SARS-CoV-2.reference.fasta}
+    description: "SARS-CoV-2 ARTIC V5.3.2 primer scheme (BED) + matching MN908947.3 reference, as used by BV-BRC SARS2Assembly"
+    used_by: [App-SARS2Assembly, App-SARS2Wastewater]
+    tools: [ivar]
+    status: unverified
+  - id: midnight_v1
+    type: database.primer_scheme
+    path: /opt/p3/deployment/lib/Bio/P3/SARS2Assembly/primer_schemes/midnight/V1
+    location: container
+    files: {bed: midnight.scheme.bed, reference: midnight.reference.fasta}
+    description: "SARS-CoV-2 Midnight (1200 bp) V1 primer scheme (BED) + matching MN908947.3 reference, as used by BV-BRC SARS2Assembly"
+    used_by: [App-SARS2Assembly, App-SARS2Wastewater]
+    tools: [ivar]
+    status: unverified
+  - id: qiagen_v1
+    type: database.primer_scheme
+    path: /opt/p3/deployment/lib/Bio/P3/SARS2Assembly/primer_schemes/qiagen/V1
+    location: container
+    files: {bed: qiagen.scheme.bed, reference: qiagen.reference.fasta}
+    description: "SARS-CoV-2 Qiagen QIAseq V1 primer scheme (BED) + matching MN908947.3 reference, as used by BV-BRC SARS2Assembly"
+    used_by: [App-SARS2Assembly, App-SARS2Wastewater]
+    tools: [ivar]
+    status: unverified
+
   # ------------------------------------------------------------------ not installed
   - id: antismash_databases
     type: database.antismash

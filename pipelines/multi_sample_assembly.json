@@ -48,12 +48,24 @@
       "in": {
         "contigs": "assemble.contigs"
       }
+    },
+    "summary": {
+      "module": "multiqc",
+      "in": {
+        "reports": [
+          "trim.report_json"
+        ],
+        "tables": [
+          "qc.metrics"
+        ]
+      }
     }
   },
   "outputs": {
     "contigs": "assemble.contigs",
     "qc_report": "qc.report",
-    "qc_metrics": "qc.metrics"
+    "qc_metrics": "qc.metrics",
+    "qc_summary": "summary.report"
   },
   "template": {
     "label": "Multi-sample assembly with combined QC",
@@ -61,6 +73,12 @@
     "expose": [
       "assemble.params.mode",
       "qc.params.min_contig"
-    ]
+    ],
+    "optional": {
+      "summary": {
+        "label": "Combined MultiQC report",
+        "default": true
+      }
+    }
   }
 }

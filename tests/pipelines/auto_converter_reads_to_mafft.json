@@ -1,0 +1,9 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "TEST auto-converter: reads straight into MAFFT",
+  "description": "Only valid because the engine inserts seqtk_seq_fasta (reads -> FASTA) automatically.",
+  "inputs": {"reads": {"type": "reads.long.nanopore", "source": {"fixture": "sarscov2_ont_small"}}},
+  "steps": {"align": {"module": "mafft", "in": {"sequences": "$inputs.reads"}, "params": {"strategy": "auto"}},
+            "tree": {"module": "fasttree", "in": {"alignment": "align.alignment"}}},
+  "outputs": {"tree": "tree.tree"}
+}
