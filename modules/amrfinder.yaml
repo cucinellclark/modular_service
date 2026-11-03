@@ -10,7 +10,7 @@ inputs:
 outputs:
   - {id: hits, type: table.tsv.amr, path: amrfinder.tsv, description: "First column (Name) is the sample label"}
 parameters:
-  - {id: organism, type: string, default: "", label: "Organism for point mutations (e.g. Escherichia, Salmonella); empty = none",
+  - {id: organism, type: string, default: "", pattern: "[A-Za-z_]{0,64}", label: "Organism for point mutations (e.g. Escherichia, Salmonella); empty = none",
      description: "See `amrfinder --list_organisms`"}
   - {id: plus, type: bool, default: true, label: "Include stress/virulence genes (--plus)"}
 resources: {cpu: 4, memory: 8G, runtime: 1h}

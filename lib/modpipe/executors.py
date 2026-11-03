@@ -102,7 +102,7 @@ class SnakemakeExecutor:
                       f"    threads: {j.cpu}",
                       f"    resources: mem_mb={int(j.mem_gb * 1024)}",
                       f"    log: {rel(os.path.join(j.workdir, '.modpipe', 'job.log'))!r}",
-                      f"    shell: 'bash {shlex.quote(rel(j.script))} > {{log}} 2>&1'", ""]
+                      f"    shell: {('bash ' + shlex.quote(rel(j.script)) + ' > {log} 2>&1')!r}", ""]
         with open(path, "w") as f:
             f.write("\n".join(lines))
         return path

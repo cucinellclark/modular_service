@@ -30,7 +30,8 @@ parameters:
     default: isolate
     label: "Assembly mode"
     description: "isolate is recommended for bacterial isolates with high coverage; meta needs exactly one paired library"
-  - {id: kmers, type: string, default: "auto", advanced: true, label: "k-mer sizes (-k), e.g. 21,33,55 or auto"}
+  - {id: kmers, type: string, default: "auto", pattern: "auto|[0-9]{1,3}(,[0-9]{1,3})*", advanced: true,
+     label: "k-mer sizes (-k), e.g. 21,33,55 or auto"}
 
 resources: {cpu: 16, memory: 64G, runtime: 12h}
 
@@ -44,7 +45,7 @@ command: |
   {% if inputs.long_reads %}
     {% if inputs.long_reads.type == 'reads.long.nanopore' %}--nanopore{% else %}--pacbio{% endif %} {{ inputs.long_reads | q }}
   {% endif %}
-  {% if params.kmers != 'auto' %}-k {{ params.kmers }}{% endif %}
+  {% if params.kmers != 'auto' %}-k {{ params.kmers | q }}{% endif %}
   -o out
 
 tests:

@@ -326,7 +326,7 @@ inputs: [{id: reads, type: reads.short}]
 outputs: [{id: report, type: taxonomy.kraken.report, path: report.txt}]
 parameters: [{id: db, type: database, db_type: database.kraken2, default: kraken2_silva}]
 resources: {cpu: 4, memory: 8G, runtime: 1h}
-command: "kraken2 --db {{ dbs.db }} --report {{ outputs.report }} {{ inputs.reads.r1 if inputs.reads.paired else inputs.reads }}"
+command: "kraken2 --db {{ dbs.db | q }} --report {{ outputs.report }} {{ (inputs.reads.r1 if inputs.reads.paired else inputs.reads) | q }}"
 """)
         cls.mods = ModuleRegistry(TS, DBS, module_dir=cls.dir)
 

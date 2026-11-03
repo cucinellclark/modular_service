@@ -7,6 +7,10 @@ import jinja2
 ENV = jinja2.Environment(undefined=jinja2.StrictUndefined, trim_blocks=False, lstrip_blocks=True, autoescape=False)
 ENV.filters["q"] = lambda v: shlex.quote(str(v))
 
+# Hostile stand-in for any untrusted text (free-text params, input paths, labels) used by lint_shell_safety.
+# Rendered unquoted, inside double quotes, or with broken quoting, it no longer survives shell parsing intact.
+HOSTILE = "h0 st;i$(le)`x`'y\"z|&>*?"
+
 
 class TemplateMisuse(Exception):
     pass
@@ -207,3 +211,74 @@ def check_step_render(module, input_types, params, ts, dbreg):
     except (jinja2.TemplateError, TemplateMisuse, AttributeError, TypeError) as e:
         return f"command template failed: {type(e).__name__}: {e}"
     return None
+
+
+# ------------------------------------------------------------------ shell-safety lint
+
+def _hostile_value(ts, tid, port_id):
+    v = _fake_value(ts, tid, port_id)
+    if v._path is not None:
+        v._path = f"inputs/{HOSTILE}/{port_id}"
+    v._parts = {k: f"inputs/{HOSTILE}/{port_id}.{k}" for k in v._parts}
+    v.label = f"{HOSTILE}{port_id}"
+    return v
+
+
+def _intact(cmd, needle):
+    """True if every occurrence of `needle` in the shell-parsed command lies inside a single argument."""
+    try:
+        tokens = shlex.split(cmd, posix=True)
+    except ValueError as e:
+        return False, f"command does not parse as shell words ({e})"
+    raw = cmd.count(needle) if needle in cmd else 0
+    seen = sum(t.count(needle) for t in tokens)
+    if seen == 0 and raw == 0:
+        return True, None   # value not used in the command (e.g. only in conditions)
+    if seen == 0:
+        return False, "untrusted value is split or altered by the shell (unquoted, or inside double quotes)"
+    return True, None
+
+
+def lint_shell_safety(module, ts, dbreg=None, max_renders=200):
+    """Render with hostile values for every untrusted string (string params without a `pattern`, input paths,
+    labels) and require each to survive shell word-splitting intact. Returns error strings."""
+    from .registry import DatabaseRegistry
+    dbreg = dbreg or DatabaseRegistry()
+    errs = []
+    in_variants = []
+    for pid, p in module.inputs.items():
+        if p.get("type") not in ts:
+            return errs
+        opts = list(dict.fromkeys(_concrete_variants(ts, p["type"])))
+        many = p.get("cardinality", "one") == "many"
+        vals = [[_hostile_value(ts, t, f"{pid}{i}") for i in range(2)] if many else _hostile_value(ts, t, pid) for t in opts]
+        if not p.get("required", True):
+            vals.append(None)
+        in_variants.append([(pid, v) for v in vals])
+    n = 0
+    for combo in itertools.product(*in_variants) if in_variants else [()]:
+        inputs = dict(combo)
+        input_types = {k: (v[0].type if isinstance(v, list) else v.type) for k, v in inputs.items() if v is not None}
+        for params in _param_variants(module, dbreg, ts):
+            n += 1
+            if n > max_renders:
+                return errs
+            for pid, spec in module.params.items():      # free text: hostile; pattern-restricted text: keep default
+                if spec["type"] == "string" and not spec.get("pattern"):
+                    params[pid] = HOSTILE
+            outputs = {oid: output_value(op, resolve_output_type(module, op, input_types, ts) or op["type"], ts)
+                       for oid, op in module.outputs.items()}
+            dbs = {pid: f"/db/{params[pid]}" for pid, p in module.params.items() if p["type"] == "database"}
+            ctx = build_context(module, inputs, outputs, params, 4, 16, dbs)
+            try:
+                cmd = render_command(module, ctx)
+            except (ConstraintViolation, jinja2.TemplateError, TemplateMisuse, AttributeError, TypeError):
+                continue   # render problems are reported by lint_render
+            ok, why = _intact(cmd, HOSTILE)
+            if not ok:
+                label = ", ".join(f"{k}={'absent' if v is None else (v[0].type + '[]' if isinstance(v, list) else v.type)}"
+                                  for k, v in inputs.items())
+                msg = f"shell safety: {why}, e.g. with {label}. Pipe untrusted values through `| q`, or give string params a `pattern`."
+                if not any(why in e for e in errs):
+                    errs.append(msg)
+    return errs

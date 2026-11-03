@@ -11,7 +11,7 @@ outputs:
   - {id: profile, type: table.tsv.mlst, path: mlst.tsv}
   - {id: profile_json, type: report.json, path: mlst.json}
 parameters:
-  - {id: scheme, type: string, default: "", label: "Force a scheme (see `mlst --list`); empty = auto"}
+  - {id: scheme, type: string, default: "", pattern: "[A-Za-z0-9_.-]{0,64}", label: "Force a scheme (see `mlst --list`); empty = auto"}
 resources: {cpu: 2, memory: 4G, runtime: 1h}
 command: |
   mlst --threads {{ cpu }} --json {{ outputs.profile_json }} --label {{ inputs.contigs.label | q }}

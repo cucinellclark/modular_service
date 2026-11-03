@@ -30,6 +30,7 @@ docs/
   MODULE_SCHEMA.md             module descriptor + pipeline JSON schema (v1), template context
   SERVICE.md                   the BV-BRC service: params, input staging, preflight, upload, testing
   DEPLOYMENT.md                make deploy-service layout, data-root lookup, going live
+  SECURITY.md                  shell-injection hardening: quoting rule, patterns, identifier validation
   ADDING_A_MODULE.md           how to add a new tool module
   OPEN_QUESTIONS.md            decisions still needed
   PREPROCESSING.md             one-time/recurring harvesting of tool metadata

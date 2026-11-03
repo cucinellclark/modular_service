@@ -14,7 +14,7 @@ outputs:
   - {id: report, type: report.text, path: iq.iqtree}
   - {id: log, type: report.text, path: iq.log}
 parameters:
-  - {id: model, type: string, default: "MFP", label: "Model (MFP = ModelFinder Plus; e.g. GTR+G, LG+G)"}
+  - {id: model, type: string, default: "MFP", pattern: "[A-Za-z0-9+_.,{}*:-]{1,100}", label: "Model (MFP = ModelFinder Plus; e.g. GTR+G, LG+G)"}
   - {id: bootstrap, type: int, default: 0, min: 0, label: "Ultrafast bootstrap replicates (0 = none, else >= 1000)"}
   - {id: fast, type: bool, default: false, advanced: true, label: "Fast tree search (--fast)"}
   - {id: seed, type: int, default: 12345, advanced: true, label: "Random seed"}

@@ -47,6 +47,7 @@ parameters:
     max: 60
     enum: [...]                 # for type: enum
     db_type: database.kraken2   # for type: database; value is a registry id of this type (or a descendant)
+    pattern: "[A-Za-z0-9_.-]{0,64}"   # string params: required regex (full match); see docs/SECURITY.md
     label: "..."
     description: "..."
     advanced: false             # UI hint: hide behind "advanced"
@@ -71,6 +72,9 @@ notes: "..."
 ```
 
 ### Template context
+**Pipe every input path, label and string parameter through `| q`.** Lint enforces this with hostile
+rendering ([SECURITY.md](SECURITY.md)).
+
 A template renders **one shell command**: its lines are joined with spaces (so arguments may be spread over
 lines). Chain several commands explicitly with `&&`. The command runs in the step's work directory.
 
@@ -105,6 +109,7 @@ lines). Chain several commands explicitly with `&&`. The command runs in the ste
 }
 ```
 
+- Step ids, input names and output names must match `[A-Za-z][A-Za-z0-9_-]{0,63}`.
 - References: `"$inputs.<name>"` or `"<step>.<output port>"`. A `cardinality: many` port may take a list of references.
 - **Scatter**: a pipeline input with `"collection": true` (one item per sample) feeding a `cardinality: one`
   port makes that step run once per item. Its outputs are collections, and steps downstream keep

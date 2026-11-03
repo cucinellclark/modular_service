@@ -1,5 +1,6 @@
 """Pipeline loading, validation (types, attributes, scatter/gather, params, dbs) and resource planning."""
 import json
+import re
 
 from .registry import check_param_value
 from .template import ENV, _fake_value, check_step_render, resolve_output_type
@@ -11,6 +12,11 @@ STEP_KEYS = {"module", "in", "params", "module_version", "description"}
 INPUT_KEYS = {"type", "source", "collection", "attributes", "description", "label"}
 SOURCE_KEYS = {"paired_end_libs", "single_end_libs", "srr_ids", "srr_libs", "wsid", "wsids", "files",
                "genome_ids", "genome_group", "feature_group", "feature_ids", "fasta_data", "fixture"}
+
+# Names that become directory names, Snakefile rule names and workspace paths.
+NAME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{0,63}$")
+GENOME_ID_RE = re.compile(r"^\d+\.\d+$")
+SAMPLE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
 
 # Pipeline job limits (decided 2026-11-03: "cap like the big services").
 CAPS = {"cpu": 32, "memory_gb": 256, "runtime_s": 48 * 3600}
@@ -68,6 +74,9 @@ class Validator:
         sizes = {}
         for name, d in (p.get("inputs") or {}).items():
             w = f"inputs.{name}"
+            if not NAME_RE.match(str(name)):
+                iss.error(w, "input names must match [A-Za-z][A-Za-z0-9_-]* (max 64)")
+                continue
             if not isinstance(d, dict) or "type" not in d:
                 iss.error(w, "needs a type")
                 continue
@@ -93,6 +102,16 @@ class Validator:
                     iss.error(w, "paired reads need paired_end_libs, srr_ids/srr_libs (or fixture)")
                 if ts.is_a(t, "reads.short.single") and "paired_end_libs" in src:
                     iss.error(w, "single-end type but paired_end_libs given")
+                for gid in src.get("genome_ids") or []:
+                    if not GENOME_ID_RE.match(str(gid)):
+                        iss.error(w, f"bad genome id {gid!r} (expected e.g. 1206109.14)")
+                for lib in (src.get("paired_end_libs") or []) + (src.get("single_end_libs") or []) + (src.get("srr_libs") or []):
+                    sid = lib.get("sample_id") if isinstance(lib, dict) else None
+                    if sid is not None and not SAMPLE_ID_RE.match(str(sid)):
+                        iss.error(w, f"bad sample_id {sid!r} (letters, digits, . _ - ; max 128)")
+                for acc in (src.get("srr_ids") or []) + [l.get("srr_accession") for l in (src.get("srr_libs") or []) if isinstance(l, dict)]:
+                    if acc is not None and not re.match(r"^[SED]RR\d+$", str(acc)):
+                        iss.error(w, f"bad SRA run accession {acc!r} (expected SRR/ERR/DRR + digits)")
             attrs = dict(ts.fixed_attributes(t))
             for a, v in (d.get("attributes") or {}).items():
                 allowed = ts.allowed_attribute_values(t, a)
@@ -110,6 +129,8 @@ class Validator:
         deps = {}
         for sid, s in steps.items():
             w = f"steps.{sid}"
+            if not NAME_RE.match(str(sid)):
+                iss.error(w, "step ids must match [A-Za-z][A-Za-z0-9_-]* (max 64)")
             if not isinstance(s, dict):
                 iss.error(w, "step must be an object")
                 continue
@@ -277,6 +298,9 @@ class Validator:
         if not p.get("outputs"):
             iss.warn(where, "no pipeline outputs declared (nothing would be saved)")
         for name, r in (p.get("outputs") or {}).items():
+            if not NAME_RE.match(str(name)):
+                iss.error(f"outputs.{name}", "output names must match [A-Za-z][A-Za-z0-9_-]* (max 64)")
+                continue
             b = self._resolve(r, bindings, steps, iss, f"outputs.{name}")
             if b is not None:
                 plan["outputs"][name] = repr(b)

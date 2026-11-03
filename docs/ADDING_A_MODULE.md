@@ -36,6 +36,9 @@
    `adapter: <id>.py` (Python class with `build_commands()` /
    `collect_outputs()`).
 
+4b. **Quote untrusted values**: `| q` on every input path, label and string param; give string params a
+   `pattern`. `bin/modpipe lint` fails otherwise (see [SECURITY.md](SECURITY.md)).
+
 5. **Set resources** (cpu/memory/runtime) conservatively. These feed preflight.
 
 6. **Validate and test**

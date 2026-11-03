@@ -15,7 +15,7 @@ outputs:
     attributes: {sorted: coordinate, indexed: true}
   - {id: flagstat, type: report.text, path: flagstat.txt}
 parameters:
-  - {id: read_group, type: string, default: "", advanced: true, label: "Read group sample name (@RG SM); empty = none"}
+  - {id: read_group, type: string, default: "", pattern: "[A-Za-z0-9_.-]{0,64}", advanced: true, label: "Read group sample name (@RG SM); empty = none"}
 resources: {cpu: 8, memory: 16G, runtime: 6h}
 command: |
   cp {{ inputs.reference | q }} ref.fa && bwa index ref.fa 2> bwa_index.log &&

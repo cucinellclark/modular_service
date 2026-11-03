@@ -15,7 +15,9 @@ TOP_KEYS = {"schema", "id", "version", "label", "description", "category", "tool
             "outputs", "parameters", "resources", "command", "adapter", "tests", "provenance", "notes"}
 IN_KEYS = {"id", "type", "required", "cardinality", "requires", "description", "label"}
 OUT_KEYS = {"id", "type", "type_from", "path", "parts", "required", "when", "attributes", "description", "label"}
-PARAM_KEYS = {"id", "type", "default", "min", "max", "enum", "db_type", "label", "description", "required", "advanced"}
+PARAM_KEYS = {"id", "type", "default", "min", "max", "enum", "db_type", "label", "description", "required", "advanced",
+              "pattern"}
+CONTROL_CHARS = re.compile(r"[\x00-\x1f\x7f]")
 
 
 class DatabaseRegistry:
@@ -154,6 +156,17 @@ class ModuleRegistry:
                 continue
             if p["type"] == "enum" and not p.get("enum"):
                 iss.error(pw, "enum parameter needs `enum` values")
+            if p.get("pattern") is not None:
+                if p["type"] != "string":
+                    iss.error(pw, "`pattern` only applies to string parameters")
+                else:
+                    try:
+                        re.compile(p["pattern"])
+                    except re.error as e:
+                        iss.error(pw, f"bad pattern: {e}")
+            elif p["type"] == "string":
+                iss.warn(pw, "free-text string parameter: add a `pattern` (it is always shell-quoted, but a pattern also "
+                             "gives users a clear validation error)")
             if p["type"] == "database":
                 dt = p.get("db_type")
                 if not dt or dt not in ts or not (dt.startswith("database") or dt.startswith("index")):
@@ -174,8 +187,10 @@ class ModuleRegistry:
             iss.error(f"{w}: resources", str(e))
         # template renders for every mode we can think of
         if d.get("command"):
-            from .template import lint_render
+            from .template import lint_render, lint_shell_safety
             for msg in lint_render(m, ts, self.dbreg):
+                iss.error(f"{w}: command", msg)
+            for msg in lint_shell_safety(m, ts, self.dbreg):
                 iss.error(f"{w}: command", msg)
         # discovery cross-check
         self._lint_discovery(m, w, iss)
@@ -260,6 +275,12 @@ def check_param_value(p, v, ts, dbreg):
     elif t == "string":
         if not isinstance(v, str):
             return f"{v!r} is not a string"
+        if CONTROL_CHARS.search(v):
+            return "contains control characters (newlines, tabs, ...)"
+        if len(v) > 1000:
+            return "is longer than 1000 characters"
+        if p.get("pattern") and not re.fullmatch(p["pattern"], v):
+            return f"{v!r} does not match the allowed pattern {p['pattern']}"
     elif t == "enum":
         if v not in p.get("enum", []):
             return f"{v!r} not in {p.get('enum')}"
