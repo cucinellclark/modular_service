@@ -46,6 +46,23 @@ def _collection_size(src):
     return n or None
 
 
+def _empty_source_value(v):
+    """Why a source value is unusable (empty string, empty list, list with blanks, read pair without a file), or None."""
+    if v is None or (isinstance(v, str) and not v.strip()):
+        return "empty"
+    if isinstance(v, (list, dict)) and not v:
+        return "nothing selected"
+    if isinstance(v, list):
+        for i, x in enumerate(v):
+            if x is None or (isinstance(x, str) and not x.strip()):
+                return f"item {i + 1} is empty"
+            if isinstance(x, dict):
+                for key in ("read1", "read2", "read", "srr_accession"):
+                    if key in x and not str(x[key] or "").strip():
+                        return f"item {i + 1}: {key} is empty"
+    return None
+
+
 def load_pipeline(path):
     return read_json(path)
 
@@ -107,6 +124,12 @@ class Validator:
                 unknown = set(src) - SOURCE_KEYS
                 if unknown:
                     iss.error(w, f"unknown source keys {sorted(unknown)} (known: {sorted(SOURCE_KEYS)})")
+                for k, v in src.items():
+                    if k == "fixture" or k in unknown:
+                        continue
+                    empty = _empty_source_value(v)
+                    if empty:
+                        iss.error(w, f"no data chosen ({k}: {empty})")
                 if ts.is_a(t, "reads.short.paired") and not {"paired_end_libs", "srr_ids", "srr_libs", "fixture"} & set(src):
                     iss.error(w, "paired reads need paired_end_libs, srr_ids/srr_libs (or fixture)")
                 if ts.is_a(t, "reads.short.single") and "paired_end_libs" in src:

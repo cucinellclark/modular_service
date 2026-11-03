@@ -171,6 +171,21 @@ class ApiTests(unittest.TestCase):
         st, r, _ = self.call("POST", "/api/validate", {"pipeline": p})
         self.assertTrue(any(i["where"] == "steps.qc.in.contigs" and "type mismatch" in i["msg"] for i in r["issues"]))
 
+    def test_empty_data_choices_are_errors(self):
+        base = {"schema": "modpipe/pipeline/v1", "name": "x", "steps": {"t": {"module": "fasttree", "in": {"alignment": "$inputs.a"}}},
+                "outputs": {"tree": "t.tree"}}
+        for src in ({"wsid": ""}, {"wsids": []}, {"wsids": ["/u/home/a.fa", ""]}, {"fasta_data": "  "}):
+            p = dict(base, inputs={"a": {"type": "alignment.msa.protein", "source": src}})
+            st, r, _ = self.call("POST", "/api/validate", {"pipeline": p})
+            self.assertFalse(r["ok"], src)
+            self.assertTrue(any(i["where"] == "inputs.a" and "no data chosen" in i["msg"] for i in r["issues"]), (src, r["issues"]))
+        p = {"schema": "modpipe/pipeline/v1", "name": "x",
+             "inputs": {"s": {"type": "reads.short.paired", "collection": True,
+                              "source": {"paired_end_libs": [{"sample_id": "S1", "read1": "/u/a_1.fq", "read2": ""}]}}},
+             "steps": {"f": {"module": "fastp", "in": {"reads": "$inputs.s"}}}, "outputs": {"r": "f.report_html"}}
+        st, r, _ = self.call("POST", "/api/validate", {"pipeline": p})
+        self.assertTrue(any("read2 is empty" in i["msg"] for i in r["issues"]), r["issues"])
+
     def test_invalid_pipeline_rejected_before_sbatch(self):
         body = {"pipeline": {"schema": "modpipe/pipeline/v1", "name": "x",
                              "inputs": {"p": {"type": "sequences.protein", "source": {"feature_ids": ["fig|1.1.peg.1"]}}},
