@@ -15,17 +15,18 @@ the signed-in user's BV-BRC token and write to their workspace.
 ## Running it
 1. On the cluster host (where Slurm and the container are), start the API from the ModularService checkout:
    ```bash
-   bin/modpipe serve --port 8765            # add --origin http://<host>:<port> if the website isn't on localhost:3000
+   bin/modpipe serve --port 8765            # allowed site origins default to https://dev-5.bv-brc.org and http://localhost:3000;
+                                            # pass --origin <scheme://host[:port]> (repeatable) for others
    ```
    Job state lives in `~/.modpipe-ui/` (job params, Slurm logs; token files are mode 600 and deleted when the job ends).
 2. If the browser is on another machine, either tunnel the port (`ssh -L 8765:localhost:8765 <cluster host>`)
    or serve on the network over HTTPS so the token isn't sent in the clear:
    ```bash
-   bin/modpipe serve --host 0.0.0.0 --port 12005 --self-signed --origin http://localhost:3000
+   bin/modpipe serve --host 0.0.0.0 --port 12005 --self-signed
    ```
    `--self-signed` creates a certificate for this host once (`~/.modpipe-ui/tls/`, key mode 600). Open
    `https://<host>:12005/api/health` in the browser once and accept the warning; after that the form's calls work.
-   With a real certificate use `--tls-cert cert.pem --tls-key key.pem` instead. Set
+   A website served over https (e.g. https://dev-5.bv-brc.org) can only call an https API. With a real certificate use `--tls-cert cert.pem --tls-key key.pem` instead. Set
    `modularPipelineServiceURL` to `https://<host>:12005`.
 3. Run BV-BRC-Web from the `modular-pipeline-ui` branch with your `p3-web.conf` (add
    `"modularPipelineServiceURL": "http://localhost:8765"` if you need a different URL). Run it **unbuilt**

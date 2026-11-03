@@ -1,6 +1,6 @@
 """Prototype HTTP API for the ModularPipeline web form (BV-BRC-Web p3/widget/app/ModularPipeline.js).
 
-    bin/modpipe serve [--host 127.0.0.1] [--port 8765] [--origin http://localhost:3000]
+    bin/modpipe serve [--host 127.0.0.1] [--port 8765] [--origin URL ...]
                       [--tls-cert C --tls-key K | --self-signed]
 
 The production app service does not know the ModularPipeline app yet, so this server stands in for it: it lists
@@ -388,7 +388,10 @@ def self_signed_cert(hostname):
     return cert, key
 
 
-def serve(host="127.0.0.1", port=8765, origins=("http://localhost:3000",), cert=None, key=None):
+DEFAULT_ORIGINS = ("https://dev-5.bv-brc.org", "http://localhost:3000")
+
+
+def serve(host="127.0.0.1", port=8765, origins=DEFAULT_ORIGINS, cert=None, key=None):
     cat = Catalog()
     httpd = ThreadingHTTPServer((host, port), make_handler(cat, set(origins)))
     scheme = "http"
