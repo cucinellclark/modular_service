@@ -31,6 +31,9 @@ the signed-in user's BV-BRC token and write to their workspace.
 3. Run BV-BRC-Web from the `modular-pipeline-ui` branch with your `p3-web.conf` (add
    `"modularPipelineServiceURL": "http://localhost:8765"` if you need a different URL). Run it **unbuilt**
    (development mode): the new widget isn't in the built release layers.
+   **dev-5 setup:** `https://dev-5.bv-brc.org` is an nginx/Cloudflare proxy that forwards plain HTTP to
+   `ash:12005`. Run `bin/modpipe serve --host 0.0.0.0 --port 12005` (no TLS; the proxy terminates HTTPS) and set
+   `modularPipelineServiceURL` to `https://dev-5.bv-brc.org`.
 4. Sign in, open **Services > Prototype > Modular Pipeline** (`/app/ModularPipeline`).
 
 ## Using the form
