@@ -12,6 +12,9 @@ Endpoints (JSON):
   GET  /api/health
   GET  /api/templates                 curated templates (+ per-input source options for the form)
   GET  /api/modules                   module catalog
+  GET  /api/catalog                   types + converters + modules (ports, params) for the graph editor
+  GET  /api/templates/<name>          one template as an editable pipeline (template.optional/links -> ui)
+  GET  /api/source_options?type=&collection=1   data sources a pipeline input of that type can use
   GET  /api/databases?type=<type>     registry entries usable for a database parameter
   POST /api/instantiate   {template, inputs, template_params}           -> {ok, errors, warnings, pipeline, resources}
   POST /api/validate      {pipeline}                                     -> same
@@ -21,6 +24,7 @@ Endpoints (JSON):
 Prototype limits: the token is trusted as given (the workspace and data API enforce access); no rate limiting.
 """
 import datetime
+import hashlib
 import json
 import os
 import re
@@ -133,12 +137,64 @@ class Catalog:
                 "steps": [{"id": k, "module": v["module"]} for k, v in p["steps"].items()]})
         return rows
 
+    def catalog(self):
+        """Everything the graph editor needs for instant (client-side) connection checks and the palette."""
+        if getattr(self, "_catalog", None) is None:
+            ts = self.ts
+            types = {t: {k: d.get(k) for k in ("abstract", "kind", "description", "registry_only") if d.get(k) is not None}
+                     for t, d in ts.types.items()}
+            mods = {}
+            for m in sorted(self.mods.modules.values(), key=lambda m: m.id):
+                d = m.d
+                mods[m.id] = {
+                    "id": m.id, "version": m.version, "label": d.get("label"), "description": d.get("description"),
+                    "category": d.get("category"), "tool": d.get("tool"), "resources": d.get("resources"),
+                    "inputs": [{k: p.get(k) for k in ("id", "type", "required", "cardinality", "description", "requires")
+                                if p.get(k) is not None} for p in m.inputs.values()],
+                    "outputs": [{k: p.get(k) for k in ("id", "type", "type_from", "description", "attributes", "when")
+                                 if p.get(k) is not None} for p in m.outputs.values()],
+                    "params": [self.param_spec(m.id, pid) for pid in m.params]}
+            cats = {}
+            for m in mods.values():
+                cats.setdefault(m["category"] or "other", []).append(m["id"])
+            body = {"types": types, "attributes": ts.attributes, "converters": ts.converters, "modules": mods,
+                    "categories": cats}
+            body["version"] = hashlib.sha1(json.dumps(body, sort_keys=True, default=str).encode()).hexdigest()[:12]
+            self._catalog = body
+        return self._catalog
+
+    def template_pipeline(self, name):
+        """A curated template as an editable pipeline: example sources dropped (except bundled references),
+        template.optional/links moved to the editor's ui key, source options per input."""
+        if not re.match(r"^[A-Za-z0-9_]+$", name) or not os.path.isfile(repo_path("pipelines", f"{name}.json")):
+            raise ApiError(404, f"unknown template {name!r}")
+        p = read_json(repo_path("pipelines", f"{name}.json"))
+        t = p.pop("template", None) or {}
+        for d in (p.get("inputs") or {}).values():
+            src = d.get("source") or {}
+            d["source"] = {"database_file": src["database_file"]} if "database_file" in src else {}
+        ui = {}
+        if t.get("optional"):
+            ui["optional"] = t["optional"]
+            off = [k for k, v in t["optional"].items() if not v.get("default", True)]
+            if off:
+                ui["disabled"] = off
+        if t.get("links"):
+            ui["links"] = t["links"]
+        if ui:
+            p["ui"] = ui
+        return {"template": name, "label": t.get("label") or p.get("name"), "pipeline": p,
+                "source_options": {k: self.source_options(v["type"], bool(v.get("collection")))
+                                   for k, v in (p.get("inputs") or {}).items()}}
+
     def check(self, p):
         p2, iss, plan = auto_convert(Validator(self.ts, self.mods, self.dbs), p)
         r = plan.get("resources") or {}
-        return {"ok": iss.ok, "errors": iss.errors, "warnings": iss.warnings, "pipeline": p2,
+        return {"ok": iss.ok, "errors": iss.errors, "warnings": iss.warnings, "issues": iss.items, "pipeline": p2,
                 "resources": {k: r.get(k) for k in ("cpu", "memory_gb", "runtime", "runtime_s", "partition")},
-                "steps": {sid: {"module": st["module"], "scatter": st["scatter"], "outputs": st["outputs"]}
+                "steps": {sid: {"module": st["module"], "scatter": st["scatter"], "scatter_size": st.get("scatter_size"),
+                                "outputs": st["outputs"], "output_types": st.get("output_types"),
+                                "auto": bool((p2.get("steps") or {}).get(sid, {}).get("auto"))}
                           for sid, st in plan.get("steps", {}).items()}}
 
 
@@ -336,6 +392,17 @@ def make_handler(cat, origins):
                     return self._send(200, {"ok": True, "modules": len(cat.mods.modules)})
                 if method == "GET" and path == "/api/templates":
                     return self._send(200, cat.templates())
+                if method == "GET" and path == "/api/catalog":
+                    return self._send(200, cat.catalog())
+                m = re.match(r"^/api/templates/([^/]+)$", path)
+                if method == "GET" and m:
+                    return self._send(200, cat.template_pipeline(m.group(1)))
+                if method == "GET" and path == "/api/source_options":
+                    t = (q.get("type") or [""])[0]
+                    if t not in cat.ts:
+                        raise ApiError(400, f"unknown type {t!r}")
+                    coll = (q.get("collection") or ["0"])[0] in ("1", "true")
+                    return self._send(200, cat.source_options(t, coll))
                 if method == "GET" and path == "/api/modules":
                     return self._send(200, [m.summary() for m in cat.mods.modules.values()])
                 if method == "GET" and path == "/api/databases":

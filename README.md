@@ -31,7 +31,8 @@ docs/
   SERVICE.md                   the BV-BRC service: params, input staging, preflight, upload, testing
   DEPLOYMENT.md                make deploy-service layout, data-root lookup, going live
   SECURITY.md                  shell-injection hardening: quoting rule, patterns, identifier validation
-  UI.md                        test UI: BV-BRC-Web ModularPipeline form + modpipe API (bin/modpipe serve)
+  UI.md                        test UI: BV-BRC-Web ModularPipeline form + graph editor + modpipe API (bin/modpipe serve)
+  GRAPH_EDITOR_PLAN.md         design of the graphical pipeline editor
   ADDING_A_MODULE.md           how to add a new tool module
   OPEN_QUESTIONS.md            decisions still needed
   PREPROCESSING.md             one-time/recurring harvesting of tool metadata

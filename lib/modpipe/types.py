@@ -76,3 +76,19 @@ class TypeSystem:
     def compatible_targets(self, src):
         """All concrete-or-abstract types that a value of type `src` can be connected to (its ancestors)."""
         return [t for t in self.ancestors(src) if t in self.types]
+
+    def connection(self, src, dst, derived=False):
+        """Can a value declared as `src` feed an input port of type `dst`? The rule the graph editor applies while
+        drawing (mirrored in BV-BRC-Web p3/widget/modpipe/TypeLogic.js; tests/unit/test_compat_parity.py checks both):
+          "yes"     src is-a dst
+          "maybe"   dst is a subtype of src and src is abstract or derived from inputs (type_from): depends on the
+                    concrete type at run time; the server-side validation decides
+          "convert" an available converter module turns src into dst (inserted automatically)
+          "no"      otherwise"""
+        if self.is_a(src, dst):
+            return "yes"
+        if self.is_a(dst, src) and (derived or self.is_abstract(src)):
+            return "maybe"
+        if any(c.get("status") == "available" for c in self.converters_between(src, dst)):
+            return "convert"
+        return "no"

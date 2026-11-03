@@ -7,7 +7,8 @@ from .template import ENV, _fake_value, check_step_render, resolve_output_type
 from .util import Issues, fmt_runtime, parse_memory_gb, read_json
 
 PIPELINE_SCHEMA = "modpipe/pipeline/v1"
-TOP_KEYS = {"schema", "name", "description", "inputs", "outputs", "steps", "template"}
+TOP_KEYS = {"schema", "name", "description", "inputs", "outputs", "steps", "template", "ui"}
+UI_KEYS = {"positions", "disabled", "optional", "links", "viewport", "notes"}
 STEP_KEYS = {"module", "in", "params", "module_version", "description", "auto"}
 INPUT_KEYS = {"type", "source", "collection", "attributes", "description", "label"}
 SOURCE_KEYS = {"paired_end_libs", "single_end_libs", "srr_ids", "srr_libs", "wsid", "wsids", "files",
@@ -65,6 +66,14 @@ class Validator:
         for k in p:
             if k not in TOP_KEYS:
                 iss.error(where, f"unknown top-level key {k!r}")
+        ui = p.get("ui")
+        if ui is not None:
+            if not isinstance(ui, dict):
+                iss.error("ui", "must be an object")
+            else:
+                for k in ui:
+                    if k not in UI_KEYS:
+                        iss.error("ui", f"unknown key {k!r} (known: {sorted(UI_KEYS)})")
         steps = p.get("steps") or {}
         if not steps:
             iss.error(where, "no steps")
@@ -303,6 +312,9 @@ class Validator:
                                   "scatter_size": sizes.get(scatter) if scatter else None,
                                   "inputs": {k: repr(bindings_for(step_in.get(k), bindings)) for k in m.inputs if k in step_in},
                                   "outputs": {k: repr(v) for k, v in outs.items()},
+                                  "output_types": {k: {"type": v.type, "collection": v.collection, "attributes": v.attrs,
+                                                       "conditional": v.conditional, "never": getattr(v, "never", False)}
+                                                   for k, v in outs.items()},
                                   "params": params, "databases": db_reqs, "resources": m.resources}
 
         # references to never-produced outputs
@@ -454,6 +466,11 @@ def auto_convert(validator, p, where="pipeline", max_rounds=4):
     import copy
     p = copy.deepcopy(p)
     notes = []
+    ui_issue = None
+    try:
+        p = apply_ui(p)
+    except ValueError as e:
+        ui_issue = str(e)
     for _ in range(max_rounds):
         iss, plan = validator.validate(p, where=where)
         fixes = plan.get("fixable") or []
@@ -475,8 +492,34 @@ def auto_convert(validator, p, where="pipeline", max_rounds=4):
             step_in[f["port"]] = [made[key] if x == f["ref"] else x for x in v] if isinstance(v, list) else made[key]
     for n in notes:
         iss.warn("auto-converter", n)
+    if ui_issue:
+        iss.error("ui.disabled", ui_issue)
     plan["auto_converters"] = notes
     return p, iss, plan
+
+
+def apply_ui(p):
+    """Editor state in a pipeline's `ui` key that changes what runs: `ui.disabled` lists optional steps switched off;
+    they are removed with `ui.optional.<step>.bypass` rewiring (same rules as template optional steps).
+    Returns a new pipeline (input unchanged); raises ValueError if a remaining step needs a disabled one."""
+    import copy
+    ui = p.get("ui") if isinstance(p, dict) else None
+    disabled = set((ui or {}).get("disabled") or []) if isinstance(ui, dict) else set()
+    if not disabled:
+        return p
+    from .templates import TemplateError, _remove_steps
+    p = copy.deepcopy(p)
+    opt = p["ui"].get("optional") or {}
+    bypass = {}
+    for st in disabled:
+        for port, ref in ((opt.get(st) or {}).get("bypass") or {}).items():
+            bypass[f"{st}.{port}"] = ref
+    try:
+        _remove_steps(p, disabled & set(p.get("steps") or {}), bypass)
+    except TemplateError as e:
+        raise ValueError(str(e))
+    p["ui"] = {k: v for k, v in p["ui"].items() if k != "disabled"}
+    return p
 
 
 def bindings_for(r, bindings):

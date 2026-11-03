@@ -120,6 +120,57 @@ class ApiTests(unittest.TestCase):
         st, r, _ = self.call("GET", f"/api/jobs/{jid}/log", token=TOKEN_B)
         self.assertEqual(st, 404)
 
+    def test_catalog_for_graph_editor(self):
+        st, cat, _ = self.call("GET", "/api/catalog")
+        self.assertEqual(st, 200)
+        self.assertIn("fastp", cat["modules"])
+        self.assertTrue(cat["version"])
+        fastp_out = {o["id"]: o for o in cat["modules"]["fastp"]["outputs"]}
+        self.assertIn("type_from", fastp_out["trimmed_reads"])
+        self.assertTrue(cat["types"]["reads"].get("abstract"))
+        self.assertTrue(any(c["module"] == "seqtk_seq_fasta" for c in cat["converters"]))
+        kdb = [p for p in cat["modules"]["kraken2"]["params"] if p["id"] == "db"][0]
+        self.assertTrue(kdb["choices"])                                  # database choices resolved
+
+    def test_template_as_graph_and_source_options(self):
+        st, t, _ = self.call("GET", "/api/templates/sars2_wastewater")
+        self.assertEqual(st, 200)
+        p = t["pipeline"]
+        self.assertNotIn("template", p)
+        self.assertIn("primertrim", p["ui"]["optional"])
+        self.assertEqual(p["inputs"]["samples"]["source"], {})          # example sources dropped
+        self.assertEqual(p["inputs"]["reference"]["source"], {"database_file": "artic_v4.1:reference"})
+        st, _, _ = self.call("GET", "/api/templates/../../etc")
+        self.assertEqual(st, 404)
+        st, opts, _ = self.call("GET", "/api/source_options?type=sequences.protein&collection=0")
+        self.assertIn("feature_ids", [o["kind"] for o in opts])
+        st, _, _ = self.call("GET", "/api/source_options?type=nope")
+        self.assertEqual(st, 400)
+
+    def test_validate_reports_structured_issues_and_applies_ui(self):
+        with open(os.path.join(REPO, "pipelines", "multi_sample_assembly.json")) as f:
+            p = json.load(f)
+        p.pop("template")
+        p["inputs"]["samples"]["source"] = {"srr_ids": ["SRR2838702", "SRR2838703"]}
+        p["ui"] = {"positions": {"step:trim": {"x": 1, "y": 2}}, "disabled": ["summary"],
+                   "optional": {"summary": {"label": "MultiQC"}}}
+        st, r, _ = self.call("POST", "/api/validate", {"pipeline": p})
+        self.assertTrue(r["ok"], r["errors"])
+        self.assertNotIn("summary", r["pipeline"]["steps"])
+        self.assertEqual(r["steps"]["assemble"]["scatter"], "samples")
+        self.assertEqual(r["steps"]["assemble"]["output_types"]["contigs"]["type"], "sequences.dna.contigs")
+        p["ui"]["disabled"] = ["trim"]                                   # assemble needs trim: refused
+        st, r, _ = self.call("POST", "/api/validate", {"pipeline": p})
+        self.assertFalse(r["ok"])
+        self.assertTrue(any(i["where"] == "ui.disabled" for i in r["issues"]))
+        p["ui"] = {"bogus": 1}
+        st, r, _ = self.call("POST", "/api/validate", {"pipeline": p})
+        self.assertTrue(any(i["where"] == "ui" and i["severity"] == "error" for i in r["issues"]))
+        del p["ui"]
+        p["steps"]["qc"]["in"]["contigs"] = "trim.report_html"
+        st, r, _ = self.call("POST", "/api/validate", {"pipeline": p})
+        self.assertTrue(any(i["where"] == "steps.qc.in.contigs" and "type mismatch" in i["msg"] for i in r["issues"]))
+
     def test_invalid_pipeline_rejected_before_sbatch(self):
         body = {"pipeline": {"schema": "modpipe/pipeline/v1", "name": "x",
                              "inputs": {"p": {"type": "sequences.protein", "source": {"feature_ids": ["fig|1.1.peg.1"]}}},

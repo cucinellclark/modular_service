@@ -144,16 +144,17 @@ def cmd_compatible(a):
     found = 0
     for m in sorted(mods.modules.values(), key=lambda m: m.id):
         for pid, p in m.inputs.items():
-            if ts.is_a(src, p["type"]):
+            c = ts.connection(src, p["type"], derived)
+            if c == "yes":
                 print(f"  yes    {m.id}.{pid} ({p['type']})")
-                found += 1
-            elif ts.is_a(p["type"], src) and (derived or ts.is_abstract(src)):
+            elif c == "maybe":
                 print(f"  maybe  {m.id}.{pid} ({p['type']}; depends on the concrete type)")
-                found += 1
+            elif c == "convert":
+                conv = [x["module"] for x in ts.converters_between(src, p["type"]) if x.get("status") == "available"]
+                print(f"  via    {m.id}.{pid} ({p['type']}) after converter {', '.join(conv)}")
             else:
-                for c in ts.converters_between(src, p["type"]):
-                    print(f"  via    {m.id}.{pid} ({p['type']}) after converter {c['module']}")
-                    found += 1
+                continue
+            found += 1
     if not found:
         print("  (no compatible module inputs)")
     return 0

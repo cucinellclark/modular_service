@@ -79,16 +79,20 @@ class Issues:
 
     def __init__(self):
         self.errors, self.warnings = [], []
+        self.items = []                     # structured: {severity, where, msg} (for UIs that point at a step/port)
 
     def error(self, where, msg):
         self.errors.append(f"{where}: {msg}")
+        self.items.append({"severity": "error", "where": where, "msg": msg})
 
     def warn(self, where, msg):
         self.warnings.append(f"{where}: {msg}")
+        self.items.append({"severity": "warning", "where": where, "msg": msg})
 
     def extend(self, other):
         self.errors += other.errors
         self.warnings += other.warnings
+        self.items += other.items
 
     @property
     def ok(self):

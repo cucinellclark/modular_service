@@ -36,6 +36,36 @@ the signed-in user's BV-BRC token and write to their workspace.
    `modularPipelineServiceURL` to `https://dev-5.bv-brc.org`.
 4. Sign in, open **Services > Prototype > Modular Pipeline** (`/app/ModularPipeline`).
 
+## Graph editor
+Pick **Graph editor** at the top of the page (code: BV-BRC-Web `public/js/p3/widget/modpipe/`). The first time, it opens
+the template that is selected in the form, with the inputs, options and parameters chosen there. Its own toolbar can
+load any template, start a new pipeline, and open or save pipelines in the workspace (JSON files with their layout).
+
+- **Palette** (left): tools by category with a search box. Drag a tool onto the canvas, or click it. When an output port is
+  selected, the palette shows only the tools that can use that output, and clicking one adds it already connected.
+- **Wiring**: drag from an output port (right side of a node) to an input port. While dragging, inputs are colored:
+  green (fits), blue (fits through an automatic converter), amber (may fit, depending on the actual input) or grey
+  (refused, with the reason as a hint). Cycles are refused. Right-click an output port, or drop a connection on empty
+  canvas, to list the tools that fit. Selecting a connection shows its types; Delete removes it.
+- **Inspector** (right): the selected step's parameters (typed, pattern-checked), its inputs (with "create pipeline input"
+  for unconnected ports), and the outputs to save to the workspace. For a pipeline input it shows the data source picker
+  (same choices as the form). Optional template steps get an on/off switch.
+- **Live check**: about half a second after each edit, the server validates the pipeline (`POST /api/validate`).
+  Problems appear as badges on the step or port they concern, steps that run once per sample show "×N per sample",
+  converters the engine will insert show as dashed "auto" connections ("Make explicit" turns one into a step), and the
+  status bar shows the resource estimate. Run is the page's normal Run button.
+- Undo/redo (Ctrl+Z / Ctrl+Shift+Z), Delete, scroll to zoom, drag the background to pan, Auto-layout, Fit.
+
+**JSON** shows the graph's pipeline as text; edits apply to the graph when you switch back.
+
+Editor state lives in the pipeline's `ui` key (`positions`, `disabled`, `optional`, `links`), which the engine accepts:
+`ui.disabled` steps are removed with their `ui.optional.<step>.bypass` rewiring (`pipeline.apply_ui`), the rest is ignored.
+
+Checks run twice: instantly in the browser while drawing (`TypeLogic.js`, `PipelineModel.canConnect`) and authoritatively
+on the server. `tests/unit/test_compat_parity.py` checks that both give the same answer for every module output/input
+pair, and runs the editor's model tests (`tests/modpipe/model_test.js` in BV-BRC-Web) on the real catalog and templates
+(set `MODPIPE_WEB_DIR` if the website checkout isn't at `~/bvbrc-dev/Deployment/BV-BRC-Web`).
+
 ## Using the form
 - **Template**: 17 curated pipelines grouped by category; the step chain is shown under the description.
 - **Inputs**: per input, pick a source (workspace read pairs per sample, SRA accessions, workspace file(s),
@@ -48,7 +78,8 @@ the signed-in user's BV-BRC token and write to their workspace.
   status, a link to the result folder and the job log.
 
 ## API
-`GET /api/health | /api/templates | /api/modules | /api/databases?type=`, `POST /api/instantiate | /api/validate`,
+`GET /api/health | /api/templates | /api/templates/<name> | /api/catalog | /api/source_options?type=&collection= |
+/api/modules | /api/databases?type=`, `POST /api/instantiate | /api/validate`,
 `POST /api/submit` (auth), `GET /api/jobs` (auth), `GET /api/jobs/<id>/log` (auth). See `lib/modpipe/api.py`;
 tests in `tests/unit/test_api.py`.
 
