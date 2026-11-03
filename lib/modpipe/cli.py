@@ -10,7 +10,7 @@
   modpipe list-templates [--json]           curated pipelines (pipelines/*.json) with inputs and exposed params
   modpipe instantiate <template> [--inputs F] [--params F] [--out F]
                                             fill a curated template (pipelines/<template>.json)
-  modpipe serve [--host H] [--port P] [--origin URL ...]
+  modpipe serve [--host H] [--port P] [--origin URL ...] [--self-signed | --tls-cert C --tls-key K]
                                             prototype API for the BV-BRC-Web ModularPipeline form
   modpipe run <pipeline.json> --workdir DIR [--executor snakemake|local] [--cores N] [--mem 64G]
                                             [--resume] [--dry-run]   execute (inside the BV-BRC container)
@@ -160,8 +160,18 @@ def cmd_compatible(a):
 
 
 def cmd_serve(a):
-    from .api import serve
-    serve(a.host, a.port, a.origin or ["http://localhost:3000"])
+    import socket
+    from .api import serve, self_signed_cert
+    cert, key = a.tls_cert, a.tls_key
+    if bool(cert) != bool(key):
+        print("error: --tls-cert and --tls-key go together", file=sys.stderr)
+        return 2
+    if a.self_signed:
+        if cert:
+            print("error: use either --self-signed or --tls-cert/--tls-key", file=sys.stderr)
+            return 2
+        cert, key = self_signed_cert(socket.getfqdn())
+    serve(a.host, a.port, a.origin or ["http://localhost:3000"], cert, key)
     return 0
 
 
@@ -276,6 +286,10 @@ def main(argv=None):
     s.add_argument("--host", default="127.0.0.1")
     s.add_argument("--port", type=int, default=8765)
     s.add_argument("--origin", action="append", help="allowed CORS origin (repeatable; default http://localhost:3000)")
+    s.add_argument("--tls-cert", help="serve HTTPS with this PEM certificate (chain)")
+    s.add_argument("--tls-key", help="private key for --tls-cert")
+    s.add_argument("--self-signed", action="store_true",
+                   help="serve HTTPS with a self-signed certificate for this host (created once under ~/.modpipe-ui/tls)")
     s.set_defaults(fn=cmd_serve)
     s = sub.add_parser("list-templates")
     s.add_argument("--json", action="store_true")

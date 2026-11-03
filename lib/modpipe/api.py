@@ -1,6 +1,7 @@
 """Prototype HTTP API for the ModularPipeline web form (BV-BRC-Web p3/widget/app/ModularPipeline.js).
 
     bin/modpipe serve [--host 127.0.0.1] [--port 8765] [--origin http://localhost:3000]
+                      [--tls-cert C --tls-key K | --self-signed]
 
 The production app service does not know the ModularPipeline app yet, so this server stands in for it: it lists
 templates, validates pipelines, and submits jobs to Slurm by running App-ModularPipeline exactly like
@@ -372,10 +373,35 @@ def make_handler(cat, origins):
     return H
 
 
-def serve(host="127.0.0.1", port=8765, origins=("http://localhost:3000",)):
+def self_signed_cert(hostname):
+    """Create (once) a self-signed certificate for `hostname` under the state dir; returns (cert, key)."""
+    import subprocess
+    d = os.path.join(STATE_DIR, "tls")
+    os.makedirs(d, mode=0o700, exist_ok=True)
+    cert, key = os.path.join(d, f"{hostname}.crt"), os.path.join(d, f"{hostname}.key")
+    if not (os.path.exists(cert) and os.path.exists(key)):
+        subprocess.run(["openssl", "req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "365",
+                        "-keyout", key, "-out", cert, "-subj", f"/CN={hostname}",
+                        "-addext", f"subjectAltName=DNS:{hostname},DNS:localhost,IP:127.0.0.1"],
+                       check=True, capture_output=True)
+        os.chmod(key, 0o600)
+    return cert, key
+
+
+def serve(host="127.0.0.1", port=8765, origins=("http://localhost:3000",), cert=None, key=None):
     cat = Catalog()
     httpd = ThreadingHTTPServer((host, port), make_handler(cat, set(origins)))
-    print(f"[modpipe-api] serving on http://{host}:{port}  (CORS origins: {', '.join(origins)}; state: {STATE_DIR})", flush=True)
+    scheme = "http"
+    if cert:
+        import ssl
+        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_2
+        ctx.load_cert_chain(cert, key)
+        httpd.socket = ctx.wrap_socket(httpd.socket, server_side=True)
+        scheme = "https"
+    print(f"[modpipe-api] serving on {scheme}://{host}:{port}  (CORS origins: {', '.join(origins)}; state: {STATE_DIR})", flush=True)
+    if cert:
+        print(f"[modpipe-api] TLS certificate: {cert}", flush=True)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

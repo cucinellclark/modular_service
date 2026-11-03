@@ -18,7 +18,15 @@ the signed-in user's BV-BRC token and write to their workspace.
    bin/modpipe serve --port 8765            # add --origin http://<host>:<port> if the website isn't on localhost:3000
    ```
    Job state lives in `~/.modpipe-ui/` (job params, Slurm logs; token files are mode 600 and deleted when the job ends).
-2. If the browser is on another machine, tunnel the port: `ssh -L 8765:localhost:8765 <cluster host>`.
+2. If the browser is on another machine, either tunnel the port (`ssh -L 8765:localhost:8765 <cluster host>`)
+   or serve on the network over HTTPS so the token isn't sent in the clear:
+   ```bash
+   bin/modpipe serve --host 0.0.0.0 --port 12005 --self-signed --origin http://localhost:3000
+   ```
+   `--self-signed` creates a certificate for this host once (`~/.modpipe-ui/tls/`, key mode 600). Open
+   `https://<host>:12005/api/health` in the browser once and accept the warning; after that the form's calls work.
+   With a real certificate use `--tls-cert cert.pem --tls-key key.pem` instead. Set
+   `modularPipelineServiceURL` to `https://<host>:12005`.
 3. Run BV-BRC-Web from the `modular-pipeline-ui` branch with your `p3-web.conf` (add
    `"modularPipelineServiceURL": "http://localhost:8765"` if you need a different URL). Run it **unbuilt**
    (development mode): the new widget isn't in the built release layers.
