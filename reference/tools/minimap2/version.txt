@@ -1,0 +1,2 @@
+# /usr/bin/minimap2 --version
+2.24-r1122

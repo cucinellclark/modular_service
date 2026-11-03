@@ -1,0 +1,60 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "filtlong_ont",
+ "set": "readqc",
+ "tool": "filtlong",
+ "mode": "nanopore",
+ "description": null,
+ "tool_version": "0.2.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_8",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:43",
+ "inputs": {
+  "R": {
+   "fixture": "portiera_nanopore",
+   "path": "inputs/test.fastq.gz",
+   "size": 13713449
+  }
+ },
+ "prep": null,
+ "cmd": "filtlong --min_length 1000 --keep_percent 90 $R | gzip > filtered.fastq.gz",
+ "wall_s": 2.87,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "filtered.fastq.gz",
+   "size": 12005817,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@ERR3772599.229",
+    "TCGGTGTGCTTTAGTTCGGTGCATTGTGCCCTAATGAATGGCATATAATTTTCTGGATGGCTTGTTATGTTTTCTTTGTTTTATTGATTTATATGTTAAATCCAATAAGCATAAACTATCTCTACCTAGATAAAGCTATCCATATTTTTTCTATTTAAAGAACTTGACTATTGAGTATAAATATCTTTTAGATAACTTCA",
+    "+"
+   ],
+   "lines": 16804,
+   "records": 4201,
+   "residues": 12270459,
+   "sha256": "ea331118b68b25132ebaed6aaa764f890add4dcb1d7262c2dc46424e2a0e5cc5"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 12005817,
+ "time": {
+  "elapsed": "0:02.84",
+  "max_rss_kb": "241112",
+  "cpu_pct": "107",
+  "exit_status": "0",
+  "user_s": "2.83",
+  "sys_s": "0.21",
+  "elapsed_s": 2.84,
+  "max_rss_mb": 235.5
+ },
+ "stdout_tail": "",
+ "stderr_tail": "\nScoring long reads\n\r  249 reads (485277 bp)\r  496 reads (970434 bp)\r  832 reads (1454361 bp)\r  1043 reads (1942028 bp)\r  1235 reads (2425648 bp)\r  1513 reads (2909382 bp)\r  1767 reads (3396660 bp)\r  2004 reads (3880870 bp)\r  2266 reads (4369071 bp)\r  2489 reads (4853316 bp)\r  2728 reads (5341244 bp)\r  2982 reads (5825156 bp)\r  3243 reads (6309632 bp)\r  3523 reads (6795119 bp)\r  3775 reads (7282537 bp)\r  4051 reads (7766500 bp)\r  4344 reads (8250959 bp)\r  4604 reads (8735263 bp)\r  4868 reads (9219747 bp)\r  5041 reads (9706001 bp)\r  5204 reads (10190453 bp)\r  5399 reads (10676024 bp)\r  5599 reads (11164720 bp)\r  5800 reads (11651451 bp)\r  5966 reads (12135067 bp)\r  6205 reads (12619799 bp)\r  6468 reads (13105812 bp)\r  6781 reads (13590328 bp)\r  7043 reads (14074234 bp)\r  7100 reads (14162700 bp)\n\nFiltering long reads\n  target: 12746430 bp\n  reads already fall below target after filtering\n\nOutputting passed long reads\n\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:46"
+}

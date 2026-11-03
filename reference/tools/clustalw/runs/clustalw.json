@@ -1,0 +1,72 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "clustalw",
+ "set": "phylogeny",
+ "tool": "clustalw",
+ "mode": "fasta_output",
+ "description": null,
+ "tool_version": "1.83",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-04",
+ "slurm_job": "21373357_3",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:28",
+ "inputs": {
+  "A": {
+   "fixture": "sarscov2_aln_all_sites",
+   "path": "inputs/all_sites.fas",
+   "size": 119652
+  }
+ },
+ "prep": "sed '/^>/!s/-//g' $A > unaligned.fna",
+ "cmd": "clustalw -INFILE=unaligned.fna -OUTFILE=aligned.fasta -OUTPUT=FASTA",
+ "wall_s": 220.94,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aligned.fasta",
+   "size": 121644,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">sample2",
+    "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN",
+    "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+   ],
+   "lines": 2000,
+   "records": 4,
+   "residues": 119612,
+   "sha256": "4153d98c8aa658ac9ceb33c8d6749a2c75298332ab91e780de0eb8941119e8c3"
+  },
+  {
+   "path": "unaligned.dnd",
+   "size": 83,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(",
+    "(",
+    "sample1:0.04748,"
+   ],
+   "lines": 7,
+   "sha256": "21a3cff4e07d5fc88287c7b753f60752f4b70871b24174a138e93bc50824f290"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 121727,
+ "time": {
+  "elapsed": "3:40.92",
+  "max_rss_kb": "16024",
+  "cpu_pct": "99",
+  "exit_status": "0",
+  "user_s": "220.82",
+  "sys_s": "0.03",
+  "elapsed_s": 220.92,
+  "max_rss_mb": 15.6
+ },
+ "stdout_tail": "\n\n\n CLUSTAL W (1.83) Multiple Sequence Alignments\n\n\n\nSequence format is Pearson\nSequence 1: sample1       29903 bp\nSequence 2: sample2       29884 bp\nSequence 3: sample3       29903 bp\nSequence 4: sample4       29903 bp\nStart of Pairwise alignments\nAligning...\nSequences (1:2) Aligned. Score:  94\nSequences (1:3) Aligned. Score:  94\nSequences (1:4) Aligned. Score:  93\nSequences (2:3) Aligned. Score:  98\nSequences (2:4) Aligned. Score:  99\nSequences (3:4) Aligned. Score:  98\nGuide tree        file created:   [unaligned.dnd]\nStart of Multiple Alignment\nThere are 3 groups\nAligning...\nGroup 1: Sequences:   2      Score:567141\nGroup 2: Sequences:   3      Score:567515\nGroup 3: Sequences:   4      Score:567470\nAlignment Score 1150123\nFasta-Alignment file created    [aligned.fasta]\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:41:09"
+}

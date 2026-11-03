@@ -1,0 +1,112 @@
+# /usr/bin/samtools cmd: samtools --help; for s in sort index view faidx depth consensus; do echo "### samtools $s"; samtools $s 2>&1 | head -60; done
+
+Program: samtools (Tools for alignments in the SAM format)
+Version: 1.13 (using htslib 1.13+ds)
+
+Usage:   samtools <command> [options]
+
+Commands:
+  -- Indexing
+     dict           create a sequence dictionary file
+     faidx          index/extract FASTA
+     fqidx          index/extract FASTQ
+     index          index alignment
+
+  -- Editing
+     calmd          recalculate MD/NM tags and '=' bases
+     fixmate        fix mate information
+     reheader       replace BAM header
+     targetcut      cut fosmid regions (for fosmid pool only)
+     addreplacerg   adds or replaces RG tags
+     markdup        mark duplicates
+     ampliconclip   clip oligos from the end of reads
+
+  -- File operations
+     collate        shuffle and group alignments by name
+     cat            concatenate BAMs
+     merge          merge sorted alignments
+     mpileup        multi-way pileup
+     sort           sort alignment file
+     split          splits a file by read group
+     quickcheck     quickly check if SAM/BAM/CRAM file appears intact
+     fastq          converts a BAM to a FASTQ
+     fasta          converts a BAM to a FASTA
+     import         Converts FASTA or FASTQ files to SAM/BAM/CRAM
+
+  -- Statistics
+     bedcov         read depth per BED region
+     coverage       alignment depth and percent coverage
+     depth          compute the depth
+     flagstat       simple stats
+     idxstats       BAM index stats
+     phase          phase heterozygotes
+     stats          generate stats (former bamcheck)
+     ampliconstats  generate amplicon specific stats
+
+  -- Viewing
+     flags          explain BAM flags
+     tview          text alignment viewer
+     view           SAM<->BAM<->CRAM conversion
+     depad          convert padded BAM to unpadded BAM
+
+  -- Misc
+     help [cmd]     display this help message or help for [cmd]
+     version        detailed version information
+
+### samtools sort
+samtools sort: failed to read header from "-"
+### samtools index
+Usage: samtools index [-bc] [-m INT] <in.bam> [out.index]
+Options:
+  -b       Generate BAI-format index for BAM files [default]
+  -c       Generate CSI-format index for BAM files
+  -m INT   Set minimum interval size for CSI indices to 2^INT [14]
+  -@ INT   Sets the number of threads [none]
+### samtools view
+[main_samview] fail to read the header from "-".
+### samtools faidx
+Usage: samtools faidx <file.fa|file.fa.gz> [<reg> [...]]
+Option: 
+ -o, --output FILE        Write FASTA to file.
+ -n, --length INT         Length of FASTA sequence line. [60]
+ -c, --continue           Continue after trying to retrieve missing region.
+ -r, --region-file FILE   File of regions.  Format is chr:from-to. One per line.
+ -i, --reverse-complement Reverse complement sequences.
+     --mark-strand TYPE   Add strand indicator to sequence name
+                          TYPE = rc   for /rc on negative strand (default)
+                                 no   for no strand indicator
+                                 sign for (+) / (-)
+                                 custom,<pos>,<neg> for custom indicator
+     --fai-idx      FILE  name of the index file (default file.fa.fai).
+     --gzi-idx      FILE  name of compressed file index (default file.fa.gz.gzi).
+ -f, --fastq              File and index in FASTQ format.
+ -h, --help               This message.
+### samtools depth
+Usage: samtools depth [options] in.bam [in.bam ...]
+
+Options:
+  -a           Output all positions (including zero depth)
+  -a -a, -aa   Output absolutely all positions, including unused ref seqs
+  -r REG       Specify a region in chr or chr:from-to syntax
+  -b FILE      Use bed FILE for list of regions
+  -f FILE      Specify list of input BAM/SAM/CRAM filenames
+  -X           Use custom index files (in -X *.bam *.bam.bai order)
+  -g INT       Remove specified flags from default flag filter
+  -G INT       Add specified flags to the default flag filter
+  -H           Print a file header line
+  -l INT       Minimum read length [0]
+  -o FILE      Write output to FILE [stdout]
+  -q INT       Minimum base quality [0]
+  -Q INT       Minimum mapping quality [0]
+  -H           Print a file header
+  -J           Include reads with deletions in depth computation
+  -s           Do not count overlapping reads within a template
+      --input-fmt-option OPT[=VAL]
+               Specify a single input file format option in the form
+               of OPTION or OPTION=VALUE
+  -@, --threads INT
+               Number of additional threads to use [0]
+      --verbosity INT
+               Set level of verbosity
+### samtools consensus
+[main] unrecognized command 'consensus'

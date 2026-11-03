@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/amrfinder --version
+4.0.3

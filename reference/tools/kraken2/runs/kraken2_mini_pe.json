@@ -1,0 +1,124 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "kraken2_mini_pe",
+ "set": "typing_expression",
+ "tool": "kraken2",
+ "mode": "paired_mini_db",
+ "description": null,
+ "tool_version": "2.1.2",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-04",
+ "slurm_job": "21373358_0",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:24",
+ "inputs": {
+  "DB": {
+   "fixture": "sarscov2_kraken2_db:dir",
+   "path": "inputs/kraken2",
+   "size": null
+  },
+  "R1": {
+   "fixture": "sarscov2_illumina_test_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 9413
+  },
+  "R2": {
+   "fixture": "sarscov2_illumina_test_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 9395
+  }
+ },
+ "prep": null,
+ "cmd": "kraken2 --db $DB --threads $CPU --paired --report report.txt --output classified.tsv --classified-out cl#.fq --unclassified-out un#.fq $R1 $R2",
+ "wall_s": 1.45,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "cl_1.fq",
+   "size": 36690,
+   "new": true,
+   "kind": "fastq",
+   "preview": [
+    "@ERR5069949.2151832 NS500628:121:HK3MMAFX2:2:21208:10793:15304/1 kraken:taxid|2697049",
+    "TCATAAACCAAAGCACTCACAGTGTCAACAATTTCAGCAGGACAACGCCGACAAGTTCCGAGGAACATGTCTGGACCTATAGTTTTCATAAGTCTACACACTGAATTGAAATATTCTGGTTCTAGTGTGCCCTTAGTTAGCAATGTGCGT",
+    "+"
+   ],
+   "lines": 400,
+   "records": 100,
+   "residues": 13897,
+   "sha256": "1d69d05b3b83170620f292e52e4bffb7f6240ddc4fb03762a2c41ebd9ae88794"
+  },
+  {
+   "path": "cl_2.fq",
+   "size": 36392,
+   "new": true,
+   "kind": "fastq",
+   "preview": [
+    "@ERR5069949.2151832 NS500628:121:HK3MMAFX2:2:21208:10793:15304/2 kraken:taxid|2697049",
+    "ATGTGTACATTGGCGACCCTGCTCAATTACCTGCACCACGCACATTGCTAACTAAGGGCACACTAGAACCAGAATATTTCAATTCAGTGTGTAGACTTATGAAAACTATAGGTCCAGACATGTTCCTCGGAACTTGTCGGCGTTGTCCTG",
+    "+"
+   ],
+   "lines": 400,
+   "records": 100,
+   "residues": 13748,
+   "sha256": "9d1b3cee2785f2840700b787a0a3688c84e140f1c38b2cea2b66fe02867dd9e9"
+  },
+  {
+   "path": "classified.tsv",
+   "size": 7711,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "C\tERR5069949.2151832\t2697049\t150|150\t2697049:116 |:| 2697049:116",
+    "C\tERR5069949.576388\t2697049\t77|77\t2697049:43 |:| 2697049:43",
+    "C\tERR5069949.501486\t2697049\t146|150\t2697049:112 |:| 2697049:116"
+   ],
+   "lines": 100,
+   "sha256": "43921ac3f7e58807d2a8ebe900a061ecf909f033543810888b3fe652a10f4b01"
+  },
+  {
+   "path": "report.txt",
+   "size": 755,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "100.00\t100\t0\tR\t1\troot",
+    "100.00\t100\t0\tD\t10239\t  Viruses",
+    "100.00\t100\t0\tD1\t2559587\t    Riboviria"
+   ],
+   "lines": 14,
+   "sha256": "8c46de4b391cb6cc03e6187ef368342090d9032fe2efbb8dbf465ab25b818859"
+  },
+  {
+   "path": "un_1.fq",
+   "size": 0,
+   "new": true,
+   "kind": "fastq",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "un_2.fq",
+   "size": 0,
+   "new": true,
+   "kind": "fastq",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+ ],
+ "n_outputs": 6,
+ "output_bytes": 81548,
+ "time": {
+  "elapsed": "0:01.37",
+  "max_rss_kb": "7956",
+  "cpu_pct": "35",
+  "exit_status": "0",
+  "user_s": "0.04",
+  "sys_s": "0.44",
+  "elapsed_s": 1.37,
+  "max_rss_mb": 7.8
+ },
+ "stdout_tail": "",
+ "stderr_tail": "Loading database information... done.\n100 sequences (0.03 Mbp) processed in 0.003s (1730.1 Kseq/m, 478.29 Mbp/m).\n  100 sequences classified (100.00%)\n  0 sequences unclassified (0.00%)\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:26"
+}

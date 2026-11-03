@@ -1,0 +1,93 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "snpeff_ann",
+ "set": "mapping_variants",
+ "tool": "snpeff",
+ "mode": "build_gff3+ann",
+ "description": null,
+ "tool_version": "4.3t",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "pear",
+ "slurm_job": "21373445_20",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:44:36",
+ "inputs": {
+  "REF": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  },
+  "GFF": {
+   "fixture": "sarscov2_gff3",
+   "path": "inputs/genome.gff3",
+   "size": 2731
+  },
+  "VCF": {
+   "fixture": "sarscov2_vcf",
+   "path": "inputs/test.vcf.gz",
+   "size": 1313
+  }
+ },
+ "prep": "mkdir -p snpdb/sarscov2\ncp $REF snpdb/sarscov2/sequences.fa\ncp $GFF snpdb/sarscov2/genes.gff\nprintf 'sarscov2.genome : SARS-CoV-2\\n' > snpEff.config\nsnpEff.sh build -gff3 -c snpEff.config -dataDir $PWD/snpdb sarscov2\n",
+ "cmd": "snpEff.sh ann -c snpEff.config -dataDir $PWD/snpdb sarscov2 $VCF > annotated.vcf",
+ "wall_s": 3.52,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "annotated.vcf",
+   "size": 7844,
+   "new": true,
+   "kind": "vcf",
+   "preview": [
+    "##fileformat=VCFv4.2",
+    "##FILTER=<ID=PASS,Description=\"All filters passed\">",
+    "##bcftoolsVersion=1.11+htslib-1.11"
+   ],
+   "lines": 46,
+   "records": 9,
+   "sha256": "1cd666dc364f879b4a0236cfeb0fee04a0777237c8b38ccbbe317ebc41a70dce"
+  },
+  {
+   "path": "snpEff_genes.txt",
+   "size": 395,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "# The following table is formatted as tab separated values. ",
+    "#GeneName\tGeneId\tTranscriptId\tBioType\tvariants_impact_HIGH\tvariants_impact_LOW\tvariants_impact_MODERATE\tvariants_impact_MODIFIER\tvariants_effect_frameshift_variant\tvariants_effect_missense_variant\tvar",
+    "orf1ab\tnull\tunknown_transcript_1\tprotein_coding\t1\t3\t4\t1\t1\t4\t3\t1"
+   ],
+   "lines": 3,
+   "sha256": "2b2a3827fa0ed82360b93fdf6b80e00ca9a67c595b5d995994d53e80a6a72335"
+  },
+  {
+   "path": "snpEff_summary.html",
+   "size": 58591,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "",
+    "<!--==========================================================================",
+    "\tFTL macros "
+   ],
+   "sha256": "4800d710754c4e281afc7d2db5de33c14c68e4964e466bac0ce66d94c5bcea69"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 66830,
+ "time": {
+  "elapsed": "0:03.48",
+  "max_rss_kb": "120564",
+  "cpu_pct": "76",
+  "exit_status": "0",
+  "user_s": "2.45",
+  "sys_s": "0.21",
+  "elapsed_s": 3.48,
+  "max_rss_mb": 117.7
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:44:45"
+}

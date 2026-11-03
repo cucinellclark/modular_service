@@ -1,0 +1,51 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "minimap2_index",
+ "set": "mapping_variants",
+ "tool": "minimap2",
+ "mode": "index",
+ "description": null,
+ "tool_version": "2.24",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373340_8",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:33",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "minimap2 -d ref.mmi $REF",
+ "wall_s": 0.03,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "ref.mmi",
+   "size": 1381004,
+   "new": true,
+   "kind": "index",
+   "sha256": "1be34603cc588678f47efed0b76443e8dfa1fcc576f354ab643f3c35bd55e4a9"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 1381004,
+ "time": {
+  "elapsed": "0:00.02",
+  "max_rss_kb": "8352",
+  "cpu_pct": "148",
+  "exit_status": "0",
+  "user_s": "0.02",
+  "sys_s": "0.01",
+  "elapsed_s": 0.02,
+  "max_rss_mb": 8.2
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[M::mm_idx_gen::0.010*1.09] collected minimizers\n[M::mm_idx_gen::0.017*1.82] sorted minimizers\n[M::main::0.020*1.67] loaded/built the index for 1 target sequence(s)\n[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 1\n[M::mm_idx_stat::0.021*1.64] distinct minimizers: 65445 (98.10% are singletons); average occurrences: 1.026; average spacing: 5.334; total length: 358242\n[M::main] Version: 2.24-r1122\n[M::main] CMD: minimap2 -d ref.mmi /disks/tmp/cucinell/modpipe-discovery/mapping_variants/minimap2_index-21373340_8/inputs/genome.fasta\n[M::main] Real time: 0.023 sec; CPU: 0.037 sec; Peak RSS: 0.008 GB\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:33"
+}

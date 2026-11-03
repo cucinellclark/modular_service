@@ -1,0 +1,128 @@
+# ModularService type <-> BV-BRC workspace type mapping. Schema: modpipe/wstypes/v1
+#
+# Sources:
+#   reference/workspace_types_known.json union of: registered types (2021 dev copy), types observed in production
+#                                       (QA outputs + a 30k-object user workspace) and the bvbrc-mcp filter enum.
+#                                       The production types-file itself is still not readable.
+#   reference/workspace_type_usage.json  what production services actually saved, from 87k objects in
+#                                       2026 QA job outputs (type -> file-extension counts)
+#   app specs (`wstype:` values)         what service inputs accept
+#
+# Policy: when SAVING, always pass the most specific registered workspace type explicitly (never rely on
+# p3-cp's suffix defaults, which map .fa/.fasta -> reads). When READING, accept the listed workspace types
+# and confirm by sniffing content, because production storage is inconsistent (see `quirks`).
+
+schema: modpipe/wstypes/v1
+
+# Our type -> workspace type used when saving outputs. Lookup walks up the dotted hierarchy, so
+# table.tsv.amr falls back to table.tsv -> tsv. `parts` maps multi-file types per part.
+save:
+  reads:                     reads
+  sequences:                 contigs          # generic nucleotide FASTA; see more specific entries below
+  sequences.dna.contigs:     contigs
+  sequences.dna.genes:       feature_dna_fasta
+  sequences.dna.transcripts: transcripts
+  sequences.dna.reads:       reads
+  sequences.protein:         feature_protein_fasta
+  alignment.msa.dna:         aligned_dna_fasta    # aligned_fasta format only; phylip/nexus/clustal -> txt
+  alignment.msa.protein:     aligned_protein_fasta
+  alignment.wga:             txt
+  alignment.reads.sam:       unspecified
+  alignment.reads.bam:       {parts: {bam: bam, index: {by_format: {bai: bai, csi: csi}}}}
+  alignment.reads.cram:      unspecified
+  alignment.overlaps:        tsv
+  homology.hits.tabular:     tsv
+  homology.hits.xml:         xml
+  homology.hmm_hits:         txt
+  homology.clusters:         {parts: {representatives: feature_protein_fasta, membership: txt}}
+  assembly.graph:            unspecified
+  variants.vcf:              {parts: {vcf: vcf, index: {by_format: {tbi: tbi, csi: csi}}}, note: "registered vcf_gz exists but production saves vcf"}
+  variants.bcf:              unspecified
+  coverage.bedgraph:         txt
+  coverage.wig:              wig
+  coverage.bigwig:           bigwig
+  coverage.depth:            tsv
+  intervals.bed:             txt
+  annotation.gto:            genome
+  annotation.genbank:        genbank_file
+  annotation.embl:           embl
+  annotation.gff:            gff
+  annotation.gtf:            gff
+  annotation.feature_table:  feature_table
+  annotation:                txt
+  table.tsv:                 tsv
+  table.csv:                 csv
+  taxonomy:                  txt
+  tree.newick:               nwk
+  tree.phyloxml:             phyloxml
+  tree.distance_matrix:      txt
+  expression.ballgown:       folder
+  primers.primer3:           txt
+  structure.protein:         pdb
+  database:                  unspecified       # normally intermediate; saved only with keep_intermediates
+  index:                     unspecified
+  report.html:               html
+  report.json:               json
+  report.text:               txt
+  report.image:              {by_format: {png: png, svg: svg, pdf: pdf}}
+  report.archive:            {by_format: {zip: zip, tar: tar_gz}}
+
+# Workspace type -> candidate types when a pipeline INPUT is a workspace file. The first candidate whose
+# format sniffs correctly wins; `sniff` lists what to check.
+accept:
+  reads:                 {candidates: [reads.short.single, reads.short.interleaved, reads.long.nanopore, reads.long.pacbio, sequences.dna],
+                          sniff: "fastq vs fasta; pairing comes from how the user supplied files (paired_end_libs), platform from params",
+                          note: "production also stores plain FASTA as `reads` (p3-cp default)"}
+  contigs:               {candidates: [sequences.dna.contigs]}
+  feature_dna_fasta:     {candidates: [sequences.dna.genes]}
+  feature_protein_fasta: {candidates: [sequences.protein]}
+  aligned_dna_fasta:     {candidates: [alignment.msa.dna]}
+  aligned_protein_fasta: {candidates: [alignment.msa.protein]}
+  transcripts:           {candidates: [sequences.dna.transcripts]}
+  genome:                {candidates: [annotation.gto]}
+  genbank_file:          {candidates: [annotation.genbank]}
+  embl:                  {candidates: [annotation.embl]}
+  gff:                   {candidates: [annotation.gff, annotation.gtf], sniff: "gff-version header / GTF attribute syntax"}
+  feature_table:         {candidates: [annotation.feature_table]}
+  bam:                   {candidates: [alignment.reads.bam]}
+  bai:                   {candidates: [alignment.reads.bam], part: index}
+  vcf:                   {candidates: [variants.vcf]}
+  vcf_gz:                {candidates: [variants.vcf]}
+  tbi:                   {candidates: [variants.vcf], part: index}
+  nwk:                   {candidates: [tree.newick]}
+  phyloxml:              {candidates: [tree.phyloxml]}
+  tsv:                   {candidates: [table.tsv]}
+  csv:                   {candidates: [table.csv]}
+  wig:                   {candidates: [coverage.wig]}
+  bigwig:                {candidates: [coverage.bigwig]}
+  json:                  {candidates: [report.json]}
+  pdb:                   {candidates: [structure.protein]}
+  html:                  {candidates: [report.html]}
+  txt:                   {candidates: [], sniff: "full content sniff (alignments, trees and tables are often saved as txt)"}
+  unspecified:           {candidates: [], sniff: "full content sniff (BAMs, archives, PDFs are often saved as unspecified)"}
+  # groups are not files: they resolve to ids via the data API
+  genome_group:          {candidates: [bvbrc.genome_group]}
+  feature_group:         {candidates: [bvbrc.feature_group]}
+
+# UI selector names used in app specs (`wstype:` field) -> workspace types they select.
+app_spec_aliases:
+  ReadFile:   [reads]
+  Contigs:    [contigs]
+  Genome:     [genome]
+  genome:     [genome]
+  genbank_file: [genbank_file]
+  genome_fasta: [contigs]
+  feature_protein_fasta: [feature_protein_fasta]
+  feature_dna_fasta: [feature_dna_fasta]
+  feature_group: [feature_group]
+  genome_group: [genome_group]
+  tsv: [tsv]
+
+# Observed inconsistencies in production storage (2026 QA outputs; counts from reference/workspace_type_usage.json).
+quirks:
+  - "FASTA saved as `reads`: .fasta 736 + .fa 619 objects (p3-cp default suffix map)."
+  - "BAM/BAI saved as `unspecified`: .bam 788, .bai 426 (vs 946 as `bam`)."
+  - "Alignments saved as `txt`: .aln/.fasta/.nexus/.phy/.pir 231-310 each (MSA service)."
+  - "Trees: `nwk` used for .tre 10,926 and .nwk 198; never saved as phyloxml except 43 conversions."
+  - "`gff` holds GFF3 and GTF (.gtf 252)."
+  - "`vcf_gz` registered but unused; compressed VCFs not observed as vcf_gz."

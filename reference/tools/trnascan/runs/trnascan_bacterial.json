@@ -1,0 +1,97 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "trnascan_bacterial",
+ "set": "annotation",
+ "tool": "trnascan",
+ "mode": "bacterial",
+ "description": null,
+ "tool_version": "2.0.9",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373347_3",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:37:23",
+ "inputs": {
+  "G": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "tRNAscan-SE -B --thread $CPU -o trna.txt -f trna.ss -m trna_stats.txt --gff trna.gff $G",
+ "wall_s": 14.95,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "trna.gff",
+   "size": 8334,
+   "new": true,
+   "kind": "gff",
+   "preview": [
+    "##gff-version 3",
+    "NC_018507.1\ttRNAscan-SE\ttRNA\t25701\t25774\t68.2\t+\t.\tID=NC_018507.1.trna1;Name=NC_018507.1.tRNA1-Ile2CAT;isotype=Ile2;anticodon=CAT;gene_biotype=tRNA;",
+    "NC_018507.1\ttRNAscan-SE\texon\t25701\t25774\t.\t+\t.\tID=NC_018507.1.trna1.exon1;Parent=NC_018507.1.trna1;"
+   ],
+   "lines": 67,
+   "records": 66,
+   "sha256": "64fb7f44a3d0d5eefff3b9d37582dab0841d874669b65b8b19f48fd9b4d3f4ea"
+  },
+  {
+   "path": "trna.ss",
+   "size": 11748,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NC_018507.1.trna1 (25701-25774)\tLength: 74 bp",
+    "Type: Ile2\tAnticodon: CAT at 35-37 (25735-25737)\tScore: 68.2",
+    "         *    |    *    |    *    |    *    |    *    |    *    |    *    |   "
+   ],
+   "lines": 198,
+   "sha256": "8f1ba585d51430e56e85d79cc9c3446680f6fe111e8b3aad68fae76febbc66bc"
+  },
+  {
+   "path": "trna.txt",
+   "size": 1776,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sequence    \t\ttRNA  \tBounds\ttRNA\tAnti\tIntron Bounds\tInf\t      ",
+    "Name        \ttRNA #\tBegin \tEnd   \tType\tCodon\tBegin\tEnd\tScore\tNote",
+    "--------    \t------\t----- \t------\t----\t-----\t-----\t----\t------\t------"
+   ],
+   "lines": 36,
+   "sha256": "a801ae6eb4098e3105cb879a0103bf56652e8276703f239f4a1dcd60501dec7b"
+  },
+  {
+   "path": "trna_stats.txt",
+   "size": 3739,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "tRNAscan-SE v.2.0.9 (July 2021) scan results (on host bio-compute-02)",
+    "Started: Mon Nov  2 15:37:28 CST 2026"
+   ],
+   "lines": 87,
+   "sha256": "da295a525b8aac05f39b6c2b9e771bdb8a68b6d9fdb6bfc3e68e2dcdec53bb8b"
+  }
+ ],
+ "n_outputs": 4,
+ "output_bytes": 25597,
+ "time": {
+  "elapsed": "0:14.94",
+  "max_rss_kb": "64472",
+  "cpu_pct": "100",
+  "exit_status": "0",
+  "user_s": "13.00",
+  "sys_s": "1.94",
+  "elapsed_s": 14.94,
+  "max_rss_mb": 63.0
+ },
+ "stdout_tail": "Status: Phase I: Searching for tRNAs with HMM-enabled Infernal\nStatus: Phase II: Infernal verification of candidate tRNAs detected with first-pass scan\n",
+ "stderr_tail": "\ntRNAscan-SE v.2.0.9 (July 2021) - scan sequences for transfer RNAs\nCopyright (C) 2020 Patricia Chan and Todd Lowe\n                   University of California Santa Cruz\nFreely distributed under the GNU General Public License (GPLv3)\n\n------------------------------------------------------------\nSequence file(s) to search:        /disks/tmp/cucinell/modpipe-discovery/annotation/trnascan_bacterial-21373347_3/inputs/genome.fasta\nSearch Mode:                       Bacterial\nResults written to:                trna.txt\nOutput format:                     Tabular\nSearching with:                    Infernal First Pass->Infernal\nIsotype-specific model scan:       Yes\nCovariance model:                  /usr/share/trnascan-se/models/TRNAinf-bact.cm\n                                   /usr/share/trnascan-se/models/TRNAinf-bact-SeC.cm\nInfernal first pass cutoff score:  10\n\nTemporary directory:               /disks/tmp/cucinell/modpipe-discovery/annotation/trnascan_bacterial-21373347_3/.tmp\ntRNA secondary structure\n    predictions saved to:          trna.ss\ntRNA predictions saved to:         trna.gff\nSearch statistics saved in:        trna_stats.txt\n------------------------------------------------------------\n\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:38"
+}

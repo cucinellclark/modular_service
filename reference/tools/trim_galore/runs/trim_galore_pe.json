@@ -1,0 +1,133 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "trim_galore_pe",
+ "set": "readqc",
+ "tool": "trim_galore",
+ "mode": "paired",
+ "description": null,
+ "tool_version": "0.6.5d",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_3",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:19",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "trim_galore --paired --cores 2 -o out $R1 $R2",
+ "wall_s": 6.08,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/test_1.fastq.gz_trimming_report.txt",
+   "size": 2288,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "SUMMARISING RUN PARAMETERS",
+    "=========================="
+   ],
+   "lines": 68,
+   "sha256": "b60e1b2542f30be2e1213afe602d4e5e76a8bb1c623fb2ceec356c591cb1d635"
+  },
+  {
+   "path": "out/test_1_val_1.fq.gz",
+   "size": 7924350,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.1 FCD1DAFACXX:5:1101:14124:2241/1",
+    "AAGAAATTAAAATTAGGCTGGTATTTCAATATTGACTCCATACAAACTTGCGTTTGTACTTCATTGTCTCCCAGCTATTCTACACAAACAATAACCACTT",
+    "+"
+   ],
+   "lines": 390864,
+   "records": 97716,
+   "residues": 9812493,
+   "sha256": "abb129d42bceac6845b96479061a32986e45413ccda083641f4d4619fae4ea62"
+  },
+  {
+   "path": "out/test_2.fastq.gz_trimming_report.txt",
+   "size": 2471,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "SUMMARISING RUN PARAMETERS",
+    "=========================="
+   ],
+   "lines": 70,
+   "sha256": "8e5b21a3e948d44ae3a39ef90bcfdc790a05574cef749db032eb2247a2a63dca"
+  },
+  {
+   "path": "out/test_2_val_2.fq.gz",
+   "size": 8056113,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.1 FCD1DAFACXX:5:1101:14124:2241/2",
+    "TTGCGATGGGGTGACGAATAAGGCTATGCGGGCCCAGCGTTGGTTGTCTGGGTTTAAGTATGTAGGTTTAGAAGTTAGGTAAATCCGATTTCTTAATA",
+    "+"
+   ],
+   "lines": 390864,
+   "records": 97716,
+   "residues": 9394099,
+   "sha256": "944329b2d034383662dd4f543d2b132082926961482167299a2be9f3812df58a"
+  },
+  {
+   "path": "test_1.fastq.gz_cutadapt.log",
+   "size": 1139,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "This is cutadapt 4.9 with Python 3.10.14",
+    "Command line parameters: -j 2 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC /disks/tmp/cucinell/modpipe-discovery/readqc/trim_galore_pe-21373335_3/inputs/test_1.fastq.gz",
+    "Processing single-end reads on 2 cores ..."
+   ],
+   "lines": 43,
+   "sha256": "ae3ebfde46892c69b094b15e625813d130f77a85b8c855d9ddb4c69582e04978"
+  },
+  {
+   "path": "test_2.fastq.gz_cutadapt.log",
+   "size": 1125,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "This is cutadapt 4.9 with Python 3.10.14",
+    "Command line parameters: -j 2 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC /disks/tmp/cucinell/modpipe-discovery/readqc/trim_galore_pe-21373335_3/inputs/test_2.fastq.gz",
+    "Processing single-end reads on 2 cores ..."
+   ],
+   "lines": 42,
+   "sha256": "0114a96dbc997f64987d5685863f97fb6eafe4a27b7ae2b569a5848b8800956c"
+  }
+ ],
+ "n_outputs": 6,
+ "output_bytes": 15987486,
+ "time": {
+  "elapsed": "0:06.03",
+  "max_rss_kb": "33524",
+  "cpu_pct": "174",
+  "exit_status": "0",
+  "user_s": "9.87",
+  "sys_s": "0.67",
+  "elapsed_s": 6.03,
+  "max_rss_mb": 32.7
+ },
+ "stdout_tail": "pigz 2.6\n",
+ "stderr_tail": " removed adapters:\n  A: 31.3%\n  C: 20.5%\n  G: 14.3%\n  T: 33.9%\n  none/other: 0.0%\n\nOverview of removed sequences\nlength\tcount\texpect\tmax.err\terror counts\n1\t32021\t24432.2\t0\t32021\n2\t4956\t6108.1\t0\t4956\n3\t1814\t1527.0\t0\t1814\n4\t469\t381.8\t0\t469\n5\t93\t95.4\t0\t93\n6\t8\t23.9\t0\t8\n7\t1\t6.0\t0\t1\n8\t2\t1.5\t0\t2\n9\t5\t0.4\t0\t0 5\n10\t7\t0.1\t1\t0 7\n11\t1\t0.0\t1\t0 1\n\nRUN STATISTICS FOR INPUT FILE: /disks/tmp/cucinell/modpipe-discovery/readqc/trim_galore_pe-21373335_3/inputs/test_1.fastq.gz\n=============================================\n97729 sequences processed in total\nThe length threshold of paired-end sequences gets evaluated later on (in the validation step)\n\nWriting report to '/disks/tmp/cucinell/modpipe-discovery/readqc/trim_galore_pe-21373335_3/out/test_2.fastq.gz_trimming_report.txt'\n\nSUMMARISING RUN PARAMETERS\n==========================\nInput filename: /disks/tmp/cucinell/modpipe-discovery/readqc/trim_galore_pe-21373335_3/inputs/test_2.fastq.gz\nTrimming mode: paired-end\nTrim Galore version: 0.6.5dev\nCutadapt version: 4.9\nPython version: 3.10.14\nNumber of cores used for trimming: 2\nQuality Phred score cutoff: 20\nQuality encoding type selected: ASCII+33\nAdapter sequence: 'AGATCGGAAGAGC' (Illumina TruSeq, Sanger iPCR; default (inconclusive auto-detection))\nMaximum trimming error rate: 0.1 (default)\nMinimum required adapter overlap (stringency): 1 bp\nMinimum required sequence length for both reads before a sequence pair gets removed: 20 bp\nOutput file(s) will be GZIP compressed\n\nCutadapt seems to be fairly up-to-date (version 4.9). Setting -j -j 2\nWriting final adapter and quality trimmed output to test_2_trimmed.fq.gz\n\n\n  >>> Now performing quality (cutoff '-q 20') and adapter trimming in a single pass for the adapter sequence: 'AGATCGGAAGAGC' from file /disks/tmp/cucinell/modpipe-discovery/readqc/trim_galore_pe-21373335_3/inputs/test_2.fastq.gz <<< \nThis is cutadapt 4.9 with Python 3.10.14\nCommand line parameters: -j 2 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC /disks/tmp/cucinell/modpipe-discovery/readqc/trim_galore_pe-21373335_3/inputs/test_2.fastq.gz\nProcessing single-end reads on 2 cores ...\nFinished in 0.939 s (9.603 \u00b5s/read; 6.25 M reads/minute).\n\n=== Summary ===\n\nTotal reads processed:                  97,729\nReads with adapters:                    36,319 (37.2%)\nReads written (passing filters):        97,729 (100.0%)\n\nTotal basepairs processed:     9,675,171 bp\nQuality-trimmed:                 233,683 bp (2.4%)\nTotal written (filtered):      9,394,188 bp (97.1%)\n\n=== Adapter 1 ===\n\nSequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 36319 times\n\nMinimum overlap: 1\nNo. of allowed errors:\n1-9 bp: 0; 10-13 bp: 1\n\nBases preceding removed adapters:\n  A: 37.7%\n  C: 19.5%\n  G: 12.2%\n  T: 30.6%\n  none/other: 0.0%\n\nOverview of removed sequences\nlength\tcount\texpect\tmax.err\terror counts\n1\t28074\t24432.2\t0\t28074\n2\t6159\t6108.1\t0\t6159\n3\t1611\t1527.0\t0\t1611\n4\t406\t381.8\t0\t406\n5\t33\t95.4\t0\t33\n6\t9\t23.9\t0\t9\n7\t5\t6.0\t0\t5\n8\t6\t1.5\t0\t6\n9\t11\t0.4\t0\t0 11\n10\t5\t0.1\t1\t0 5\n\nRUN STATISTICS FOR INPUT FILE: /disks/tmp/cucinell/modpipe-discovery/readqc/trim_galore_pe-21373335_3/inputs/test_2.fastq.gz\n=============================================\n97729 sequences processed in total\nThe length threshold of paired-end sequences gets evaluated later on (in the validation step)\n\nValidate paired-end files test_1_trimmed.fq.gz and test_2_trimmed.fq.gz\nfile_1: test_1_trimmed.fq.gz, file_2: test_2_trimmed.fq.gz\n\n\n>>>>> Now validing the length of the 2 paired-end infiles: test_1_trimmed.fq.gz and test_2_trimmed.fq.gz <<<<<\nWriting validated paired-end Read 1 reads to test_1_val_1.fq.gz\nWriting validated paired-end Read 2 reads to test_2_val_2.fq.gz\n\nTotal number of sequences analysed: 97729\n\nNumber of sequence pairs removed because at least one read was shorter than the length cutoff (20 bp): 13 (0.01%)\n\nDeleting both intermediate output files test_1_trimmed.fq.gz and test_2_trimmed.fq.gz\n\n====================================================================================================\n\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:25"
+}

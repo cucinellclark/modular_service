@@ -1,0 +1,68 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "fasttree_nt",
+ "set": "phylogeny",
+ "tool": "fasttree",
+ "mode": "nt_gtr",
+ "description": "matches modules/fasttree.yaml (FastTree 2.1.11 with -log)",
+ "tool_version": "2.1.11",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21374883_6",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T08:25:53",
+ "inputs": {
+  "A": {
+   "fixture": "sarscov2_aln_all_sites",
+   "path": "inputs/all_sites.fas",
+   "size": 119652
+  }
+ },
+ "prep": null,
+ "cmd": "FastTree -nt -gtr -log fasttree.log $A > tree.nwk",
+ "wall_s": 1.12,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "fasttree.log",
+   "size": 97422,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Command: FastTree -nt -gtr -log fasttree.log /disks/tmp/cucinell/modpipe-discovery/phylogeny/fasttree_nt-21374883_6/inputs/all_sites.fas",
+    "FastTree Version 2.1.11 SSE3",
+    "Alignment: /disks/tmp/cucinell/modpipe-discovery/phylogeny/fasttree_nt-21374883_6/inputs/all_sites.fas"
+   ],
+   "lines": 424,
+   "sha256": "877a399af1aacc88b8791ff7d829040bab947e4a1d0ac2f1ec9dfc009d167b2d"
+  },
+  {
+   "path": "tree.nwk",
+   "size": 82,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(sample2:0.00092,sample4:0.00055,(sample1:0.00055,sample3:0.00055)0.998:0.00055);"
+   ],
+   "lines": 1,
+   "sha256": "097ac09296f585ffb41bfe8e1a094d41a24b419d7bd9cdf52a424b8473717fa4"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 97504,
+ "time": {
+  "elapsed": "0:01.11",
+  "max_rss_kb": "123852",
+  "cpu_pct": "94",
+  "exit_status": "0",
+  "user_s": "0.78",
+  "sys_s": "0.27",
+  "elapsed_s": 1.11,
+  "max_rss_mb": 120.9
+ },
+ "stdout_tail": "",
+ "stderr_tail": "FastTree Version 2.1.11 SSE3\nAlignment: /disks/tmp/cucinell/modpipe-discovery/phylogeny/fasttree_nt-21374883_6/inputs/all_sites.fas\nNucleotide distances: Jukes-Cantor Joins: balanced Support: SH-like 1000\nSearch: Normal +NNI +SPR (2 rounds range 10) +ML-NNI opt-each=1\nTopHits: 1.00*sqrtN close=default refresh=0.80\nML Model: Generalized Time-Reversible, CAT approximation with 20 rate categories\nIgnored unknown character X (seen 4273 times)\nInitial topology in 0.00 seconds\nRefining topology: 8 rounds ME-NNIs, 2 rounds ME-SPRs, 4 rounds ML-NNIs\nTotal branch-length 0.002 after 0.03 sec\n\nWARNING! This alignment consists of closely-related and very-long sequences.\nThis version of FastTree may not report reasonable branch lengths!\nConsider recompiling FastTree with -DUSE_DOUBLE.\nFor more information, visit\nhttp://www.microbesonline.org/fasttree/#BranchLen\n\nWARNING! FastTree (or other standard maximum-likelihood tools)\nmay not be appropriate for aligments of very closely-related sequences\nlike this one, as FastTree does not account for recombination or gene conversion\n\nML-NNI round 1: LogLk = -41309.089 NNIs 0 max delta 0.00 Time 0.05\n      0.12 seconds: Optimizing GTR model, step 2 of 12\n      0.23 seconds: Optimizing GTR model, step 4 of 12\n      0.36 seconds: Optimizing GTR model, step 7 of 12\n      0.48 seconds: Optimizing GTR model, step 10 of 12\nGTR Frequencies: 0.2992 0.1835 0.1960 0.3213\nGTR rates(ac ag at cg ct gt) 0.4302 0.6471 0.3193 1.2995 3.8463 1.0000\n      0.60 seconds: ML Lengths 1 of 2 splits\nSwitched to using 20 rate categories (CAT approximation)\nRate categories were divided by 0.624 so that average rate = 1.0\nCAT-based log-likelihoods may not be comparable across runs\nUse -gamma for approximate but comparable Gamma(20) log-likelihoods\nML-NNI round 2: LogLk = -40375.278 NNIs 0 max delta 0.00 Time 0.74\nTurning off heuristics for final round of ML NNIs (converged)\n      0.74 seconds: ML NNI round 3 of 4, 1 of 2 splits\nML-NNI round 3: LogLk = -40375.278 NNIs 0 max delta 0.00 Time 0.78 (final)\nOptimize all lengths: LogLk = -40375.278 Time 0.80\nTotal time: 1.05 seconds Unique: 4/4 Bad splits: 0/1\n",
+ "status": "ok",
+ "finished": "2026-11-03T08:25:55"
+}

@@ -1,0 +1,66 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Multi-sample assembly with combined QC",
+  "description": "Per sample: fastp -> SPAdes (scatter). Then one QUAST over all assemblies (gather).",
+  "inputs": {
+    "samples": {
+      "type": "reads.short.paired",
+      "collection": true,
+      "source": {
+        "paired_end_libs": [
+          {
+            "sample_id": "S1",
+            "read1": "/user@bvbrc/home/reads/S1_R1.fastq.gz",
+            "read2": "/user@bvbrc/home/reads/S1_R2.fastq.gz"
+          },
+          {
+            "sample_id": "S2",
+            "read1": "/user@bvbrc/home/reads/S2_R1.fastq.gz",
+            "read2": "/user@bvbrc/home/reads/S2_R2.fastq.gz"
+          },
+          {
+            "sample_id": "S3",
+            "read1": "/user@bvbrc/home/reads/S3_R1.fastq.gz",
+            "read2": "/user@bvbrc/home/reads/S3_R2.fastq.gz"
+          }
+        ]
+      }
+    }
+  },
+  "steps": {
+    "trim": {
+      "module": "fastp",
+      "in": {
+        "reads": "$inputs.samples"
+      }
+    },
+    "assemble": {
+      "module": "spades",
+      "in": {
+        "reads": "trim.trimmed_reads"
+      },
+      "params": {
+        "mode": "isolate"
+      }
+    },
+    "qc": {
+      "module": "quast",
+      "in": {
+        "contigs": "assemble.contigs"
+      }
+    }
+  },
+  "outputs": {
+    "contigs": "assemble.contigs",
+    "qc_report": "qc.report",
+    "qc_metrics": "qc.metrics"
+  },
+  "template": {
+    "label": "Multi-sample assembly with combined QC",
+    "category": "assembly",
+    "expose": [
+      "assemble.params.mode",
+      "qc.params.min_contig"
+    ]
+  }
+}

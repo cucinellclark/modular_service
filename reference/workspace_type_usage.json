@@ -1,0 +1,209 @@
+{
+ "source": "Workspace.ls recursive over /olson@patricbrc.org/PATRIC-QA/applications/App-*/2026 (22 apps), 2026-11-03",
+ "note": "workspace type -> {file extension: count}; shows what production services actually save",
+ "types": {
+  "folder": {
+   "-": 10847
+  },
+  "job_result": {
+   "-": 2622
+  },
+  "txt": {
+   ".txt": 12109,
+   ".log": 321,
+   ".stderr": 47,
+   ".gfa": 66,
+   ".json": 178,
+   ".svg": 28,
+   ".ini": 25,
+   ".warnings": 25,
+   ".aln": 310,
+   ".tbl": 94,
+   ".rpt": 25,
+   ".nex": 52,
+   ".err": 28,
+   ".fasta": 231,
+   ".nexus": 231,
+   ".phy": 231,
+   ".pir": 231,
+   ".xmfa": 14,
+   ".depth": 223,
+   ".tsv": 138,
+   ".align": 209,
+   ".pileup.gz": 69,
+   ".vcf.gz": 28,
+   ".frag.gz": 54,
+   ".mapstat": 54,
+   ".fsa": 54,
+   ".res": 54,
+   ".tn_stats": 35,
+   ".counts": 7021
+  },
+  "html": {
+   ".html": 3691
+  },
+  "contigs": {
+   ".fasta": 1403,
+   ".fa": 450,
+   ".fna": 14
+  },
+  "unspecified": {
+   ".json": 312,
+   ".get_transcript_edited_features": 10,
+   ".get_splice_variant_features": 10,
+   "(none)": 24,
+   ".contig_quality": 18,
+   ".feature_quality": 18,
+   ".viral_genome_quality": 10,
+   ".stderr": 165,
+   ".classification": 6,
+   ".tbi": 150,
+   ".vcf.gz": 194,
+   ".bai": 426,
+   ".zip": 527,
+   ".align_stdout": 252,
+   ".infer": 252,
+   ".samtools_stats": 252,
+   ".tab": 154,
+   ".counts": 133,
+   ".htseq_err": 133,
+   ".count_tracking": 56,
+   ".fpkm_tracking": 140,
+   ".read_group_tracking": 56,
+   ".diff": 98,
+   ".info": 70,
+   ".cxb": 14,
+   ".attr_table": 56,
+   ".fpkm_table": 56,
+   ".count_table": 56,
+   ".table": 14,
+   ".sam": 65,
+   ".log": 87,
+   ".krona": 32,
+   ".archive": 543,
+   ".sra": 28,
+   ".xfl": 2,
+   ".vcf": 232,
+   ".bam": 788,
+   ".pdf": 978,
+   ".ref": 1208,
+   ".sh": 36,
+   ".tex": 146,
+   ".sqm": 120,
+   ".csi": 44,
+   ".bed": 44,
+   ".amb": 44,
+   ".bwt": 44,
+   ".fai": 184,
+   ".pac": 44,
+   ".ann": 44,
+   ".sa": 44,
+   ".afa": 14,
+   ".partitions": 7,
+   ".nex": 7,
+   ".analysisstats": 12,
+   ".pileup": 140,
+   ".pileup.gz": 140,
+   ".depths": 140
+  },
+  "genome": {
+   ".genome": 388
+  },
+  "gff": {
+   ".gff": 336,
+   ".gff3": 25,
+   ".gtf": 252
+  },
+  "tsv": {
+   ".txt": 336,
+   ".tsv": 2331,
+   ".tbl": 140,
+   ".err": 27,
+   ".result": 27
+  },
+  "xls": {
+   ".xls": 331
+  },
+  "feature_table": {
+   ".txt": 336
+  },
+  "genbank_file": {
+   ".gb": 672
+  },
+  "tar_gz": {
+   ".tar.gz": 568
+  },
+  "embl": {
+   ".embl": 336
+  },
+  "feature_dna_fasta": {
+   ".fasta": 371
+  },
+  "feature_protein_fasta": {
+   ".fasta": 336,
+   ".cds": 25,
+   ".pep": 25,
+   ".faa": 14
+  },
+  "json": {
+   ".json": 5622
+  },
+  "svg": {
+   ".svg": 378
+  },
+  "png": {
+   ".png": 805
+  },
+  "nwk": {
+   ".nwk": 198,
+   ".tre": 10926
+  },
+  "vcf": {
+   ".vcf": 300
+  },
+  "bam": {
+   ".bam": 946,
+   ".bai": 35
+  },
+  "bigwig": {
+   ".bigwig": 150
+  },
+  "csv": {
+   ".csv": 274
+  },
+  "bai": {
+   ".bai": 621
+  },
+  "diffexp_input_data": {
+   ".gmx": 28
+  },
+  "reads": {
+   ".fq": 196,
+   ".fastq": 274,
+   ".fastq.gz": 62,
+   ".fq.gz": 556,
+   ".fa": 619,
+   ".fasta": 736
+  },
+  "aligned_dna_fasta": {
+   ".fa": 26,
+   ".afa": 64
+  },
+  "phyloxml": {
+   ".phyloxml": 43
+  },
+  "aligned_protein_fasta": {
+   ".fa": 10,
+   ".afa": 167
+  },
+  "xml": {
+   ".xml": 69
+  },
+  "tbi": {
+   ".tbi": 14
+  },
+  "wig": {
+   ".wig": 7021
+  }
+ }
+}

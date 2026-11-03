@@ -1,0 +1,87 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bwa_index",
+ "set": "mapping_variants",
+ "tool": "bwa",
+ "mode": "index",
+ "description": null,
+ "tool_version": "0.7.17",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373340_0",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:18",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "bwa index $REF",
+ "wall_s": 0.17,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "inputs/genome.fasta.amb",
+   "size": 11,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "358242 1 0"
+   ],
+   "sha256": "ebd3523425bab1cddcd710febd8aea1334f18f20f0b32fad6b98874db6c2ba46"
+  },
+  {
+   "path": "inputs/genome.fasta.ann",
+   "size": 99,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "358242 1 11",
+    "0 NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence",
+    "0 358242 0"
+   ],
+   "sha256": "5af9384676104d1f03df3c29a23e3b94ce98a43815c7a602a87821aa992e61d3"
+  },
+  {
+   "path": "inputs/genome.fasta.bwt",
+   "size": 358332,
+   "new": true,
+   "kind": "index",
+   "sha256": "ecc15dded126f56062397b69937dca2e6e1b49e50f2b21395f83408862bf04aa"
+  },
+  {
+   "path": "inputs/genome.fasta.pac",
+   "size": 89562,
+   "new": true,
+   "kind": "index",
+   "sha256": "6c285d401dad4452acac7707b330d186e4178c8758ddd851f8ee98e14f079221"
+  },
+  {
+   "path": "inputs/genome.fasta.sa",
+   "size": 179176,
+   "new": true,
+   "kind": "index",
+   "sha256": "82f31b1ab7ac274d22d51a6117ac0f4777d5aca654da6c430e8554c73c73504a"
+  }
+ ],
+ "n_outputs": 5,
+ "output_bytes": 627180,
+ "time": {
+  "elapsed": "0:00.13",
+  "max_rss_kb": "6216",
+  "cpu_pct": "48",
+  "exit_status": "0",
+  "user_s": "0.06",
+  "sys_s": "0.00",
+  "elapsed_s": 0.13,
+  "max_rss_mb": 6.1
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[bwa_index] Pack FASTA... 0.00 sec\n[bwa_index] Construct BWT for the packed sequence...\n[bwa_index] 0.04 seconds elapse.\n[bwa_index] Update BWT... 0.00 sec\n[bwa_index] Pack forward-only FASTA... 0.00 sec\n[bwa_index] Construct SA from BWT and Occ... 0.01 sec\n[main] Version: 0.7.17-r1188\n[main] CMD: bwa index /disks/tmp/cucinell/modpipe-discovery/mapping_variants/bwa_index-21373340_0/inputs/genome.fasta\n[main] Real time: 0.069 sec; CPU: 0.065 sec\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:18"
+}

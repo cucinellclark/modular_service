@@ -1,0 +1,33 @@
+{
+  "pipeline": {
+    "schema": "modpipe/pipeline/v1",
+    "name": "QUAST over a genome group (gather)",
+    "inputs": {
+      "genomes": {
+        "type": "sequences.dna.contigs",
+        "collection": true,
+        "source": {
+          "genome_group": "/clark.cucinell@patricbrc.org/home/Genome Groups/test_norovirus_group_gg"
+        }
+      }
+    },
+    "steps": {
+      "qc": {
+        "module": "quast",
+        "in": {
+          "contigs": "$inputs.genomes"
+        },
+        "params": {
+          "min_contig": 100
+        }
+      }
+    },
+    "outputs": {
+      "report": "qc.report",
+      "metrics": "qc.metrics"
+    }
+  },
+  "output_path": "/clark.cucinell@patricbrc.org/home/ModularService_tests",
+  "output_file": "genome_group_too_short",
+  "_comment": "NEGATIVE TEST: this group holds 71-99 bp fragments; QUAST must fail and the job result must have success=0 with pipeline_run.json saved."
+}

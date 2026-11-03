@@ -1,0 +1,22 @@
+schema: modpipe/module/v1
+id: mlst
+version: 1
+label: "mlst: multi-locus sequence typing"
+description: Finds the PubMLST scheme and sequence type of an assembled genome (scheme detected automatically unless given).
+category: typing
+tool: {id: mlst, binary: mlst, version: 2.23.0}
+inputs:
+  - {id: contigs, type: sequences.dna.contigs}
+outputs:
+  - {id: profile, type: table.tsv.mlst, path: mlst.tsv}
+  - {id: profile_json, type: report.json, path: mlst.json}
+parameters:
+  - {id: scheme, type: string, default: "", label: "Force a scheme (see `mlst --list`); empty = auto"}
+resources: {cpu: 2, memory: 4G, runtime: 1h}
+command: |
+  mlst --threads {{ cpu }} --json {{ outputs.profile_json }} --label {{ inputs.contigs.label | q }}
+  {% if params.scheme %}--scheme {{ params.scheme | q }}{% endif %}
+  {{ inputs.contigs | q }} > {{ outputs.profile }}
+tests:
+  discovery_runs: [mlst_hinfluenzae]
+provenance: {bvbrc_invocations: [run_cgMLST_snakefile], nfcore: [mlst]}

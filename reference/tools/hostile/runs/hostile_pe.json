@@ -1,0 +1,93 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "hostile_pe",
+ "set": "readqc",
+ "tool": "hostile",
+ "mode": "paired_default_index",
+ "description": "BV-BRC hostile cache dir; may try to download the index if absent",
+ "tool_version": "1.1.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_13",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:54",
+ "inputs": {
+  "R1": {
+   "fixture": "sarscov2_illumina_test_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 9413
+  },
+  "R2": {
+   "fixture": "sarscov2_illumina_test_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 9395
+  }
+ },
+ "prep": null,
+ "cmd": "HOSTILE_CACHE_DIR=/vol/bvbrc/production/application-backend/fastqutils/reference_indices/hostile_cache hostile clean --fastq1 $R1 --fastq2 $R2 --out-dir out --threads $CPU > hostile.json",
+ "wall_s": 17.2,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "hostile.json",
+   "size": 804,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "[",
+    "    {",
+    "        \"version\": \"1.1.0\","
+   ],
+   "sha256": "b826cd996831a79b828cafd1f3d56c367c26aa5140d3c12c2b61b59ead987222"
+  },
+  {
+   "path": "out/test_1.clean_1.fastq.gz",
+   "size": 7918,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@ERR5069949.2674295/1",
+    "GTTATAACACTGACACCACCAAAAGAACATGGTGTAATGTCAAGAATCTCAAGTGTCTGTGGATCACGGACAGCATCAGTAGTGTCAGCAATGTCTCTGCCAAATTGTTGGAAAGGCAGAAACTTTTTGTTAGACTCAGTAAGAACAC",
+    "+"
+   ],
+   "lines": 400,
+   "records": 100,
+   "residues": 13897,
+   "sha256": "ad02266ae0952c51d242f1b7c02d0e7360bfe0963e7af13081ca0334671ecf30"
+  },
+  {
+   "path": "out/test_2.clean_2.fastq.gz",
+   "size": 7903,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@ERR5069949.2674295/2",
+    "CCTAAAAAGTCTACTAATTTGGTTAAAAACAAATGTGTCAATTTCAACTTCAATGGTTTAACAGGCACAGGTGTTCTTACTGAGTCTAACAAAAAGTTTCTGCCTTTCCAACAATTTGGCAGAGACATTGCTGACACTACTGATGCTGTC",
+    "+"
+   ],
+   "lines": 400,
+   "records": 100,
+   "residues": 13748,
+   "sha256": "44c2956373d8486b36c9d3dc9d6c0a4735d25c1841d6418bd0de3d200157ab20"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 16625,
+ "time": {
+  "elapsed": "0:17.17",
+  "max_rss_kb": "439376",
+  "cpu_pct": "6",
+  "exit_status": "0",
+  "user_s": "0.36",
+  "sys_s": "0.79",
+  "elapsed_s": 17.17,
+  "max_rss_mb": 429.1
+ },
+ "stdout_tail": "",
+ "stderr_tail": "15:37:57 INFO: Hostile version 1.1.0. Mode: paired short read (Bowtie2)\n15:37:58 INFO: Found cached standard index human-t2t-hla\n15:37:58 INFO: Cleaning\u2026\n15:38:12 INFO: Cleaning complete\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:12"
+}

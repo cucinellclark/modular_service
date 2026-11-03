@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/snpEff.sh cmd: snpEff.sh -version
+SnpEff	4.3t	2017-11-24

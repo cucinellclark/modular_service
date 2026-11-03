@@ -1,0 +1,86 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "freyja_variants",
+ "set": "typing_expression",
+ "tool": "freyja",
+ "mode": "variants",
+ "description": null,
+ "tool_version": "1.5.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-01",
+ "slurm_job": "21373358_6",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:42",
+ "inputs": {
+  "REF": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  },
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  }
+ },
+ "prep": null,
+ "cmd": "freyja variants $BAM --variants variants.tsv --depths depths.tsv --ref $REF",
+ "wall_s": 13.2,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "depths.tsv",
+   "size": 615303,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1\t1\tG\t0",
+    "MT192765.1\t2\tT\t0",
+    "MT192765.1\t3\tT\t0"
+   ],
+   "lines": 29829,
+   "sha256": "8c2765eb824dccc2398f301d21d32fdf28cc946fa2ce3a8ad0e169a6226ad3b6"
+  },
+  {
+   "path": "inputs/genome.fasta.fai",
+   "size": 27,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1\t29829\t120\t80\t81"
+   ],
+   "lines": 1,
+   "sha256": "7460341f2de1295e0b54f86ff8a39d33a4f3e11da8a2f3763194eeaad99694d4"
+  },
+  {
+   "path": "variants.tsv",
+   "size": 1539,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "REGION\tPOS\tREF\tALT\tREF_DP\tREF_RV\tREF_QUAL\tALT_DP\tALT_RV\tALT_QUAL\tALT_FREQ\tTOTAL_DP\tPVAL\tPASS\tGFF_FEATURE\tREF_CODON\tREF_AA\tALT_CODON\tALT_AA\tPOS_AA",
+    "MT192765.1\t197\tG\tT\t0\t0\t0\t1\t0\t36\t1\t1\t1\tFALSE\tNA\tNA\tNA\tNA\tNA\tNA",
+    "MT192765.1\t3744\tA\tT\t0\t0\t0\t1\t1\t36\t1\t1\t1\tFALSE\tNA\tNA\tNA\tNA\tNA\tNA"
+   ],
+   "lines": 21,
+   "sha256": "36c392c63b50e1e7c0748e12fd0c6b85200f59000d313c0e8389257e053cfcae"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 616869,
+ "time": {
+  "elapsed": "0:13.19",
+  "max_rss_kb": "76952",
+  "cpu_pct": "46",
+  "exit_status": "0",
+  "user_s": "1.19",
+  "sys_s": "4.92",
+  "elapsed_s": 13.19,
+  "max_rss_mb": 75.1
+ },
+ "stdout_tail": "samtools mpileup -aa -A -d 600000 -Q 20 -q 0 -B -f /disks/tmp/cucinell/modpipe-discovery/typing_expression/freyja_variants-21373358_6/inputs/genome.fasta /disks/tmp/cucinell/modpipe-discovery/typing_expression/freyja_variants-21373358_6/inputs/test.paired_end.sorted.bam | tee >(cut -f1-4 > depths.tsv) | ivar variants -p variants.tsv -q 20 -t 0.0 -r /disks/tmp/cucinell/modpipe-discovery/typing_expression/freyja_variants-21373358_6/inputs/genome.fasta\n",
+ "stderr_tail": "[mpileup] 1 samples in 1 input files\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:55"
+}

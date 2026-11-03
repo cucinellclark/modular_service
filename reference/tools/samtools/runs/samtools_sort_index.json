@@ -1,0 +1,59 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "samtools_sort_index",
+ "set": "mapping_variants",
+ "tool": "samtools",
+ "mode": "sort+index",
+ "description": null,
+ "tool_version": "1.13",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373340_9",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:35",
+ "inputs": {
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  }
+ },
+ "prep": null,
+ "cmd": "samtools sort -@ $CPU -o sorted.bam $BAM && samtools index sorted.bam",
+ "wall_s": 0.27,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "sorted.bam",
+   "size": 19760,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "bam",
+   "sha256": "55d80fbe14df0d8658abeaa35aafc91990776debc2e216f2597b6a39eee7ad9b"
+  },
+  {
+   "path": "sorted.bam.bai",
+   "size": 128,
+   "new": true,
+   "kind": "index",
+   "sha256": "0a632f7d22fa7e43ae3837858486c04895846723482852b45ff0e23111c8b9e5"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 19888,
+ "time": {
+  "elapsed": "0:00.22",
+  "max_rss_kb": "4544",
+  "cpu_pct": "5",
+  "exit_status": "0",
+  "user_s": "0.00",
+  "sys_s": "0.01",
+  "elapsed_s": 0.22,
+  "max_rss_mb": 4.4
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:35"
+}

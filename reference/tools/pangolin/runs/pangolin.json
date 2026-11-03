@@ -1,0 +1,43 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "pangolin",
+ "set": "typing_expression",
+ "tool": "pangolin",
+ "mode": "container_data",
+ "description": null,
+ "tool_version": "4.3.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373453_11",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:44:41",
+ "inputs": {
+  "G": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  }
+ },
+ "prep": null,
+ "cmd": "pangolin $G --outfile lineage_report.csv -t $CPU --tempdir $TMPDIR",
+ "wall_s": 3.22,
+ "exit_code": 1,
+ "outputs": [],
+ "n_outputs": 0,
+ "output_bytes": 0,
+ "time": {
+  "elapsed": "0:03.17",
+  "max_rss_kb": "91016",
+  "cpu_pct": "153",
+  "exit_status": "1",
+  "user_s": "3.89",
+  "sys_s": "0.95",
+  "elapsed_s": 3.17,
+  "max_rss_mb": 88.9
+ },
+ "stdout_tail": "\u001b[32m****\nQuery sequences collapsed from \u001b[0m1\u001b[32m to \u001b[0m1\u001b[32m unique sequences.\u001b[0m\n\u001b[32m****\nPangolin running in usher mode.\n****\u001b[0m\n\u001b[32mMaximum ambiguity allowed is 0.3.\n****\u001b[0m\n\u001b[32mQuery file:\t\u001b[0m/disks/tmp/cucinell/modpipe-discovery/typing_expression/pangolin-21373453_11/inputs/genome.fasta\n\u001b[32m****\nData files found:\u001b[0m\nusher_pb:\t/opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/pangolin_data/data/lineageTree.pb\n\u001b[32m****\u001b[0m\n",
+ "stderr_tail": "olin/lib/python3.8/site-packages/constellations/definitions/cB.1.1.529.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.1.7+E484K.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.1.7.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.351.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.427.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.429.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.525.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.526.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.617.1.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.617.2+K417N.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.617.2.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.617.3.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cB.1.621.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cBA.1.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cBA.2.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cBA.3.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cBA.4.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cBA.5.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cC.37.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cP.1.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cP.2.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cP.3.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cXBB-parent1.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cXBB-parent2.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cXBB.1.16.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cXBB.1.5.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cXBB.1.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cXBB.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cXE-parent1.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cXE-parent2.json /opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/constellations/definitions/cXE.json                      --pangolin                      --list-incompatible                      --long &> /disks/tmp/cucinell/modpipe-discovery/typing_expression/pangolin-21373453_11/.tmp/tmpcc6vevdz/logs/scorpio.log' returned non-zero exit status 1.\n  File \"/opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/pangolin/scripts/preprocessing.smk\", line 92, in __rule_scorpio\n  File \"/opt/patric-common/runtime/pangolin/lib/python3.8/concurrent/futures/thread.py\", line 57, in run\nShutting down, this might take some time.\nExiting because a job execution failed. Look above for error message\nShutting down, this might take some time.\nExiting because a job execution failed. Look above for error message\nComplete log: .snakemake/log/2026-11-02T154441.909702.snakemake.log\n",
+ "status": "failed",
+ "finished": "2026-11-02T15:44:44"
+}

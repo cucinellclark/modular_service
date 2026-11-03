@@ -1,0 +1,82 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "phispy",
+ "set": "annotation",
+ "tool": "phispy",
+ "mode": "genbank",
+ "description": null,
+ "tool_version": "4.2.21",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373347_5",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:37:34",
+ "inputs": {
+  "GB": {
+   "fixture": "bfragilis_gbff",
+   "path": "inputs/genome.gbff.gz",
+   "size": 3698522
+  }
+ },
+ "prep": "gunzip -c $GB > genome.gbff",
+ "cmd": "phispy genome.gbff -o phispy --threads $CPU",
+ "wall_s": 94.15,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "phispy/genome.gbff",
+   "size": 12509587,
+   "new": true,
+   "kind": "genbank",
+   "preview": [
+    "LOCUS       NZ_CP069563          5150703 bp    DNA     circular CON 25-AUG-2021",
+    "DEFINITION  Bacteroides fragilis strain FDAARGOS_1225 chromosome, complete",
+    "            genome."
+   ],
+   "sha256": "bf458a62433807268571a8c9bc059bf88d88205a13b9d38d7cb23a34cb1defbf"
+  },
+  {
+   "path": "phispy/phispy.log",
+   "size": 12819,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "2026-11-02 15:38:06 INFO     Welcome to PhiSpy.py version 4.2.21",
+    "2026-11-02 15:38:06 INFO     Starting PhiSpy.py with the following arguments",
+    "Namespace(infile='genome.gbff', output_dir='phispy', make_training_data=None, training_set='data/trainSet_genericAll.txt', list=False, file_prefix='', evaluate=False, number=5, min_contig_size=5000, w"
+   ],
+   "lines": 123,
+   "sha256": "f1291704d1e0407561a5c62316617f6308f0594c688c4a8cca543a262ba9dcf6"
+  },
+  {
+   "path": "phispy/prophage_coordinates.tsv",
+   "size": 990,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "pp1\tNZ_CP069563.1\t346648\t350152\t350205\t350226\t350492\t350513\tGTTACTTTGTAGGTAACGGCA\tTGCCGTTACCTACAAAGTAAC\tLongest Repeat flanking phage and within 2000 bp",
+    "pp2\tNZ_CP069563.1\t532038\t553538\t530306\t530317\t551908\t551919\tACTTCTCCATG\tACTTCTCCATG\tLongest Repeat flanking phage and within 2000 bp",
+    "pp3\tNZ_CP069563.1\t951245\t1024585\t951242\t951254\t1025597\t1025609\tATGTCAATAATC\tATGTCAATAATC\tLongest Repeat flanking phage and within 2000 bp"
+   ],
+   "lines": 7,
+   "sha256": "286e13df3fc5fef785e40e7f5ad0bb5d50d663656ac6ff81cb29655adf042b27"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 12523396,
+ "time": {
+  "elapsed": "1:34.10",
+  "max_rss_kb": "701496",
+  "cpu_pct": "255",
+  "exit_status": "0",
+  "user_s": "231.51",
+  "sys_s": "8.94",
+  "elapsed_s": 94.1,
+  "max_rss_mb": 685.1
+ },
+ "stdout_tail": "",
+ "stderr_tail": "635204\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t4594350\t4594814\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t4551360\t4552199\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t4488640\t4489485\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t4353710\t4354168\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t4290351\t4290704\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t3855958\t3856323\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t3599364\t3599591\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t3219909\t3221126\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t3050368\t3051423\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t2860053\t2860343\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1998940\t1999806\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1961830\t1962189\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1943806\t1944849\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1779795\t1780019\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1744098\t1745915\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1673068\t1673469\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1531271\t1531636\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1508041\t1509183\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1393519\t1394751\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1374945\t1376159\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1294686\t1295012\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1164621\t1164914\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t1106274\t1107113\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t906923\t908686\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t893662\t895437\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t821529\t822377\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t742614\t745148\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t639462\t640439\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t629137\t629478\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t613284\t613493\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t512597\t513841\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t466749\t467204\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t261226\t261426\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t177736\t178623\t1\tDropped. Region too small (Not enough genes)\nNZ_CP069563.1\t99306\t99662\t1\tDropped. Region too small (Not enough genes)\nPROPHAGE: 1 Contig: NZ_CP069563.1 Start: 346648 Stop: 350152\nPROPHAGE: 2 Contig: NZ_CP069563.1 Start: 532038 Stop: 553538\nThere were 5 repeats with the same length as the best. One chosen somewhat randomly!\nPROPHAGE: 3 Contig: NZ_CP069563.1 Start: 951245 Stop: 1024585\nThere were 3 repeats with the same length as the best. One chosen somewhat randomly!\nPROPHAGE: 4 Contig: NZ_CP069563.1 Start: 1052231 Stop: 1082841\nPROPHAGE: 5 Contig: NZ_CP069563.1 Start: 3623588 Stop: 3636668\nThere were 2 repeats with the same length as the best. One chosen somewhat randomly!\nPROPHAGE: 6 Contig: NZ_CP069563.1 Start: 3698911 Stop: 3719956\nThere were 2 repeats with the same length as the best. One chosen somewhat randomly!\nPROPHAGE: 7 Contig: NZ_CP069563.1 Start: 4391535 Stop: 4397271\nThere were 5 repeats with the same length as the best. One chosen somewhat randomly!\nCreating output files\n/opt/patric-common/runtime/phispy/lib/python3.12/site-packages/Bio/SeqFeature.py:257: BiopythonDeprecationWarning: Using the strand argument is deprecated, and will be removed in a future release. Please set it via the location object instead.\n  warnings.warn(\nWriting GenBank output file\nWriting prophage_coordinates output file\nDone!!! Output is in phispy and the log is in phispy/phispy.log\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:39:09"
+}

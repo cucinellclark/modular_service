@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/fastp --version
+fastp 1.3.2

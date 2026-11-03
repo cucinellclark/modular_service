@@ -1,0 +1,100 @@
+# /opt/patric-common/runtime/bin/freyja cmd: freyja --help; for s in variants demix boot; do echo "### freyja $s"; freyja $s --help 2>&1; done
+Usage: freyja [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --version  Show the version and exit.
+  --help     Show this message and exit.
+
+Commands:
+  aggregate        Aggregates all demix data in RESULTS directory
+  barcode-build    Build barcodes from a custom protobuf tree
+  boot             Perform bootstrapping method for freyja using VARIANTS...
+  covariants       Finds mutations co-occurring on the same read pair in...
+  dash
+  demix            Generate relative lineage abundances from VARIANTS and...
+  extract          Extracts reads from INPUT_BAM containing one or more...
+  filter           Excludes reads from INPUT_BAM containing one or more...
+  get-lineage-def  Get the mutations defining a LINEAGE of interest from...
+  plot             Create plot from AGG_RESULTS
+  plot-covariants  Plot COVARIANTS output as a heatmap
+  relgrowthrate    Calculates relative growth rates for each lineage...
+  update           Update to the most recent barcodes and curated lineage...
+  variants         Perform variant calling using samtools and iVar on a...
+### freyja variants
+Usage: freyja variants [OPTIONS] BAMFILE
+
+  Perform variant calling using samtools and iVar on a BAMFILE
+
+Options:
+  --ref PATH         Reference file in fasta format  [default:
+                     data/NC_045512_Hu-1.fasta]
+  --variants PATH    Variant calling output file
+  --depths PATH      Sequencing depth output file
+  --refname TEXT     Ref name (for bams with multiple sequences)  [default:
+                     ""]
+  --minq INTEGER     Minimum base quality score  [default: 20]
+  --annot TEXT       provide an annotation file in gff3 format  [default: ""]
+  --varthresh FLOAT  Variant frequency threshold  [default: 0.0]
+  --help             Show this message and exit.
+### freyja demix
+Usage: freyja demix [OPTIONS] VARIANTS DEPTHS
+
+  Generate relative lineage abundances from VARIANTS and DEPTHS
+
+Options:
+  --eps FLOAT                minimum abundance to include for each lineage
+                             [default: 0.001]
+  --barcodes TEXT            Path to custom barcode file  [default: ""]
+  --meta TEXT                custom lineage to variant metadata file
+                             [default: ""]
+  --output PATH              Output file  [default: output name]
+  --covcut INTEGER           calculate percent of sites with n or greater
+                             reads  [default: 10]
+  --confirmedonly            exclude unconfirmed lineages
+  --version
+  --depthcutoff INTEGER      exclude sites with coverage depth below this
+                             value andgroup identical barcodes  [default: 0]
+  --lineageyml TEXT          lineage hierarchy file in a yaml format
+                             [default: ""]
+  --adapt FLOAT              adaptive lasso penalty parameter  [default: 0.0]
+  --a_eps FLOAT              adaptive lasso parameter, hard threshold
+                             [default: 1e-08]
+  --region_of_interest TEXT  JSON file containing region(s) of interest for
+                             which to compute additional coverage estimates
+                             [default: ""]
+  --relaxedmrca              for use with depth cutoff,clusters are assigned
+                             robust mrca to handle outliers
+  --relaxedthresh FLOAT      associated threshold for robust mrca function
+                             [default: 0.9]
+  --solver TEXT              solver used for estimating lineage prevalence
+                             [default: CLARABEL]
+  --help                     Show this message and exit.
+### freyja boot
+Usage: freyja boot [OPTIONS] VARIANTS DEPTHS
+
+  Perform bootstrapping method for freyja using VARIANTS and DEPTHS
+
+Options:
+  --nb INTEGER           number of times bootstrapping is performed  [default:
+                         100]
+  --nt INTEGER           max number of cpus to use  [default: 1]
+  --eps FLOAT            minimum abundance to include  [default: 0.001]
+  --barcodes TEXT        custom barcode file  [default: ""]
+  --meta TEXT            custom lineage to variant metadata file  [default:
+                         ""]
+  --output_base PATH     Output file basename  [default: test]
+  --boxplot TEXT         file format of boxplot output (e.g. pdf or png)
+                         [default: ""]
+  --confirmedonly        exclude unconfirmed lineages
+  --rawboots             return raw bootstraps
+  --lineageyml TEXT      lineage hierarchy file in yaml format  [default: ""]
+  --depthcutoff INTEGER  exclude sites with coverage depth below this value
+                         andgroup identical barcodes  [default: 0]
+  --relaxedmrca          for use with depth cutoff,clusters are assigned
+                         robust mrca to handle outliers
+  --relaxedthresh FLOAT  associated threshold for robust mrca function
+                         [default: 0.9]
+  --bootseed INTEGER     set seed for bootstrap generation  [default: 0]
+  --solver TEXT          solver used for estimating lineage prevalence
+                         [default: CLARABEL]
+  --help                 Show this message and exit.

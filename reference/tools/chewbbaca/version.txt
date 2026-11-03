@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/chewBBACA.py --version
+chewBBACA version: 3.3.10

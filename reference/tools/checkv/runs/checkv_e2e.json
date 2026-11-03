@@ -1,0 +1,2809 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "checkv_e2e",
+ "set": "annotation",
+ "tool": "checkv",
+ "mode": "end_to_end",
+ "description": null,
+ "tool_version": "0.7.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373347_11",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:39:11",
+ "inputs": {
+  "G": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  }
+ },
+ "prep": null,
+ "cmd": "checkv end_to_end $G out -t $CPU -d /opt/patric-common/runtime/checkv-db/checkv-db-v1.0",
+ "wall_s": 28.64,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/complete_genomes.tsv",
+   "size": 159,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "contig_id\tcontig_length\tkmer_freq\tprediction_type\tconfidence_level\tconfidence_reason\trepeat_length\trepeat_count\trepeat_n_freq\trepeat_mode_base_freq\trepeat_seq"
+   ],
+   "lines": 1,
+   "sha256": "1aa92d49df77fd257b462c2c52706bc50802a276db6a384410c0467fa57e8023"
+  },
+  {
+   "path": "out/completeness.tsv",
+   "size": 350,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "contig_id\tcontig_length\tproviral_length\taai_expected_length\taai_completeness\taai_confidence\taai_error\taai_num_hits\taai_top_hit\taai_id\taai_af\thmm_completeness_lower\thmm_completeness_upper\thmm_num_hits\t",
+    "MT192765.1\t29829\tNA\t30136.582104731446\t98.97937296385327\thigh\t1.41165352470394\t11\tGCA_000864885.1\t84.07\t97.43\t95.47597142857144\t100.0\t4\t1.0"
+   ],
+   "lines": 2,
+   "sha256": "2a6b6188094c53bf7189ee6dfbeb2639516d18659102915994316c3a1e4a62ea"
+  },
+  {
+   "path": "out/contamination.tsv",
+   "size": 248,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "contig_id\tcontig_length\ttotal_genes\tviral_genes\thost_genes\tprovirus\tproviral_length\thost_length\tregion_types\tregion_lengths\tregion_coords_bp\tregion_coords_genes\tregion_viral_genes\tregion_host_genes",
+    "MT192765.1\t29829\t9\t5\t0\tNo\tNA\tNA\tNA\tNA\tNA\tNA\tNA\tNA"
+   ],
+   "lines": 2,
+   "sha256": "e337a0b1ad94dbc0f6d41c4ae92acea3ca568fcc759c64aa48cbea9ba06d1df9"
+  },
+  {
+   "path": "out/proviruses.fna",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/quality_summary.tsv",
+   "size": 277,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "contig_id\tcontig_length\tprovirus\tproviral_length\tgene_count\tviral_genes\thost_genes\tcheckv_quality\tmiuvig_quality\tcompleteness\tcompleteness_method\tcontamination\tkmer_freq\twarnings",
+    "MT192765.1\t29829\tNo\tNA\t9\t5\t0\tHigh-quality\tHigh-quality\t98.98\tAAI-based (high-confidence)\t0.0\t1.0\t"
+   ],
+   "lines": 2,
+   "sha256": "36950509f69b2b031a25a3731493ca5d64527f63f820154c919f02319c0c2633"
+  },
+  {
+   "path": "out/tmp/aai.tsv",
+   "size": 3541,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "query\ttarget\taligned_genes\tpercent_genes\taligned_length\tpercent_length\tidentity\tscore",
+    "MT192765.1\tGCA_000864885.1\t7\t77.78\t9257\t97.43\t84.07\t7782.36",
+    "MT192765.1\tGCA_000887595.1\t7\t77.78\t9257\t97.43\t80.83\t7482.43"
+   ],
+   "lines": 59,
+   "sha256": "f221aa44c3215f8ec1edc3e74be2b6cd87d6e64e50651055b966567d9f954206"
+  },
+  {
+   "path": "out/tmp/diamond.tsv",
+   "size": 14219,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1_1\tGCA_000864885.1_1\t79.9\t4423\t832\t11\t1\t4406\t1\t4383\t0.0\t7121",
+    "MT192765.1_1\tGCA_000887595.1_1\t76.2\t4415\t1001\t10\t1\t4406\t1\t4374\t0.0\t6814",
+    "MT192765.1_1\tGCA_000926915.1_1\t47.1\t3435\t1698\t36\t1030\t4406\t1194\t4566\t0.0\t3082"
+   ],
+   "lines": 191,
+   "sha256": "a187b65ca5c3b4a6051dc3789d2382dc65b542623c4a42da224c81f227a739b0"
+  },
+  {
+   "path": "out/tmp/diamond.tsv.cmd",
+   "size": 259,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "diamond blastp --outfmt 6 --evalue 1e-5 --query-cover 50 --subject-cover 50 -k 10000 --query out/tmp/proteins.faa --db /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/genome_db/checkv_reps.dmnd --"
+   ],
+   "lines": 1,
+   "sha256": "6494e7cfb486fff189a8471b12e71e2ab310ed5f112eceeaaa461adeba131835"
+  },
+  {
+   "path": "out/tmp/diamond.tsv.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/gene_features.tsv",
+   "size": 575,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "contig_id\tgene_num\tstart\tend\tstrand\tgc\thmm_cat\thmm_db\thmm_name\tevalue\tscore",
+    "MT192765.1\t1\t259\t13476\t1\t37.7\t1\trvdb\tFAM001886\t0.0\t3555.2",
+    "MT192765.1\t2\t13761\t21548\t1\t37.0\t1\trvdb\tFAM001886\t0.0\t5276.5"
+   ],
+   "lines": 10,
+   "sha256": "a537e6ae7fa5b7653cfbb02d4b309a52525ec1cc259588720c92fd338a389f7f"
+  },
+  {
+   "path": "out/tmp/hmmsearch.txt",
+   "size": 92849,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 1076,
+   "sha256": "11f6ec0a3ad740361c7b6d5b136ad49eb64ecdb2c08d3a05934140f81063a387"
+  },
+  {
+   "path": "out/tmp/hmmsearch/1.hmmout",
+   "size": 1046,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "41c728a10e656a19ab65de1c1e9ee0b5a3e01b9763f8b6d3a2db913830a5feca"
+  },
+  {
+   "path": "out/tmp/hmmsearch/1.hmmout.cmd",
+   "size": 214,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/1.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/1.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearch/"
+   ],
+   "lines": 1,
+   "sha256": "607543e26201c794889c510bea177b2602ed2ed6bf68717e719542104bcef4bc"
+  },
+  {
+   "path": "out/tmp/hmmsearch/1.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/10.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "e63361af6db7c827df7e5690fd96192752413a21cdc1d4302b26b84f0dae9715"
+  },
+  {
+   "path": "out/tmp/hmmsearch/10.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/10.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/10.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "23fcf37c58ff5deac2edc944c24aa3fd2cdd36a75c7eb9a33248be033a2fc569"
+  },
+  {
+   "path": "out/tmp/hmmsearch/10.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/11.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "95f01a85c4594008e8931bcc56eca9555d74bc694b366df4284b3ca984564c89"
+  },
+  {
+   "path": "out/tmp/hmmsearch/11.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/11.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/11.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "d64b9ff37719ff5e40bcce55a5281b60dd4c32395bd988f5e6a9c2ba8e76c580"
+  },
+  {
+   "path": "out/tmp/hmmsearch/11.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/12.hmmout",
+   "size": 1292,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "c59babb63e1405d704662d78933aa1238fb4cb6347b3e21b1ec28ea69bf75eba"
+  },
+  {
+   "path": "out/tmp/hmmsearch/12.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/12.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/12.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "fcf0bde1a8883c37e989660e34ae194c9ce9c689182a77d8d586a26af804ded7"
+  },
+  {
+   "path": "out/tmp/hmmsearch/12.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/13.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "f2883993aa2d34e25867adebcc6dd4f64ec5390e159449924b62783bb6fcbfd7"
+  },
+  {
+   "path": "out/tmp/hmmsearch/13.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/13.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/13.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "e8140912fa83d2032aaf602657272336339d7ebdcb45feb1903f89c4e0ea73a5"
+  },
+  {
+   "path": "out/tmp/hmmsearch/13.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/14.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "29b96314533c9bfb33142fafbb5161fa69bf076a8e14acb3673719a9820bfad5"
+  },
+  {
+   "path": "out/tmp/hmmsearch/14.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/14.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/14.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "5afeb639d685295be3f540c238aec3d80835d76d62cfe0d63c5f10c171ee3b47"
+  },
+  {
+   "path": "out/tmp/hmmsearch/14.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/15.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "1b2111c55b714e52a35ca0cc6f040a18d52df924c7445554c126bd1b81820230"
+  },
+  {
+   "path": "out/tmp/hmmsearch/15.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/15.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/15.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "8162dc84b0f09ecbf45822f98dafa47c250c33b07618bfd08fee8f96dc8d8b66"
+  },
+  {
+   "path": "out/tmp/hmmsearch/15.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/16.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "dc3efab4a37631da8c184dc5ad09ee205f2062fce73b082e8206bfe5aad2866a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/16.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/16.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/16.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "5d914d43ec486df62280daaec6f69b7ccd869002aa04a5c6697fd3cc3ed31d67"
+  },
+  {
+   "path": "out/tmp/hmmsearch/16.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/17.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "6e9d3188beefa4a95d03f0cc108afba559cc9291f66a22c77546a26bc68b4712"
+  },
+  {
+   "path": "out/tmp/hmmsearch/17.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/17.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/17.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "f37e1003babefbbb356a9a3d16a98a4e9bc3fcb993ac645f00adf555fd061485"
+  },
+  {
+   "path": "out/tmp/hmmsearch/17.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/18.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "575db5a4aa7bb4ef4457453e4205af42027cb5d7e0bc49f120856f11fee3b65c"
+  },
+  {
+   "path": "out/tmp/hmmsearch/18.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/18.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/18.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "5d850ecf588ba6739711f91b1fd648a0ec13c44fbf104d1961fc9349f88f0275"
+  },
+  {
+   "path": "out/tmp/hmmsearch/18.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/19.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "f97971cfcfb387f400b63520d834bc262de2fe64e61e4444733eff8bb2cbc85d"
+  },
+  {
+   "path": "out/tmp/hmmsearch/19.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/19.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/19.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "06e57b613d4ecda8d85592b5f79c91898cb9bb26bd0c84222fb15e17edfb6085"
+  },
+  {
+   "path": "out/tmp/hmmsearch/19.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/2.hmmout",
+   "size": 1290,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "827d094de9e9916f0c032fca585adae5104b28726161d1fb0541910b0f947198"
+  },
+  {
+   "path": "out/tmp/hmmsearch/2.hmmout.cmd",
+   "size": 214,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/2.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/2.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearch/"
+   ],
+   "lines": 1,
+   "sha256": "daaac5690f2600d870a143f348bc45af699d5dbb70ad7e626aba07562e87e5cc"
+  },
+  {
+   "path": "out/tmp/hmmsearch/2.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/20.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "b816528e1548b6cd75d9e2a4352bc93b8eef5088b0192bdd15be75e6c08b9511"
+  },
+  {
+   "path": "out/tmp/hmmsearch/20.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/20.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/20.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "89eb5adde0f2afcc830086ed4fcaa691a2c6cb1cfbe9e4f6eaa7102492d05e4d"
+  },
+  {
+   "path": "out/tmp/hmmsearch/20.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/21.hmmout",
+   "size": 1293,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "e3a158b0e11c7e06edaee907b835cbc4c36ab4ccb063e606d42ae6fcd0f494dc"
+  },
+  {
+   "path": "out/tmp/hmmsearch/21.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/21.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/21.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "b4938b7a45b3257a839002949c89ffb253f6ac7078879ae20613112158f0a941"
+  },
+  {
+   "path": "out/tmp/hmmsearch/21.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/22.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "19149daa22d0b8ead53a36880d5317ff662d24fe848c74ceedd270da03654ad4"
+  },
+  {
+   "path": "out/tmp/hmmsearch/22.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/22.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/22.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "72399446225a9e46fee0e8087bbe2e129413811d463c62f6048ef6c6cfbc4ed2"
+  },
+  {
+   "path": "out/tmp/hmmsearch/22.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/23.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "e568f93a4ebcf2a2091bb8da3a0390593c1984c22504162c5824bac11542c606"
+  },
+  {
+   "path": "out/tmp/hmmsearch/23.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/23.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/23.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "82f1e3bb520d607ba06a6a54a70268716c919890a8ff2d5e657770ee6a7299c9"
+  },
+  {
+   "path": "out/tmp/hmmsearch/23.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/24.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "9bdfa964853cf752a5b573a5671081e78351c8c17c7ffb95944f0fb8c7e61541"
+  },
+  {
+   "path": "out/tmp/hmmsearch/24.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/24.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/24.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "80d0b7c373477042b491de12c7d65fbcf3ae9f768b361797efa67217faa0a1ff"
+  },
+  {
+   "path": "out/tmp/hmmsearch/24.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/25.hmmout",
+   "size": 1292,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "eb89c49e425aa7e52bc8446bad9ff689fc2c03cc380db36d0f9b08326eca3525"
+  },
+  {
+   "path": "out/tmp/hmmsearch/25.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/25.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/25.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "b85061b6354fe2fa37bc722528d5eae7624755fb56c73b612b0bd0414343e3d8"
+  },
+  {
+   "path": "out/tmp/hmmsearch/25.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/26.hmmout",
+   "size": 1292,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "fb90bbeb735e6caffbc6c4e4a9d3ce7ec6b1712c7c0f1a077a46746ff83ae95f"
+  },
+  {
+   "path": "out/tmp/hmmsearch/26.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/26.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/26.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "91210baab619bbed415e6f5ffac7b1cb6f1824e5a7738ba6dbcccbb4692d5158"
+  },
+  {
+   "path": "out/tmp/hmmsearch/26.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/27.hmmout",
+   "size": 1291,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "544d625a28ce2b6f1d61fe677adfdaf6344bb86e9bc7c39809eb689b9ce3b3bc"
+  },
+  {
+   "path": "out/tmp/hmmsearch/27.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/27.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/27.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "663ef08f5e77fe6ffc1055bc4c240c8f8786c2b63827b822ae64a805a5278608"
+  },
+  {
+   "path": "out/tmp/hmmsearch/27.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/28.hmmout",
+   "size": 1533,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 15,
+   "sha256": "49765b9ca3366e8ec395d079fe8d20d50c952d7d6ff7a40f106b51d0a1b6d7e9"
+  },
+  {
+   "path": "out/tmp/hmmsearch/28.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/28.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/28.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "6552fea5c3920abf454bee83c703229e2a9d78c43597d512754b9c0af10394f1"
+  },
+  {
+   "path": "out/tmp/hmmsearch/28.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/29.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "bf0887aa2fa17e2eb8fef215298691495c4fd3114aa329bb27668c527fff6e40"
+  },
+  {
+   "path": "out/tmp/hmmsearch/29.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/29.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/29.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "e012a6f58911c7dcc4976e54fe3af5493e8bb53565806bf52455252ba54053b6"
+  },
+  {
+   "path": "out/tmp/hmmsearch/29.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/3.hmmout",
+   "size": 1288,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "02389a01875dcc53c0723355ca939b1fb7ba190181a6ef2648dee4b8ac131ab3"
+  },
+  {
+   "path": "out/tmp/hmmsearch/3.hmmout.cmd",
+   "size": 214,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/3.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/3.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearch/"
+   ],
+   "lines": 1,
+   "sha256": "37c5c87a2659722f50946e4145ed7d98915357b9b8f9fb78109a796daad36a29"
+  },
+  {
+   "path": "out/tmp/hmmsearch/3.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/30.hmmout",
+   "size": 1535,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 15,
+   "sha256": "dcf2754f814ed42903ad00ab4a4a155bd9b69a62f547d7f8ba7a299c46ee7007"
+  },
+  {
+   "path": "out/tmp/hmmsearch/30.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/30.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/30.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "6bc615a646181c9682c7c58d6e1f7bd9d48c2336ead186d4062b1ba643a267ed"
+  },
+  {
+   "path": "out/tmp/hmmsearch/30.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/31.hmmout",
+   "size": 1775,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 16,
+   "sha256": "185ff29dc4f277007615c6996452c4cd61fb524ddcd126e6371599491729e4d2"
+  },
+  {
+   "path": "out/tmp/hmmsearch/31.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/31.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/31.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "6fcdc5dd905b1d9daa3e56af51383818d76284086615e6689f422b1f9c469027"
+  },
+  {
+   "path": "out/tmp/hmmsearch/31.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/32.hmmout",
+   "size": 1537,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 15,
+   "sha256": "df78ec4dc2e4587db9b96fddefbdbbc6a16d490a834cebfefffe6ce056f0520a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/32.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/32.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/32.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "daa6bce14e32cf3fcae54d4d5e337b00ff09c073881c20566b999e174dcc3977"
+  },
+  {
+   "path": "out/tmp/hmmsearch/32.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/33.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "c93cedfb916437545315ba6b42c97b9ce43117fded00adda9f54945f9534cfc8"
+  },
+  {
+   "path": "out/tmp/hmmsearch/33.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/33.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/33.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "7587405be2da652e3bbb52bfa833146fef79d824deb862de97e876e4d26e2e1e"
+  },
+  {
+   "path": "out/tmp/hmmsearch/33.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/34.hmmout",
+   "size": 1291,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "b813c5df49d770d1c5f2a13dd6b95717ec7e523c35c65d791f008809f96c4f6c"
+  },
+  {
+   "path": "out/tmp/hmmsearch/34.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/34.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/34.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "4b4b3d060fedf7a9daadc912f1037b6f8de73de5ed850fd26397cdbf46fd6f0d"
+  },
+  {
+   "path": "out/tmp/hmmsearch/34.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/35.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "58a0bdfb4ccb7276e70d95bb02b908dc88a4b1c3d612e7dc053c3aaa1865d4c1"
+  },
+  {
+   "path": "out/tmp/hmmsearch/35.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/35.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/35.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "67eaf35a69a6af000ba9dd0691d6e027bc7b3004fee58d144c9c3837f229e500"
+  },
+  {
+   "path": "out/tmp/hmmsearch/35.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/36.hmmout",
+   "size": 1291,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "93217b2ddbb09c4b1c71f78bc2c0dfca13bcd5c134672b5af221f2727666ae27"
+  },
+  {
+   "path": "out/tmp/hmmsearch/36.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/36.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/36.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "e5caf37a039a755afb7813de6fd8288b7119f867841ca419b2746068d2a98700"
+  },
+  {
+   "path": "out/tmp/hmmsearch/36.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/37.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "e1d88bccbb6a52a6a3782d61e750d83165c6cc77d827ef6015c947878a52f359"
+  },
+  {
+   "path": "out/tmp/hmmsearch/37.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/37.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/37.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "5c50560f88ac3a9bb459ee43d84e88b6557fe842e88c1ea57c2f8f8284c5b950"
+  },
+  {
+   "path": "out/tmp/hmmsearch/37.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/38.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "0066df0b0e02641b64af350b5fc6ef1590b4f9ee6a17e97f76139ffdbb64ba85"
+  },
+  {
+   "path": "out/tmp/hmmsearch/38.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/38.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/38.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "ce7a4f9a52b2d93733ddd99adc17c35a4c18e2f335ef288e19f93005ad689630"
+  },
+  {
+   "path": "out/tmp/hmmsearch/38.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/39.hmmout",
+   "size": 1535,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 15,
+   "sha256": "fd5258bf744f9a6ae5e2bbc525b2d2eb362cbfd4183ea01e17e0341e933b7746"
+  },
+  {
+   "path": "out/tmp/hmmsearch/39.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/39.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/39.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "59262a4bf78948d6bd795039564cd90d04f86f797c2051b4ffa187fc54ad8012"
+  },
+  {
+   "path": "out/tmp/hmmsearch/39.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/4.hmmout",
+   "size": 1288,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "793b7a93fc23ce81040cf017dec1731d83908775c79b76732e68c62750464166"
+  },
+  {
+   "path": "out/tmp/hmmsearch/4.hmmout.cmd",
+   "size": 214,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/4.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/4.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearch/"
+   ],
+   "lines": 1,
+   "sha256": "39a65428fd3e4f1510cf7d93b10342b5349d310a1868522aafc548a56d9c8421"
+  },
+  {
+   "path": "out/tmp/hmmsearch/4.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/40.hmmout",
+   "size": 1779,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 16,
+   "sha256": "050371117df8fa65ec21466b790f318106759eb310bf3e2b1e76cffc89b6251b"
+  },
+  {
+   "path": "out/tmp/hmmsearch/40.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/40.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/40.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "cefe3808dafc57a63935bea0ed5b56d4361e3d8c25524f938bfd8fbc002c92dc"
+  },
+  {
+   "path": "out/tmp/hmmsearch/40.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/41.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "0a3a8846d37d3d3ded1ede1f1101235f537840e687dd9bfda73fde418b8eb1a2"
+  },
+  {
+   "path": "out/tmp/hmmsearch/41.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/41.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/41.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "0d807eb91f4418a24587aa265979ad91d26d5b1ff881e3d166c63dbf167e1f29"
+  },
+  {
+   "path": "out/tmp/hmmsearch/41.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/42.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "b8828f795b5f10b6c3140b6fe2e1350137d14768f1ed3280044792dbe4fa594b"
+  },
+  {
+   "path": "out/tmp/hmmsearch/42.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/42.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/42.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "efe4df9aeddde3fa60ad1ebb9428da0fbcbd87314d758722ce1a5eb3948d964d"
+  },
+  {
+   "path": "out/tmp/hmmsearch/42.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/43.hmmout",
+   "size": 1293,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "c87f0099e0aa3e6032c10f5701b795ed51a6a4f93995384188653c4f6aad7956"
+  },
+  {
+   "path": "out/tmp/hmmsearch/43.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/43.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/43.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "9e9d76edc35f5a453c4521707ff8c4ebec93fa08821f47112117192efef05305"
+  },
+  {
+   "path": "out/tmp/hmmsearch/43.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/44.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "e3fcb36a7302c97c134629f873a0e777ba6977a7945352377d82f7ebd6a4f267"
+  },
+  {
+   "path": "out/tmp/hmmsearch/44.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/44.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/44.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "5907ebfbfded656ed609f5007040f708e903f9e17c064352498fc29c69198f03"
+  },
+  {
+   "path": "out/tmp/hmmsearch/44.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/45.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "63635f6c878c40fca0d38e761a943354bf9751e03f3c31a057768740d12e57b1"
+  },
+  {
+   "path": "out/tmp/hmmsearch/45.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/45.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/45.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "3d5f51f7867c74821cf874d388e9e912b7e7f2d1c44b317b74322462e8d33585"
+  },
+  {
+   "path": "out/tmp/hmmsearch/45.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/46.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "d230575e0e40ef773c1a4d01b18d6b91360854d3726f86a750d55ab294b9f72a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/46.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/46.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/46.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "1cf12a80620fc2ce0640113ed461a46976d5b4c19f00276e5093b05682ec56da"
+  },
+  {
+   "path": "out/tmp/hmmsearch/46.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/47.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "e38a49757ca8386950d07bbec8742a234e0e605ecfb277b4572f41f0b6eaf8cc"
+  },
+  {
+   "path": "out/tmp/hmmsearch/47.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/47.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/47.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "73581720007673aa1940ca1f9f8d036bcfac1e1d9ab357cf6545365ad6584c10"
+  },
+  {
+   "path": "out/tmp/hmmsearch/47.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/48.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "2e61a18093c8e8e9076e3cc62ccd3cf195da03eea7194d053f03c2efe07fa661"
+  },
+  {
+   "path": "out/tmp/hmmsearch/48.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/48.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/48.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "be91e83c611cfd3dcde0bb7d5e4ef5b22cfda81863b442168f2d7bbcab8bc0cc"
+  },
+  {
+   "path": "out/tmp/hmmsearch/48.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/49.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "2793a265a9f0fdb1f086b389f44162639972e93644acf25677020e4b6cd8de2a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/49.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/49.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/49.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "2e0baa1ee69b36710a130140d23920deee08112ecabdc959b59d0cab79a9990d"
+  },
+  {
+   "path": "out/tmp/hmmsearch/49.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/5.hmmout",
+   "size": 1046,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "1945f45e5598a34e631a6ddc6768060c0bdaceafc1773b5b4d0632a8d8b0d29b"
+  },
+  {
+   "path": "out/tmp/hmmsearch/5.hmmout.cmd",
+   "size": 214,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/5.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/5.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearch/"
+   ],
+   "lines": 1,
+   "sha256": "d3507b67cd4b5a134fbf08e49d17112e0bf8eeaa15146fe7362baf201879ecbb"
+  },
+  {
+   "path": "out/tmp/hmmsearch/5.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/50.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "6066a33f95d2da41549225afe928aabb088a04498b44cf69d3e8e4491f763d59"
+  },
+  {
+   "path": "out/tmp/hmmsearch/50.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/50.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/50.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "14ee1259f9d86aaa9dc8c0a1f0b58b18045b98f01b58a0cb2770827751e954d3"
+  },
+  {
+   "path": "out/tmp/hmmsearch/50.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/51.hmmout",
+   "size": 1534,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 15,
+   "sha256": "f763c041495bfaf4087b16a8f7e3e0822007c329788bbc07248fbd022c5a3679"
+  },
+  {
+   "path": "out/tmp/hmmsearch/51.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/51.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/51.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "c5f3c66c6b8cc0ade7cca624d498c07fa2889b1d4b24d077d6e1037cda1bf27c"
+  },
+  {
+   "path": "out/tmp/hmmsearch/51.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/52.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "0e8b7bd1e026e5ac906d462fe271bc67309abf345afefb04b112712e19dc10bb"
+  },
+  {
+   "path": "out/tmp/hmmsearch/52.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/52.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/52.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "44959030a2a94bc79ce728b1199bb963f163593ac9f92574c6df7e74702f6e4d"
+  },
+  {
+   "path": "out/tmp/hmmsearch/52.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/53.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "fea7805de68b806077697a2f5b6f405e99a2cae95fda9c2cb5fce5dd5c4ac0d9"
+  },
+  {
+   "path": "out/tmp/hmmsearch/53.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/53.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/53.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "c5894d2bd0e5b09bf70b0a9fbacacf11f4055060717369cb9d4dab2c809ba0f1"
+  },
+  {
+   "path": "out/tmp/hmmsearch/53.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/54.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "8d2386a8b8bb78959b866c2700f4eca6351df1b385e7f640c65418846e83f2aa"
+  },
+  {
+   "path": "out/tmp/hmmsearch/54.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/54.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/54.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "1b018e76aba643c01191df9151c62ab1d072cbec464a8676ce4f4e5d26dd588a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/54.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/55.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "2abaf91cf1db93ebf7ff5469438dc6f6836e20b2d8a46c3c52c4ab7fc3a1cde7"
+  },
+  {
+   "path": "out/tmp/hmmsearch/55.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/55.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/55.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "267265376fd67384874067a37dd7bd86b0db3279576a39b3957f68a3fac2826c"
+  },
+  {
+   "path": "out/tmp/hmmsearch/55.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/56.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "44855fc83aa538af15cd6d614002edcc0d7394305eae193fb6c5bcae98f7f80a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/56.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/56.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/56.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "816445b6b1e845d66dcd36d220e849728c4cb3e6ea00575c31d5c397e1760e87"
+  },
+  {
+   "path": "out/tmp/hmmsearch/56.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/57.hmmout",
+   "size": 1291,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "635c7c24b38c4a6c5be9db14eceb0b5ae6158648e2e331797a273ea7dc6b5ff2"
+  },
+  {
+   "path": "out/tmp/hmmsearch/57.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/57.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/57.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "613c4b171c834a3e0df7067afd37b99227e6fe0ed1266b0d95075d20969c5e9b"
+  },
+  {
+   "path": "out/tmp/hmmsearch/57.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/58.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "f9316179223b730ddd467a64b93dadd7711c343af4f65ee854db388c1122af28"
+  },
+  {
+   "path": "out/tmp/hmmsearch/58.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/58.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/58.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "f30efce8fb7badf23b52f78bcd571b42305fc14f954cf7e8eaaa72cf4dd074f5"
+  },
+  {
+   "path": "out/tmp/hmmsearch/58.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/59.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "3ba33305c04dedbf85cb9620c97254c329e297f10aca9ecb45c82b5594091619"
+  },
+  {
+   "path": "out/tmp/hmmsearch/59.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/59.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/59.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "f663dfe9cc4fbe76ae68311deef15ae792f38867ea838e8f599002329b69cd0d"
+  },
+  {
+   "path": "out/tmp/hmmsearch/59.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/6.hmmout",
+   "size": 1046,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "d6777cc8bc0eba2aa7c87395c8e68a411905e8a0969686486523efcbd777b430"
+  },
+  {
+   "path": "out/tmp/hmmsearch/6.hmmout.cmd",
+   "size": 214,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/6.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/6.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearch/"
+   ],
+   "lines": 1,
+   "sha256": "be7a00822d4b4810f57fb14dcd00712a0e3b4c0c83a74e2696a7b523041a3097"
+  },
+  {
+   "path": "out/tmp/hmmsearch/6.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/60.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "9060515150348870afec91edf3f72d1ed635447adbdf7fd2cd1d230e771f2f13"
+  },
+  {
+   "path": "out/tmp/hmmsearch/60.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/60.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/60.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "094e4c6f58fd8fa97f2fdaff4c920b49ba704e878a3a1e7f642160376d39855a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/60.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/61.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "c7ce37cffeef3d6306c5d4b449151f8d6b101114b668d43e9a009b2678cbe353"
+  },
+  {
+   "path": "out/tmp/hmmsearch/61.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/61.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/61.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "b11479f98e1578586383de6be4319ad38776cf992ad4c02ffe92402f35f639ed"
+  },
+  {
+   "path": "out/tmp/hmmsearch/61.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/62.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "eba6c9a7a519bee3748a274ac1d5ea79ce267a43b560856a165daaaf3560c244"
+  },
+  {
+   "path": "out/tmp/hmmsearch/62.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/62.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/62.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "c1c34cd034ba6b49ffa8c967d39743257b6f758a41c2b079011c2a003680ed82"
+  },
+  {
+   "path": "out/tmp/hmmsearch/62.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/63.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "3aff29187cd4d3d4572788d78b33b19753e93cab4984a8a36fb6c718b9590135"
+  },
+  {
+   "path": "out/tmp/hmmsearch/63.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/63.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/63.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "46d38885e355a8f983522cfbd61481e789d8a370ee4555058147e89b0ba7ed43"
+  },
+  {
+   "path": "out/tmp/hmmsearch/63.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/64.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "7e3175c0f6069db8419aae475d620e613efec4f27fb2615c464cd376c5468335"
+  },
+  {
+   "path": "out/tmp/hmmsearch/64.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/64.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/64.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "51ac515b0fff90c421f26fd6baa38d79834a741d5426b63285aaff7896e09844"
+  },
+  {
+   "path": "out/tmp/hmmsearch/64.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/65.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "79360266e4d421491ded84f86e2dd2ca7fe3a449236bd83f70d4319251003a33"
+  },
+  {
+   "path": "out/tmp/hmmsearch/65.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/65.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/65.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "96ce514d71c8e60097047b90ed90a0b2be65c18838255d288fe43791caad0622"
+  },
+  {
+   "path": "out/tmp/hmmsearch/65.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/66.hmmout",
+   "size": 1160,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                                                                    --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name                                                accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of targ",
+    "#------------------- ----------                                      -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- -------------------"
+   ],
+   "lines": 13,
+   "sha256": "a0a48011faa9cf7df1f408b394277b2cbd643ebeeb61c26c829aae0f3ade1edf"
+  },
+  {
+   "path": "out/tmp/hmmsearch/66.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/66.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/66.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "c78d82b59b46f1f2027c390802f0d0716c4915f2f7ec506e5afb80a383a71ff7"
+  },
+  {
+   "path": "out/tmp/hmmsearch/66.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/67.hmmout",
+   "size": 1121,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                                                       --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name                                   accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ----------                         -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "1c1c31363339b588a0bfd8b94848c61c8f070db3cc8bd2aa4a9ee91a3f7feefe"
+  },
+  {
+   "path": "out/tmp/hmmsearch/67.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/67.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/67.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "374625b253e90a32228e25ab3b89cedf738ef63460360f72c4b71f920539b91f"
+  },
+  {
+   "path": "out/tmp/hmmsearch/67.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/68.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "910ab0e9cd00fe545ec8921e4c558a40dd8237c98f2ef6ad34355fdf6ec47e88"
+  },
+  {
+   "path": "out/tmp/hmmsearch/68.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/68.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/68.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "70cb631ecb6e92abd4d886abd0fec5e5d58779fd9a2f249a6bfb401b4ee679da"
+  },
+  {
+   "path": "out/tmp/hmmsearch/68.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/69.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "72efef89c8318e5bbcc106a787727454d54feb7b489578f817bf47ab3223cbb1"
+  },
+  {
+   "path": "out/tmp/hmmsearch/69.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/69.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/69.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "5552ecd7149a965228b86b9bc8e8c35eeccf9a690d13022ce31555f0103f13fa"
+  },
+  {
+   "path": "out/tmp/hmmsearch/69.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/7.hmmout",
+   "size": 1289,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "3f8b9576e49021e5048fe6059d31fde84599d6fd9f0b5f98b51d0fc97a21045f"
+  },
+  {
+   "path": "out/tmp/hmmsearch/7.hmmout.cmd",
+   "size": 214,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/7.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/7.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearch/"
+   ],
+   "lines": 1,
+   "sha256": "cbb7beb0e9691d5fe3d74288db194a33eeb2874155e8a4049f162c7820a32e83"
+  },
+  {
+   "path": "out/tmp/hmmsearch/7.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/70.hmmout",
+   "size": 1055,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                                 --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name             accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ----------   -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "c62578c49445097467615f469b242519444e478eee7d8445c70bef3e82dee001"
+  },
+  {
+   "path": "out/tmp/hmmsearch/70.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/70.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/70.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "ee349b47c75940b3a2ae86abbda3dc072d573a191a0de242568125db417c3558"
+  },
+  {
+   "path": "out/tmp/hmmsearch/70.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/71.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "fc27fdf5606871ea28c67078ac5ea6ada763517101bf57c9bfb92b0ca4b2d506"
+  },
+  {
+   "path": "out/tmp/hmmsearch/71.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/71.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/71.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "6d3e7050b6410a383eedc8ad230d245f932076194e052be56b7197f041971461"
+  },
+  {
+   "path": "out/tmp/hmmsearch/71.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/72.hmmout",
+   "size": 1299,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                                 --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name             accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ----------   -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "0a19d6d4780a7149bf34b21ab49ff9a116f7c1922082d66a26c841d5e06891f1"
+  },
+  {
+   "path": "out/tmp/hmmsearch/72.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/72.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/72.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "5058a0d9f09dd387e43504f948ba4e3b68d78eedbca9da57bc3f4891616326ea"
+  },
+  {
+   "path": "out/tmp/hmmsearch/72.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/73.hmmout",
+   "size": 1055,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                                 --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name             accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ----------   -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "e220c1aa6a5b68f91f735cbae0e09241adcbef8653765e28051dd4cf38658c2b"
+  },
+  {
+   "path": "out/tmp/hmmsearch/73.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/73.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/73.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "f68a0d18291ef15a0117796bf9e57ce8a8dee78d0622a06363766d5f5298fef5"
+  },
+  {
+   "path": "out/tmp/hmmsearch/73.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/74.hmmout",
+   "size": 1055,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                                 --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name             accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ----------   -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "796b5d744080db0ff7d8e35ca8e68745ec33e4bdacf4428eecac358c59404368"
+  },
+  {
+   "path": "out/tmp/hmmsearch/74.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/74.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/74.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "4f3b70fc7125d9d3dc3d18fdf7769eb8dc74ff3a57b10a8741505e125e30f00c"
+  },
+  {
+   "path": "out/tmp/hmmsearch/74.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/75.hmmout",
+   "size": 1055,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                                 --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name             accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ----------   -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "60787b6f6df44b163c6c33f80860e3584ab4f541d8272f85d9af0aa8142960b6"
+  },
+  {
+   "path": "out/tmp/hmmsearch/75.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/75.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/75.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "87fb7eecf98863e2aa509b74fa024978f854328eebeef15cf68ef446e6bce4e6"
+  },
+  {
+   "path": "out/tmp/hmmsearch/75.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/76.hmmout",
+   "size": 1778,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 16,
+   "sha256": "6750edeaf71202150d98647c3f6bce115788cb2674ace4a1adfa84fcdab03aaf"
+  },
+  {
+   "path": "out/tmp/hmmsearch/76.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/76.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/76.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "9a178513ebd5d3957e25f865e2f60746aa0213f0d5bd8df302d7904136c1785a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/76.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/77.hmmout",
+   "size": 1535,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 15,
+   "sha256": "5532d90b6e799da4460ba0dc68f9e61e241e5d2b3f2387ca80c85c3b4f32b5f3"
+  },
+  {
+   "path": "out/tmp/hmmsearch/77.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/77.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/77.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "249ca7503f3fc9c85bff89c96387ede667851c3e40b652847af72a6925023370"
+  },
+  {
+   "path": "out/tmp/hmmsearch/77.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/78.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "e37f1994d3a94cbdcb414a709bdfde2eb6cb036b5eb63116a2d0dd0aa2e3ad0a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/78.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/78.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/78.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "e19a0be703c37a9add5f79bb8444ea810fe947ec859c5ddb2c3d60085eb7d19a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/78.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/79.hmmout",
+   "size": 1049,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "e12741890ac0b7f74c54095c78c5a158ce03ebe8daa7697593655df92958b30a"
+  },
+  {
+   "path": "out/tmp/hmmsearch/79.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/79.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/79.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "9e5b2214c87f22dcce6f0229d91e963c3c75cbea7423d8dada8ee5483c919b52"
+  },
+  {
+   "path": "out/tmp/hmmsearch/79.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/8.hmmout",
+   "size": 1046,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "2b56a03282f8af6a07cf57c17618c7176007d7e4ea31719fc4e6c5fbc1347ec9"
+  },
+  {
+   "path": "out/tmp/hmmsearch/8.hmmout.cmd",
+   "size": 214,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/8.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/8.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearch/"
+   ],
+   "lines": 1,
+   "sha256": "d7b04e34366bfc54df7b06415400933c2db1941483cc0a94d89658300f560ccc"
+  },
+  {
+   "path": "out/tmp/hmmsearch/8.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/80.hmmout",
+   "size": 1292,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 14,
+   "sha256": "bf5988d65ce6dd2146093b376087619febc622d3825923368f0352b0dbf18cd3"
+  },
+  {
+   "path": "out/tmp/hmmsearch/80.hmmout.cmd",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/80.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/80.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearc"
+   ],
+   "lines": 1,
+   "sha256": "dbeed3f2bb4c242bf0741d9b15e650c3a6b967e86bf421c266d2ea6329c8f389"
+  },
+  {
+   "path": "out/tmp/hmmsearch/80.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/hmmsearch/9.hmmout",
+   "size": 1046,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 13,
+   "sha256": "af4f4d9a2fcbd9a48c5630c65e6137caf255dfe93d792a898da37cbc3f06ab87"
+  },
+  {
+   "path": "out/tmp/hmmsearch/9.hmmout.cmd",
+   "size": 214,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmmsearch --noali -o /dev/null -E 10 --tblout out/tmp/hmmsearch/9.hmmout --cpu 1 /opt/patric-common/runtime/checkv-db/checkv-db-v1.0/hmm_db/checkv_hmms/9.hmm out/tmp/proteins.faa 2> out/tmp/hmmsearch/"
+   ],
+   "lines": 1,
+   "sha256": "10e27c32a4e9c94b4f2c5795ee5f12d5737dd1d389e73b0d9b4e5c5ffbe70001"
+  },
+  {
+   "path": "out/tmp/hmmsearch/9.hmmout.log",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/tmp/proteins.faa",
+   "size": 10682,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1_1 # 259 # 13476 # 1 # ID=1_1;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.377",
+    "MESLVPGFNEKTHVQLSLPVLQVRDVLVRGFGDSVEEVLSEARQHLKDGTCGLVEVEKGV",
+    "LPQLEQPYVFIKRSDARTAPHGHVMVELVAELEGIQYGRSGETLGVLVPHVGEIPVAYRK"
+   ],
+   "lines": 173,
+   "records": 9,
+   "residues": 9501,
+   "sha256": "9d9faffb6c07e05fd8c8a5a1523afbd6f8200f84cb36972ae4b772384e80a070"
+  },
+  {
+   "path": "out/tmp/proteins/1.cmd",
+   "size": 108,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "prodigal -p meta -i out/tmp/proteins/1.fna -a out/tmp/proteins/1.faa 1> /dev/null 2> out/tmp/proteins/1.log"
+   ],
+   "lines": 1,
+   "sha256": "cc6428dd602dbccab32c586eca9e54ea80edcb663d1e7b762faa3d5d44ea5ef9"
+  },
+  {
+   "path": "out/tmp/proteins/1.faa",
+   "size": 10682,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1_1 # 259 # 13476 # 1 # ID=1_1;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.377",
+    "MESLVPGFNEKTHVQLSLPVLQVRDVLVRGFGDSVEEVLSEARQHLKDGTCGLVEVEKGV",
+    "LPQLEQPYVFIKRSDARTAPHGHVMVELVAELEGIQYGRSGETLGVLVPHVGEIPVAYRK"
+   ],
+   "lines": 173,
+   "records": 9,
+   "residues": 9501,
+   "sha256": "9d9faffb6c07e05fd8c8a5a1523afbd6f8200f84cb36972ae4b772384e80a070"
+  },
+  {
+   "path": "out/tmp/proteins/1.fna",
+   "size": 29950,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1 Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/PC00101P/2020, complete genome",
+    "GTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCTGTTCTCTAAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACTCACGCAGTATAATTAATAACTAATTACTGTCGTTGACAGGACACGAGTAACTCGTCTATCTTCTGCAGGCTGCTTACGGTTTCGTCC"
+   ],
+   "lines": 2,
+   "records": 1,
+   "residues": 29829,
+   "sha256": "652026c4b945e1e420050a2c231758093eacbd1650439c99e99fb5af71158162"
+  },
+  {
+   "path": "out/tmp/proteins/1.log",
+   "size": 400,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "-------------------------------------",
+    "PRODIGAL v2.6.3 [February, 2016]         ",
+    "Univ of Tenn / Oak Ridge National Lab"
+   ],
+   "lines": 10,
+   "sha256": "0deec218d8bb36982b891c5473bbc137a00e8164adf59cdf42e3761037f9a7df"
+  },
+  {
+   "path": "out/tmp/proteins/2.cmd",
+   "size": 108,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "prodigal -p meta -i out/tmp/proteins/2.fna -a out/tmp/proteins/2.faa 1> /dev/null 2> out/tmp/proteins/2.log"
+   ],
+   "lines": 1,
+   "sha256": "34898e768b96dc81b24746fded6f938a847ee46fdc35facacbc85153d197adc4"
+  },
+  {
+   "path": "out/tmp/proteins/2.log",
+   "size": 249,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "-------------------------------------",
+    "PRODIGAL v2.6.3 [February, 2016]         ",
+    "Univ of Tenn / Oak Ridge National Lab"
+   ],
+   "lines": 8,
+   "sha256": "5179726353a08f36d80dba3e12cb4e93a7961326e46e3aa5a4f29106e8096fc9"
+  },
+  {
+   "path": "out/tmp/proteins/3.cmd",
+   "size": 108,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "prodigal -p meta -i out/tmp/proteins/3.fna -a out/tmp/proteins/3.faa 1> /dev/null 2> out/tmp/proteins/3.log"
+   ],
+   "lines": 1,
+   "sha256": "a6118d5cd72b1bba3611cffccba321efe88e6f7a8e81882b509f57e17be372b7"
+  },
+  {
+   "path": "out/tmp/proteins/3.log",
+   "size": 249,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "-------------------------------------",
+    "PRODIGAL v2.6.3 [February, 2016]         ",
+    "Univ of Tenn / Oak Ridge National Lab"
+   ],
+   "lines": 8,
+   "sha256": "bb8acba09ae28d463612a66e462df81b5c492b45118631615fb37026027a909b"
+  },
+  {
+   "path": "out/tmp/proteins/4.cmd",
+   "size": 108,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "prodigal -p meta -i out/tmp/proteins/4.fna -a out/tmp/proteins/4.faa 1> /dev/null 2> out/tmp/proteins/4.log"
+   ],
+   "lines": 1,
+   "sha256": "2c81b08070ea0b425fd41fc3e875786092f484f2d417bb98fc8d4d8ab2173fee"
+  },
+  {
+   "path": "out/tmp/proteins/4.log",
+   "size": 249,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "-------------------------------------",
+    "PRODIGAL v2.6.3 [February, 2016]         ",
+    "Univ of Tenn / Oak Ridge National Lab"
+   ],
+   "lines": 8,
+   "sha256": "833666634bdc2554d3a6b2184174132017ba367f3582253907ba084a9bae3c3b"
+  },
+  {
+   "path": "out/tmp/tr.fna",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/viruses.fna",
+   "size": 29842,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1",
+    "GTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCTGTTCTCTAAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACTCACGCAGTATAATTAATAACTAATTACTGTCGTTGACAGGACACGAGTAACTCGTCTATCTTCTGCAGGCTGCTTACGGTTTCGTCC"
+   ],
+   "lines": 2,
+   "records": 1,
+   "residues": 29829,
+   "sha256": "09c95a7a1a54ef47f9675e627556fac1e2a204d889e5bd6d0a59a3e6d6386acf"
+  }
+ ],
+ "n_outputs": 264,
+ "output_bytes": 305394,
+ "time": {
+  "elapsed": "0:28.60",
+  "max_rss_kb": "1058928",
+  "cpu_pct": "193",
+  "exit_status": "0",
+  "user_s": "50.74",
+  "sys_s": "4.55",
+  "elapsed_s": 28.6,
+  "max_rss_mb": 1034.1
+ },
+ "stdout_tail": "",
+ "stderr_tail": "\nCheckV v0.7.0: contamination\n[1/8] Reading database info...\n[2/8] Reading genome info...\n[3/8] Calling genes with Prodigal...\n[4/8] Reading gene info...\n[5/8] Running hmmsearch...\n[6/8] Annotating genes...\n[7/8] Identifying host regions...\n[8/8] Writing results...\nRun time: 15.18 seconds\nPeak mem: 0.68 GB\n\nCheckV v0.7.0: completeness\n[1/8] Skipping gene calling...\n[2/8] Initializing queries and database...\n[3/8] Running DIAMOND blastp search...\n[4/8] Computing AAI...\n[5/8] Running AAI based completeness estimation...\n[6/8] Running HMM based completeness estimation...\n[7/8] Determining genome copy number...\n[8/8] Writing results...\nRun time: 12.04 seconds\nPeak mem: 1.18 GB\n\nCheckV v0.7.0: complete_genomes\n[1/7] Reading input sequences...\n[2/7] Finding complete proviruses...\n[3/7] Finding direct/inverted terminal repeats...\n[4/7] Filtering terminal repeats...\n[5/7] Checking genome for completeness...\n[6/7] Checking genome for large duplications...\n[7/7] Writing results...\nRun time: 0.0 seconds\nPeak mem: 1.18 GB\n\nCheckV v0.7.0: quality_summary\n[1/6] Reading input sequences...\n[2/6] Reading results from contamination module...\n[3/6] Reading results from completeness module...\n[4/6] Reading results from complete genomes module...\n[5/6] Classifying contigs into quality tiers...\n[6/6] Writing results...\nRun time: 0.0 seconds\nPeak mem: 1.18 GB\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:39:40"
+}

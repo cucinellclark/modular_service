@@ -1,0 +1,205 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "quast_noref",
+ "set": "assembly",
+ "tool": "quast",
+ "mode": "no_reference",
+ "description": null,
+ "tool_version": "5.2.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373339_15",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:40:44",
+ "inputs": {
+  "C": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "quast.py -t $CPU -o quast $C",
+ "wall_s": 1.77,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "quast/basic_stats/GC_content_plot.pdf",
+   "size": 12778,
+   "new": true,
+   "kind": "image",
+   "sha256": "a65d3d6c7ceb560f8a86d166ea960bdd8c0cc0bc9baac4a43683b4bd6d263211"
+  },
+  {
+   "path": "quast/basic_stats/Nx_plot.pdf",
+   "size": 11313,
+   "new": true,
+   "kind": "image",
+   "sha256": "b70b1f3dff902db624132ff564e8defac6f650e35527915fbc4692419b5ece46"
+  },
+  {
+   "path": "quast/basic_stats/cumulative_plot.pdf",
+   "size": 12246,
+   "new": true,
+   "kind": "image",
+   "sha256": "8e1f925b426554b080997d5f4c60f346ced10d0be19a7ea1dc3832ae8a0abf93"
+  },
+  {
+   "path": "quast/basic_stats/genome_GC_content_plot.pdf",
+   "size": 12261,
+   "new": true,
+   "kind": "image",
+   "sha256": "a76fef63b2c96566e136d85dc4fef31f6e006c2294c17b5a93f02b1b3b920140"
+  },
+  {
+   "path": "quast/icarus.html",
+   "size": 53351,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<html>",
+    "<head>",
+    "    <style type=\"text/css\" rel=\"stylesheet\" name=\"icarus.css\">"
+   ],
+   "sha256": "cc7c5e8a5f194b527f59c2e80c77138e30c6e1e0e3c16f340c1d714d21df4809"
+  },
+  {
+   "path": "quast/icarus_viewers/contig_size_viewer.html",
+   "size": 780256,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!--",
+    "The MIT License (MIT)",
+    ""
+   ],
+   "sha256": "4e3da900527e7723077417ecad850a9090a41dafd2a22cc91bed7b66e576bc6e"
+  },
+  {
+   "path": "quast/quast.log",
+   "size": 3029,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "/opt/patric-common/runtime/bin/quast.py -t 8 -o quast /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/inputs/genome.fasta",
+    "",
+    "Version: 5.2.0"
+   ],
+   "lines": 61,
+   "sha256": "eb44258c4a925ac4cada05b10a8650778e4305c6a7c7cee3b2f76218d999c2e9"
+  },
+  {
+   "path": "quast/report.html",
+   "size": 368398,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!DOCTYPE html>",
+    "<html lang=\"en\">",
+    "<head>"
+   ],
+   "sha256": "7575819bc1773c78b42b7e30f5ab9e5b60b5e5f10c612621eb0224d674bcf14b"
+  },
+  {
+   "path": "quast/report.pdf",
+   "size": 24857,
+   "new": true,
+   "kind": "image",
+   "sha256": "fcd72a3b7f5597ec55bc12590836f54a2b5635339ffc141f23be18b8ab408123"
+  },
+  {
+   "path": "quast/report.tex",
+   "size": 1193,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\\documentclass[12pt,a4paper]{article}",
+    "\\begin{document}",
+    "\\begin{table}[ht]"
+   ],
+   "lines": 34,
+   "sha256": "ff46e6c33cee3c3a8cedcc94af57c99566b18a321ac44cf45473f4e47ac1d817"
+  },
+  {
+   "path": "quast/report.tsv",
+   "size": 501,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Assembly\tgenome",
+    "# contigs (>= 0 bp)\t1",
+    "# contigs (>= 1000 bp)\t1"
+   ],
+   "lines": 23,
+   "sha256": "a29f9a6a2dfea7cd0bb17c9b72171766436f740038d84ec57844b9126a9f9bda"
+  },
+  {
+   "path": "quast/report.txt",
+   "size": 1010,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., \"# contigs (>= 0 bp)\" and \"Total length (>= 0 bp)\" include all contigs).",
+    "",
+    "Assembly                    genome  "
+   ],
+   "lines": 25,
+   "sha256": "68b36701e865491e3f4a7ddd6542fab462abd9f93f1ae814876065a310efc38f"
+  },
+  {
+   "path": "quast/transposed_report.tex",
+   "size": 1026,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\\documentclass[12pt,a4paper]{article}",
+    "\\begin{document}",
+    "\\begin{table}[ht]"
+   ],
+   "lines": 13,
+   "sha256": "6dff28ec9d5071fbecdc2fed0cb2edf5f42f624582e5525b18e9102bb5b3ce73"
+  },
+  {
+   "path": "quast/transposed_report.tsv",
+   "size": 501,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Assembly\t# contigs (>= 0 bp)\t# contigs (>= 1000 bp)\t# contigs (>= 5000 bp)\t# contigs (>= 10000 bp)\t# contigs (>= 25000 bp)\t# contigs (>= 50000 bp)\tTotal length (>= 0 bp)\tTotal length (>= 1000 bp)\tTota",
+    "genome\t1\t1\t1\t1\t1\t1\t358242\t358242\t358242\t358242\t358242\t358242\t1\t358242\t358242\t26.17\t358242\t358242\t358242.0\t1\t1\t0.00"
+   ],
+   "lines": 2,
+   "sha256": "3bf219e0ec2003c8379bfab12cb8e1b68bf34f5bdc3f635a24688203d9f50b16"
+  },
+  {
+   "path": "quast/transposed_report.txt",
+   "size": 997,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., \"# contigs (>= 0 bp)\" and \"Total length (>= 0 bp)\" include all contigs).",
+    "",
+    "Assembly  # contigs (>= 0 bp)  # contigs (>= 1000 bp)  # contigs (>= 5000 bp)  # contigs (>= 10000 bp)  # contigs (>= 25000 bp)  # contigs (>= 50000 bp)  Total length (>= 0 bp)  Total length (>= 1000 "
+   ],
+   "lines": 4,
+   "sha256": "afe15e2b65d74a75eabd5df5fa780022c68ad5442473243538b27961af65f153"
+  }
+ ],
+ "n_outputs": 15,
+ "output_bytes": 1283717,
+ "time": {
+  "elapsed": "0:01.76",
+  "max_rss_kb": "103864",
+  "cpu_pct": "171",
+  "exit_status": "0",
+  "user_s": "1.24",
+  "sys_s": "1.78",
+  "elapsed_s": 1.76,
+  "max_rss_mb": 101.4
+ },
+ "stdout_tail": "/opt/patric-common/runtime/bin/quast.py -t 8 -o quast /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/inputs/genome.fasta\n\nVersion: 5.2.0\n\nSystem information:\n  OS: Linux-5.15.0-191-generic-x86_64-with-glibc2.35 (linux_64)\n  Python version: 3.10.14\n  CPUs number: 96\n\nStarted: 2026-11-02 15:40:44\n\nLogging to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/quast.log\n\nCWD: /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15\nMain parameters: \n  MODE: default, threads: 8, min contig length: 500, min alignment length: 65, min alignment IDY: 95.0, \\\n  ambiguity: one, min local misassembly length: 200, min extensive misassembly length: 1000\n\nContigs:\n  Pre-processing...\n  /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/inputs/genome.fasta ==> genome\n\n2026-11-02 15:40:45\nRunning Basic statistics processor...\n  Contig files: \n    genome\n  Calculating N50 and L50...\n    genome, N50 = 358242, L50 = 1, auN = 358242.0, Total length = 358242, GC % = 26.17, # N's per 100 kbp =  0.00\n  Drawing Nx plot...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/basic_stats/Nx_plot.pdf\n  Drawing cumulative plot...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/basic_stats/cumulative_plot.pdf\n  Drawing GC content plot...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/basic_stats/GC_content_plot.pdf\n  Drawing genome GC content plot...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/basic_stats/genome_GC_content_plot.pdf\nDone.\n\nNOTICE: Genes are not predicted by default. Use --gene-finding or --glimmer option to enable it.\n\n2026-11-02 15:40:45\nCreating large visual summaries...\nThis may take a while: press Ctrl-C to skip this step..\n  1 of 2: Creating PDF with all tables and plots...\n  2 of 2: Creating Icarus viewers...\nDone\n\n2026-11-02 15:40:46\nRESULTS:\n  Text versions of total report are saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/report.txt, report.tsv, and report.tex\n  Text versions of transposed total report are saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/transposed_report.txt, transposed_report.tsv, and transposed_report.tex\n  HTML version (interactive tables and plots) is saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/report.html\n  PDF version (tables and plots) is saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/report.pdf\n  Icarus (contig browser) is saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/icarus.html\n  Log is saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_noref-21373339_15/quast/quast.log\n\nFinished: 2026-11-02 15:40:46\nElapsed time: 0:00:01.401143\nNOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0\n\nThank you for using QUAST!\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:40:46"
+}

@@ -1,0 +1,37 @@
+schema: modpipe/module/v1
+id: flye
+version: 1
+label: "Flye: long-read genome assembly"
+description: De novo assembly of nanopore or PacBio reads. Read mode follows the input type unless set explicitly.
+category: assembly
+tool: {id: flye, binary: flye, version: 2.9.1}
+inputs:
+  - {id: reads, type: reads.long}
+outputs:
+  - {id: contigs, type: sequences.dna.contigs, path: out/assembly.fasta}
+  - {id: graph, type: assembly.graph.gfa, path: out/assembly_graph.gfa}
+  - {id: assembly_info, type: table.tsv, path: out/assembly_info.txt, description: "Per-contig length, coverage, circularity"}
+  - {id: log, type: report.text, path: out/flye.log}
+parameters:
+  - id: read_mode
+    type: enum
+    enum: [auto, nano-raw, nano-hq, nano-corr, pacbio-raw, pacbio-corr, pacbio-hifi]
+    default: auto
+    label: "Read type"
+    description: "auto = nano-raw for nanopore, pacbio-raw for PacBio; use nano-hq for recent (Q20+) nanopore data"
+  - {id: genome_size, type: string, default: "", label: "Estimated genome size (e.g. 5m); empty = let Flye estimate"}
+  - {id: meta, type: bool, default: false, label: "Metagenome mode (--meta)"}
+  - {id: iterations, type: int, default: 1, min: 0, max: 10, advanced: true, label: "Polishing iterations"}
+resources: {cpu: 16, memory: 64G, runtime: 12h}
+command: |
+  {% set nano = inputs.reads.type == 'reads.long.nanopore' %}
+  {% set mode = params.read_mode if params.read_mode != 'auto' else ('nano-raw' if nano else 'pacbio-raw') %}
+  {% if nano and mode.startswith('pacbio') %}{{ fail('Flye read_mode ' ~ mode ~ ' does not match nanopore reads') }}{% endif %}
+  {% if not nano and mode.startswith('nano') %}{{ fail('Flye read_mode ' ~ mode ~ ' does not match PacBio reads') }}{% endif %}
+  flye --{{ mode }} {{ inputs.reads | q }} --out-dir out --threads {{ cpu }} -i {{ params.iterations }}
+  {% if params.genome_size %}--genome-size {{ params.genome_size | q }}{% endif %}
+  {% if params.meta %}--meta{% endif %}
+tests:
+  discovery_runs: [flye_nano]
+  observed: {max_rss_mb: 8302, max_wall_s: 79, note: "Portiera ONT ~40x; fails on very short reads (SARS-CoV-2 ONT, ~540 bp)"}
+provenance: {bvbrc_invocations: [App-GenomeAssembly2.pl, p3x-assembly.py], nfcore: [flye]}

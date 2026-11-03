@@ -1,0 +1,4 @@
+# /usr/bin/bbnorm.sh --version
+java -ea -Xmx39753m -Xms39753m -cp /usr/share/java/bbmap.jar jgi.KmerNormalize bits=32 --version
+BBMap version 38.95
+For help, please run the shellscript with no parameters, or look in /docs/.

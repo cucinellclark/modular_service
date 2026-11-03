@@ -1,0 +1,3 @@
+# /opt/patric-common/runtime/bin/kraken2 --version
+Kraken version 2.1.2
+Copyright 2013-2021, Derrick Wood (dwood@cs.jhu.edu)

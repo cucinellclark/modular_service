@@ -1,0 +1,545 @@
+{
+ "format_1930": {
+  "label": "FASTQ",
+  "patterns": {
+   "*.{fq,fastq,fq.gz,fastq.gz}": 4,
+   "*.{fasta,fastq}": 3,
+   "*fail.fastq.gz": 2,
+   "*.{fastq,fq,fastq.gz,fq.gz}": 2,
+   "*fastp.fastq.gz": 1,
+   "*.{fastq.gz,fastq}": 1
+  },
+  "modules": [
+   "bbmap__bbnorm",
+   "bwa__mem",
+   "canu",
+   "cdhit__cdhitest",
+   "cutadapt",
+   "fastp",
+   "fastplong",
+   "filtlong",
+   "flye",
+   "hostile__clean",
+   "mmseqs__createdb",
+   "racon",
+   "samtools__consensus",
+   "seqtk__subseq",
+   "snippy__run",
+   "trimgalore"
+  ],
+  "directions": {
+   "output": 11,
+   "input": 15
+  }
+ },
+ "format_3989": {
+  "label": "GZIP",
+  "patterns": {
+   "*fastq.gz": 3,
+   "*.vcf.gz": 3,
+   "*fail.fastq.gz": 2,
+   "*.fastq.gz": 2,
+   "*.fasta.gz": 2,
+   "*.tar.gz": 2
+  },
+  "modules": [
+   "amrfinderplus__run",
+   "amrfinderplus__update",
+   "bbmap__bbduk",
+   "bowtie2__align",
+   "canu",
+   "cutadapt",
+   "diamond__makedb",
+   "fastp",
+   "fastplong",
+   "filtlong",
+   "flye",
+   "freebayes",
+   "hisat2__align",
+   "hmmer__hmmsearch",
+   "megahit",
+   "racon",
+   "snippy__core",
+   "snippy__run",
+   "trimgalore",
+   "trnascanse"
+  ],
+  "directions": {
+   "output": 30,
+   "input": 7
+  }
+ },
+ "format_3464": {
+  "label": "JSON",
+  "patterns": {
+   "*.json": 5,
+   "*lineages.json": 2,
+   "*report.json": 1
+  },
+  "modules": [
+   "antismash__antismash",
+   "fastp",
+   "fastplong",
+   "flye",
+   "freyja__boot",
+   "freyja__demix",
+   "hostile__clean",
+   "trimgalore"
+  ],
+  "directions": {
+   "output": 6,
+   "input": 2
+  }
+ },
+ "format_2330": {
+  "label": "Plain text",
+  "patterns": {
+   "*.txt": 3,
+   "*report.txt": 1,
+   "*cutadapt.log": 1,
+   "*.{txt.gz}": 1,
+   "*_logging_info.txt": 1,
+   "*_invalid_cds.txt": 1
+  },
+  "modules": [
+   "blast__makeblastdb",
+   "chewbbaca__allelecall",
+   "cutadapt",
+   "freebayes",
+   "hmmer__hmmsearch",
+   "trimgalore"
+  ],
+  "directions": {
+   "output": 5,
+   "input": 3
+  }
+ },
+ "format_2331": {
+  "label": null,
+  "patterns": {
+   "*_fastqc.html": 1
+  },
+  "modules": [
+   "trimgalore"
+  ],
+  "directions": {
+   "output": 1
+  }
+ },
+ "format_3987": {
+  "label": "ZIP format",
+  "patterns": {
+   "*_fastqc.zip": 1,
+   "*.zip": 1
+  },
+  "modules": [
+   "antismash__antismash",
+   "trimgalore"
+  ],
+  "directions": {
+   "output": 2
+  }
+ },
+ "data_1049": {
+  "label": null,
+  "patterns": {},
+  "modules": [
+   "hostile__clean"
+  ],
+  "directions": {
+   "input": 1
+  }
+ },
+ "format_3750": {
+  "label": "YAML",
+  "patterns": {
+   "*.{yml,yaml}": 2,
+   "*lineages.yml": 2
+  },
+  "modules": [
+   "freyja__boot",
+   "freyja__demix",
+   "multiqc",
+   "spades"
+  ],
+  "directions": {
+   "input": 4
+  }
+ },
+ "format_3475": {
+  "label": "TSV",
+  "patterns": {
+   "*.{tsv}": 10,
+   "*.variants.tsv": 3,
+   "*.depth.tsv": 3,
+   "*.tab": 2,
+   "*.tsv": 2,
+   "*_cds_coordinates.tsv": 2
+  },
+  "modules": [
+   "amrfinderplus__run",
+   "blast__blastp",
+   "bracken__bracken",
+   "chewbbaca__allelecall",
+   "chewbbaca__createschema",
+   "diamond__blastp",
+   "freyja__boot",
+   "freyja__demix",
+   "freyja__variants",
+   "genomad__endtoend",
+   "mlst",
+   "mmseqs__easycluster",
+   "mmseqs__easysearch",
+   "multiqc",
+   "phispy",
+   "samtools__depth",
+   "snippy__core",
+   "snippy__run",
+   "trnascanse"
+  ],
+  "directions": {
+   "input": 7,
+   "output": 35
+  }
+ },
+ "data_2044": {
+  "label": null,
+  "patterns": {
+   "*.{fasta,fa}": 1
+  },
+  "modules": [
+   "bwa__index",
+   "bwa__mem"
+  ],
+  "directions": {
+   "input": 3
+  }
+ },
+ "format_1929": {
+  "label": "FASTA",
+  "patterns": {
+   "*.{fa,fasta}{.gz,}": 6,
+   "*.{fa,fasta,fa.gz,fasta.gz}": 3,
+   "*.{fasta,fa}": 2,
+   "*.{fa,fasta,fna}": 2,
+   "*.{fasta,fa,fna}": 2,
+   ".{fa,fa.gz,fasta,fasta.gz}": 1
+  },
+  "modules": [
+   "amrfinderplus__run",
+   "blast__makeblastdb",
+   "bowtie2__align",
+   "bowtie2__build",
+   "bwa__index",
+   "bwa__mem",
+   "chewbbaca__allelecall",
+   "diamond__blastp",
+   "diamond__makedb",
+   "freebayes",
+   "hmmer__hmmsearch",
+   "mafft__align",
+   "mmseqs__easycluster",
+   "parsnp",
+   "samtools__view",
+   "trnascanse"
+  ],
+  "directions": {
+   "input": 20,
+   "output": 4
+  }
+ },
+ "data_3210": {
+  "label": null,
+  "patterns": {
+   "*.{amb,ann,bwt,pac,sa}": 1,
+   "Directory containing BWA index *.{amb,ann,bwt,pac,sa}": 1
+  },
+  "modules": [
+   "bwa__index",
+   "bwa__mem"
+  ],
+  "directions": {
+   "output": 1,
+   "input": 1
+  }
+ },
+ "format_2572": {
+  "label": "BAM",
+  "patterns": {
+   "*.{bam,cram,sam}": 2,
+   "*.{bam}": 1
+  },
+  "modules": [
+   "bwa__mem",
+   "freebayes"
+  ],
+  "directions": {
+   "output": 1,
+   "input": 2
+  }
+ },
+ "format_3462": {
+  "label": "CRAM",
+  "patterns": {
+   "*.{bam,cram,sam}": 2,
+   "*.{cram}": 1
+  },
+  "modules": [
+   "bwa__mem",
+   "freebayes"
+  ],
+  "directions": {
+   "output": 1,
+   "input": 2
+  }
+ },
+ "format_2573": {
+  "label": "SAM",
+  "patterns": {
+   "*.{bam,cram,sam}": 2,
+   "*.{sam}": 1,
+   "*.{sam,sam.gz}": 1
+  },
+  "modules": [
+   "bwa__mem",
+   "diamond__blastp",
+   "freebayes"
+  ],
+  "directions": {
+   "output": 2,
+   "input": 2
+  }
+ },
+ "format_3326": {
+  "label": "Index",
+  "patterns": {
+   "*.{fai}": 1
+  },
+  "modules": [
+   "samtools__view"
+  ],
+  "directions": {
+   "input": 1
+  }
+ },
+ "format_3003": {
+  "label": "BED",
+  "patterns": {
+   "*.bed": 2,
+   "*.{bed}": 1
+  },
+  "modules": [
+   "freebayes",
+   "samtools__view",
+   "trnascanse"
+  ],
+  "directions": {
+   "input": 3,
+   "output": 1
+  }
+ },
+ "format_3327": {
+  "label": "FASTA index",
+  "patterns": {
+   "*.{bai,crai}": 2,
+   "*.{fa,fasta}.fai": 1
+  },
+  "modules": [
+   "freebayes"
+  ],
+  "directions": {
+   "input": 3
+  }
+ },
+ "format_3752": {
+  "label": "CSV",
+  "patterns": {
+   "*.csv": 3,
+   "*barcodes.csv": 2,
+   "*lineages.csv": 1,
+   "*summarized.csv": 1,
+   "*.{csv}": 1
+  },
+  "modules": [
+   "blast__blastp",
+   "freyja__boot",
+   "freyja__demix",
+   "pangolin__run",
+   "snippy__run",
+   "snpeff__snpeff"
+  ],
+  "directions": {
+   "output": 6,
+   "input": 2
+  }
+ },
+ "data_3671": {
+  "label": "Text",
+  "patterns": {
+   "*.log": 1,
+   "*.stats": 1
+  },
+  "modules": [
+   "trnascanse"
+  ],
+  "directions": {
+   "output": 2
+  }
+ },
+ "format_1975": {
+  "label": null,
+  "patterns": {},
+  "modules": [
+   "trnascanse"
+  ],
+  "directions": {
+   "output": 1
+  }
+ },
+ "format_3981": {
+  "label": null,
+  "patterns": {
+   "*.tar.gz": 2
+  },
+  "modules": [
+   "amrfinderplus__run",
+   "amrfinderplus__update"
+  ],
+  "directions": {
+   "input": 1,
+   "output": 1
+  }
+ },
+ "data_1364": {
+  "label": "HMM",
+  "patterns": {
+   "*.{hmm,hmm.gz}": 1
+  },
+  "modules": [
+   "hmmer__hmmsearch"
+  ],
+  "directions": {
+   "input": 1
+  }
+ },
+ "format_1961": {
+  "label": "Stockholm format",
+  "patterns": {
+   "*.{sto.gz}": 1
+  },
+  "modules": [
+   "hmmer__hmmsearch"
+  ],
+  "directions": {
+   "output": 1
+  }
+ },
+ "format_2332": {
+  "label": "XML",
+  "patterns": {
+   "*.{xml}": 1,
+   "*.{xml,xml.gz}": 1
+  },
+  "modules": [
+   "blast__blastp",
+   "diamond__blastp"
+  ],
+  "directions": {
+   "output": 2
+  }
+ },
+ "format_3836": {
+  "label": "BLAST XML v2 results format",
+  "patterns": {
+   "*.{blast,blast.gz}": 1
+  },
+  "modules": [
+   "diamond__blastp"
+  ],
+  "directions": {
+   "output": 1
+  }
+ },
+ "format_1333": {
+  "label": "BLAST results",
+  "patterns": {
+   "*.{txt,txt.gz}": 1
+  },
+  "modules": [
+   "diamond__blastp"
+  ],
+  "directions": {
+   "output": 1
+  }
+ },
+ "format_1920": {
+  "label": "FASTA",
+  "patterns": {},
+  "modules": [
+   "mmseqs__easycluster"
+  ],
+  "directions": {
+   "input": 1
+  }
+ },
+ "format_1919": {
+  "label": "SEQUENCE-LIKE",
+  "patterns": {
+   "*.{fa,fasta}{.gz,}": 6
+  },
+  "modules": [
+   "mafft__align"
+  ],
+  "directions": {
+   "input": 6
+  }
+ },
+ "format_2554": {
+  "label": "ALIGNMENT FORMAT TXT",
+  "patterns": {
+   "*.fas{.gz,}": 1
+  },
+  "modules": [
+   "mafft__align"
+  ],
+  "directions": {
+   "output": 1
+  }
+ },
+ "format_1921": {
+  "label": "ALIGNMENT FORMAT",
+  "patterns": {
+   "*.fas{.gz,}": 1
+  },
+  "modules": [
+   "mafft__align"
+  ],
+  "directions": {
+   "output": 1
+  }
+ },
+ "format_1984": {
+  "label": "FASTA-ALN",
+  "patterns": {
+   "*.fas{.gz,}": 1
+  },
+  "modules": [
+   "mafft__align"
+  ],
+  "directions": {
+   "output": 1
+  }
+ },
+ "format_1910": {
+  "label": null,
+  "patterns": {
+   "*.tree": 1
+  },
+  "modules": [
+   "parsnp"
+  ],
+  "directions": {
+   "output": 1
+  }
+ }
+}

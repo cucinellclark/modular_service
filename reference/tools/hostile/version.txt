@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/hostile --version
+1.1.0

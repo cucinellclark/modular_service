@@ -1,0 +1,696 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "ksnp4",
+ "set": "phylogeny",
+ "tool": "ksnp4",
+ "mode": "core+ML",
+ "description": "kSNP rejects file names with extra dots, so genomes are copied to g<id>.fasta",
+ "tool_version": "4.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "pear",
+ "slurm_job": "21373455_13",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:45:35",
+ "inputs": {
+  "G1": {
+   "fixture": "bvbrc_1206109.14",
+   "path": "inputs/1206109.14.fna",
+   "size": 364235
+  },
+  "G2": {
+   "fixture": "bvbrc_1239881.13",
+   "path": "inputs/1239881.13.fna",
+   "size": 356809
+  },
+  "G3": {
+   "fixture": "bvbrc_1297582.10",
+   "path": "inputs/1297582.10.fna",
+   "size": 285369
+  },
+  "G4": {
+   "fixture": "bvbrc_91844.21",
+   "path": "inputs/91844.21.fna",
+   "size": 360458
+  }
+ },
+ "prep": "mkdir genomes\nfor g in $G1 $G2 $G3 $G4; do n=g$(basename $g .fna | tr . _); cp $g genomes/$n.fasta; printf '%s\\t%s\\n' \"$PWD/genomes/$n.fasta\" \"$n\"; done > in_list.txt\n",
+ "cmd": "kSNP4 -k 19 -outdir out -in in_list.txt -core -ML -CPU $CPU",
+ "wall_s": 60.11,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/COUNT_Homoplastic_SNPs.SNPs_all.ML",
+   "size": 27,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Number_Homoplastic_SNPs: 6"
+   ],
+   "lines": 1,
+   "sha256": "486daa0e07ccd74d8318786adf5320b83dcdf30abf8b7b31aa82b0ae0e30a602"
+  },
+  {
+   "path": "out/COUNT_Homoplastic_SNPs.SNPs_all.parsimony",
+   "size": 27,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Number_Homoplastic_SNPs: 6"
+   ],
+   "lines": 1,
+   "sha256": "486daa0e07ccd74d8318786adf5320b83dcdf30abf8b7b31aa82b0ae0e30a602"
+  },
+  {
+   "path": "out/COUNT_Homoplastic_SNPs.core_SNPs.ML",
+   "size": 27,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Number_Homoplastic_SNPs: 6"
+   ],
+   "lines": 1,
+   "sha256": "486daa0e07ccd74d8318786adf5320b83dcdf30abf8b7b31aa82b0ae0e30a602"
+  },
+  {
+   "path": "out/COUNT_Homoplastic_SNPs.core_SNPs.parsimony",
+   "size": 27,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Number_Homoplastic_SNPs: 6"
+   ],
+   "lines": 1,
+   "sha256": "486daa0e07ccd74d8318786adf5320b83dcdf30abf8b7b31aa82b0ae0e30a602"
+  },
+  {
+   "path": "out/COUNT_SNPs",
+   "size": 18,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Number_SNPs: 4655"
+   ],
+   "lines": 1,
+   "sha256": "09818ebf74813030c5441161d4baf97bc751f753ef34e4d614360a58aaaf78db"
+  },
+  {
+   "path": "out/COUNT_coreSNPs",
+   "size": 106,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Number core SNPs: 2460",
+    "Number non-core SNPs: 2195",
+    "Number SNPs in at least a fraction 0.5 of genomes: 4655"
+   ],
+   "lines": 3,
+   "sha256": "eabe4c60713f76ad7ffc3b48799db2497e135aa2060b89515a7e7361750d3138"
+  },
+  {
+   "path": "out/ClusterInfo.SNPs_all.ML",
+   "size": 266812,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "LocusNumber\tContextSeq\tCore\tClusters",
+    "0\tAAAAAAAAA.AAAAAAGAA\t0\tLeaf.Node.g1206109_14 Leaf.Node.g1297582_10",
+    "1\tAAAAAAAAA.AAATCTTTT\t1\tGroup.7 Leaf.Node.g1297582_10"
+   ],
+   "lines": 4656,
+   "sha256": "6a1183e0421e649ee6ee2534cc0088f2897de333ced0301a1ce9c4c5a2c6d3ba"
+  },
+  {
+   "path": "out/ClusterInfo.SNPs_all.parsimony",
+   "size": 266812,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "LocusNumber\tContextSeq\tCore\tClusters",
+    "0\tAAAAAAAAA.AAAAAAGAA\t0\tLeaf.Node.g1206109_14 Leaf.Node.g1297582_10",
+    "1\tAAAAAAAAA.AAATCTTTT\t1\tGroup.7 Leaf.Node.g1297582_10"
+   ],
+   "lines": 4656,
+   "sha256": "6a1183e0421e649ee6ee2534cc0088f2897de333ced0301a1ce9c4c5a2c6d3ba"
+  },
+  {
+   "path": "out/ClusterInfo.core_SNPs.ML",
+   "size": 139726,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "LocusNumber\tContextSeq\tCore\tClusters",
+    "1\tAAAAAAAAA.AAATCTTTT\t1\tGroup.7 Leaf.Node.g1297582_10",
+    "5\tAAAAAAAAA.ATATTTATT\t1\tGroup.7 Leaf.Node.g1297582_10"
+   ],
+   "lines": 2461,
+   "sha256": "5b25baad3a85868b35074f9689a42b727f3a8ffba1df8fe4e89c8e185b987de4"
+  },
+  {
+   "path": "out/ClusterInfo.core_SNPs.parsimony",
+   "size": 139638,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "LocusNumber\tContextSeq\tCore\tClusters",
+    "1\tAAAAAAAAA.AAATCTTTT\t1\tGroup.7 Leaf.Node.g1297582_10",
+    "5\tAAAAAAAAA.ATATTTATT\t1\tGroup.7 Leaf.Node.g1297582_10"
+   ],
+   "lines": 2461,
+   "sha256": "1b95d05db7def6ebd62b418a0126fb85cbde2813bc8275871645323181eae74f"
+  },
+  {
+   "path": "out/Homoplasy_groups.SNPs_all.ML",
+   "size": 694,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Group: Group.7\tNumberTargets: 3\tNumberSNPs: 2386",
+    "g1206109_14",
+    "g1239881_13"
+   ],
+   "lines": 40,
+   "sha256": "a3839979b8aa7ec64f7976a60e9718f4bd8263b6ef355fa218bcbee227851e56"
+  },
+  {
+   "path": "out/Homoplasy_groups.SNPs_all.parsimony",
+   "size": 694,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Group: Group.7\tNumberTargets: 3\tNumberSNPs: 2386",
+    "g1206109_14",
+    "g1239881_13"
+   ],
+   "lines": 40,
+   "sha256": "a3839979b8aa7ec64f7976a60e9718f4bd8263b6ef355fa218bcbee227851e56"
+  },
+  {
+   "path": "out/Homoplasy_groups.core_SNPs.ML",
+   "size": 686,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Group: Group.7\tNumberTargets: 3\tNumberSNPs: 2386",
+    "g1206109_14",
+    "g1239881_13"
+   ],
+   "lines": 40,
+   "sha256": "c8e5537f3a9795dfeae2cf07f42d96a13a016ce6a0bc6ead3de2acc90e842a9d"
+  },
+  {
+   "path": "out/Homoplasy_groups.core_SNPs.parsimony",
+   "size": 688,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Group: Group.7\tNumberTargets: 3\tNumberSNPs: 2386",
+    "g1206109_14",
+    "g1239881_13"
+   ],
+   "lines": 40,
+   "sha256": "b2eb9e0026c3be584fc406efb4771b052413030e05a3d01969f4bea5f85d5e5d"
+  },
+  {
+   "path": "out/Node_SNP_counts.SNPs_all.ML",
+   "size": 403,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "node: 1\tNumberTargets: 4\tNumberSNPs: 0",
+    "g1206109_14",
+    "g1239881_13"
+   ],
+   "lines": 22,
+   "sha256": "03821f32acd0cff293245df52174716beb0bfc049a8fb5288ed9b3992a616497"
+  },
+  {
+   "path": "out/Node_SNP_counts.SNPs_all.parsimony",
+   "size": 403,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "node: 1\tNumberTargets: 4\tNumberSNPs: 0",
+    "g1206109_14",
+    "g1239881_13"
+   ],
+   "lines": 22,
+   "sha256": "03821f32acd0cff293245df52174716beb0bfc049a8fb5288ed9b3992a616497"
+  },
+  {
+   "path": "out/Node_SNP_counts.core_SNPs.ML",
+   "size": 399,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "node: 1\tNumberTargets: 4\tNumberSNPs: 0",
+    "g1206109_14",
+    "g1239881_13"
+   ],
+   "lines": 22,
+   "sha256": "997a36881452972fe88ac2688b1e5436a86b62ff93e8c586b6462303024ca7e0"
+  },
+  {
+   "path": "out/Node_SNP_counts.core_SNPs.parsimony",
+   "size": 397,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "node: 1\tNumberTargets: 4\tNumberSNPs: 0",
+    "g1206109_14",
+    "g1239881_13"
+   ],
+   "lines": 22,
+   "sha256": "8495bf6c653b0bf7e56724c598526573664d6b0d6901381d37a287a549a6c2a5"
+  },
+  {
+   "path": "out/SNPs_all",
+   "size": 648814,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "0\tAAAAAAAAA.AAAAAAGAA\tA\tx\tg1206109_14",
+    "0\tAAAAAAAAA.AAAAAAGAA\tT\tx\tg1297582_10"
+   ],
+   "lines": 20674,
+   "sha256": "dc351f8be0a8842c6dda64f57a53b41053721bcd9d5765cd272234429ef1ed29"
+  },
+  {
+   "path": "out/SNPs_all_matrix",
+   "size": 18993,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "4   4655",
+    "g1206109_14                                                                               AGCCCGACTAACGATATAANCNGTAATNAAGANTTGTACACTNNAAGTTATTGCTGGTTCGNNTTTATNNNGATNATCACAGAACATTAGGAANGTACTCAAGATCCACG"
+   ],
+   "lines": 5,
+   "sha256": "55397795122ab9e6a06dda2fd9c45f7ba73c7e382045364facc1b13eba62fa77"
+  },
+  {
+   "path": "out/SNPs_all_matrix.fasta",
+   "size": 18674,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">g1206109_14",
+    "AGCCCGACTAACGATATAA-C-GTAAT-AAGA-TTGTACACT--AAGTTATTGCTGGTTCG--TTTAT---GAT-ATCACAGAACATTAGGAA-GTACTCAAGATCCACGGAAACGTGATGAGGCAAATCCACATAGGGA-CGTGA-GGGCTCCTGTGTTCGACCTCATAAGCCCAAAAAAACGCTATCACCTTTA-AG-"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 18620,
+   "sha256": "ca1a0e27d723d4502f5e48cca5fda9e744bbe9797c514336f1dfb9c548c9f640"
+  },
+  {
+   "path": "out/SNPs_in_majority0.5",
+   "size": 648814,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "0\tAAAAAAAAA.AAAAAAGAA\tA\tx\tg1206109_14",
+    "0\tAAAAAAAAA.AAAAAAGAA\tT\tx\tg1297582_10"
+   ],
+   "lines": 20674,
+   "sha256": "f201712694011ca75e3c223862ac8649da6c15b9951f446e3e111516da78b1b2"
+  },
+  {
+   "path": "out/annotate_list",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/core_SNPs",
+   "size": 398748,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "1\tAAAAAAAAA.AAATCTTTT\tG\tx\tg1206109_14",
+    "1\tAAAAAAAAA.AAATCTTTT\tG\tx\tg1239881_13"
+   ],
+   "lines": 12300,
+   "sha256": "db9c8cc407b8fb94fae2a889ddc64415a5d587398635e96843726e88af426be3"
+  },
+  {
+   "path": "out/core_SNPs_matrix",
+   "size": 10213,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "4   2460",
+    "g1206109_14                                                                               GGAAGTAACTAAGTGTAATAGTATCGTCGTTGATTCATTAGGAGTATCGGTGATCAATGGACGTAGGGCTCTGTGTTCGCAACCAAAATTACCTTCGTATGGAAGATGAT",
+    "g1239881_13                                                                               GGAAGTAACTAAGTGTAATAGTATCGTCGTTGATTCCTTAGGAGTATCGGTGATCAATGGACGTAGGGCTCTGTGTTCGCAACCAAAATTACCTTCGTATGGAAGATGAT"
+   ],
+   "lines": 5,
+   "sha256": "7b18246823fb970d9e53bd52cdfa5c7edc85bf5481c9cd8ba5fe6a53ad5814c5"
+  },
+  {
+   "path": "out/core_SNPs_matrix.fasta",
+   "size": 9894,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">g1206109_14",
+    "GGAAGTAACTAAGTGTAATAGTATCGTCGTTGATTCATTAGGAGTATCGGTGATCAATGGACGTAGGGCTCTGTGTTCGCAACCAAAATTACCTTCGTATGGAAGATGATTTTGACCCCCACGCTAATTACGTATCCTCGGAATGTGTGCTGGCAACTACACGACTGCAACCTCTCACGTATACGGTATTAATAGTATAT",
+    ">g1239881_13"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 9840,
+   "sha256": "d43b5b214894ad6f072683e764c25e29e7e63e63fe5b08c2f84562e22aa5fe34"
+  },
+  {
+   "path": "out/fasta_list",
+   "size": 412,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "/disks/tmp/cucinell/modpipe-discovery/phylogeny/ksnp4-21373455_13/genomes/g1206109_14.fasta\tg1206109_14",
+    "/disks/tmp/cucinell/modpipe-discovery/phylogeny/ksnp4-21373455_13/genomes/g1239881_13.fasta\tg1239881_13",
+    "/disks/tmp/cucinell/modpipe-discovery/phylogeny/ksnp4-21373455_13/genomes/g1297582_10.fasta\tg1297582_10"
+   ],
+   "lines": 4,
+   "sha256": "5acd4a773cfb84395bff79656f5513ff80bfdab1f042c9e9641ce68d365bbb44"
+  },
+  {
+   "path": "out/kSNP_verbose.log",
+   "size": 59323,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "/opt/patric-common/runtime/bin/statusupdate 0 10 1 Preprocessing",
+    "Finished genomes for finding SNP positions:",
+    ""
+   ],
+   "lines": 714,
+   "sha256": "738ed7b2ef38f40452ff09db4f2b74d7bae1a13700e0438006a55f3b1c75d8c1"
+  },
+  {
+   "path": "out/nonCore_SNPs",
+   "size": 250066,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "0\tAAAAAAAAA.AAAAAAGAA\tA\tx\tg1206109_14",
+    "0\tAAAAAAAAA.AAAAAAGAA\tT\tx\tg1297582_10"
+   ],
+   "lines": 8374,
+   "sha256": "d561352a1df433ba9bb13946a9518937b6963c68ffc53d12713807bfe531c098"
+  },
+  {
+   "path": "out/tip_SNP_counts.SNPs_all.ML",
+   "size": 88,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "name_on_tree\tSNP_counts",
+    "g1206109_14\t359",
+    "g1239881_13\t267"
+   ],
+   "lines": 5,
+   "sha256": "55973e843ec4dce0485cf77d49230384801aa47b58f5e9050997f8e16926129e"
+  },
+  {
+   "path": "out/tip_SNP_counts.SNPs_all.parsimony",
+   "size": 88,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "name_on_tree\tSNP_counts",
+    "g1206109_14\t359",
+    "g1239881_13\t267"
+   ],
+   "lines": 5,
+   "sha256": "55973e843ec4dce0485cf77d49230384801aa47b58f5e9050997f8e16926129e"
+  },
+  {
+   "path": "out/tip_SNP_counts.core_SNPs.ML",
+   "size": 82,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "name_on_tree\tSNP_counts",
+    "g1206109_14\t3",
+    "g1239881_13\t4"
+   ],
+   "lines": 5,
+   "sha256": "541d79bf436a1ef85be55f8fc2e0e113026127eaf60a35c4b9845fcf3341bbb1"
+  },
+  {
+   "path": "out/tip_SNP_counts.core_SNPs.parsimony",
+   "size": 82,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "name_on_tree\tSNP_counts",
+    "g1206109_14\t3",
+    "g1239881_13\t4"
+   ],
+   "lines": 5,
+   "sha256": "541d79bf436a1ef85be55f8fc2e0e113026127eaf60a35c4b9845fcf3341bbb1"
+  },
+  {
+   "path": "out/tree.SNPs_all.ML.tre",
+   "size": 96,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14:0.04707,g1239881_13:0.05789,(g1297582_10:6.69341,g91844_21:0.46136)0.709:0.25600);"
+   ],
+   "lines": 1,
+   "sha256": "a45dfeedc09a556f9dcbeb7963aed6271f23e6cd33b3ddcb77d98cd8a775b966"
+  },
+  {
+   "path": "out/tree.core_SNPs.ML.tre",
+   "size": 96,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1297582_10:7.79312,g91844_21:0.01811,(g1206109_14:0.00280,g1239881_13:0.00460)0.464:0.01736);"
+   ],
+   "lines": 1,
+   "sha256": "1238e1c44a89523005c2ded22890a58d5ce72418fac6e260b013734f9373db00"
+  },
+  {
+   "path": "out/tree.core_SNPs.parsimony.tre",
+   "size": 96,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1239881_13:0.00458,(g1297582_10:7.79836,g91844_21:0.02070)0.074:0.01478,g1206109_14:0.00280);"
+   ],
+   "lines": 1,
+   "sha256": "d0cd52ca365f576447ff4a3aa9f19420401da1e4d0cabbf48ef01175377c79c5"
+  },
+  {
+   "path": "out/tree.parsimony.tre",
+   "size": 96,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1239881_13:0.05801,(g1297582_10:6.69410,g91844_21:0.44304)0.735:0.27426,g1206109_14:0.04696);"
+   ],
+   "lines": 1,
+   "sha256": "e3431348ffbfab3c6f945115a3e798aec996af4c1d6176f1221d5f1cdc13f901"
+  },
+  {
+   "path": "out/tree_AlleleCounts.SNPs_all.ML.NodeLabel.tre",
+   "size": 108,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((g91844_21:0.46136,g1297582_10:6.69341)20.71_0:0.25600,g1239881_13:0.05789,g1206109_14:0.04707)1_0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "f3cd173f0f63ccf7bef0fd2bca0d67bbd64befdf5f27efd57ad5ce69348b4c56"
+  },
+  {
+   "path": "out/tree_AlleleCounts.SNPs_all.ML.tre",
+   "size": 100,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((g91844_21:0.46136,g1297582_10:6.69341)0:0.25600,g1239881_13:0.05789,g1206109_14:0.04707)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "4e26ce3e3d8775885bcd27e875aa89fc6021f301ab6445aa9776e61ba602e45c"
+  },
+  {
+   "path": "out/tree_AlleleCounts.SNPs_all.parsimony.NodeLabel.tre",
+   "size": 108,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14:0.04696,(g91844_21:0.44304,g1297582_10:6.69410)20.73_0:0.27426,g1239881_13:0.05801)1_0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "976f04b207504c540233aa7a13feaacdf49694cfe3afa94ddf155746dacbe4a5"
+  },
+  {
+   "path": "out/tree_AlleleCounts.SNPs_all.parsimony.tre",
+   "size": 100,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14:0.04696,(g91844_21:0.44304,g1297582_10:6.69410)0:0.27426,g1239881_13:0.05801)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "fb6f5b1ca65e2e4b2bc9fe2a51ba0a0863b7af5882880e1f2a987764d2ae16d6"
+  },
+  {
+   "path": "out/tree_AlleleCounts.core_SNPs.ML.NodeLabel.tre",
+   "size": 108,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((g1239881_13:0.00460,g1206109_14:0.00280)20.46_0:0.01736,g91844_21:0.01811,g1297582_10:7.79312)1_0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "d7a47f2be690cc6f7db95964cda4612dcd0e92a437d11319c2fbf423f9542ad6"
+  },
+  {
+   "path": "out/tree_AlleleCounts.core_SNPs.ML.tre",
+   "size": 100,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((g1239881_13:0.00460,g1206109_14:0.00280)0:0.01736,g91844_21:0.01811,g1297582_10:7.79312)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "75418c992e941612042562287652bdd95236a7b6cf4b816e5aa64f7c0e97e675"
+  },
+  {
+   "path": "out/tree_AlleleCounts.core_SNPs.parsimony.NodeLabel.tre",
+   "size": 108,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14:0.00280,(g91844_21:0.02070,g1297582_10:7.79836)20.07_0:0.01478,g1239881_13:0.00458)1_0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "45f135c2cc928660a07e334dae0200e1c3a49487ab2ea5a922391fc215431cfd"
+  },
+  {
+   "path": "out/tree_AlleleCounts.core_SNPs.parsimony.tre",
+   "size": 100,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14:0.00280,(g91844_21:0.02070,g1297582_10:7.79836)0:0.01478,g1239881_13:0.00458)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "d54268559eb22b33f2d894b2fe15201fb5680020ce36358547347bb41c05ff30"
+  },
+  {
+   "path": "out/tree_AlleleCounts.parsimony.NodeLabel.tre",
+   "size": 108,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14:0.04696,(g91844_21:0.44304,g1297582_10:6.69410)20.73_0:0.27426,g1239881_13:0.05801)1_0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "976f04b207504c540233aa7a13feaacdf49694cfe3afa94ddf155746dacbe4a5"
+  },
+  {
+   "path": "out/tree_AlleleCounts.parsimony.tre",
+   "size": 100,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14:0.04696,(g91844_21:0.44304,g1297582_10:6.69410)0:0.27426,g1239881_13:0.05801)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "fb6f5b1ca65e2e4b2bc9fe2a51ba0a0863b7af5882880e1f2a987764d2ae16d6"
+  },
+  {
+   "path": "out/tree_tipAlleleCounts.SNPs_all.ML.tre",
+   "size": 118,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((g91844_21_1746:0.46136,g1297582_10_2677:6.69341)0:0.25600,g1239881_13_267:0.05789,g1206109_14_359:0.04707)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "969f9635616722c7c369db4fb8724e65d303d9b32a11992a9692b8e08612cb24"
+  },
+  {
+   "path": "out/tree_tipAlleleCounts.SNPs_all.parsimony.tre",
+   "size": 118,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14_359:0.04696,(g91844_21_1746:0.44304,g1297582_10_2677:6.69410)0:0.27426,g1239881_13_267:0.05801)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "edec0e133e0fe1555160dc10abe0faeee691969dd78792d96e794132e0c42353"
+  },
+  {
+   "path": "out/tree_tipAlleleCounts.core_SNPs.ML.tre",
+   "size": 112,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((g1239881_13_4:0.00460,g1206109_14_3:0.00280)0:0.01736,g91844_21_32:0.01811,g1297582_10_2397:7.79312)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "f6e1ea8f20156645591b2bcb9af23720d795081501706f02c8f76ceb6e953ef3"
+  },
+  {
+   "path": "out/tree_tipAlleleCounts.core_SNPs.parsimony.tre",
+   "size": 112,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14_3:0.00280,(g91844_21_32:0.02070,g1297582_10_2397:7.79836)0:0.01478,g1239881_13_4:0.00458)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "fbc75cc7348645db1f3844ff20b3ea4bb3a27238ae984fb0177567f20c2b17b5"
+  },
+  {
+   "path": "out/tree_tipAlleleCounts.parsimony.tre",
+   "size": 118,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(g1206109_14_359:0.04696,(g91844_21_1746:0.44304,g1297582_10_2677:6.69410)0:0.27426,g1239881_13_267:0.05801)0:0.00000;"
+   ],
+   "lines": 1,
+   "sha256": "edec0e133e0fe1555160dc10abe0faeee691969dd78792d96e794132e0c42353"
+  },
+  {
+   "path": "out/unresolved_clusters",
+   "size": 94,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#Unresolved clusters",
+    "#Uniquely resolved",
+    "1\tg1206109_14"
+   ],
+   "lines": 6,
+   "sha256": "d678df0ca90bb3aa6b340eb95e9afbf82503b51fd95b630359591e1be126409e"
+  }
+ ],
+ "n_outputs": 53,
+ "output_bytes": 2883971,
+ "time": {
+  "elapsed": "1:00.08",
+  "max_rss_kb": "3073392",
+  "cpu_pct": "260",
+  "exit_status": "0",
+  "user_s": "138.33",
+  "sys_s": "18.47",
+  "elapsed_s": 60.08,
+  "max_rss_mb": 3001.4
+ },
+ "stdout_tail": "Output directory: /disks/tmp/cucinell/modpipe-discovery/phylogeny/ksnp4-21373455_13/out\nfasta_list: /disks/tmp/cucinell/modpipe-discovery/phylogeny/ksnp4-21373455_13/in_list.txt\nStarting kSNP4.1\nMon Nov  2 15:45:37 CST 2026\nConfiguration for this run:\ninput fasta_list: /disks/tmp/cucinell/modpipe-discovery/phylogeny/ksnp4-21373455_13/in_list.txt\noutput / working directory: /disks/tmp/cucinell/modpipe-discovery/phylogeny/ksnp4-21373455_13/out\nk=19\nannotate_list file: \nMaximum number of open files: 10240\nNumber CPUs: 4\nPython version to be used:\nPython 3.10.14\nSNPS_ALL_INPUT=\nGENBANKFILEINPUT=\nCORE=1\nML=1\nNJ=0\nVCF=0\nDEBUG=0\n[00:00:00] (1/10) Preprocessing\n[00:00:01] (2/10) Running jellyfish to get kmer counts\n[00:00:33] (3/10) Partitioning kmer counts for parallelization\n[00:00:35] (4/10) Finding SNPs (1/4) Generating SNPs within partitions\n[00:00:38] (4/10) Finding SNPs (2/4) Combining partitions into FASTA files for mummer\n[00:00:38] (4/10) Finding SNPs (3/4) Combining partitions into complete list of SNPs found\n[00:00:39] (4/10) Finding SNPs (4/4) Done finding SNPs\n[00:00:39] (5/10) Running mummer to find SNP positions for annotation (0/0) Starting\n[00:00:39] (5/10) Running mummer to find SNP positions for annotation (0/0) Done\n[00:00:40] (6/10) Processing SNPs data (1/4) Adding position data to all_SNPs\n[00:00:40] (6/10) Processing SNPs data (2/4) Sorting SNPs\n[00:00:40] (6/10) Processing SNPs data (3/4) Number and label SNPs\n[00:00:41] (6/10) Processing SNPs data (4/4) Creating VCF file.\n[00:00:42] (7/10) Generating phylogenic trees (0/3) Setup\n[00:00:42] (7/10) Generating phylogenic trees (1/3) parsimony\n[00:00:51] (7/10) Generating phylogenic trees (2/3) ML\n[00:00:56] (7/10) Generating phylogenic trees (3/3) Generating unresolved clusters\n[00:00:57] (7/10) Generating phylogenic trees (3/3) Done\n[00:00:57] (8/10) Getting annotation data from NCBI (0/0) Starting\n[00:00:58] (10/10) Cleanup (0/1) Starting\n[00:00:58] (10/10) Cleanup (1/1) Done\n\nTime used: 00:00:58\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:46:36"
+}

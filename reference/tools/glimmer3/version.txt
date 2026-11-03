@@ -1,0 +1,2 @@
+# /usr/lib/tigr-glimmer/glimmer3 cmd: dpkg-query -W -f='tigr-glimmer ${Version}\n' tigr-glimmer
+tigr-glimmer 3.02b-6

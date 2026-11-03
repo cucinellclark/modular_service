@@ -1,0 +1,32 @@
+{
+  "pipeline": {
+    "schema": "modpipe/pipeline/v1",
+    "name": "QUAST over a genome group (gather)",
+    "inputs": {
+      "genomes": {
+        "type": "sequences.dna.contigs",
+        "collection": true,
+        "source": {
+          "genome_group": "/clark.cucinell@patricbrc.org/home/Genome Groups/brucella_test_group"
+        }
+      }
+    },
+    "steps": {
+      "qc": {
+        "module": "quast",
+        "in": {
+          "contigs": "$inputs.genomes"
+        },
+        "params": {
+          "min_contig": 500
+        }
+      }
+    },
+    "outputs": {
+      "report": "qc.report",
+      "metrics": "qc.metrics"
+    }
+  },
+  "output_path": "/clark.cucinell@patricbrc.org/home/ModularService_tests",
+  "output_file": "genome_group_quast"
+}

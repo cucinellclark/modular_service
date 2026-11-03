@@ -1,0 +1,74 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "cdhit_est",
+ "set": "homology",
+ "tool": "cd-hit",
+ "mode": "nucleotide",
+ "description": null,
+ "tool_version": "4.8.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373352_9",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:55",
+ "inputs": {
+  "T": {
+   "fixture": "sarscov2_transcriptome",
+   "path": "inputs/transcriptome.fasta",
+   "size": 31134
+  }
+ },
+ "prep": null,
+ "cmd": "cd-hit-est -i $T -o clusters.fna -c 0.95 -T $CPU -M 0",
+ "wall_s": 0.32,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "clusters.fna",
+   "size": 31134,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">lcl|MT192765.1_cds_QIK50426.1_1 [gene=orf1ab] [protein=orf1ab polyprotein] [exception=ribosomal slippage] [protein_id=QIK50426.1] [location=join(259..13461,13461..21548)] [gbkey=CDS]",
+    "ATGGAGAGCCTTGTCCCTGGTTTCAACGAGAAAACACACGTCCAACTCAGTTTGCCTGTTTTACAGGTTCGCGACGTGCT",
+    "CGTACGTGGCTTTGGAGACTCCGTGGAGGAGGTCTTATCAGAGGCACGTCAACATCTTAAAGATGGCACTTGTGGCTTAG"
+   ],
+   "lines": 382,
+   "records": 11,
+   "residues": 29265,
+   "sha256": "5eecf151669a0774a870d60184011b318fec5be83dbb1ec3d2e1404fa572a948"
+  },
+  {
+   "path": "clusters.fna.clstr",
+   "size": 511,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">Cluster 0",
+    "0\t21291nt, >lcl|MT192765.1_cds_... *",
+    ">Cluster 1"
+   ],
+   "lines": 22,
+   "records": 11,
+   "residues": 378,
+   "sha256": "04bf58bcdcea9fe2d7c20873c5e384104e538c670b81fe6a95ca3394d4184709"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 31645,
+ "time": {
+  "elapsed": "0:00.27",
+  "max_rss_kb": "93188",
+  "cpu_pct": "73",
+  "exit_status": "0",
+  "user_s": "0.11",
+  "sys_s": "0.08",
+  "elapsed_s": 0.27,
+  "max_rss_mb": 91.0
+ },
+ "stdout_tail": "================================================================\nProgram: CD-HIT, V4.8.1 (+OpenMP), May 08 2026, 02:46:10\nCommand: cd-hit-est -i\n         /disks/tmp/cucinell/modpipe-discovery/homology/cdhit_est-21373352_9/inputs/transcriptome.fasta\n         -o clusters.fna -c 0.95 -T 4 -M 0\n\nStarted: Mon Nov  2 15:37:55 2026\n================================================================\n                            Output                              \n----------------------------------------------------------------\ntotal seq: 11\nlongest and shortest : 21291 and 117\nTotal letters: 29265\nSequences have been sorted\n\nApproximated minimal memory consumption:\nSequence        : 0M\nBuffer          : 4 X 16M = 66M\nTable           : 2 X 16M = 33M\nMiscellaneous   : 4M\nTotal           : 104M\n\nTable limit with the given memory limit:\nMax number of representatives: 1500000\nMax number of word counting entries: 793579090\n\n\r# comparing sequences from          0  to         11\n---------- new table with       11 representatives\n\n       11  finished         11  clusters\n\nApproximated maximum memory consumption: 104M\nwriting new database\nwriting clustering information\nprogram completed !\n\nTotal CPU time 0.17\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:56"
+}

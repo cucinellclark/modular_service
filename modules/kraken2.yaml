@@ -1,0 +1,28 @@
+schema: modpipe/module/v1
+id: kraken2
+version: 1
+label: "Kraken2: taxonomic classification of reads"
+description: Assigns reads to taxa with a Kraken2 database and writes a Kraken-style report (input for Bracken).
+category: taxonomy
+tool: {id: kraken2, binary: kraken2, version: 2.1.2}
+inputs:
+  - {id: reads, type: reads}
+outputs:
+  - {id: report, type: taxonomy.kraken.report, path: report.txt}
+  - {id: classifications, type: taxonomy.kraken.output, path: classified.tsv, when: "params.save_read_classifications",
+     description: "Per-read classifications (large)"}
+parameters:
+  - {id: db, type: database, db_type: database.kraken2, default: kraken2_std, label: "Kraken2 database",
+     description: "kraken2_brc (BV-BRC, 150 GB RAM, kraken_db partition), kraken2_std (80 GB), kraken2_silva / kraken2_greengenes (16S, 8 GB)"}
+  - {id: confidence, type: float, default: 0.0, min: 0, max: 1, label: "Confidence threshold"}
+  - {id: save_read_classifications, type: bool, default: false, label: "Save per-read classifications"}
+resources: {cpu: 8, memory: 16G, runtime: 4h}
+command: |
+  kraken2 --db {{ dbs.db | q }} --threads {{ cpu }} --confidence {{ params.confidence }}
+  --report {{ outputs.report }} --output {% if params.save_read_classifications %}{{ outputs.classifications }}{% else %}/dev/null{% endif %}
+  {% if inputs.reads.paired %}--paired {{ inputs.reads.r1 | q }} {{ inputs.reads.r2 | q }}{% else %}{{ inputs.reads | q }}{% endif %}
+tests:
+  discovery_runs: [kraken2_mini_pe]
+  observed: {max_rss_mb: 8, max_wall_s: 1.5, note: "nf-core SARS-CoV-2 mini DB; real DB memory comes from the registry"}
+provenance: {bvbrc_invocations: [App-TaxonomicClassification.pl], nfcore: [kraken2/kraken2]}
+notes: "Memory and partition for big DBs come from resources/databases.yaml requirements (preflight routes to kraken_db)."

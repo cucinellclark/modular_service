@@ -1,0 +1,1 @@
+{"inputs": {"short_reads": {"fixture": "portiera_pe"}, "long_reads": {"fixture": "portiera_nanopore"}}}

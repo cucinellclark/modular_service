@@ -1,0 +1,53 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bracken_mini",
+ "set": "typing_expression",
+ "tool": "bracken",
+ "mode": "species",
+ "description": null,
+ "tool_version": "2.9",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-05",
+ "slurm_job": "21373358_1",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:24",
+ "inputs": {
+  "DB": {
+   "fixture": "sarscov2_kraken2_bracken_db:dir",
+   "path": "inputs/kraken2_bracken",
+   "size": null
+  },
+  "R1": {
+   "fixture": "sarscov2_illumina_test_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 9413
+  },
+  "R2": {
+   "fixture": "sarscov2_illumina_test_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 9395
+  }
+ },
+ "prep": "kraken2 --db $DB --paired --report report.txt --output /dev/null $R1 $R2",
+ "cmd": "bracken -d $DB -i report.txt -o bracken.tsv -w bracken_report.txt -r 100 -l S -t 0",
+ "wall_s": 0.11,
+ "exit_code": 2,
+ "outputs": [],
+ "n_outputs": 0,
+ "output_bytes": 0,
+ "time": {
+  "elapsed": "0:00.08",
+  "max_rss_kb": "8932",
+  "cpu_pct": "52",
+  "exit_status": "2",
+  "user_s": "0.02",
+  "sys_s": "0.01",
+  "elapsed_s": 0.08,
+  "max_rss_mb": 8.7
+ },
+ "stdout_tail": " >> Checking for Valid Options...\n >> Running Bracken \n      >> python3 src/est_abundance.py -i report.txt -o bracken.tsv -k /disks/tmp/cucinell/modpipe-discovery/typing_expression/bracken_mini-21373358_1/inputs/kraken2_bracken/database100mers.kmer_distrib -l S -t 0\n",
+ "stderr_tail": "python3: can't open file '/opt/patric-common/runtime/bin/src/est_abundance.py': [Errno 2] No such file or directory\n",
+ "status": "failed",
+ "finished": "2026-11-02T15:37:25"
+}

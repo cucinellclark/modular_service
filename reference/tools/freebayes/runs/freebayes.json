@@ -1,0 +1,68 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "freebayes",
+ "set": "mapping_variants",
+ "tool": "freebayes",
+ "mode": "haploid",
+ "description": null,
+ "tool_version": "1.3.6",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373340_18",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:45",
+ "inputs": {
+  "REF": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  },
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  },
+  "BAI": {
+   "fixture": "sarscov2_bam_pe_bai",
+   "path": "inputs/test.paired_end.sorted.bam.bai",
+   "size": 128
+  }
+ },
+ "prep": "samtools faidx $REF",
+ "cmd": "freebayes -p 1 -f $REF $BAM > freebayes.vcf",
+ "wall_s": 0.11,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "freebayes.vcf",
+   "size": 10512,
+   "new": true,
+   "kind": "vcf",
+   "preview": [
+    "##fileformat=VCFv4.2",
+    "##fileDate=20261102",
+    "##source=freeBayes v1.3.6"
+   ],
+   "lines": 68,
+   "records": 6,
+   "sha256": "13ea1cac579559f50be4d81d57aaf9cc391f316f837165e0310721d49c3f0f08"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 10512,
+ "time": {
+  "elapsed": "0:00.11",
+  "max_rss_kb": "3864",
+  "cpu_pct": "11",
+  "exit_status": "0",
+  "user_s": "0.00",
+  "sys_s": "0.00",
+  "elapsed_s": 0.11,
+  "max_rss_mb": 3.8
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:45"
+}

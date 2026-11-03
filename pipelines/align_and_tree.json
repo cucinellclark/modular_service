@@ -1,0 +1,46 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Align and build tree",
+  "description": "MAFFT -> FastTree on a protein FASTA",
+  "inputs": {
+    "proteins": {
+      "type": "sequences.protein",
+      "source": {
+        "wsid": "/user@bvbrc/home/proteins.faa"
+      }
+    }
+  },
+  "steps": {
+    "align": {
+      "module": "mafft",
+      "in": {
+        "sequences": "$inputs.proteins"
+      },
+      "params": {
+        "strategy": "linsi"
+      }
+    },
+    "tree": {
+      "module": "fasttree",
+      "in": {
+        "alignment": "align.alignment"
+      },
+      "params": {
+        "model": "lg"
+      }
+    }
+  },
+  "outputs": {
+    "alignment": "align.alignment",
+    "tree": "tree.tree"
+  },
+  "template": {
+    "expose": [
+      "align.params.strategy",
+      "tree.params.model",
+      "tree.params.gamma"
+    ],
+    "label": "Quick protein tree (MAFFT + FastTree)",
+    "category": "phylogeny"
+  }
+}

@@ -1,0 +1,62 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "freyja_demix_csv",
+ "set": "typing_expression",
+ "tool": "freyja",
+ "mode": "demix_csv_barcodes",
+ "description": "CSV barcodes (the feather barcodes need pyarrow, which is missing from the container's python) plus BV-BRC curated lineage files (freyja's bundled data dir is missing)",
+ "tool_version": "1.5.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "pear",
+ "slurm_job": "21373456_9",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:45:36",
+ "inputs": {
+  "REF": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  },
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  }
+ },
+ "prep": "freyja variants $BAM --variants variants.tsv --depths depths.tsv --ref $REF",
+ "cmd": "freyja demix variants.tsv depths.tsv --output demix.tsv --barcodes /vol/bvbrc/production/application-backend/bvbrc_taxonomic_classification_2/data/usher_barcodes.csv --meta /vol/bvbrc/production/application-backend/bvbrc_taxonomic_classification_2/data/curated_lineages.json --lineageyml /vol/bvbrc/production/application-backend/bvbrc_taxonomic_classification_2/data/lineages.yml",
+ "wall_s": 15.9,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "demix.tsv",
+   "size": 546,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\tvariants.tsv",
+    "summarized\t[('Other', np.float64(0.6666656925136032)), ('A', np.float64(0.33333284625680154))]",
+    "lineages\tA.19 A.12 A.9 A.22 A.11 A.16 A.5 B.18 B.53 A B.51 B.4 B.44 B.57 B.26 B.1.14 B.12 B.50 B.6 B.5 B.23 B.55 B.27 B"
+   ],
+   "lines": 6,
+   "sha256": "5beaf070f347f12df03bdacd3b6eea78b4cb37aeadf36c4dd27ec80dee3f2886"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 546,
+ "time": {
+  "elapsed": "0:15.88",
+  "max_rss_kb": "1184388",
+  "cpu_pct": "88",
+  "exit_status": "0",
+  "user_s": "11.19",
+  "sys_s": "2.92",
+  "elapsed_s": 15.88,
+  "max_rss_mb": 1156.6
+ },
+ "stdout_tail": "building mix/depth matrices\ndemixing\n",
+ "stderr_tail": "/opt/patric-common/runtime/frejya-1.5.1/lib/python3.14/site-packages/freyja/sample_deconv.py:179: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.\n  prob.solve(verbose=False, solver=solver_)\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:46:03"
+}

@@ -1,0 +1,55 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "samtools_faidx",
+ "set": "mapping_variants",
+ "tool": "samtools",
+ "mode": "faidx",
+ "description": null,
+ "tool_version": "1.13",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373340_11",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:37",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "samtools faidx $REF",
+ "wall_s": 0.03,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "inputs/genome.fasta.fai",
+   "size": 28,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NC_018507.1\t358242\t75\t80\t81"
+   ],
+   "lines": 1,
+   "sha256": "aa73c4abef219ef5b569ec787727c3c5bf13b76c6c4b6def72dffa748b4817ac"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 28,
+ "time": {
+  "elapsed": "0:00.01",
+  "max_rss_kb": "3368",
+  "cpu_pct": "31",
+  "exit_status": "0",
+  "user_s": "0.00",
+  "sys_s": "0.00",
+  "elapsed_s": 0.01,
+  "max_rss_mb": 3.3
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:37"
+}

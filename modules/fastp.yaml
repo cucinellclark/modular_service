@@ -1,0 +1,63 @@
+schema: modpipe/module/v1
+id: fastp
+version: 1
+label: "fastp: adapter/quality trimming with QC report"
+description: >-
+  Trims adapters and low-quality bases from short reads and writes an HTML/JSON QC report.
+  Interleaved input is split into a read pair.
+category: read_qc
+tool: {id: fastp, binary: fastp, version: 1.3.2}
+
+inputs:
+  - id: reads
+    type: reads.short
+    description: Paired, interleaved, or single-end short reads
+
+outputs:
+  - id: trimmed_reads
+    type: reads.short
+    type_from:
+      port: reads
+      map: {reads.short.paired: reads.short.paired, reads.short.interleaved: reads.short.paired,
+            reads.short.single: reads.short.single}
+    path: trimmed.fastq.gz
+    parts: {r1: trimmed_1.fastq.gz, r2: trimmed_2.fastq.gz}
+    attributes: {compression: gzip}
+  - id: report_html
+    type: report.html
+    path: fastp.html
+  - id: report_json
+    type: report.json
+    path: fastp.json
+
+parameters:
+  - {id: qualified_quality_phred, type: int, default: 15, min: 0, max: 60, label: "Minimum base quality (-q)"}
+  - {id: length_required, type: int, default: 50, min: 1, label: "Minimum read length after trimming (-l)"}
+  - {id: detect_adapter_for_pe, type: bool, default: true, label: "Detect adapters by overlap (paired reads)"}
+  - {id: cut_right, type: bool, default: false, advanced: true, label: "Sliding-window trim from 3' end (--cut_right)"}
+
+resources: {cpu: 4, memory: 8G, runtime: 2h}
+
+command: |
+  fastp -w {{ cpu }}
+  {% if inputs.reads.type == 'reads.short.paired' %}
+    -i {{ inputs.reads.r1 | q }} -I {{ inputs.reads.r2 | q }}
+    -o {{ outputs.trimmed_reads.r1 }} -O {{ outputs.trimmed_reads.r2 }}
+    {% if params.detect_adapter_for_pe %}--detect_adapter_for_pe{% endif %}
+  {% elif inputs.reads.type == 'reads.short.interleaved' %}
+    -i {{ inputs.reads | q }} --interleaved_in
+    -o {{ outputs.trimmed_reads.r1 }} -O {{ outputs.trimmed_reads.r2 }}
+    {% if params.detect_adapter_for_pe %}--detect_adapter_for_pe{% endif %}
+  {% else %}
+    -i {{ inputs.reads | q }} -o {{ outputs.trimmed_reads }}
+  {% endif %}
+  -q {{ params.qualified_quality_phred }} -l {{ params.length_required }}
+  {% if params.cut_right %}--cut_right{% endif %}
+  -h {{ outputs.report_html }} -j {{ outputs.report_json }}
+
+tests:
+  discovery_runs: [fastp_pe, fastp_se]
+  observed: {max_rss_mb: 1163, max_wall_s: 37, note: "Portiera fixtures (~100k read pairs), 4 CPUs"}
+provenance:
+  bvbrc_invocations: [reference_guided_assembly.py, run_viral_assembly.py]
+  nfcore: [fastp]

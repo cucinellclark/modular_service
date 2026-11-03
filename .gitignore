@@ -1,0 +1,16 @@
+# Downloaded / generated data. Re-create with:
+#   tests/fixtures/data:  python3 tests/fixtures/fetch_fixtures.py
+#   tests/e2e/generated:  tests/templates/run_all.sh
+tests/fixtures/data/
+tests/e2e/logs/
+tests/e2e/results/
+tests/e2e/generated/
+tests/discovery/logs/
+tests/app/logs/
+# Python / editor / OS
+__pycache__/
+*.py[cod]
+*.part
+*.swp
+*~
+.DS_Store

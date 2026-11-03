@@ -1,0 +1,4 @@
+# /opt/patric-common/runtime/bin/parsnp --version
+14:55:57 - [1;37mINFO[0m - |--Parsnp 2.1.2--|
+
+parsnp 2.1.2

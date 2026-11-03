@@ -1,0 +1,28 @@
+schema: modpipe/module/v1
+id: unicycler
+version: 1
+label: "Unicycler: short-read, long-read or hybrid assembly"
+description: Bacterial genome assembly from paired short reads, long reads, or both (hybrid), producing circularised replicons where possible.
+category: assembly
+tool: {id: unicycler, binary: unicycler, version: 0.4.8}
+inputs:
+  - {id: short_reads, type: reads.short.paired, required: false}
+  - {id: long_reads, type: reads.long, required: false}
+outputs:
+  - {id: contigs, type: sequences.dna.contigs, path: out/assembly.fasta}
+  - {id: graph, type: assembly.graph.gfa, path: out/assembly.gfa}
+  - {id: log, type: report.text, path: out/unicycler.log}
+parameters:
+  - {id: mode, type: enum, enum: [conservative, normal, bold], default: normal, label: "Bridging mode"}
+  - {id: min_fasta_length, type: int, default: 100, min: 1, label: "Exclude contigs shorter than (bp)"}
+resources: {cpu: 16, memory: 32G, runtime: 12h}
+command: |
+  {% if not inputs.short_reads and not inputs.long_reads %}{{ fail('Unicycler needs short reads, long reads, or both') }}{% endif %}
+  unicycler -t {{ cpu }} --mode {{ params.mode }} --min_fasta_length {{ params.min_fasta_length }} -o out
+  {% if inputs.short_reads %}-1 {{ inputs.short_reads.r1 | q }} -2 {{ inputs.short_reads.r2 | q }}{% endif %}
+  {% if inputs.long_reads %}-l {{ inputs.long_reads | q }}{% endif %}
+tests:
+  discovery_runs: [unicycler_short, unicycler_hybrid, unicycler_long]
+  observed: {max_rss_mb: 507, max_wall_s: 286, note: "hybrid on Portiera fixtures"}
+provenance: {bvbrc_invocations: [p3x-assembly.py], nfcore: [unicycler]}
+notes: "BV-BRC's p3x-assembly.py can pass --spades_path; the container's SPAdes 4.0 worked in discovery without it."

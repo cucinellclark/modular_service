@@ -1,0 +1,71 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "gblocks_dna",
+ "set": "phylogeny",
+ "tool": "gblocks",
+ "mode": "dna",
+ "description": "Gblocks exits non-zero even on success; check outputs",
+ "tool_version": null,
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "cedar",
+ "slurm_job": "21373357_5",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:56",
+ "inputs": {
+  "A": {
+   "fixture": "sarscov2_aln_all_sites",
+   "path": "inputs/all_sites.fas",
+   "size": 119652
+  }
+ },
+ "prep": "cp $A aln.fas",
+ "cmd": "Gblocks aln.fas -t=d -b5=h || test -s aln.fas-gb",
+ "wall_s": 0.12,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aln.fas-gb",
+   "size": 127572,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">sample1",
+    "ATGGAGAGCC TTGTCCCTGG TTTCAACGAG AAAACACACG TCCAACTCAG TTTGCCTGTT",
+    "TTACAGGTTC GCGACGTGCT CGTACGTGGC TTTGGAGACT CCGTGGAGGA GGTCTTATCA"
+   ],
+   "lines": 1940,
+   "records": 4,
+   "residues": 125600,
+   "sha256": "c43cf6a023bc43ad0ecefa91fbd7f591db9c50873c163e9193f1abab8c6544a5"
+  },
+  {
+   "path": "aln.fas-gb.htm",
+   "size": 3427434,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<html>",
+    "<head>",
+    "<meta http-equiv=content-type content=text/html;charset=ISO-8859-1>"
+   ],
+   "sha256": "b47103b8d4f2f4b6ca88ed2784910d99878d780751d7dd1ddb124fc24546d59e"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 3555006,
+ "time": {
+  "elapsed": "0:00.08",
+  "max_rss_kb": "4304",
+  "cpu_pct": "72",
+  "exit_status": "0",
+  "user_s": "0.04",
+  "sys_s": "0.02",
+  "elapsed_s": 0.08,
+  "max_rss_mb": 4.2
+ },
+ "stdout_tail": "\n4 sequences and 29903 positions in the first alignment file:\naln.fas\n\naln.fas\nOriginal alignment: 29903 positions\nGblocks alignment:  28985 positions (96 %) in 4 selected block(s)\n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:56"
+}

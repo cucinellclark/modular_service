@@ -1,0 +1,12 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "TEST multi-sample assembly (B. fragilis, scatter/gather)",
+  "description": "Per sample: fastp -> SPAdes (scatter over 2 samples); then one QUAST over both (gather). Low coverage; tests mechanics.",
+  "inputs": {"samples": {"type": "reads.short.paired", "collection": true, "source": {"fixture": "bfragilis_samples"}}},
+  "steps": {
+    "trim":     {"module": "fastp",  "in": {"reads": "$inputs.samples"}},
+    "assemble": {"module": "spades", "in": {"reads": "trim.trimmed_reads"}, "params": {"mode": "isolate"}},
+    "qc":       {"module": "quast",  "in": {"contigs": "assemble.contigs"}, "params": {"min_contig": 200}}
+  },
+  "outputs": {"contigs": "assemble.contigs", "trim_reports": "trim.report_html", "qc_report": "qc.report", "qc_metrics": "qc.metrics"}
+}

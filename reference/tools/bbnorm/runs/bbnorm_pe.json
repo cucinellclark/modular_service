@@ -1,0 +1,81 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bbnorm_pe",
+ "set": "readqc",
+ "tool": "bbnorm",
+ "mode": "paired",
+ "description": null,
+ "tool_version": "38.95",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_10",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:48",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "bbnorm.sh -Xmx${MEM_GB}g in1=$R1 in2=$R2 out1=norm_1.fastq.gz out2=norm_2.fastq.gz target=30 min=2 threads=$CPU",
+ "wall_s": 13.0,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "norm_1.fastq.gz",
+   "size": 2365699,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.6 FCD1DAFACXX:5:1101:2434:2749/1",
+    "TTATATTAATGTATAGTTAAATGGTTAAATGTTAACAGCTAAAGTTGTTTATATAACTTGTTTTTATGAAAAATAAAAGAGGTGATAGGTAAAGGTGTTTA",
+    "+"
+   ],
+   "lines": 109896,
+   "records": 27474,
+   "residues": 2774874,
+   "sha256": "6c7895acb289a757da404ec7c10494817167ca969027783403571265598e5e86"
+  },
+  {
+   "path": "norm_2.fastq.gz",
+   "size": 2374896,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.6 FCD1DAFACXX:5:1101:2434:2749/2",
+    "AAATAACCTTACAACTGTTTAAGTTATTACAACAAACTAACACATTATCTAGTTCTCTTTTTATTATCATAATAAAAAACTACCGTTTTACAACAAACT",
+    "+"
+   ],
+   "lines": 109896,
+   "records": 27474,
+   "residues": 2719926,
+   "sha256": "31e3e3c3d56ce6f0d72380a40b8f12f0a5e11cbf1f4b1cf541aeaf0a3e1fcfb0"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 4740595,
+ "time": {
+  "elapsed": "0:12.95",
+  "max_rss_kb": "13214052",
+  "cpu_pct": "279",
+  "exit_status": "0",
+  "user_s": "29.73",
+  "sys_s": "6.47",
+  "elapsed_s": 12.95,
+  "max_rss_mb": 12904.3
+ },
+ "stdout_tail": "",
+ "stderr_tail": "/share/java/bbmap.jar jgi.KmerNormalize bits=32 -Xmx16g in1=/disks/tmp/cucinell/modpipe-discovery/readqc/bbnorm_pe-21373335_10/inputs/test_1.fastq.gz in2=/disks/tmp/cucinell/modpipe-discovery/readqc/bbnorm_pe-21373335_10/inputs/test_2.fastq.gz out1=norm_1.fastq.gz out2=norm_2.fastq.gz target=30 min=2 threads=4\nExecuting jgi.KmerNormalize [bits=32, -Xmx16g, in1=/disks/tmp/cucinell/modpipe-discovery/readqc/bbnorm_pe-21373335_10/inputs/test_1.fastq.gz, in2=/disks/tmp/cucinell/modpipe-discovery/readqc/bbnorm_pe-21373335_10/inputs/test_2.fastq.gz, out1=norm_1.fastq.gz, out2=norm_2.fastq.gz, target=30, min=2, threads=4]\n\nSet threads to 4\n\n   ***********   Pass 1   **********   \n\n\nSettings:\nthreads:          \t4\nk:                \t31\ndeterministic:    \ttrue\ntoss error reads: \tfalse\npasses:           \t1\nbits per cell:    \t16\ncells:            \t6235.09M\nhashes:           \t3\nbase min quality: \t5\nkmer min prob:    \t0.5\n\ntarget depth:     \t120\nmin depth:        \t2\nmax depth:        \t150\nmin good kmers:   \t15\ndepth percentile: \t64.8\nignore dupe kmers:\ttrue\nfix spikes:       \tfalse\n\nWarning - trouble parsing BGZIP version:\n1.13+ds\nMade hash table:  \thashes = 3   \t mem = 11.61 GB   \tcells = 6230.42M   \tused = 0.026%\n\nEstimated unique kmers:     \t544840\n\nTable creation time:\t\t6.544 seconds.\nStarted output threads.\nTable read time: \t\t2.003 seconds.   \t9758.56 kb/sec\nTotal reads in:  \t\t195458   \t42.434% Kept\nTotal bases in:  \t\t19545800   \t42.434% Kept\nError reads in:  \t\t12255    \t6.270%\nError pairs in:  \t\t11017    \t11.273%\nError type 1:    \t\t2943     \t1.506%\nError type 2:    \t\t8661     \t4.431%\nError type 3:    \t\t8314     \t4.254%\nTotal kmers counted:          \t13681497\nTotal unique kmer count:      \t747984\nIncludes forward kmers only.\nThe unique kmer estimate can be more accurate than the unique count, if the tables are very full.\nThe most accurate value is the greater of the two.\n\nPercent unique:               \t 5.47%\nDepth average:                \t18.29\t(unique kmers)\nDepth median:                 \t1\t(unique kmers)\nDepth standard deviation:     \t119.26\t(unique kmers)\nCorrected depth average:      \t18.29\t\n\nDepth average:                \t796.07\t(all kmers)\nDepth median:                 \t317\t(all kmers)\nDepth standard deviation:     \t843.90\t(all kmers)\n\nApprox. read depth median:    \t452.86\n\n   ***********   Pass 2   **********   \n\n\nSettings:\nthreads:          \t4\nk:                \t31\ndeterministic:    \ttrue\ntoss error reads: \tfalse\npasses:           \t1\nbits per cell:    \t16\ncells:            \t6235.09M\nhashes:           \t3\nbase min quality: \t5\nkmer min prob:    \t0.5\n\ntarget depth:     \t30\nmin depth:        \t2\nmax depth:        \t30\nmin good kmers:   \t15\ndepth percentile: \t54.0\nignore dupe kmers:\ttrue\nfix spikes:       \tfalse\n\nMade hash table:  \thashes = 3   \t mem = 11.61 GB   \tcells = 6230.42M   \tused = 0.019%\n\nEstimated unique kmers:     \t385438\n\nTable creation time:\t\t1.988 seconds.\nStarted output threads.\nTable read time: \t\t0.930 seconds.   \t8920.64 kb/sec\nTotal reads in:  \t\t82940    \t66.250% Kept\nTotal bases in:  \t\t8294000    \t66.250% Kept\nError reads in:  \t\t4444     \t5.358%\nError pairs in:  \t\t3924     \t9.462%\nError type 1:    \t\t2145     \t2.586%\nError type 2:    \t\t2242     \t2.703%\nError type 3:    \t\t982      \t1.184%\nTotal kmers counted:          \t5805626\nTotal unique kmer count:      \t436279\nIncludes forward kmers only.\nThe unique kmer estimate can be more accurate than the unique count, if the tables are very full.\nThe most accurate value is the greater of the two.\n\nPercent unique:               \t 7.51%\nDepth average:                \t13.31\t(unique kmers)\nDepth median:                 \t2\t(unique kmers)\nDepth standard deviation:     \t23.91\t(unique kmers)\nCorrected depth average:      \t13.31\t\n\nDepth average:                \t56.26\t(all kmers)\nDepth median:                 \t58\t(all kmers)\nDepth standard deviation:     \t35.66\t(all kmers)\n\nApprox. read depth median:    \t82.86\n\nRemoving temp files.\n\nTotal time:      \t\t11.585 seconds.   \t2403.18 kb/sec\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:02"
+}

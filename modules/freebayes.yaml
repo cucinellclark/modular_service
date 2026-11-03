@@ -1,0 +1,22 @@
+schema: modpipe/module/v1
+id: freebayes
+version: 1
+label: "FreeBayes: haplotype-based variant calling"
+description: Calls SNPs/indels/MNPs from a sorted, indexed BAM.
+category: variants
+tool: {id: freebayes, binary: freebayes, version: 1.3.6}
+inputs:
+  - {id: alignment, type: alignment.reads.bam, requires: {sorted: coordinate, indexed: true}}
+  - {id: reference, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - {id: variants, type: variants.vcf, path: freebayes.vcf, attributes: {compression: none}}
+parameters:
+  - {id: ploidy, type: int, default: 1, min: 1, max: 8, label: "Ploidy (-p)"}
+  - {id: min_alternate_fraction, type: float, default: 0.05, min: 0, max: 1, advanced: true, label: "Min alternate allele fraction (-F)"}
+resources: {cpu: 1, memory: 8G, runtime: 6h}
+command: |
+  cp {{ inputs.reference | q }} ref.fa && samtools faidx ref.fa &&
+  freebayes -p {{ params.ploidy }} -F {{ params.min_alternate_fraction }} -f ref.fa {{ inputs.alignment.bam | q }} > {{ outputs.variants }}
+tests:
+  discovery_runs: [freebayes]
+provenance: {bvbrc_invocations: [App-Variation.pl], nfcore: [freebayes]}

@@ -1,0 +1,67 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "htseq_count",
+ "set": "typing_expression",
+ "tool": "htseq-count",
+ "mode": "bam_pos_unstranded",
+ "description": null,
+ "tool_version": "2.0.9",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373358_11",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:38:18",
+ "inputs": {
+  "BAM": {
+   "fixture": "hs_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 179552
+  },
+  "BAI": {
+   "fixture": "hs_bam_pe_bai",
+   "path": "inputs/test.paired_end.sorted.bam.bai",
+   "size": 96
+  },
+  "GTF": {
+   "fixture": "hs_gtf",
+   "path": "inputs/genome.gtf",
+   "size": 15025
+  }
+ },
+ "prep": null,
+ "cmd": "htseq-count -f bam -r pos -s no $BAM $GTF > counts.tsv",
+ "wall_s": 1.42,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "counts.tsv",
+   "size": 220,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "ENSG00000100181\t0",
+    "ENSG00000198445\t0",
+    "ENSG00000233995\t0"
+   ],
+   "lines": 12,
+   "sha256": "66cd69dad9ce62b53273be656eb18b30185ec1e6116908948cd85770087d48d4"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 220,
+ "time": {
+  "elapsed": "0:01.39",
+  "max_rss_kb": "48100",
+  "cpu_pct": "50",
+  "exit_status": "0",
+  "user_s": "0.38",
+  "sys_s": "0.32",
+  "elapsed_s": 1.39,
+  "max_rss_mb": 47.0
+ },
+ "stdout_tail": "",
+ "stderr_tail": "40 GFF lines processed.\n2821 alignment record pairs processed.\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:19"
+}

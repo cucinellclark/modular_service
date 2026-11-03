@@ -1,0 +1,4 @@
+# /usr/bin/bbduk.sh --version
+java -ea -Xmx19877m -Xms19877m -cp /usr/share/java/bbmap.jar jgi.BBDuk --version
+BBMap version 38.95
+For help, please run the shellscript with no parameters, or look in /docs/.

@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/pangolin --version
+pangolin 4.3.1

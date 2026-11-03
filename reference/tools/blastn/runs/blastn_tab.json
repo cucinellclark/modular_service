@@ -1,0 +1,62 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "blastn_tab",
+ "set": "homology",
+ "tool": "blastn",
+ "mode": "outfmt6",
+ "description": null,
+ "tool_version": "2.15.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373352_3",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:27",
+ "inputs": {
+  "G": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  },
+  "T": {
+   "fixture": "sarscov2_transcriptome",
+   "path": "inputs/transcriptome.fasta",
+   "size": 31134
+  }
+ },
+ "prep": "makeblastdb -in $G -dbtype nucl -out nucdb",
+ "cmd": "blastn -query $T -db nucdb -evalue 1e-10 -num_threads $CPU -outfmt \"6 std qlen slen\" -out hits.tsv",
+ "wall_s": 17.26,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "hits.tsv",
+   "size": 1083,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "lcl|MT192765.1_cds_QIK50426.1_1\tMT192765.1\t99.995\t21291\t0\t1\t1\t21291\t259\t21548\t0.0\t39310\t21291\t29829",
+    "lcl|MT192765.1_cds_QIK50427.1_2\tMT192765.1\t100.000\t3822\t0\t0\t1\t3822\t21556\t25377\t0.0\t7059\t3822\t29829",
+    "lcl|MT192765.1_cds_QIK50428.1_3\tMT192765.1\t100.000\t828\t0\t0\t1\t828\t25386\t26213\t0.0\t1530\t828\t29829"
+   ],
+   "lines": 11,
+   "sha256": "54cbcf4b280bdc049f3f964aee209a6b690fb7f3fc91d997cd71e502021860d1"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 1083,
+ "time": {
+  "elapsed": "0:17.21",
+  "max_rss_kb": "39148",
+  "cpu_pct": "16",
+  "exit_status": "0",
+  "user_s": "0.03",
+  "sys_s": "2.84",
+  "elapsed_s": 17.21,
+  "max_rss_mb": 38.2
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:45"
+}

@@ -1,0 +1,3 @@
+# /usr/bin/progressiveMauve cmd: for p in progressivemauve mauve-aligner; do dpkg-query -W -f='progressiveMauve ${Version}\n' $p 2>/dev/null; done
+progressiveMauve 1.2.0+4713+dfsg-5build1
+progressiveMauve 

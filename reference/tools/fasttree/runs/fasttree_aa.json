@@ -1,0 +1,68 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "fasttree_aa",
+ "set": "phylogeny",
+ "tool": "fasttree",
+ "mode": "aa_lg",
+ "description": "uses FastTree 2.1.11; FastTreeMP on PATH is 2.1.3, which has no -lg",
+ "tool_version": "2.1.11",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21374883_7",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T08:25:53",
+ "inputs": {
+  "P": {
+   "fixture": "sarscov2_proteome",
+   "path": "inputs/proteome.fasta",
+   "size": 18016
+  }
+ },
+ "prep": "mafft --auto --quiet $P > aln.faa",
+ "cmd": "FastTree -lg -log fasttree.log aln.faa > tree.nwk",
+ "wall_s": 1.72,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "fasttree.log",
+   "size": 22344,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Command: FastTree -lg -log fasttree.log aln.faa",
+    "FastTree Version 2.1.11 SSE3",
+    "Alignment: aln.faa"
+   ],
+   "lines": 40,
+   "sha256": "99e3e6878578ca191aa9236d79efe311261fcaf58d0331fe84a362ac66c8b47d"
+  },
+  {
+   "path": "tree.nwk",
+   "size": 486,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(ENSSASP00005000002.1:0.00055,ENSSASP00005000003.1:0.00054,(ENSSASP00005000010.1:0.13701,(ENSSASP00005000012.1:0.29624,((ENSSASP00005000007.1:0.75526,(ENSSASP00005000008.1:0.63182,ENSSASP00005000009.1"
+   ],
+   "lines": 1,
+   "sha256": "2adaa152dd61d299cd189da47085546fd4c16ad3041b5d9fef20cbe30db95ec4"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 22830,
+ "time": {
+  "elapsed": "0:01.68",
+  "max_rss_kb": "38996",
+  "cpu_pct": "99",
+  "exit_status": "0",
+  "user_s": "1.61",
+  "sys_s": "0.06",
+  "elapsed_s": 1.68,
+  "max_rss_mb": 38.1
+ },
+ "stdout_tail": "",
+ "stderr_tail": "FastTree Version 2.1.11 SSE3\nAlignment: aln.faa\nAmino acid distances: BLOSUM45 Joins: balanced Support: SH-like 1000\nSearch: Normal +NNI +SPR (2 rounds range 10) +ML-NNI opt-each=1\nTopHits: 1.00*sqrtN close=default refresh=0.80\nML Model: Le-Gascuel 2008, CAT approximation with 20 rate categories\nInitial topology in 0.01 seconds\nRefining topology: 14 rounds ME-NNIs, 2 rounds ME-SPRs, 7 rounds ML-NNIs\nTotal branch-length 5.897 after 0.07 sec\n      0.15 seconds: ML NNI round 1 of 7, 1 of 10 splits\nML-NNI round 1: LogLk = -27226.280 NNIs 1 max delta 0.34 Time 0.51\n      0.51 seconds: Site likelihoods with rate category 1 of 20\nSwitched to using 20 rate categories (CAT approximation)\nRate categories were divided by 0.648 so that average rate = 1.0\nCAT-based log-likelihoods may not be comparable across runs\nUse -gamma for approximate but comparable Gamma(20) log-likelihoods\nML-NNI round 2: LogLk = -26832.402 NNIs 1 max delta 0.34 Time 0.76\n      0.75 seconds: ML NNI round 3 of 7, 1 of 10 splits\nML-NNI round 3: LogLk = -26832.283 NNIs 0 max delta 0.00 Time 0.90\nTurning off heuristics for final round of ML NNIs (converged)\n      0.89 seconds: ML NNI round 4 of 7, 1 of 10 splits\nML-NNI round 4: LogLk = -26831.027 NNIs 0 max delta 0.00 Time 1.25 (final)\n      1.24 seconds: ML Lengths 1 of 10 splits\nOptimize all lengths: LogLk = -26831.010 Time 1.33\nTotal time: 1.68 seconds Unique: 12/12 Bad splits: 0/9\n",
+ "status": "ok",
+ "finished": "2026-11-03T08:25:59"
+}

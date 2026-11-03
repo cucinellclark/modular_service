@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/cutadapt --version
+4.9

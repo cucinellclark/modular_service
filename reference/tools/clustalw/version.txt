@@ -1,0 +1,11 @@
+# /opt/patric-common/runtime/bin/clustalw cmd: clustalw -help
+
+
+
+ CLUSTAL W (1.83) Multiple Sequence Alignments
+
+
+
+
+ERROR: Cannot open help file [clustalw_help]
+

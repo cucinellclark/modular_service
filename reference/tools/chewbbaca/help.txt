@@ -1,0 +1,210 @@
+# /opt/patric-common/runtime/bin/chewBBACA.py cmd: chewBBACA.py --help; for s in AlleleCall CreateSchema ExtractCgMLST; do echo "### $s"; chewBBACA.py $s --help 2>&1 | head -80; done
+chewBBACA version: 3.3.10
+Authors: Rafael Mamede, Pedro Cerqueira, Mickael Silva, João Carriço, Mário Ramirez
+Github: https://github.com/B-UMMI/chewBBACA
+Documentation: https://chewbbaca.readthedocs.io/en/latest/index.html
+Contacts: imm-bioinfo@medicina.ulisboa.pt
+
+USAGE: chewBBACA.py [module] -h, --help
+
+Select one of the following modules:
+CreateSchema: Create a gene-by-gene schema based on a set of genome assemblies or coding sequences.
+AlleleCall: Determine the allelic profiles of a set of bacterial genomes based on a schema.
+SchemaEvaluator: Build an interactive report for schema evaluation.
+AlleleCallEvaluator: Build an interactive report for allele calling results evaluation.
+ExtractCgMLST: Determines the set of loci that constitute the core genome based on loci presence thresholds.
+RemoveGenes: Remove a list of loci from your allele call output.
+PrepExternalSchema: Adapt an external schema to be used with chewBBACA.
+JoinProfiles: Join allele calling results from different runs.
+UniprotFinder: Retrieve annotations for loci in a schema.
+DownloadSchema: Download a schema from Chewie-NS.
+LoadSchema: Upload a schema to Chewie-NS.
+SyncSchema: Synchronize a schema with its remote version in Chewie-NS.
+NSStats: Retrieve basic information about the species and schemas in Chewie-NS.
+### AlleleCall
+chewBBACA version: 3.3.10
+Authors: Rafael Mamede, Pedro Cerqueira, Mickael Silva, João Carriço, Mário Ramirez
+Github: https://github.com/B-UMMI/chewBBACA
+Documentation: https://chewbbaca.readthedocs.io/en/latest/index.html
+Contacts: imm-bioinfo@medicina.ulisboa.pt
+
+==========================
+  chewBBACA - AlleleCall
+==========================
+usage: chewBBACA.py AlleleCall --input-files <path> --schema-directory <dir> --output-directory <dir> [options]
+
+Determine the allelic profiles of a set of genomes.
+
+options:
+ -h, --help                  show this help message and exit
+                             
+ -i, --input-files           Path to the directory that contains the input FASTA files or to a file
+                             with a list of full paths to FASTA files, one per line. (default: None)
+                             
+ -g, --schema-directory      Path to the schema directory. The schema directory contains the loci
+                             FASTA files and a folder named "short" that contains the FASTA files
+                             with the loci representative alleles. (default: None)
+                             
+ -o, --output-directory      Output directory where the process will store intermediate files and
+                             allele calling results (will create a subdirectory named
+                             "results_<TIMESTAMP>" if the path passed by the user already exists).
+                             (default: None)
+                             
+ --ptf, --training-file      Path to the Prodigal training file used by Pyrodigal to predict genes.
+                             Default is to use the training file included in the schema's directory.
+                             The translation table used to create this file overrides any value
+                             passed to `--t`, `--translation-table`. (default: None)
+                             
+ --gl, --genes-list          Path to a file with the list of genes/loci to perform allele calling.
+                             The file must include the full paths to the loci FASTA files or the
+                             loci IDs, one per line. The process will perform allele calling only
+                             for the subset of genes provided in the file. (default: False)
+                             
+ --bsr, --blast-score-ratio  BLAST Score Ratio (BSR) value. The BSR is computed for each BLASTp
+                             alignment and aligned sequences with a BSR >= than the defined value
+                             are considered to be alleles of the same gene. (default: None)
+                             
+ --l, --minimum-length       Minimum sequence length value. Predicted coding sequences (CDSs)
+                             shorter than this value are excluded. (default: None)
+                             
+ --t, --translation-table    Genetic code used to predict genes and to translate coding DNA
+                             sequences (CDSs). This value will be ignored if a training file is
+                             used. (default: None)
+                             
+ --st, --size-threshold      Coding sequence (CDS) size variation threshold. At the default value of
+                             0.2, CDSs with a size that deviates +-20 percent from the locus length
+                             mode are classified as ASM/ALM. (default: None)
+                             
+ --cpu, --cpu-cores          Number of CPU cores that will be used to run the process (chewie resets
+                             to a lower value if it is equal to or exceeds the total number of
+                             available CPU cores). (default: 1)
+                             
+ --b, --blast-path           Path to the directory that contains the BLAST executables. (default: )
+                             
+ --pm, --prodigal-mode       Prodigal running mode ("single" for finished genomes, reasonable
+                             quality draft genomes and big viruses. "meta" for metagenomes, low
+                             quality draft genomes, small viruses, and small plasmids). (default:
+                             single)
+                             
+ --cds, --cds-input          If provided, chewBBACA skips the gene prediction step and assumes the
+                             input FASTA files contain coding sequences (one FASTA file per strain).
+                             (default: False)
+                             
+ --no-inferred               If provided, the process will not add the sequences of inferred alleles
+                             (INF) to the schema. Allelic profiles will still include the allele
+                             identifiers attributed to the inferred alleles. Use this parameter if
+                             the schema is being accessed by multiple processes/users
+                             simultaneously. (default: False)
+                             
+ --output-unclassified       Create a Fasta file with the coding sequences (CDSs) that were not
+                             classified. (default: False)
+                             
+ --output-missing            Create a Fasta file with coding sequences (CDSs) classified as NIPH,
+                             NIPHEM, ASM, ALM, PLOT3, PLOT5 and LOTSC. (default: False)
+                             
+### CreateSchema
+chewBBACA version: 3.3.10
+Authors: Rafael Mamede, Pedro Cerqueira, Mickael Silva, João Carriço, Mário Ramirez
+Github: https://github.com/B-UMMI/chewBBACA
+Documentation: https://chewbbaca.readthedocs.io/en/latest/index.html
+Contacts: imm-bioinfo@medicina.ulisboa.pt
+
+============================
+  chewBBACA - CreateSchema
+============================
+usage: chewBBACA.py CreateSchema --input-files <path> --output-directory <dir> [options]
+
+Create a schema seed.
+
+options:
+ -h, --help                  show this help message and exit
+                             
+ -i, --input-files           Path to the directory that contains the input FASTA files or to a file
+                             with a list of full paths to FASTA files, one per line. (default: None)
+                             
+ -o, --output-directory      Output directory where the process will store intermediate files and
+                             create the schema's directory. (default: None)
+                             
+ --n, --schema-name          Name given to the schema folder. (default: schema_seed)
+                             
+ --ptf, --training-file      Path to the Prodigal training file used by Pyrodigal to predict genes.
+                             The translation table used to create this file overrides any value
+                             passed to `--t`, `--translation-table`. This file is copied to the
+                             schema folder to be used for allele calling. (default: None)
+                             
+ --bsr, --blast-score-ratio  BLAST Score Ratio (BSR) value. The BSR is computed for each BLASTp
+                             alignment and aligned sequences with a BSR >= than the defined value
+                             are considered to be alleles of the same gene. (default: 0.6)
+                             
+ --l, --minimum-length       Minimum sequence length value. Predicted coding sequences (CDSs)
+                             shorter than this value are excluded. (default: 201)
+                             
+ --t, --translation-table    Genetic code used to predict genes and to translate coding DNA
+                             sequences (CDSs). This value is ignored if a valid training file is
+                             passed to `--ptf`, `--training-file`. (default: None)
+                             
+ --st, --size-threshold      Coding sequence (CDS) size variation threshold. Added to the schema's
+                             config file to identify alleles with a size that deviates from the
+                             locus length mode during the allele calling process. (default: 0.2)
+                             
+ --cpu, --cpu-cores          Number of CPU cores that will be used to run the process (chewie resets
+                             to a lower value if it is equal to or exceeds the total number of
+                             available CPU cores). (default: 1)
+                             
+ --b, --blast-path           Path to the directory that contains the BLAST executables. (default: )
+                             
+ --pm, --prodigal-mode       Prodigal running mode ("single" for finished genomes, reasonable
+                             quality draft genomes and big viruses. "meta" for metagenomes, low
+                             quality draft genomes, small viruses, and small plasmids). (default:
+                             single)
+                             
+ --cds, --cds-input          If provided, chewBBACA skips the gene prediction step and assumes the
+                             input FASTA files contain coding sequences. (default: False)
+                             
+ --no-cleanup                If provided, intermediate files generated during process execution are
+                             not deleted at the end. (default: False)
+                             
+
+It is strongly advised to provide a training file to create a schema. Module documentation available
+at https://chewbbaca.readthedocs.io/en/latest/user/modules/CreateSchema.html
+### ExtractCgMLST
+chewBBACA version: 3.3.10
+Authors: Rafael Mamede, Pedro Cerqueira, Mickael Silva, João Carriço, Mário Ramirez
+Github: https://github.com/B-UMMI/chewBBACA
+Documentation: https://chewbbaca.readthedocs.io/en/latest/index.html
+Contacts: imm-bioinfo@medicina.ulisboa.pt
+
+=============================
+  chewBBACA - ExtractCgMLST
+=============================
+usage: chewBBACA.py ExtractCgMLST --input-file <file> --output-directory <dir> [options]
+
+Determine the set of loci that constitute the core genome.
+
+options:
+ -h, --help              show this help message and exit
+                         
+ -i, --input-file        Path to the TSV file that contains the allelic profiles determined by the
+                         AlleleCall module. (default: None)
+                         
+ -o, --output-directory  Path to the directory where the process will store the output files.
+                         (default: None)
+                         
+ --t, --threshold        Genes that constitute the core genome must be in a proportion of genomes
+                         that is at least equal to this value. Provide multiple values to compute
+                         the core genome for multiple threshold values. (default: [0.95, 0.99, 1])
+                         
+ --s, --step             The allele calling results are processed iteratively to evaluate the impact
+                         of adding subsets of the results in computing the core genome. The step
+                         value controls the number of profiles added in each iteration until all
+                         profiles are included. (default: 1)
+                         
+ --r, --genes2remove     Path to a file with a list of gene IDs to exclude from the analysis (one
+                         gene identifier per line). (default: False)
+                         
+ --g, --genomes2remove   Path to a file with a list of genome IDs to exclude from the analysis (one
+                         genome identifier per line). (default: False)
+                         
+
+Module documentation available at
+https://chewbbaca.readthedocs.io/en/latest/user/modules/ExtractCgMLST.html

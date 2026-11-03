@@ -1,0 +1,24 @@
+# /opt/patric-common/runtime/bin/minced --help
+MinCED, a program to find CRISPRs in shotgun DNA sequences or full genomes
+
+Usage:    minced [options] file.fa [outputFile.txt] [outputFile.gff]
+
+Options:  -searchWL  Length of search window used to discover CRISPRs (range: 6-9). Default: 8
+          -minNR     Minimum number of repeats a CRISPR must contain. Default: 3
+          -minRL     Minimum length of the CRISPR repeats. Default: 23
+          -maxRL     Maximum length of the CRISPR repeats. Default: 47
+          -minSL     Minimum length of the CRISPR spacers. Default: 26
+          -maxSL     Maximum length of the CRISPR spacers. Default: 50
+          -gff       Output summary results in gff format containing
+                     only the positions of the CRISPR arrays. Default: false
+          -gffFull   Output detailed results in gff format containing
+                     positions of CRISPR arrays and all repeat units. Default: false
+          -spacers   Output a fasta formatted file containing the spacers. Default: false
+          -h --help  Output this handy help message
+          --version  Output version information
+
+Examples: minced ecoli.fna
+          minced metagenome.fna
+          minced metagenome.fna metagenome.crisprs
+          minced metagenome.fna metagenome.crisprs metagenome.gff
+

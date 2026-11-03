@@ -1,0 +1,63 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "racon_polish",
+ "set": "assembly",
+ "tool": "racon",
+ "mode": "ont_polish",
+ "description": null,
+ "tool_version": "1.5.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373339_12",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:40:14",
+ "inputs": {
+  "DRAFT": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  },
+  "L": {
+   "fixture": "portiera_nanopore",
+   "path": "inputs/test.fastq.gz",
+   "size": 13713449
+  }
+ },
+ "prep": "minimap2 -x map-ont -t $CPU $DRAFT $L > overlaps.paf",
+ "cmd": "racon -t $CPU $L overlaps.paf $DRAFT > polished.fasta",
+ "wall_s": 2.22,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "polished.fasta",
+   "size": 358076,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1 LN:i:358026 RC:i:7065 XC:f:1.000000",
+    "ATTGATTTAGGTACTACTAACTCGTGTGTTTGCAGTTTTAGAAAATGGAAAAGTCGTGTTATAGAAAATTCAGAAGGTGCCGTACTACTCTTCTATAATTGCATATACTGATGATAATGAAATATTAATTGGACAAAACCGCAAAACGGCAGGCTGTAACTAATCCGTCTAATACTTTATACGCAATTAAACGGGTCTTA"
+   ],
+   "lines": 2,
+   "records": 1,
+   "residues": 358026,
+   "sha256": "fc244b015c585d06373c1589baaf3f5b2d5f783b0423d67754a6b29c7149caea"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 358076,
+ "time": {
+  "elapsed": "0:02.19",
+  "max_rss_kb": "89208",
+  "cpu_pct": "712",
+  "exit_status": "0",
+  "user_s": "15.34",
+  "sys_s": "0.31",
+  "elapsed_s": 2.19,
+  "max_rss_mb": 87.1
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[racon::Polisher::initialize] loaded target sequences 0.000903 s\n[racon::Polisher::initialize] loaded sequences 0.192863 s\n[racon::Polisher::initialize] loaded overlaps 0.006889 s\n[racon::Polisher::initialize] aligning overlaps [=>                  ] 0.047473 s\r[racon::Polisher::initialize] aligning overlaps [==>                 ] 0.062773 s\r[racon::Polisher::initialize] aligning overlaps [===>                ] 0.079158 s\r[racon::Polisher::initialize] aligning overlaps [====>               ] 0.097814 s\r[racon::Polisher::initialize] aligning overlaps [=====>              ] 0.114641 s\r[racon::Polisher::initialize] aligning overlaps [======>             ] 0.128277 s\r[racon::Polisher::initialize] aligning overlaps [=======>            ] 0.144205 s\r[racon::Polisher::initialize] aligning overlaps [========>           ] 0.161663 s\r[racon::Polisher::initialize] aligning overlaps [=========>          ] 0.176251 s\r[racon::Polisher::initialize] aligning overlaps [==========>         ] 0.187230 s\r[racon::Polisher::initialize] aligning overlaps [===========>        ] 0.206579 s\r[racon::Polisher::initialize] aligning overlaps [============>       ] 0.213845 s\r[racon::Polisher::initialize] aligning overlaps [=============>      ] 0.229531 s\r[racon::Polisher::initialize] aligning overlaps [==============>     ] 0.243530 s\r[racon::Polisher::initialize] aligning overlaps [===============>    ] 0.268596 s\r[racon::Polisher::initialize] aligning overlaps [================>   ] 0.295314 s\r[racon::Polisher::initialize] aligning overlaps [=================>  ] 0.316863 s\r[racon::Polisher::initialize] aligning overlaps [==================> ] 0.328989 s\r[racon::Polisher::initialize] aligning overlaps [===================>] 0.342173 s\r[racon::Polisher::initialize] aligning overlaps [====================] 0.355835 s\n[racon::Polisher::initialize] transformed data into windows 0.013504 s\n[racon::Polisher::polish] generating consensus [=>                  ] 0.080367 s\r[racon::Polisher::polish] generating consensus [==>                 ] 0.174619 s\r[racon::Polisher::polish] generating consensus [===>                ] 0.263025 s\r[racon::Polisher::polish] generating consensus [====>               ] 0.434363 s\r[racon::Polisher::polish] generating consensus [=====>              ] 0.629923 s\r[racon::Polisher::polish] generating consensus [======>             ] 0.657766 s\r[racon::Polisher::polish] generating consensus [=======>            ] 0.710075 s\r[racon::Polisher::polish] generating consensus [========>           ] 0.739310 s\r[racon::Polisher::polish] generating consensus [=========>          ] 0.792671 s\r[racon::Polisher::polish] generating consensus [==========>         ] 0.858471 s\r[racon::Polisher::polish] generating consensus [===========>        ] 0.964639 s\r[racon::Polisher::polish] generating consensus [============>       ] 1.102745 s\r[racon::Polisher::polish] generating consensus [=============>      ] 1.249336 s\r[racon::Polisher::polish] generating consensus [==============>     ] 1.314503 s\r[racon::Polisher::polish] generating consensus [===============>    ] 1.333292 s\r[racon::Polisher::polish] generating consensus [================>   ] 1.360172 s\r[racon::Polisher::polish] generating consensus [=================>  ] 1.422975 s\r[racon::Polisher::polish] generating consensus [==================> ] 1.522294 s\r[racon::Polisher::polish] generating consensus [===================>] 1.556534 s\r[racon::Polisher::polish] generating consensus [====================] 1.589124 s\n[racon::Polisher::] total = 2.166967 s\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:40:17"
+}

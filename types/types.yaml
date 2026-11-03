@@ -1,0 +1,286 @@
+# ModularService data type vocabulary (P7). Schema: modpipe/types/v1
+#
+# Decisions (2026-11-03):
+#   * Our own readable, dotted type names. EDAM terms are attached as cross-references.
+#   * Compression is an ATTRIBUTE, not a type. The engine (de)compresses automatically when a module
+#     declares it needs plain or gzip input.
+#   * Installed reference databases are chosen by registry id as PARAMETERS (resources/databases.yaml).
+#     Databases and indexes that a pipeline builds (makeblastdb, bwa index, ...) flow as typed PORTS (database.*, index.*).
+#   * BV-BRC genome typed object (GTO) is in the vocabulary. RASTtk step modules are DEFERRED (2026-11-03), so the
+#     rast_* converters below stay `planned`.
+#
+# Compatibility: an output of type A may feed an input of type B if A == B or A is a descendant of B
+# (dotted prefix: sequences.dna.contigs is-a sequences.dna is-a sequences), AND A's attributes satisfy B's
+# `requires`. Abstract types may only appear on inputs. Collections: `cardinality: many` on a port
+# accepts a collection<T> (gather); a single-valued port fed from a collection runs once per item (scatter).
+#
+# Kinds: file | files (named parts) | prefix (file set sharing a basename, e.g. BLAST/bwa index)
+#        | directory | value (not a file, e.g. a BV-BRC genome id)
+#
+# EDAM ids marked `edam_src: nfcore` were seen in nf-core meta.yml (reference/nfcore_edam_terms.json);
+# `curated` ones were assigned by us from the EDAM ontology. Verify any curated id before relying on it externally.
+
+schema: modpipe/types/v1
+
+attributes:
+  compression: {values: [none, gzip, bgzip], default: none,
+                note: "auto-handled. bgzip implies gzip-compatible; some consumers (tabix, bcftools index) require bgzip"}
+  alphabet:    {values: [dna, rna, protein]}
+  platform:    {values: [illumina, iontorrent, nanopore, pacbio_hifi, pacbio_clr, other]}
+  sorted:      {values: [none, coordinate, name], default: none}
+  indexed:     {values: [true, false], default: false, note: "companion index present (bai/csi/tbi/fai)"}
+  aligned:     {values: [true, false], default: false}
+  strandedness: {values: [unstranded, forward, reverse]}
+
+formats:
+  # id:            edam          edam_src  extensions (case-insensitive; compression suffixes handled separately)
+  fastq:          {edam: format_1930, edam_src: nfcore,  ext: [fastq, fq]}
+  fasta:          {edam: format_1929, edam_src: nfcore,  ext: [fasta, fa, fna, faa, ffn, frn, fas, seq, pep, cds, contigs]}
+  aligned_fasta:  {edam: format_1984, edam_src: nfcore,  ext: [afa, aln.fasta, aln.fa, fas, mfa, aln]}
+  phylip:         {edam: format_1997, edam_src: curated, ext: [phy, phylip]}
+  nexus:          {edam: format_1912, edam_src: curated, ext: [nex, nexus]}
+  clustal:        {edam: format_1982, edam_src: curated, ext: [aln, clustal, clw]}
+  stockholm:      {edam: format_1961, edam_src: nfcore,  ext: [sto, stockholm]}
+  xmfa:           {edam: null,                           ext: [xmfa], note: "progressiveMauve extended multi-FASTA"}
+  sam:            {edam: format_2573, edam_src: nfcore,  ext: [sam]}
+  bam:            {edam: format_2572, edam_src: nfcore,  ext: [bam]}
+  cram:           {edam: format_3462, edam_src: nfcore,  ext: [cram]}
+  bai:            {edam: format_3327, edam_src: nfcore,  ext: [bai]}
+  csi:            {edam: null,                           ext: [csi]}
+  crai:           {edam: null,                           ext: [crai]}
+  fai:            {edam: null,                           ext: [fai]}
+  paf:            {edam: null,                           ext: [paf]}
+  vcf:            {edam: format_3016, edam_src: curated, ext: [vcf]}
+  bcf:            {edam: format_3020, edam_src: curated, ext: [bcf]}
+  tbi:            {edam: null,                           ext: [tbi]}
+  gff3:           {edam: format_1975, edam_src: curated, ext: [gff, gff3]}
+  gtf:            {edam: format_2306, edam_src: curated, ext: [gtf]}
+  genbank:        {edam: format_1936, edam_src: curated, ext: [gb, gbk, gbff, genbank]}
+  embl:           {edam: format_1927, edam_src: curated, ext: [embl]}
+  gto:            {edam: null,                           ext: [gto, genome], note: "BV-BRC Genome Typed Object (JSON)"}
+  bed:            {edam: format_3003, edam_src: nfcore,  ext: [bed]}
+  bedgraph:       {edam: format_3583, edam_src: curated, ext: [bedgraph, bdg]}
+  wig:            {edam: format_3005, edam_src: curated, ext: [wig]}
+  bigwig:         {edam: format_3006, edam_src: curated, ext: [bigwig, bw]}
+  gfa:            {edam: format_3975, edam_src: curated, ext: [gfa]}
+  fastg:          {edam: null,                           ext: [fastg]}
+  newick:         {edam: format_1910, edam_src: nfcore,  ext: [nwk, newick, tre, tree, treefile, dnd, contree, bionj, besttree, starttree, raxml.bestTree]}
+  phyloxml:       {edam: format_3159, edam_src: curated, ext: [phyloxml]}
+  hmmer3:         {edam: format_3329, edam_src: curated, ext: [hmm]}
+  blast_tabular:  {edam: null,                           ext: [tsv, m8, blast6, txt], note: "outfmt 6 / m8 (BLAST, DIAMOND, MMseqs2)"}
+  blast_xml:      {edam: format_3331, edam_src: curated, ext: [xml]}
+  hmmer_tbl:      {edam: null,                           ext: [tbl, tblout, domtblout, txt]}
+  kraken_report:  {edam: null,                           ext: [txt, kreport, report]}
+  kraken_output:  {edam: null,                           ext: [tsv, txt, kraken]}
+  cdhit_clstr:    {edam: null, ext: [clstr], note: "cd-hit cluster membership"}
+  kma_res:        {edam: null, ext: [res], note: "kma per-template results table"}
+  glimmer_predict: {edam: null, ext: [predict], note: "glimmer3 gene predictions"}
+  distance_matrix: {edam: null, ext: [mldist, dist], note: "PHYLIP-style distance matrix"}
+  boulder_io:     {edam: null,                           ext: [txt, boulder], note: "primer3 input/output"}
+  tsv:            {edam: format_3475, edam_src: nfcore,  ext: [tsv, tab, txt, tbl]}
+  csv:            {edam: format_3752, edam_src: nfcore,  ext: [csv]}
+  json:           {edam: format_3464, edam_src: nfcore,  ext: [json]}
+  yaml:           {edam: format_3750, edam_src: nfcore,  ext: [yml, yaml]}
+  html:           {edam: format_2331, edam_src: nfcore,  ext: [html, htm]}
+  text:           {edam: format_2330, edam_src: nfcore,  ext: [txt, log, out, stats]}
+  xml:            {edam: format_2332, edam_src: nfcore,  ext: [xml]}
+  pdb:            {edam: format_1476, edam_src: curated, ext: [pdb, ent]}
+  png:            {edam: format_3603, edam_src: curated, ext: [png]}
+  svg:            {edam: format_3604, edam_src: curated, ext: [svg]}
+  pdf:            {edam: format_3508, edam_src: curated, ext: [pdf]}
+  zip:            {edam: format_3987, edam_src: nfcore,  ext: [zip]}
+  tar:            {edam: format_3981, edam_src: nfcore,  ext: [tar, tar.gz, tgz]}
+  binary:         {edam: null,                           ext: [], note: "opaque tool-specific binary (index parts etc.)"}
+  index_part:     {edam: null, ext: [bt2, bt2l, ht2, amb, ann, bwt, pac, sa, mmi, dmnd, h3f, h3i, h3m, h3p,
+                                     nhr, nin, nsq, ndb, nog, nos, not, ntf, nto, njs, phr, pin, psq, pdb, pog, pos, pot, ptf, pto, pjs,
+                                     comp.b, index.b, length.b, seq.b, k2d, kmer_distrib],
+                   note: "component files of prefix/directory database and index types"}
+  ballgown_ctab:  {edam: null, ext: [ctab], note: "stringtie -B tables (members of expression.ballgown)"}
+
+types:
+  # ---------------------------------------------------------------- reads
+  reads:                        {abstract: true, description: "Sequencing reads", edam_data: data_2044}
+  reads.short:                  {abstract: true, description: "Short reads (Illumina/Ion Torrent)",
+                                 attributes: {platform: [illumina, iontorrent, other]}}
+  reads.short.paired:           {kind: files, parts: {r1: fastq, r2: fastq}, description: "Paired-end reads, two files"}
+  reads.short.interleaved:      {kind: file, format: fastq, description: "Paired-end reads interleaved in one file"}
+  reads.short.single:           {kind: file, format: fastq, description: "Single-end reads"}
+  reads.long:                   {abstract: true, description: "Long reads"}
+  reads.long.nanopore:          {kind: file, format: fastq, attributes: {platform: [nanopore]}}
+  reads.long.pacbio:            {kind: file, format: fastq, attributes: {platform: [pacbio_hifi, pacbio_clr]}}
+
+  # ---------------------------------------------------------------- sequences (unaligned FASTA)
+  sequences:                    {abstract: true, kind: file, format: fasta, description: "Unaligned sequences", edam_data: data_2044}
+  sequences.dna:                {kind: file, format: fasta, attributes: {alphabet: [dna]}, description: "Nucleotide sequences (generic)"}
+  sequences.dna.contigs:        {kind: file, format: fasta, description: "Assembled contigs / scaffolds / genome sequence"}
+  sequences.dna.genes:          {kind: file, format: fasta, description: "Gene / feature nucleotide sequences (CDS, rRNA, ...)"}
+  sequences.dna.transcripts:    {kind: file, format: fasta, description: "Transcript sequences"}
+  sequences.dna.reads:          {kind: file, format: fasta, description: "Reads converted to FASTA (no qualities)"}
+  sequences.protein:            {kind: file, format: fasta, attributes: {alphabet: [protein]}, description: "Protein sequences"}
+
+  # ---------------------------------------------------------------- alignments
+  alignment:                    {abstract: true}
+  alignment.msa:                {abstract: true, kind: file, formats: [aligned_fasta, phylip, nexus, clustal, stockholm],
+                                 description: "Multiple sequence alignment", edam_data: data_0863}
+  alignment.msa.dna:            {kind: file, formats: [aligned_fasta, phylip, nexus, clustal, stockholm], attributes: {alphabet: [dna]}}
+  alignment.msa.protein:        {kind: file, formats: [aligned_fasta, phylip, nexus, clustal, stockholm], attributes: {alphabet: [protein]}}
+  alignment.wga:                {kind: file, formats: [xmfa], description: "Whole-genome alignment (progressiveMauve, parsnp)"}
+  alignment.reads:              {abstract: true, description: "Reads aligned to a reference"}
+  alignment.reads.sam:          {kind: file, format: sam}
+  alignment.reads.bam:          {kind: files, parts: {bam: bam, index: {formats: [bai, csi], optional: true}},
+                                 attributes: {sorted: [none, coordinate, name], indexed: [true, false]}}
+  alignment.reads.cram:         {kind: files, parts: {cram: cram, index: {formats: [crai], optional: true}}}
+  alignment.overlaps:           {kind: file, format: paf, description: "Pairwise read/contig overlaps (minimap2 PAF)"}
+
+  # ---------------------------------------------------------------- homology search results
+  homology:                     {abstract: true}
+  homology.hits:                {abstract: true}
+  homology.hits.tabular:        {kind: file, format: blast_tabular, description: "BLAST/DIAMOND/MMseqs2 tabular hits (outfmt 6 / m8)"}
+  homology.hits.xml:            {kind: file, format: blast_xml}
+  homology.hmm_hits:            {kind: file, format: hmmer_tbl, description: "HMMER --tblout / --domtblout"}
+  homology.clusters:            {kind: files, parts: {representatives: fasta, membership: {formats: [tsv, text, cdhit_clstr]}},
+                                 description: "Sequence clusters (cd-hit .clstr, mmseqs cluster tsv)"}
+
+  # ---------------------------------------------------------------- assembly graphs
+  assembly:                     {abstract: true}
+  assembly.graph:               {abstract: true}
+  assembly.graph.gfa:           {kind: file, format: gfa}
+  assembly.graph.fastg:         {kind: file, format: fastg}
+
+  # ---------------------------------------------------------------- variants & coverage
+  variants:                     {abstract: true}
+  variants.vcf:                 {kind: files, parts: {vcf: vcf, index: {formats: [tbi, csi], optional: true}},
+                                 attributes: {compression: [none, gzip, bgzip], indexed: [true, false]}}
+  variants.bcf:                 {kind: files, parts: {bcf: bcf, index: {formats: [csi], optional: true}}}
+  coverage:                     {abstract: true}
+  coverage.bedgraph:            {kind: file, format: bedgraph}
+  coverage.wig:                 {kind: file, format: wig}
+  coverage.bigwig:              {kind: file, format: bigwig}
+  coverage.depth:               {kind: file, format: tsv, description: "Per-position depth table (samtools depth)"}
+  intervals:                    {abstract: true}
+  intervals.bed:                {kind: file, format: bed, description: "Genomic intervals (primer schemes, targets, ...)"}
+
+  # ---------------------------------------------------------------- annotation
+  annotation:                   {abstract: true}
+  annotation.gto:               {kind: file, format: gto, description: "BV-BRC Genome Typed Object: contigs + features + metadata (RASTtk)"}
+  annotation.genbank:           {kind: file, format: genbank}
+  annotation.embl:              {kind: file, format: embl}
+  annotation.gff:               {kind: file, format: gff3}
+  annotation.gtf:               {kind: file, format: gtf}
+  annotation.feature_table:     {kind: file, format: tsv, description: "BV-BRC/RASTtk feature table"}
+  annotation.trna:              {kind: file, format: text, description: "tRNAscan-SE results"}
+  annotation.crispr:            {kind: file, formats: [text, gff3], description: "CRISPR arrays (minced)"}
+  annotation.glimmer_predict:   {kind: file, format: glimmer_predict, description: "glimmer3 .predict"}
+
+  # ---------------------------------------------------------------- typed result tables (all is-a table.tsv/csv)
+  table:                        {abstract: true}
+  table.tsv:                    {kind: file, format: tsv}
+  table.csv:                    {kind: file, format: csv}
+  table.tsv.amr:                {kind: file, format: tsv, description: "AMR gene calls (AMRFinderPlus)"}
+  table.tsv.mlst:               {kind: file, format: tsv, description: "MLST profile (mlst)"}
+  table.tsv.allele_profiles:    {kind: file, format: tsv, description: "cgMLST allele calls (chewBBACA)"}
+  table.tsv.taxon_abundance:    {kind: file, format: tsv, description: "Taxon abundance (bracken, freyja demix)"}
+  table.csv.lineage:            {kind: file, format: csv, description: "Lineage assignment (pangolin)"}
+  table.tsv.gene_counts:        {kind: file, format: tsv, description: "Read counts per gene (htseq-count)"}
+  table.tsv.expression:         {kind: file, format: tsv, description: "Abundance estimates (stringtie -A)"}
+  table.tsv.assembly_metrics:   {kind: file, format: tsv, description: "Assembly QC metrics (QUAST report.tsv)"}
+  table.tsv.variant_frequencies: {kind: file, format: tsv, description: "Per-site variant frequencies (freyja variants, iVar)"}
+  table.tsv.mobile_elements:    {kind: file, format: tsv, description: "Plasmid/virus calls (geNomad summaries)"}
+  table.tsv.virus_quality:      {kind: file, format: tsv, description: "Viral genome completeness (CheckV)"}
+  table.tsv.template_hits:      {kind: file, format: kma_res, description: "Read-mapping hits per reference template (kma .res)"}
+  table.tsv.prophage:           {kind: file, format: tsv, description: "Prophage predictions (PhiSpy)"}
+
+  # ---------------------------------------------------------------- taxonomy
+  taxonomy:                     {abstract: true}
+  taxonomy.kraken:              {abstract: true}
+  taxonomy.kraken.report:       {kind: file, format: kraken_report, description: "Kraken2/Bracken-style report"}
+  taxonomy.kraken.output:       {kind: file, format: kraken_output, description: "Per-read Kraken2 classifications"}
+
+  # ---------------------------------------------------------------- phylogeny
+  tree:                         {abstract: true}
+  tree.newick:                  {kind: file, format: newick, edam_data: data_0872}
+  tree.phyloxml:                {kind: file, format: phyloxml}
+  tree.distance_matrix:         {kind: file, format: distance_matrix, description: "Pairwise distance matrix (iqtree .mldist, mash, ...)"}
+
+  # ---------------------------------------------------------------- expression
+  expression:                   {abstract: true}
+  expression.ballgown:          {kind: directory, description: "stringtie -B ballgown tables (e2t/i2t/t_data.ctab ...)"}
+
+  # ---------------------------------------------------------------- structures
+  structure:                    {abstract: true}
+  structure.protein:            {kind: file, format: pdb, description: "Protein 3D structure (PDB format)"}
+
+  # ---------------------------------------------------------------- primers
+  primers:                      {abstract: true}
+  primers.primer3:              {kind: file, format: boulder_io, description: "primer3 output"}
+
+  # ---------------------------------------------------------------- databases & indexes built inside pipelines (ports)
+  database:                     {abstract: true}
+  database.blast:               {abstract: true}
+  database.blast.nucl:          {kind: prefix, description: "makeblastdb -dbtype nucl (.nhr/.nin/.nsq ...)"}
+  database.blast.prot:          {kind: prefix, description: "makeblastdb -dbtype prot (.phr/.pin/.psq ...)"}
+  database.diamond:             {kind: file, format: binary, description: ".dmnd"}
+  database.mmseqs:              {kind: prefix}
+  database.hmm:                 {kind: prefix, format: hmmer3, description: "HMM profile file (+ hmmpress .h3* parts when pressed)"}
+  database.kma:                 {kind: prefix, description: "kma index (.comp.b/.index.b/.length.b/.name/.seq.b)"}
+  database.kraken2:             {kind: directory, description: "hash.k2d/opts.k2d/taxo.k2d (+ database*mers.kmer_distrib for bracken)"}
+  database.snpeff:              {kind: directory, description: "snpEff dataDir + config for one genome"}
+  database.chewbbaca_schema:    {kind: directory, description: "chewBBACA schema (schema_seed etc.)"}
+  # registry-only database types: installed reference data, chosen by id as a module PARAMETER
+  # (resources/databases.yaml); never connected as ports.
+  database.genomad:             {kind: directory, registry_only: true}
+  database.checkv:              {kind: directory, registry_only: true}
+  database.vigor:               {kind: directory, registry_only: true, description: "VIGOR4 reference DB, selected by name"}
+  database.pangolin:            {kind: directory, registry_only: true}
+  database.freyja_barcodes:     {kind: directory, registry_only: true, description: "barcodes + curated_lineages.json + lineages.yml"}
+  database.amrfinder:           {kind: directory, registry_only: true}
+  database.mlst:                {kind: directory, registry_only: true}
+  database.card:                {kind: directory, registry_only: true}
+  database.mash:                {kind: file, format: binary, registry_only: true}
+  database.antismash:           {kind: directory, registry_only: true}
+  database.rast_kmers:          {kind: directory, registry_only: true}
+  database.specialty_proteins:  {kind: directory, registry_only: true}
+  database.subsystems:          {kind: directory, registry_only: true}
+  database.rast_workflows:      {kind: directory, registry_only: true}
+  database.seedtk:              {kind: directory, registry_only: true}
+  index:                        {abstract: true}
+  index.bwa:                    {kind: prefix, description: ".amb/.ann/.bwt/.pac/.sa"}
+  index.bowtie2:                {kind: prefix, description: ".1-4.bt2 / .rev.1-2.bt2 (or .bt2l)"}
+  index.hisat2:                 {kind: prefix, description: ".1-8.ht2"}
+  index.minimap2:               {kind: file, format: binary, description: ".mmi"}
+  index.fai:                    {kind: file, format: fai}
+
+  # ---------------------------------------------------------------- reports (usually terminal outputs)
+  report:                       {abstract: true}
+  report.html:                  {kind: file, format: html}
+  report.json:                  {kind: file, format: json}
+  report.text:                  {kind: file, format: text, description: "Logs / plain-text summaries"}
+  report.image:                 {kind: file, formats: [png, svg, pdf]}
+  report.archive:               {kind: file, formats: [zip, tar]}
+
+  # ---------------------------------------------------------------- BV-BRC references (values resolved at staging time)
+  bvbrc:                        {abstract: true}
+  bvbrc.genome_id:              {kind: value, description: "BV-BRC genome id, e.g. 1206109.14. Resolved via data API (p3-genome-fasta etc.)"}
+  bvbrc.genome_group:           {kind: value, description: "Workspace genome group path"}
+  bvbrc.feature_group:          {kind: value, description: "Workspace feature group path"}
+  bvbrc.feature_ids:            {kind: value, description: "List of BV-BRC feature ids"}
+  bvbrc.sra_accession:          {kind: value, description: "SRA run accession(s); staged to reads.* by the engine (as BV-BRC ReadSet does)"}
+
+# Conversions the engine may suggest/insert for near-miss edges (each is (or will be) an ordinary module).
+converters:
+  - {from: reads.short.interleaved, to: reads.short.paired,       module: seqtk_deinterleave, status: planned}
+  - {from: reads,                   to: sequences.dna.reads,       module: seqtk_seq_fasta,    status: available, note: "discovery run seqtk_fq2fa"}
+  - {from: alignment.reads.sam,     to: alignment.reads.bam,       module: samtools_sort_index, status: available, note: "result sorted=coordinate, indexed=true"}
+  - {from: alignment.reads.bam,     to: alignment.reads.bam,       module: samtools_sort_index, status: available, note: "attribute upgrade: sorted/indexed"}
+  - {from: sequences.dna.contigs,   to: annotation.gto,            module: rast_create_genome,  status: planned, note: "rast-create-genome"}
+  - {from: annotation.gto,          to: annotation.genbank,        module: rast_export_genome,  status: planned}
+  - {from: annotation.gto,          to: annotation.gff,            module: rast_export_genome,  status: planned}
+  - {from: annotation.gto,          to: sequences.dna.contigs,     module: rast_export_genome,  status: planned}
+  - {from: annotation.gto,          to: sequences.protein,         module: rast_export_genome,  status: planned}
+  - {from: annotation.gto,          to: sequences.dna.genes,       module: rast_export_genome,  status: planned}
+  - {from: annotation.genbank,      to: annotation.gto,            module: rast_create_genome_genbank, status: planned}
+  - {from: tree.newick,             to: tree.phyloxml,             module: p3x_newick_to_phyloxml, status: planned}
+  - {from: alignment.msa,           to: alignment.msa,             module: msa_convert,         status: planned, note: "format change, e.g. aligned_fasta -> phylip"}
+  - {from: sequences.dna.contigs,   to: index.bwa,                 module: bwa_index,           status: planned}
+  - {from: sequences.dna.contigs,   to: index.fai,                 module: samtools_faidx,      status: planned}
+  - {from: variants.vcf,            to: variants.vcf,              module: bgzip_tabix,         status: planned, note: "compression=bgzip, indexed=true"}

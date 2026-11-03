@@ -1,0 +1,105 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "makeblastdb_nucl",
+ "set": "homology",
+ "tool": "blastn",
+ "mode": "makeblastdb_nucl",
+ "description": null,
+ "tool_version": "2.15.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373352_1",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:20",
+ "inputs": {
+  "G": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "makeblastdb -in $G -dbtype nucl -out nucdb",
+ "wall_s": 5.1,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "nucdb.ndb",
+   "size": 20480,
+   "new": true,
+   "kind": "index",
+   "sha256": "36c494bd3f3ae5d652b92844301d6facc895c859334cf40e5d7e8586f9bccd67"
+  },
+  {
+   "path": "nucdb.nhr",
+   "size": 136,
+   "new": true,
+   "kind": "index",
+   "sha256": "87dbda80cf2c14c0424308808fad5da4c9c39de96127e61e08dd593a47f709e0"
+  },
+  {
+   "path": "nucdb.nin",
+   "size": 192,
+   "new": true,
+   "kind": "index",
+   "sha256": "5fdf8f5ce31551c0f98d86d67553faaed7a8ce5c3bc6fd2cc0c6d78c9157236e"
+  },
+  {
+   "path": "nucdb.njs",
+   "size": 518,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "{",
+    "  \"version\": \"1.2\",",
+    "  \"dbname\": \"nucdb\","
+   ],
+   "sha256": "3bf25f21a90df29c962283260dd2ed5d17095e3eb8f4ca3a9af8367d97fe62ce"
+  },
+  {
+   "path": "nucdb.not",
+   "size": 20,
+   "new": true,
+   "kind": "index",
+   "sha256": "e2099cbf3445ac30a98dcc86f0b899eac91fd0a23cf2825f48bd01daadee347a"
+  },
+  {
+   "path": "nucdb.nsq",
+   "size": 89562,
+   "new": true,
+   "kind": "index",
+   "sha256": "2ce5af26359da509c379c1c324bc1ccc6187c031421b79de7a55435b9eb7b5ad"
+  },
+  {
+   "path": "nucdb.ntf",
+   "size": 16384,
+   "new": true,
+   "kind": "index",
+   "sha256": "67982e4d7b1490b09cce06e7c29175c6bd011cd542cfacb1a1c310084a50821a"
+  },
+  {
+   "path": "nucdb.nto",
+   "size": 8,
+   "new": true,
+   "kind": "index",
+   "sha256": "7c9fa136d4413fa6173637e883b6998d32e1d675f88cddff9dcbcf331820f4b8"
+  }
+ ],
+ "n_outputs": 8,
+ "output_bytes": 127300,
+ "time": {
+  "elapsed": "0:05.05",
+  "max_rss_kb": "18092",
+  "cpu_pct": "15",
+  "exit_status": "0",
+  "user_s": "0.04",
+  "sys_s": "0.74",
+  "elapsed_s": 5.05,
+  "max_rss_mb": 17.7
+ },
+ "stdout_tail": "\n\nBuilding a new DB, current time: 11/02/2026 15:37:24\nNew DB name:   /disks/tmp/cucinell/modpipe-discovery/homology/makeblastdb_nucl-21373352_1/nucdb\nNew DB title:  /disks/tmp/cucinell/modpipe-discovery/homology/makeblastdb_nucl-21373352_1/inputs/genome.fasta\nSequence type: Nucleotide\nKeep MBits: T\nMaximum file size: 3000000000B\nAdding sequences from FASTA; added 1 sequences in 0.535962 seconds.\n\n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:26"
+}

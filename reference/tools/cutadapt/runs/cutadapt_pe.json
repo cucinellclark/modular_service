@@ -1,0 +1,106 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "cutadapt_pe",
+ "set": "readqc",
+ "tool": "cutadapt",
+ "mode": "paired",
+ "description": null,
+ "tool_version": "4.9",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_5",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:30",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "cutadapt -j $CPU -a AGATCGGAAGAGC -A AGATCGGAAGAGC -q 20 -m 30 -o out_1.fastq.gz -p out_2.fastq.gz --json cutadapt.json $R1 $R2 > cutadapt.log",
+ "wall_s": 0.92,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "cutadapt.json",
+   "size": 3830,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "  \"tag\": \"Cutadapt report\",",
+    "  \"schema_version\": [0, 3],"
+   ],
+   "sha256": "b09c031271b7187e3681eecb32c9a50f67408700f9df410108c9c1219e2a661b"
+  },
+  {
+   "path": "cutadapt.log",
+   "size": 2023,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "This is cutadapt 4.9 with Python 3.10.14",
+    "Command line parameters: -j 4 -a AGATCGGAAGAGC -A AGATCGGAAGAGC -q 20 -m 30 -o out_1.fastq.gz -p out_2.fastq.gz --json cutadapt.json /disks/tmp/cucinell/modpipe-discovery/readqc/cutadapt_pe-21373335_5",
+    "Processing paired-end reads on 4 cores ..."
+   ],
+   "lines": 78,
+   "sha256": "ca6ff99f73b47f5d280f67702c911b75ff25687de3f0056eb2180d517b76e576"
+  },
+  {
+   "path": "out_1.fastq.gz",
+   "size": 7964264,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.1 FCD1DAFACXX:5:1101:14124:2241/1",
+    "AAGAAATTAAAATTAGGCTGGTATTTCAATATTGACTCCATACAAACTTGCGTTTGTACTTCATTGTCTCCCAGCTATTCTACACAAACAATAACCACTTA",
+    "+"
+   ],
+   "lines": 390792,
+   "records": 97698,
+   "residues": 9852658,
+   "sha256": "7e678156a9815654f931a429e202921f2a82a258c31c0e234013a857ad96c82c"
+  },
+  {
+   "path": "out_2.fastq.gz",
+   "size": 8082087,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.1 FCD1DAFACXX:5:1101:14124:2241/2",
+    "TTGCGATGGGGTGACGAATAAGGCTATGCGGGCCCAGCGTTGGTTGTCTGGGTTTAAGTATGTAGGTTTAGAAGTTAGGTAAATCCGATTTCTTAATAA",
+    "+"
+   ],
+   "lines": 390792,
+   "records": 97698,
+   "residues": 9434038,
+   "sha256": "80f16b3ab547fe8ec61762f23dcffa19fc3d818bf28a41d36c372b1b1a764982"
+  }
+ ],
+ "n_outputs": 4,
+ "output_bytes": 16052204,
+ "time": {
+  "elapsed": "0:00.88",
+  "max_rss_kb": "53116",
+  "cpu_pct": "272",
+  "exit_status": "0",
+  "user_s": "2.12",
+  "sys_s": "0.27",
+  "elapsed_s": 0.88,
+  "max_rss_mb": 51.9
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:31"
+}

@@ -1,0 +1,87 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "samtools_stats",
+ "set": "mapping_variants",
+ "tool": "samtools",
+ "mode": "stats+flagstat+idxstats",
+ "description": null,
+ "tool_version": "1.13",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373340_12",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:40",
+ "inputs": {
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  },
+  "BAI": {
+   "fixture": "sarscov2_bam_pe_bai",
+   "path": "inputs/test.paired_end.sorted.bam.bai",
+   "size": 128
+  }
+ },
+ "prep": null,
+ "cmd": "samtools stats $BAM > stats.txt && samtools flagstat $BAM > flagstat.txt && samtools idxstats $BAM > idxstats.txt",
+ "wall_s": 0.03,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "flagstat.txt",
+   "size": 472,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "200 + 0 in total (QC-passed reads + QC-failed reads)",
+    "200 + 0 primary",
+    "0 + 0 secondary"
+   ],
+   "lines": 16,
+   "sha256": "1335652a01c7e3c84c36e544488d24b098df0a13ffe815bc0dee7ea4749f2dba"
+  },
+  {
+   "path": "idxstats.txt",
+   "size": 31,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1\t29829\t197\t3",
+    "*\t0\t0\t0"
+   ],
+   "lines": 2,
+   "sha256": "236009d9761b529ae3effc487e5b3807b0ffa1be0b0dd845c6e196de4dd15326"
+  },
+  {
+   "path": "stats.txt",
+   "size": 61266,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "# This file was produced by samtools stats (1.13+htslib-1.13+ds) and can be plotted using plot-bamstats",
+    "# This file contains statistics for all reads.",
+    "# The command line was:  stats /disks/tmp/cucinell/modpipe-discovery/mapping_variants/samtools_stats-21373340_12/inputs/test.paired_end.sorted.bam"
+   ],
+   "lines": 1525,
+   "sha256": "5bf6597ff36fdf73df38dd13fb65137b5ad1c0a5e7c34752612127231e6d7404"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 61769,
+ "time": {
+  "elapsed": "0:00.02",
+  "max_rss_kb": "4184",
+  "cpu_pct": "48",
+  "exit_status": "0",
+  "user_s": "0.00",
+  "sys_s": "0.00",
+  "elapsed_s": 0.02,
+  "max_rss_mb": 4.1
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:40"
+}

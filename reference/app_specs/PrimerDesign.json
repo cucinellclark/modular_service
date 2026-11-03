@@ -1,0 +1,194 @@
+{
+    "id": "PrimerDesign",
+    "script": "App-PrimerDesign",
+    "label": "Primer Design",
+    "description": "Use Primer3 to design primers to given sequence",
+    "default_memory": "4G",
+    "parameters": [
+        {
+            "id":"output_file",
+            "label":"File Basename",
+            "required": 1,
+            "desc":"Basename for the generated output files.",
+            "type":"wsid"
+        },
+        {
+            "id": "output_path",
+            "label": "Output Folder",
+            "required": 1,
+            "desc": "Path to which the output will be written.",
+            "type": "folder"
+        },
+        {
+            "id": "input_type",
+            "label": "How to interpret sequence_input",
+            "required": 1,
+            "desc": "How to interpret sequence_input: 'sequence_text'|'workplace_fasta'|'database_id'",
+            "type": ["sequence_text", "workplace_fasta", "database_id"]
+        },
+        {
+            "id": "sequence_input",
+            "label": "DNA sequence data",
+            "required": 1,
+            "desc": "Sequence may be text, workspace file, or database id as per input_type.",
+            "type": "string"
+        },
+        {
+            "id": "SEQUENCE_ID",
+            "label": "Sequence ID",
+            "required": 0,
+            "type": "string"
+        },
+        {
+            "id": "SEQUENCE_TARGET",
+            "label": "Amplification target",
+            "desc": "Start/stop of region that primers must flank",
+            "required": 0,
+            "allow_multiple": 1,
+            "type": "array",
+            "items" : [
+                { "type" : "number" },
+                { "type" : "number" }
+            ]
+        },                
+        {
+            "id": "SEQUENCE_INCLUDED_REGION",
+            "label": "Region where primers can be picked",
+            "required": 0,
+            "type": "array",
+            "items" : [
+                { "type" : "number" },
+                { "type" : "number" }
+            ]
+        },
+        {
+            "id": "SEQUENCE_EXCLUDED_REGION",
+            "label": "Region where primers cannot overlap",
+            "required": 0,
+            "type": "array",
+            "items" : [
+                { "type" : "number" },
+                { "type" : "number" }
+            ]
+        },
+        {
+            "id": "SEQUENCE_OVERLAP_JUNCTION_LIST",
+            "label": "Start position and length of region that primers must flank",
+            "required": 0,
+            "allow_multiple": 1,
+            "type": "array",
+            "items" : [
+                { "type" : "number" },
+                { "type" : "number" }
+            ]
+        },
+        {
+            "id": "PRIMER_PICK_INTERNAL_OLIGO",
+            "label": "Pick an internal oligo (hybridization probe).",
+            "desc": "If the associated value = 1 (non-0), then Primer3 will attempt to pick an internal oligo (hybridization probe to detect the PCR product).",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_PRODUCT_SIZE_RANGE",
+            "label": "Min, max product size",
+            "required": 0,
+            "allow_multiple": 1,
+            "type": "array",
+            "items" : [
+                { "type" : "number" },
+                { "type" : "number" }
+            ]
+        },
+        {
+            "id": "PRIMER_NUM_RETURN",
+            "label": "Max num primer pairs to report",
+            "required": 0,
+            "type": "integer"
+        },
+        {
+            "id": "PRIMER_MIN_SIZE",
+            "label": "Min primer length",
+            "required": 0,
+            "type": "integer"
+        },
+        {
+            "id": "PRIMER_OPT_SIZE",
+            "label": "Optimal primer length",
+            "required": 0,
+            "type": "integer"
+        },
+        {
+            "id": "PRIMER_MAX_SIZE",
+            "label": "Maximum primer length",
+            "required": 0,
+            "type": "integer"
+        },
+        {
+            "id": "PRIMER_MAX_TM",
+            "label": "Maximum primer melting temperature",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_MIN_TM",
+            "label": "Minimum primer melting temperature",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_OPT_TM",
+            "label": "Optimal primer melting temperature",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_PAIR_MAX_DIFF_TM",
+            "label": "Max Tm difference of paired primers",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_MAX_GC",
+            "label": "Maximum primer GC percentage",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_MIN_GC",
+            "label": "Minimum primer GC percentage",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_OPT_GC",
+            "label": "Optimal primer GC percentage",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_SALT_MONOVALENT",
+            "label": "Concentration of monovalent cations (mM)",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_SALT_DIVALENT",
+            "label": "Concentration of divalent cations (mM)",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_DNA_CONC",
+            "label": "Annealing Oligo Concentration (nM)",
+            "required": 0,
+            "type": "number"
+        },
+        {
+            "id": "PRIMER_DNTP_CONC",
+            "label": "Concentration of dNTPs (mM)",
+            "required": 0,
+            "type": "number"
+        }
+    ]
+}

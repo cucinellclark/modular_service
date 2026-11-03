@@ -1,0 +1,60 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "seqtk_sample",
+ "set": "readqc",
+ "tool": "seqtk",
+ "mode": "sample",
+ "description": null,
+ "tool_version": "1.4",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_11",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:49",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  }
+ },
+ "prep": null,
+ "cmd": "seqtk sample -s 11 $R1 0.1 | gzip > sub_1.fastq.gz",
+ "wall_s": 0.32,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "sub_1.fastq.gz",
+   "size": 813114,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.5 FCD1DAFACXX:5:1101:13769:2381/1",
+    "TTACTGGGCGTAAAGGGCATGTAGGTGGTTTGTTAAGCTTTATGTGAAAGCCCTATGCTTAACATAGGAACGGAATAAAGAACTGACAAACTAGAGTGCAA",
+    "+"
+   ],
+   "lines": 39368,
+   "records": 9842,
+   "residues": 994042,
+   "sha256": "f672ccdb70f4ca2bbcb9c89e5c3f282d145b693bd01df22bb8f7e15e6efa0eca"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 813114,
+ "time": {
+  "elapsed": "0:00.28",
+  "max_rss_kb": "3452",
+  "cpu_pct": "128",
+  "exit_status": "0",
+  "user_s": "0.35",
+  "sys_s": "0.00",
+  "elapsed_s": 0.28,
+  "max_rss_mb": 3.4
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:49"
+}

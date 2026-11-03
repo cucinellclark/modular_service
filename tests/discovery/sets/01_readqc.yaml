@@ -1,0 +1,83 @@
+# P4 discovery set: read QC / preprocessing. Env: $CPU, $MEM_GB, inputs as named vars (paths under inputs/).
+set: readqc
+resources: {cpus: 4, mem: 16G, time: "01:00:00"}
+runs:
+  - id: fastp_pe
+    tool: fastp
+    mode: paired
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: fastp -w $CPU -i $R1 -I $R2 -o trimmed_1.fastq.gz -O trimmed_2.fastq.gz --detect_adapter_for_pe -h fastp.html -j fastp.json
+  - id: fastp_se
+    tool: fastp
+    mode: single
+    inputs: {R: portiera_illumina_se}
+    cmd: fastp -w $CPU -i $R -o trimmed.fastq.gz -h fastp.html -j fastp.json
+  - id: fastplong_ont
+    tool: fastplong
+    mode: nanopore
+    inputs: {R: portiera_nanopore}
+    cmd: fastplong -w $CPU -i $R -o filtered.fastq.gz -h fastplong.html -j fastplong.json
+  - id: trim_galore_pe
+    tool: trim_galore
+    mode: paired
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: trim_galore --paired --cores 2 -o out $R1 $R2
+  - id: trim_galore_pe_fastqc
+    tool: trim_galore
+    mode: paired+fastqc
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: trim_galore --paired --fastqc --cores 2 -o out $R1 $R2
+  - id: cutadapt_pe
+    tool: cutadapt
+    mode: paired
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: cutadapt -j $CPU -a AGATCGGAAGAGC -A AGATCGGAAGAGC -q 20 -m 30 -o out_1.fastq.gz -p out_2.fastq.gz --json cutadapt.json $R1 $R2 > cutadapt.log
+  - id: fastqc_pe
+    tool: fastqc
+    mode: paired
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: mkdir fastqc && fastqc -t $CPU -o fastqc $R1 $R2
+  - id: fastqc_ont
+    tool: fastqc
+    mode: nanopore
+    inputs: {R: portiera_nanopore}
+    cmd: mkdir fastqc && fastqc -t $CPU -o fastqc $R
+  - id: filtlong_ont
+    tool: filtlong
+    mode: nanopore
+    inputs: {R: portiera_nanopore}
+    cmd: filtlong --min_length 1000 --keep_percent 90 $R | gzip > filtered.fastq.gz
+  - id: bbduk_pe
+    tool: bbduk
+    mode: paired_adapter_trim
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    description: bundled ref=adapters resource is missing from the container's bbmap.jar; uses an explicit adapter FASTA
+    prep: printf '>TruSeq_Universal\nAGATCGGAAGAGCACACGTCTGAACTCCAGTCA\n>TruSeq_R2\nAGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT\n>Nextera\nCTGTCTCTTATACACATCT\n' > adapters.fa
+    cmd: bbduk.sh -Xmx${MEM_GB}g in1=$R1 in2=$R2 out1=clean_1.fastq.gz out2=clean_2.fastq.gz ref=adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo threads=$CPU stats=stats.txt
+  - id: bbnorm_pe
+    tool: bbnorm
+    mode: paired
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: bbnorm.sh -Xmx${MEM_GB}g in1=$R1 in2=$R2 out1=norm_1.fastq.gz out2=norm_2.fastq.gz target=30 min=2 threads=$CPU
+  - id: seqtk_sample
+    tool: seqtk
+    mode: sample
+    inputs: {R1: portiera_illumina_1}
+    cmd: seqtk sample -s 11 $R1 0.1 | gzip > sub_1.fastq.gz
+  - id: seqtk_fq2fa
+    tool: seqtk
+    mode: fastq_to_fasta
+    inputs: {R1: portiera_illumina_1}
+    cmd: seqtk seq -a $R1 > reads.fasta
+  - id: hostile_pe
+    tool: hostile
+    mode: paired_default_index
+    description: BV-BRC hostile cache dir; may try to download the index if absent
+    inputs: {R1: sarscov2_illumina_test_1, R2: sarscov2_illumina_test_2}
+    cmd: HOSTILE_CACHE_DIR=/vol/bvbrc/production/application-backend/fastqutils/reference_indices/hostile_cache hostile clean --fastq1 $R1 --fastq2 $R2 --out-dir out --threads $CPU > hostile.json
+  - id: multiqc_fastqc
+    tool: multiqc
+    mode: from_fastqc
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    prep: mkdir qc && fastqc -t $CPU -o qc $R1 $R2
+    cmd: multiqc -o multiqc qc

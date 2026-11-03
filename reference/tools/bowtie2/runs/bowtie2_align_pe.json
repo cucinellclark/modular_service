@@ -1,0 +1,111 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bowtie2_align_pe",
+ "set": "mapping_variants",
+ "tool": "bowtie2",
+ "mode": "align_paired",
+ "description": null,
+ "tool_version": "2.4.4",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373340_3",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:21",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  },
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": "bowtie2-build --threads $CPU $REF refidx",
+ "cmd": "bowtie2 -p $CPU -x refidx -1 $R1 -2 $R2 -S aln.sam --un-conc-gz unaligned_%.fastq.gz 2> bowtie2.log",
+ "wall_s": 7.35,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aln.sam",
+   "size": 64398623,
+   "new": true,
+   "kind": "sam",
+   "preview": [
+    "@HD\tVN:1.0\tSO:unsorted",
+    "@SQ\tSN:NC_018507.1\tLN:358242",
+    "@PG\tID:bowtie2\tPN:bowtie2\tVN:2.4.4\tCL:\"/usr/bin/bowtie2-align-s --wrapper basic-0 -p 4 -x refidx --passthrough -1 /disks/tmp/cucinell/modpipe-discovery/mapping_variants/bowtie2_align_pe-21373340_3/inp"
+   ],
+   "sha256": "ca00b12fd398ecf19a4242b7e3a2dc742741b40c235d2568f12aee8612ccf940"
+  },
+  {
+   "path": "bowtie2.log",
+   "size": 598,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "97729 reads; of these:",
+    "  97729 (100.00%) were paired; of these:",
+    "    95362 (97.58%) aligned concordantly 0 times"
+   ],
+   "lines": 15,
+   "sha256": "e4bf6ecf44fc93fe07a8a0c0ceddd2189139524461070a7094748c3b06fa59e5"
+  },
+  {
+   "path": "unaligned_1.fastq.gz",
+   "size": 7771590,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.1 FCD1DAFACXX:5:1101:14124:2241/1",
+    "AAGAAATTAAAATTAGGCTGGTATTTCAATATTGACTCCATACAAACTTGCGTTTGTACTTCATTGTCTCCCAGCTATTCTACACAAACAATAACCACTTA",
+    "+"
+   ],
+   "lines": 381448,
+   "records": 95362,
+   "residues": 9631562,
+   "sha256": "b5729fab80c5bc85e7d6647f06491c2a5baffc69973ab5204a0ec16f3c7054bd"
+  },
+  {
+   "path": "unaligned_2.fastq.gz",
+   "size": 8018024,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.1 FCD1DAFACXX:5:1101:14124:2241/2",
+    "TTGCGATGGGGTGACGAATAAGGCTATGCGGGCCCAGCGTTGGTTGTCTGGGTTTAAGTATGTAGGTTTAGAAGTTAGGTAAATCCGATTTCTTAATAA",
+    "+"
+   ],
+   "lines": 381448,
+   "records": 95362,
+   "residues": 9440838,
+   "sha256": "ac4073467842f62c876041da659ea41953f84e52cc7c148e08b532a484bfae47"
+  }
+ ],
+ "n_outputs": 4,
+ "output_bytes": 80188835,
+ "time": {
+  "elapsed": "0:07.34",
+  "max_rss_kb": "36424",
+  "cpu_pct": "378",
+  "exit_status": "0",
+  "user_s": "25.05",
+  "sys_s": "2.70",
+  "elapsed_s": 7.34,
+  "max_rss_mb": 35.6
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:29"
+}

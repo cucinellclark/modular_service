@@ -1,0 +1,77 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "minimap2_sorted_ont",
+ "set": "modules_v1",
+ "tool": "minimap2",
+ "mode": "module_minimap2_map_ont",
+ "description": "matches modules/minimap2.yaml",
+ "tool_version": "2.24",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "pear",
+ "slurm_job": "21374922_1",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T09:08:38",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  },
+  "L": {
+   "fixture": "portiera_nanopore",
+   "path": "inputs/test.fastq.gz",
+   "size": 13713449
+  }
+ },
+ "prep": null,
+ "cmd": "minimap2 -t $CPU -ax map-ont $REF $L | samtools sort -@ 3 -o aligned.bam - && samtools index aligned.bam && samtools flagstat aligned.bam > flagstat.txt",
+ "wall_s": 8.59,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aligned.bam",
+   "size": 17886056,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "bam",
+   "sha256": "a8890ee725041ff30f3521c49354a3fa1a6ad08ddcb11d5f3aa41955eea1fc18"
+  },
+  {
+   "path": "aligned.bam.bai",
+   "size": 3504,
+   "new": true,
+   "kind": "index",
+   "sha256": "e289592e53df388585628550a321d0dfbf9b80c8cee31cae8a7cac61b6dc6fec"
+  },
+  {
+   "path": "flagstat.txt",
+   "size": 469,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "11140 + 0 in total (QC-passed reads + QC-failed reads)",
+    "7100 + 0 primary",
+    "24 + 0 secondary"
+   ],
+   "lines": 16,
+   "sha256": "4a306727ab5a67ee913ee98151025589df127b45dcd06047cc3e9b285c98ae24"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 17890029,
+ "time": {
+  "elapsed": "0:08.56",
+  "max_rss_kb": "377792",
+  "cpu_pct": "356",
+  "exit_status": "0",
+  "user_s": "29.92",
+  "sys_s": "0.63",
+  "elapsed_s": 8.56,
+  "max_rss_mb": 368.9
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[M::mm_idx_gen::0.068*0.51] collected minimizers\n[M::mm_idx_gen::0.080*0.84] sorted minimizers\n[M::main::0.080*0.84] loaded/built the index for 1 target sequence(s)\n[M::mm_mapopt_update::0.081*0.84] mid_occ = 10\n[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 1\n[M::mm_idx_stat::0.083*0.85] distinct minimizers: 65445 (98.10% are singletons); average occurrences: 1.026; average spacing: 5.334; total length: 358242\n[M::worker_pipeline::7.643*3.79] mapped 7100 sequences\n[M::main] Version: 2.24-r1122\n[M::main] CMD: minimap2 -t 4 -ax map-ont /disks/tmp/cucinell/modpipe-discovery/modules_v1/minimap2_sorted_ont-21374922_1/inputs/genome.fasta /disks/tmp/cucinell/modpipe-discovery/modules_v1/minimap2_sorted_ont-21374922_1/inputs/test.fastq.gz\n[M::main] Real time: 7.649 sec; CPU: 28.997 sec; Peak RSS: 0.360 GB\n[bam_sort_core] merging from 0 files and 3 in-memory blocks...\n",
+ "status": "ok",
+ "finished": "2026-11-03T09:08:47"
+}

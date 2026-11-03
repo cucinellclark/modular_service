@@ -1,0 +1,8 @@
+# /opt/patric-common/runtime/bin/trim_galore --version
+
+                        Quality-/Adapter-/RRBS-/Speciality-Trimming
+                                [powered by Cutadapt]
+                                  version 0.6.5dev
+
+                               Last update: 05 05 2020
+

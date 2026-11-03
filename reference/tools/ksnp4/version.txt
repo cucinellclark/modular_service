@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/kSNP4 cmd: ls -d /opt/patric-common/runtime/ksnp-*
+/opt/patric-common/runtime/ksnp-4.1

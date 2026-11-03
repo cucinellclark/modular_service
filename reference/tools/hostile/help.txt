@@ -1,0 +1,12 @@
+# /opt/patric-common/runtime/bin/hostile --help
+usage: hostile [-h] [--version] {clean,mask,fetch} ...
+
+positional arguments:
+  {clean,mask,fetch}
+    clean             Remove reads aligning to an index from fastq[.gz] input files
+    mask              Mask reference genome against target genome(s)
+    fetch             Download and cache indexes from object storage for use with hostile clean
+
+options:
+  -h, --help          show this help message and exit
+  --version           show program's version number and exit

@@ -1,0 +1,45 @@
+schema: modpipe/module/v1
+id: mafft
+version: 1
+label: "MAFFT: multiple sequence alignment"
+description: Aligns nucleotide or protein sequences. The alignment alphabet follows the input.
+category: alignment
+tool: {id: mafft, binary: mafft, version: "7.526"}
+
+inputs:
+  - id: sequences
+    type: sequences
+    description: Unaligned DNA or protein FASTA
+
+outputs:
+  - id: alignment
+    type: alignment.msa
+    type_from:
+      port: sequences
+      map: {sequences.dna: alignment.msa.dna, sequences.protein: alignment.msa.protein}
+    path: aligned.fasta
+
+parameters:
+  - id: strategy
+    type: enum
+    enum: [auto, fftns1, fftns2, fftnsi, einsi, linsi, ginsi]
+    default: auto
+    label: "Alignment strategy"
+    description: "auto picks by data size; linsi/ginsi/einsi are slower and more accurate (< ~200 sequences)"
+
+resources: {cpu: 8, memory: 16G, runtime: 4h}
+
+command: |
+  {% set flags = {'auto': '--auto', 'fftns1': '--retree 1 --maxiterate 0', 'fftns2': '--retree 2 --maxiterate 0',
+                  'fftnsi': '--retree 2 --maxiterate 2', 'einsi': '--genafpair --ep 0 --maxiterate 1000',
+                  'linsi': '--localpair --maxiterate 1000', 'ginsi': '--globalpair --maxiterate 1000'} %}
+  mafft {{ flags[params.strategy] }} --thread {{ cpu }}
+  {% if inputs.sequences.attrs.get('alphabet') == 'protein' %}--amino{% elif inputs.sequences.attrs.get('alphabet') == 'dna' %}--nuc{% endif %}
+  {{ inputs.sequences | q }} > {{ outputs.alignment }}
+
+tests:
+  discovery_runs: [mafft_auto_dna, mafft_linsi_protein]
+  observed: {max_rss_mb: 2337, max_wall_s: 9, note: "linsi on 12 SARS-CoV-2 proteins"}
+provenance:
+  bvbrc_invocations: [App-MSA.pl, App-GeneTree.pl, p3x-build-codon-tree.py]
+  nfcore: [mafft/align]

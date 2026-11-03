@@ -1,0 +1,85 @@
+# /opt/patric-common/runtime/bin/vigor4 --help
+usage: vigor4 -i inputfasta -o outputprefix [ -d refdb ]
+
+named arguments:
+  -h, --help             show this help message and exit
+  -i <input fasta>, --input-fasta <input fasta>
+                         path to fasta  file  of  genomic  sequences  to be
+                         annotated.
+  -o <output prefix>, --output-prefix <output prefix>
+                         prefix for outputfile  files,  e.g.  if the output
+                         prefix is  /mydir/anno  VIGOR  will  create output
+                         files /mydir/anno.tbl, /mydir/anno.stats,  etc. An
+                         output prefix  without  a  directory  element will
+                         create the output  files  in  the  current working
+                         directory.
+  -c MIN_COVERAGE, --min-coverage MIN_COVERAGE
+                         minimum  coverage  of  reference  product  (0-100)
+                         required to report a gene,  by default coverage is
+                         ignored
+  -P <parameter=value~~...~~parameter=value>, --parameter <parameter=value~~...~~parameter=value>
+                         ~~ separated list of  VIGOR parameters to override
+                         default values.  Use  --list-config-parameters  to
+                         see settable parameters.
+  -v, --verbose          verbose logging (default=terse)
+  --list-config-parameters [{all,current}]
+                         list available configuration  parameters and exit.
+                         By  default  only   lists   description,  use  the
+                         verbose option before  this  option  to  list more
+                         information
+  --list-databases       list the names  and  other  information  about the
+                         found   vigor   compatible   databases.   Requires
+                         reference  database  path  to  be  set  either  by
+                         passing  the   --reference-database-path   command
+                         line parameter or  setting reference_database_path
+                         in the configuration file
+  --version              print version information
+  --config-file CONFIG_FILE
+                         config file to use
+  --reference-database-path REFERENCE_DATABASE_PATH
+                         reference database path
+  --virus-config VIRUSSPECIFICCONFIG
+                         Path to virus specific configuration
+  --virus-config-path VIRUSSPECIFICCONFIGPATH
+                         Path  to  directory   containing   virus  specific
+                         config files.
+  --overwrite-output     overwrite existing output files if they exist
+  --temporary-directory TEMPORARYDIRECTORY
+                         Root directory to use for temporary directories
+  --list-output-formats  list acceptable output formats and exit
+
+reference database:
+  -d <ref db>, --reference-database <ref db>
+                         specify the reference database to be used
+
+locus tag usage:
+  -l, --no-locus-tags    do  NOT  use   locus_tags   in   TBL  file  output
+                         (incompatible with -L)
+  -L [<locus_tag_prefix>], --locus-tags [<locus_tag_prefix>]
+                         USE locus_tags in  TBL  file  output (incompatible
+                         with -l). If  no  prefix  is  provided, the prefix
+                         "vigor_" will be used.
+
+Unimplemented/Ignored for backward compatibilty:
+  -0, --circular         complete circular  genome  (allows  gene  to  span
+                         origin). This feature is currently unimplemented
+  -f {0,1,2}, --frameshift-sensitivity {0,1,2}
+                         frameshift  sensitivity,   0=ignore   frameshifts,
+                         1=normal (default), 2=sensitive. 
+  -m, --ignore-reference-requirements
+                         ignore      reference      match      requirements
+                         (coverage/identity/similarity),  sometimes  useful
+                         when running VIGOR  to  evaluate  raw  contigs and
+                         rough draft sequences
+  -x <ref_id,...,ref_id>, --ignore-refID <ref_id,...,ref_id>
+                         comma separated list of  reference sequence IDs to
+                         ignore  (useful   when   debugging   a   reference
+                         database). Not currently implemented
+
+Outputs:
+  outputprefix.rpt   - summary of program results
+  outputprefix.cds   - fasta file of predicted CDSs
+  outputprefix.pep   - fasta file of predicted proteins
+  outputprefix.tbl   - predicted features in GenBank tbl format
+outputprefix.aln   -  alignment  of  predicted  protein  to  reference, and
+reference protein to genome

@@ -1,0 +1,107 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "glimmer3_from_scratch",
+ "set": "annotation",
+ "tool": "glimmer3",
+ "mode": "long-orfs+build-icm+glimmer3",
+ "description": null,
+ "tool_version": "3.02b",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373347_2",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:37:20",
+ "inputs": {
+  "G": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "long-orfs -n -t 1.15 $G longorfs\nextract -t $G longorfs > train.fasta\nbuild-icm -r icm < train.fasta\nglimmer3 -o50 -g110 -t30 $G icm g3\n",
+ "wall_s": 1.73,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "g3.detail",
+   "size": 101752,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Command:  glimmer3 -o 50 -g 110 -t 30 /disks/tmp/cucinell/modpipe-discovery/annotation/glimmer3_from_scratch-21373347_2/inputs/genome.fasta icm g3",
+    "",
+    "Sequence file = /disks/tmp/cucinell/modpipe-discovery/annotation/glimmer3_from_scratch-21373347_2/inputs/genome.fasta"
+   ],
+   "lines": 1134,
+   "sha256": "9bae3313946511f74559e5dfc094787f86939dd68f043988cc8a4ffbbcf85fa1"
+  },
+  {
+   "path": "g3.predict",
+   "size": 16155,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence",
+    "orf00003        1     1926  +1     2.97",
+    "orf00006     1942     2985  +1     2.95"
+   ],
+   "lines": 403,
+   "records": 1,
+   "residues": 15678,
+   "sha256": "2a1979108528ec0e928a03e875e1b44de001f3abee2c5c6798f8cfc68263460b"
+  },
+  {
+   "path": "icm",
+   "size": 470516,
+   "new": true,
+   "kind": "binary",
+   "sha256": "58e98f0f8c7a3d7e30915a4b0fcdf6e25be109eafda10b8e5e7f7bc1a59cba7b"
+  },
+  {
+   "path": "longorfs",
+   "size": 7446,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "00001    3074    3184  +2   1.019",
+    "00002    3323    3219  -3   0.974",
+    "00003   18827   18925  +2   0.995"
+   ],
+   "lines": 219,
+   "sha256": "0b4c69b76bba331b6029b3373bde91ecb5bda55dbcb192722a8fe12e68096ee9"
+  },
+  {
+   "path": "train.fasta",
+   "size": 37265,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">00001  3074 3184  len=108",
+    "TTGTTTTTATTTTGCTTTTTGTTTTATTTGTTTTTTTTAGATTTTTTATTTTTTTTTGAT",
+    "GGAGTTAGCTGTTATGTTTTTTTGTTCTTATTATTAGTTGTTGTATTC"
+   ],
+   "lines": 815,
+   "records": 219,
+   "residues": 30066,
+   "sha256": "020ed7a97d7b9e11cc378ab153f0d23f1be73b04fef7e9ad9714efd270ff8926"
+  }
+ ],
+ "n_outputs": 5,
+ "output_bytes": 633134,
+ "time": {
+  "elapsed": "0:01.69",
+  "max_rss_kb": "26252",
+  "cpu_pct": "43",
+  "exit_status": "0",
+  "user_s": "0.50",
+  "sys_s": "0.23",
+  "elapsed_s": 1.69,
+  "max_rss_mb": 25.6
+ },
+ "stdout_tail": "",
+ "stderr_tail": "Starting at Mon Nov  2 15:37:22 2026\n\nSequence file = /disks/tmp/cucinell/modpipe-discovery/annotation/glimmer3_from_scratch-21373347_2/inputs/genome.fasta\nExcluded regions file = none\nCircular genome = true\nInitial minimum gene length = 90 bp\nDetermine optimal min gene length to maximize number of genes\nMaximum overlap bases = 30\nStart codons = atg,gtg,ttg\nStop codons = taa,tag,tga\nSequence length = 358242\nFinal minimum gene length = 90\nNumber of genes = 219\nTotal bases = 30066\nStarting at Mon Nov  2 15:37:22 2026\n\nSequence file = /disks/tmp/cucinell/modpipe-discovery/annotation/glimmer3_from_scratch-21373347_2/inputs/genome.fasta\nNumber of sequences = 1\nICM model file = icm\nExcluded regions file = none\nList of orfs file = none\nInput is NOT separate orfs\nIndependent (non-coding) scores are used\nCircular genome = true\nTruncated orfs = false\nMinimum gene length = 110 bp\nMaximum overlap bases = 50\nThreshold score = 30\nUse first start codon = false\nStart codons = atg,gtg,ttg\nStart probs = 0.600,0.300,0.100\nStop codons = taa,tag,tga\nGC percentage = 26.2%\nIgnore score on orfs longer than 420\nAnalyzing Sequence #1\nStart Find_Orfs\nStart Score_Orfs\nStart Process_Events\nStart Trace_Back\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:22"
+}

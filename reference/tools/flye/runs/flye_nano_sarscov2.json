@@ -1,0 +1,74 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "flye_nano_sarscov2",
+ "set": "assembly",
+ "tool": "flye",
+ "mode": "nano_raw_small_genome",
+ "description": null,
+ "tool_version": "2.9.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-01",
+ "slurm_job": "21373339_10",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:39:22",
+ "inputs": {
+  "L": {
+   "fixture": "sarscov2_ont",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 3342884
+  }
+ },
+ "prep": null,
+ "cmd": "flye --nano-raw $L --genome-size 30k --out-dir out --threads $CPU",
+ "wall_s": 49.79,
+ "exit_code": 1,
+ "outputs": [
+  {
+   "path": "out/00-assembly/draft_assembly.fasta",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/flye.log",
+   "size": 9611,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "[2026-11-02 15:39:22] root: INFO: Starting Flye 2.9.1-b1780",
+    "[2026-11-02 15:39:22] root: DEBUG: Cmd: /opt/patric-common/runtime/flye-2.9.1/bin/flye --nano-raw /disks/tmp/cucinell/modpipe-discovery/assembly/flye_nano_sarscov2-21373339_10/inputs/test_2.fastq.gz -",
+    "[2026-11-02 15:39:22] root: DEBUG: Python version: 3.10.14 (main, Sep 26 2024, 20:33:52) [GCC 11.4.0]"
+   ],
+   "lines": 141,
+   "sha256": "ef56791a35368bcde353b515a0de27f9e08a51f65f2d58c5e4384b7faa9c2a89"
+  },
+  {
+   "path": "out/params.json",
+   "size": 92,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{\"pipeline_version\": 3, \"min_overlap\": 1000, \"min_read_length\": 0, \"stage_name\": \"assembly\"}"
+   ],
+   "sha256": "54b578120db065d0b2092ac1303313bf8d4cdc20d32ebf2884c488c70b373622"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 9703,
+ "time": {
+  "elapsed": "0:49.74",
+  "max_rss_kb": "8452688",
+  "cpu_pct": "107",
+  "exit_status": "1",
+  "user_s": "49.43",
+  "sys_s": "3.96",
+  "elapsed_s": 49.74,
+  "max_rss_mb": 8254.6
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[2026-11-02 15:39:22] INFO: Starting Flye 2.9.1-b1780\n[2026-11-02 15:39:22] INFO: >>>STAGE: configure\n[2026-11-02 15:39:22] INFO: Configuring run\n[2026-11-02 15:39:22] INFO: Total read length: 2145959\n[2026-11-02 15:39:22] INFO: Input genome size: 30000\n[2026-11-02 15:39:22] INFO: Estimated coverage: 71\n[2026-11-02 15:39:22] INFO: Reads N50/N90: 686 / 279\n[2026-11-02 15:39:22] INFO: Minimum overlap set to 1000\n[2026-11-02 15:39:22] INFO: >>>STAGE: assembly\n[2026-11-02 15:39:22] INFO: Assembling disjointigs\n[2026-11-02 15:39:22] INFO: Reading sequences\n[2026-11-02 15:39:26] INFO: Counting k-mers:\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:40:09] INFO: Filling index table (1/2)\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:40:10] INFO: Filling index table (2/2)\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:40:10] INFO: Extending reads\n[2026-11-02 15:40:11] INFO: Overlap-based coverage: 4\n[2026-11-02 15:40:11] INFO: Median overlap divergence: 0.0756595\n0% 100% \n[2026-11-02 15:40:11] INFO: Assembled 0 disjointigs\n[2026-11-02 15:40:11] INFO: Generating sequence\n[2026-11-02 15:40:12] INFO: Filtering contained disjointigs\n[2026-11-02 15:40:12] INFO: Contained seqs: 0\n[2026-11-02 15:40:12] ERROR: No disjointigs were assembled - please check if the read type and genome size parameters are correct\n[2026-11-02 15:40:12] ERROR: Pipeline aborted\n",
+ "status": "failed",
+ "finished": "2026-11-02T15:40:12"
+}

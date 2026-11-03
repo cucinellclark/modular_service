@@ -1,0 +1,1 @@
+{"inputs": {"samples": {"source": {"fixture": "sarscov2_samples"}, "collection": true}}, "params": {"classify.params.db": "kraken2_bracken_test_sarscov2", "abundance.params.read_length": 100}}

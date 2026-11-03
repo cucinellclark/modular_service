@@ -1,0 +1,23 @@
+schema: modpipe/module/v1
+id: prodigal
+version: 1
+label: "Prodigal: prokaryotic gene prediction"
+description: Predicts protein-coding genes; writes proteins, gene nucleotide sequences and GFF.
+category: annotation
+tool: {id: prodigal, binary: prodigal, version: 2.6.3}
+inputs:
+  - {id: contigs, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - {id: proteins, type: sequences.protein, path: proteins.faa}
+  - {id: genes, type: sequences.dna.genes, path: genes.fna}
+  - {id: gff, type: annotation.gff, path: genes.gff}
+parameters:
+  - {id: mode, type: enum, enum: [single, meta], default: single, label: "single (isolate) or meta (metagenome / short sequences)"}
+  - {id: translation_table, type: int, default: 11, min: 1, max: 25, label: "Genetic code"}
+resources: {cpu: 1, memory: 4G, runtime: 2h}
+command: |
+  prodigal -p {{ params.mode }} -g {{ params.translation_table }} -i {{ inputs.contigs | q }}
+  -a {{ outputs.proteins }} -d {{ outputs.genes }} -o {{ outputs.gff }} -f gff -q
+tests:
+  discovery_runs: [prodigal_single]
+provenance: {nfcore: [prodigal]}

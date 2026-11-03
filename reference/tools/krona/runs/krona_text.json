@@ -1,0 +1,50 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "krona_text",
+ "set": "typing_expression",
+ "tool": "krona",
+ "mode": "ktImportText",
+ "description": null,
+ "tool_version": "2.8.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-05",
+ "slurm_job": "21373358_2",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:24",
+ "inputs": {},
+ "prep": "printf '100\\tViruses\\tRiboviria\\tCoronaviridae\\tSARS-CoV-2\\n20\\tBacteria\\tProteobacteria\\n' > krona.txt",
+ "cmd": "ktImportText krona.txt -o krona.html",
+ "wall_s": 0.5,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "krona.html",
+   "size": 226912,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">",
+    "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">",
+    " <head>"
+   ],
+   "sha256": "93f33ff5d16276dc97f6e7b3209c0fd0fbb0a152f8b616bd814eae52fc3b5a76"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 226912,
+ "time": {
+  "elapsed": "0:00.45",
+  "max_rss_kb": "9628",
+  "cpu_pct": "25",
+  "exit_status": "0",
+  "user_s": "0.04",
+  "sys_s": "0.07",
+  "elapsed_s": 0.45,
+  "max_rss_mb": 9.4
+ },
+ "stdout_tail": "Writing krona.html...\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:25"
+}

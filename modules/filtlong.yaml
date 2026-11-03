@@ -1,0 +1,24 @@
+schema: modpipe/module/v1
+id: filtlong
+version: 1
+label: "Filtlong: long-read quality/length filtering"
+description: Removes short and low-quality long reads, keeping the best fraction (and optionally a target number of bases).
+category: read_qc
+tool: {id: filtlong, binary: filtlong, version: 0.2.1}
+inputs:
+  - {id: reads, type: reads.long}
+outputs:
+  - {id: filtered_reads, type: reads.long, type_from: reads, path: filtered.fastq.gz, attributes: {compression: gzip}}
+parameters:
+  - {id: min_length, type: int, default: 1000, min: 0, label: "Minimum read length (bp)"}
+  - {id: keep_percent, type: float, default: 90, min: 1, max: 100, label: "Keep this % of bases (best reads)"}
+  - {id: target_bases, type: int, default: 0, min: 0, advanced: true, label: "Keep at most this many bases (0 = no limit)"}
+resources: {cpu: 1, memory: 8G, runtime: 2h}
+command: |
+  filtlong --min_length {{ params.min_length }} --keep_percent {{ params.keep_percent }}
+  {% if params.target_bases > 0 %}--target_bases {{ params.target_bases }}{% endif %}
+  {{ inputs.reads | q }} | gzip > {{ outputs.filtered_reads }}
+tests:
+  discovery_runs: [filtlong_ont]
+  observed: {max_rss_mb: 236, max_wall_s: 3}
+provenance: {bvbrc_invocations: [App-GenomeAssembly2.pl, p3x-assembly.py], nfcore: [filtlong]}

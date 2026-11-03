@@ -1,0 +1,88 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "hmmscan_proteome",
+ "set": "annotation",
+ "tool": "hmmscan",
+ "mode": "hmmscan",
+ "description": null,
+ "tool_version": "3.3.2",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373347_12",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:39:16",
+ "inputs": {
+  "HMM": {
+   "fixture": "sarscov2_proteome_hmm",
+   "path": "inputs/proteome.hmm.gz",
+   "size": 652403
+  },
+  "P": {
+   "fixture": "sarscov2_proteome",
+   "path": "inputs/proteome.fasta",
+   "size": 18016
+  }
+ },
+ "prep": "gunzip -c $HMM > db.hmm && hmmpress db.hmm",
+ "cmd": "hmmscan --cpu $CPU --tblout tbl.txt --domtblout domtbl.txt -o hmmscan.txt db.hmm $P",
+ "wall_s": 0.32,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "domtbl.txt",
+   "size": 15713,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                                            --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord",
+    "# target name        accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of targ",
+    "#------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- -------------------"
+   ],
+   "lines": 80,
+   "sha256": "d60e7271bdb41cc124e61579b8ca2f164bd741fa16313192c9c65ca7058dde82"
+  },
+  {
+   "path": "hmmscan.txt",
+   "size": 131535,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "# hmmscan :: search sequence(s) against a profile database",
+    "# HMMER 3.3.2 (Nov 2020); http://hmmer.org/",
+    "# Copyright (C) 2020 Howard Hughes Medical Institute."
+   ],
+   "lines": 1736,
+   "sha256": "9673f27d2dc459a82afee7b85775e38c6e610532ff8781a1173e45eace48af19"
+  },
+  {
+   "path": "tbl.txt",
+   "size": 11152,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#                                                               --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----",
+    "# target name        accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target",
+    "#------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------"
+   ],
+   "lines": 69,
+   "sha256": "290ec19a005e4d7871f2260a191c104e33432344076bbe7b9b584bc29d1246cb"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 158400,
+ "time": {
+  "elapsed": "0:00.27",
+  "max_rss_kb": "15076",
+  "cpu_pct": "91",
+  "exit_status": "0",
+  "user_s": "0.21",
+  "sys_s": "0.02",
+  "elapsed_s": 0.27,
+  "max_rss_mb": 14.7
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:39:16"
+}

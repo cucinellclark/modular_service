@@ -1,0 +1,119 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "iqtree2_fast",
+ "set": "phylogeny",
+ "tool": "iqtree2",
+ "mode": "fast_gtr",
+ "description": null,
+ "tool_version": "2.4.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373357_10",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:38:16",
+ "inputs": {
+  "A": {
+   "fixture": "sarscov2_aln_all_sites",
+   "path": "inputs/all_sites.fas",
+   "size": 119652
+  }
+ },
+ "prep": null,
+ "cmd": "iqtree2 -s $A -m GTR+G -T $CPU --fast --prefix iq",
+ "wall_s": 0.27,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "iq.bionj",
+   "size": 104,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((sample1:0.00036858866,sample3:0.000102017):0.00036739389,sample2:0.0008172724,sample4:0.00017784926);"
+   ],
+   "lines": 1,
+   "sha256": "6c609f72eebd336a2ccab34ac77964932a5996e41d82e434b5cb90a9ae293bc7"
+  },
+  {
+   "path": "iq.ckp.gz",
+   "size": 582,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "text",
+   "preview": [
+    "--- # IQ-TREE Checkpoint ver >= 1.6",
+    "CandidateSet:",
+    " 0: -40381.6974016 (0:0.0003982281,(1:0.0008212564,3:0.0001802422):0.0003858252549,2:0.0000856217);"
+   ],
+   "lines": 26,
+   "sha256": "77699d91e086cd205f07bec0fc4d9c07685a416115356a866d3c29e2c3f6a06e"
+  },
+  {
+   "path": "iq.iqtree",
+   "size": 3954,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "IQ-TREE 2.4.0 built May  8 2026",
+    "",
+    "Input file name: /disks/tmp/cucinell/modpipe-discovery/phylogeny/iqtree2_fast-21373357_10/inputs/all_sites.fas"
+   ],
+   "lines": 114,
+   "sha256": "7314c5f2021e3dbdfc364c45bc12672eb1f342af827730d08a54c895ef5179b3"
+  },
+  {
+   "path": "iq.log",
+   "size": 3975,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "IQ-TREE multicore version 2.4.0 for Linux x86 64-bit built May  8 2026",
+    "Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,",
+    "Dominik Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong"
+   ],
+   "lines": 80,
+   "sha256": "07636632abd122d02c7f3519e9fffced1189d8c11b7ee433dc02783f2d77ea0b"
+  },
+  {
+   "path": "iq.mldist",
+   "size": 210,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "4",
+    "sample1    0.0000000 0.0015598 0.0004706 0.0009073 ",
+    "sample2    0.0015598 0.0000000 0.0012802 0.0009951 "
+   ],
+   "lines": 5,
+   "sha256": "0767ddb57d209145376aeb2defa2f034ed7176f8dc56d35c16b24932ce559e6f"
+  },
+  {
+   "path": "iq.treefile",
+   "size": 102,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(sample1:0.0003982281,(sample2:0.0008212564,sample4:0.0001802422):0.0003858253,sample3:0.0000856217);"
+   ],
+   "lines": 1,
+   "sha256": "8b61423355b3a8df3d6e1a58add56009d2c181fbd6c30f89f9e7190870464c5b"
+  }
+ ],
+ "n_outputs": 6,
+ "output_bytes": 8927,
+ "time": {
+  "elapsed": "0:00.22",
+  "max_rss_kb": "13168",
+  "cpu_pct": "46",
+  "exit_status": "0",
+  "user_s": "0.08",
+  "sys_s": "0.02",
+  "elapsed_s": 0.22,
+  "max_rss_mb": 12.9
+ },
+ "stdout_tail": "IQ-TREE multicore version 2.4.0 for Linux x86 64-bit built May  8 2026\nDeveloped by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,\nDominik Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong\n\nHost:    lemon (AVX512, FMA3, 1133 GB RAM)\nCommand: iqtree2 -s /disks/tmp/cucinell/modpipe-discovery/phylogeny/iqtree2_fast-21373357_10/inputs/all_sites.fas -m GTR+G -T 4 --fast --prefix iq\nSeed:    526394 (Using SPRNG - Scalable Parallel Random Number Generator)\nTime:    Mon Nov  2 15:38:16 2026\nKernel:  AVX+FMA - 4 threads (4 CPU cores detected)\n\nReading alignment file /disks/tmp/cucinell/modpipe-discovery/phylogeny/iqtree2_fast-21373357_10/inputs/all_sites.fas ... Fasta format detected\nReading fasta file: done in 0.00303605 secs using 99.87% CPU\nAlignment most likely contains DNA/RNA sequences\nWARNING: 494 sites contain only gaps or ambiguous characters.\nAlignment has 4 sequences with 29903 columns, 52 distinct patterns\n9 parsimony-informative, 45 singleton sites, 29849 constant sites\nAnalyzing sequences: done in 1.12075e-05 secs using 89.23% CPU\n\nCreate initial parsimony tree by phylogenetic likelihood library (PLL)... 0.00 seconds\n\nNOTE: 0 MB RAM (0 GB) is required!\nWARNING: Number of threads seems too high for short alignments. Use -T AUTO to determine best number of threads.\nEstimate model parameters (epsilon = 0.50)\n1. Initial log-likelihood: -40403.31\n2. Current log-likelihood: -40381.96\nOptimal log-likelihood: -40381.83\nRate parameters:  A-C: 0.38208  A-G: 0.47730  A-T: 0.22133  C-G: 0.90964  C-T: 2.47259  G-T: 1.00000\nBase frequencies:  A: 0.299  C: 0.183  G: 0.196  T: 0.321\nGamma shape alpha: 998.448\nParameters optimization took 2 rounds (0.001 sec)\nWrote distance file to... \nComputing ML distances based on estimated model parameters...\nCalculating distance matrix: done in 7.66758e-05 secs using 2890% CPU\nComputing ML distances took 0.000111 sec (of wall-clock time) 0.002245 sec (of CPU time)\nSetting up auxiliary I and S matrices: done in 0.000186141 secs using 128.9% CPU\nComputing RapidNJ tree took 0.000450 sec (of wall-clock time) 0.000638 sec (of CPU time)\nLog-likelihood of RapidNJ tree: -40381.834\n--------------------------------------------------------------------\n|             INITIALIZING CANDIDATE TREE SET                      |\n--------------------------------------------------------------------\nGenerating 1 parsimony trees... 0.000 second\nComputing log-likelihood of 1 initial trees ... 0.000 seconds\nCurrent best score: -40381.834\n\nDo NNI search on 2 best initial trees\nUPDATE BEST LOG-LIKELIHOOD: -40381.834\nUPDATE BEST LOG-LIKELIHOOD: -40381.834\nFinish initializing candidate tree set (2)\nCurrent best tree score: -40381.834 / CPU time: 0.001\nNumber of iterations: 2\nTREE SEARCH COMPLETED AFTER 2 ITERATIONS / Time: 0h:0m:0s\n\n--------------------------------------------------------------------\n|                    FINALIZING TREE SEARCH                        |\n--------------------------------------------------------------------\nPerforms final model parameters optimization\nEstimate model parameters (epsilon = 0.050)\n1. Initial log-likelihood: -40381.834\n2. Current log-likelihood: -40381.739\nOptimal log-likelihood: -40381.697\nRate parameters:  A-C: 0.32472  A-G: 0.49153  A-T: 0.23861  C-G: 0.92791  C-T: 2.52843  G-T: 1.00000\nBase frequencies:  A: 0.299  C: 0.183  G: 0.196  T: 0.321\nGamma shape alpha: 998.448\nParameters optimization took 2 rounds (0.001 sec)\nBEST SCORE FOUND : -40381.697\nTotal tree length: 0.002\n\nTotal number of iterations: 2\nCPU time used for tree search: 0.001 sec (0h:0m:0s)\nWall-clock time used for tree search: 0.001 sec (0h:0m:0s)\nTotal CPU time used: 0.033 sec (0h:0m:0s)\nTotal wall-clock time used: 0.009 sec (0h:0m:0s)\n\nAnalysis results written to: \n  IQ-TREE report:                iq.iqtree\n  Maximum-likelihood tree:       iq.treefile\n  Likelihood distances:          iq.mldist\n  Screen log file:               iq.log\n\nDate and Time: Mon Nov  2 15:38:16 2026\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:16"
+}

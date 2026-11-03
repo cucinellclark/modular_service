@@ -1,0 +1,17 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Reference-based variant calling",
+  "description": "fastp -> BWA-MEM (sorted, indexed BAM) against a reference genome -> bcftools SNP/indel calls.",
+  "inputs": {
+    "reads": {"type": "reads.short.paired", "source": {"paired_end_libs": [{"read1": "/user@bvbrc/home/reads/S_R1.fastq.gz", "read2": "/user@bvbrc/home/reads/S_R2.fastq.gz"}]}},
+    "reference": {"type": "sequences.dna.contigs", "source": {"genome_ids": ["1206109.14"]}}
+  },
+  "steps": {
+    "trim":  {"module": "fastp", "in": {"reads": "$inputs.reads"}},
+    "map":   {"module": "bwa_mem", "in": {"reads": "trim.trimmed_reads", "reference": "$inputs.reference"}},
+    "call":  {"module": "bcftools_call", "in": {"alignment": "map.alignment", "reference": "$inputs.reference"}}
+  },
+  "outputs": {"alignment": "map.alignment", "mapping_stats": "map.flagstat", "variants": "call.variants", "trim_report": "trim.report_html"},
+  "template": {"label": "Variant calling against a reference", "category": "variants",
+               "expose": ["call.params.ploidy", "call.params.min_mapping_quality", "trim.params.qualified_quality_phred"]}
+}

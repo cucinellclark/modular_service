@@ -1,0 +1,471 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "genomad_e2e",
+ "set": "annotation",
+ "tool": "genomad",
+ "mode": "end-to-end",
+ "description": null,
+ "tool_version": "1.12.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "pear",
+ "slurm_job": "21373347_10",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:38:38",
+ "inputs": {
+  "G": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  }
+ },
+ "prep": null,
+ "cmd": "genomad end-to-end --cleanup --threads $CPU $G out /vol/bvbrc/production/application-backend/genomad/genomad_db",
+ "wall_s": 557.23,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/genome_aggregated_classification.log",
+   "size": 2314,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+    "\u2502  Executing geNomad aggregated-classification (v1.12.0). This will aggregate  \u2502",
+    "\u2502  the results of the marker-classification and nn-classification modules to   \u2502"
+   ],
+   "lines": 22,
+   "sha256": "93032452a6aa960cb0287db35e231edbe214b7b36dc3fbd8ac27f8d593d20314"
+  },
+  {
+   "path": "out/genome_aggregated_classification/genome_aggregated_classification.json",
+   "size": 204,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "    \"module\": \"aggregated_classification\",",
+    "    \"input\": \"genome.fasta\","
+   ],
+   "sha256": "0f663f544865c27a7ce6e2570830b2d81268029a1ffce1113f925fc8aa406357"
+  },
+  {
+   "path": "out/genome_aggregated_classification/genome_aggregated_classification.npz",
+   "size": 465,
+   "new": true,
+   "kind": "index",
+   "sha256": "4f46ea36e433f5f1462ce7795428b8fc6bd191f8afbd513e8a9f0662c01996e8"
+  },
+  {
+   "path": "out/genome_aggregated_classification/genome_aggregated_classification.tsv",
+   "size": 84,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "seq_name\tchromosome_score\tplasmid_score\tvirus_score",
+    "MT192765.1\t0.0066\t0.0106\t0.9828"
+   ],
+   "lines": 2,
+   "sha256": "1d46fc29037a2198fdca10a2df9e61b73a47c3ba452209c8448e52d63d77c354"
+  },
+  {
+   "path": "out/genome_annotate.log",
+   "size": 2405,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+    "\u2502  Executing geNomad annotate (v1.12.0). This will perform gene calling in     \u2502",
+    "\u2502  the input sequences and annotate the predicted proteins with geNomad's      \u2502"
+   ],
+   "lines": 23,
+   "sha256": "0c1b8add0861e69eabf6090a8603a8acb8b77f6791b651b47f8eda6a92fb4763"
+  },
+  {
+   "path": "out/genome_annotate/genome_annotate.json",
+   "size": 277,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "    \"module\": \"annotate\",",
+    "    \"input\": \"genome.fasta\","
+   ],
+   "sha256": "c719838b6cc07c8d2c3ab31eefc91fd3fac615e330511cfed3e0bd8a5d3cdb96"
+  },
+  {
+   "path": "out/genome_annotate/genome_genes.tsv",
+   "size": 1282,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "gene\tstart\tend\tlength\tstrand\tgc_content\tgenetic_code\trbs_motif\tmarker\tevalue\tbitscore\tuscg\tplasmid_hallmark\tvirus_hallmark\ttaxid\ttaxname\tannotation_conjscan\tannotation_amr\tannotation_accessions\tannota",
+    "MT192765.1_1\t259\t13476\t13218\t1\t0.377\t11\tAAA\tGENOMAD.077253.VV\t5.646e-116\t420\t0\t0\t0\t1320\tOrthocoronavirinae\tNA\tNA\tNA\tNA",
+    "MT192765.1_2\t13803\t21548\t7746\t1\t0.370\t11\tAAAT\tGENOMAD.045190.VV\t1.986e-206\t713\t0\t0\t1\t3023\tBetacoronavirus pandemicum\tNA\tNA\tPF00680\tViral RNA-dependent RNA polymerase"
+   ],
+   "lines": 9,
+   "sha256": "7d4dfd061501af48e698e40a6ef874c6e67b96ccb89b4f4a4e1f4e9739f8925f"
+  },
+  {
+   "path": "out/genome_annotate/genome_mmseqs2.tsv",
+   "size": 989,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1_1 # 259 # 13476 # 1 # ID=1_1;partial=00;start_type=ATG;rbs_motif=AAA;rbs_spacer=6bp;genetic_code=11;gc_cont=0.377\tGENOMAD.077253.VV\t5.646E-116\t420\t1320",
+    "MT192765.1_2 # 13803 # 21548 # 1 # ID=1_2;partial=00;start_type=ATG;rbs_motif=AAAT;rbs_spacer=5bp;genetic_code=11;gc_cont=0.370\tGENOMAD.045190.VV\t1.986E-206\t713\t3023",
+    "MT192765.1_3 # 21556 # 25377 # 1 # ID=1_3;partial=00;start_type=ATG;rbs_motif=AAA;rbs_spacer=6bp;genetic_code=11;gc_cont=0.373\tGENOMAD.078460.VV\t2.751E-126\t441\t9708"
+   ],
+   "lines": 6,
+   "sha256": "ce2f9a6eadcea296b3eaded5135a018e1418d82e3f7b5383fe9f7059125ab12c"
+  },
+  {
+   "path": "out/genome_annotate/genome_proteins.faa",
+   "size": 10603,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1_1 # 259 # 13476 # 1 # ID=1_1;partial=00;start_type=ATG;rbs_motif=AAA;rbs_spacer=6bp;genetic_code=11;gc_cont=0.377",
+    "MESLVPGFNEKTHVQLSLPVLQVRDVLVRGFGDSVEEVLSEARQHLKDGTCGLVEVEKGV",
+    "LPQLEQPYVFIKRSDARTAPHGHVMVELVAELEGIQYGRSGETLGVLVPHVGEIPVAYRK"
+   ],
+   "lines": 170,
+   "records": 8,
+   "residues": 9417,
+   "sha256": "11e38e31009cdf5fabe6dbd8c0bf3f259ad254697a4a800db91c7263990ad9df"
+  },
+  {
+   "path": "out/genome_annotate/genome_taxonomy.tsv",
+   "size": 167,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "seq_name\tn_genes_with_taxonomy\tagreement\ttaxid\tlineage",
+    "MT192765.1\t6\t1.0000\t6993\tViruses;Riboviria;Orthornavirae;Pisuviricota;Pisoniviricetes;Nidovirales;Coronaviridae"
+   ],
+   "lines": 2,
+   "sha256": "4927a81753ad8e6288a5fdd7c2ac0ab5a7c80153ab1c952df429a53a5ad6aa1f"
+  },
+  {
+   "path": "out/genome_find_proviruses.log",
+   "size": 2107,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+    "\u2502  Executing geNomad find-proviruses (v1.12.0). This will find putative        \u2502",
+    "\u2502  proviral regions within the input sequences.                                \u2502"
+   ],
+   "lines": 19,
+   "sha256": "eba7f049993a5714553cd058f0bbf0fc2907e29b0a64cd6bbe02b2aad8c3d057"
+  },
+  {
+   "path": "out/genome_find_proviruses/genome_find_proviruses.json",
+   "size": 563,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "    \"module\": \"find-proviruses\",",
+    "    \"input\": \"genome.fasta\","
+   ],
+   "sha256": "a54dd635adc8cbaf63753e98e49ef643dc0a608440a8e1060472dfe1e2a9b583"
+  },
+  {
+   "path": "out/genome_find_proviruses/genome_provirus.fna",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/genome_find_proviruses/genome_provirus.tsv",
+   "size": 81,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "seq_name\tsource_seq\tstart\tend\tlength\tn_genes\tv_vs_c_score\tin_seq_edge\tintegrases"
+   ],
+   "lines": 1,
+   "sha256": "660f7048a58823bc82de28e2648823a20a79e9b1bf3b0eab538bd5b9a83338a4"
+  },
+  {
+   "path": "out/genome_find_proviruses/genome_provirus_aragorn.tsv",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/genome_find_proviruses/genome_provirus_genes.tsv",
+   "size": 136,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "gene\tstart\tend\tlength\tstrand\tgc_content\tgenetic_code\trbs_motif\tmarker\tevalue\tbitscore\tuscg\tannotation_accessions\tannotation_description"
+   ],
+   "lines": 1,
+   "sha256": "3fa6e588d890605b0a59b581a42e496dc3b0dbcbee63cdb6aa823c4b94d9f6b1"
+  },
+  {
+   "path": "out/genome_find_proviruses/genome_provirus_mmseqs2.tsv",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/genome_find_proviruses/genome_provirus_proteins.faa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/genome_find_proviruses/genome_provirus_taxonomy.tsv",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/genome_marker_classification.log",
+   "size": 2658,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+    "\u2502  Executing geNomad marker-classification (v1.12.0). This will classify the   \u2502",
+    "\u2502  input sequences into chromosome, plasmid, or virus based on the presence    \u2502"
+   ],
+   "lines": 26,
+   "sha256": "bc694a337d82bf55feca3376e85b9a412d7f6b598023e41a5be945e54975ba8e"
+  },
+  {
+   "path": "out/genome_marker_classification/genome_features.npz",
+   "size": 1552,
+   "new": true,
+   "kind": "index",
+   "sha256": "cba50b598ba76468bd46bb7324a25f14fd1e9a952a2969ed0be371742a52754f"
+  },
+  {
+   "path": "out/genome_marker_classification/genome_features.tsv",
+   "size": 765,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "seq_name\tn_genes\tn_uscg\tn_plasmid_hallmarks\tn_virus_hallmarks\tgenetic_code\tstrand_switch_rate\tcoding_density\tno_rbs_freq\tsd_bacteroidetes_rbs_freq\tsd_canonical_rbs_freq\ttatata_rbs_freq\tcc_marker_freq\t",
+    "MT192765.1\t8\t0\t0\t5\t11\t0.0000\t0.9479\t0.0000\t0.0000\t0.0000\t0.0000\t0.0000\t0.0000\t0.0000\t0.0000\t0.0000\t0.0000\t0.0000\t0.0000\t0.7500\t0.0000\t0.0000\t0.7500\t0.0000\t0.0000\t1.0000\t0.9943\t0.9943\t0.5000\t0.0000\t-10"
+   ],
+   "lines": 2,
+   "sha256": "749bb3e3726a2d9d843a8c44d0b09f4db72b3ac96a7dd65208639c7e21b30ff1"
+  },
+  {
+   "path": "out/genome_marker_classification/genome_marker_classification.json",
+   "size": 200,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "    \"module\": \"marker_classification\",",
+    "    \"input\": \"genome.fasta\","
+   ],
+   "sha256": "8cfd3e0f05d93593ef84c37557326aa79780fe0f9cff4101c8df97eabb82ec89"
+  },
+  {
+   "path": "out/genome_marker_classification/genome_marker_classification.npz",
+   "size": 453,
+   "new": true,
+   "kind": "index",
+   "sha256": "c6f4366542a5e2dfb1fa55448e3077bf7270a5fa195994042d30a5ee861fc316"
+  },
+  {
+   "path": "out/genome_marker_classification/genome_marker_classification.tsv",
+   "size": 84,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "seq_name\tchromosome_score\tplasmid_score\tvirus_score",
+    "MT192765.1\t0.0049\t0.0013\t0.9938"
+   ],
+   "lines": 2,
+   "sha256": "04f8b6ab149d01d09e59eef89f7cfe234031dbab726ea44ccd84840bb0ba5d05"
+  },
+  {
+   "path": "out/genome_nn_classification.log",
+   "size": 2563,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+    "\u2502  Executing geNomad nn-classification (v1.12.0). This will classify the       \u2502",
+    "\u2502  input sequences into chromosome, plasmid, or virus based on the nucleotide  \u2502"
+   ],
+   "lines": 25,
+   "sha256": "84fdaf7dd5a17e3b647fe6fe68aa6a0dfa373201b2e9960b9cb728a9bc96840b"
+  },
+  {
+   "path": "out/genome_nn_classification/genome_nn_classification.json",
+   "size": 232,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "    \"module\": \"nn_classification\",",
+    "    \"input\": \"genome.fasta\","
+   ],
+   "sha256": "2b25338fea5d9863876b103a4ea0447113ed957612d72da3290b3a1bcb3495fb"
+  },
+  {
+   "path": "out/genome_nn_classification/genome_nn_classification.npz",
+   "size": 452,
+   "new": true,
+   "kind": "index",
+   "sha256": "55804a5557e5576d5298755e2b26ea5dcb2fd77586454d8edceb9a01ddb0c811"
+  },
+  {
+   "path": "out/genome_nn_classification/genome_nn_classification.tsv",
+   "size": 84,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "seq_name\tchromosome_score\tplasmid_score\tvirus_score",
+    "MT192765.1\t0.0078\t0.0029\t0.9893"
+   ],
+   "lines": 2,
+   "sha256": "02a59681c7f9a143c96ab2f2c6325cf9b82241db2d539f7897b1de57187c024b"
+  },
+  {
+   "path": "out/genome_summary.log",
+   "size": 2927,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+    "\u2502  Executing geNomad summary (v1.12.0). This will summarize the results        \u2502",
+    "\u2502  across modules into a classification report.                                \u2502"
+   ],
+   "lines": 29,
+   "sha256": "88c87c38b73387887ed19014a3c7ed2cc71413762580fa3d7d1b811171cd5901"
+  },
+  {
+   "path": "out/genome_summary/genome_plasmid.fna",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/genome_summary/genome_plasmid_genes.tsv",
+   "size": 217,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "gene\tstart\tend\tlength\tstrand\tgc_content\tgenetic_code\trbs_motif\tmarker\tevalue\tbitscore\tuscg\tplasmid_hallmark\tvirus_hallmark\ttaxid\ttaxname\tannotation_conjscan\tannotation_amr\tannotation_accessions\tannota"
+   ],
+   "lines": 1,
+   "sha256": "5a1779721b35afa8ebd7a9efe64ed2ff356491187dcffd89f003de3800062a69"
+  },
+  {
+   "path": "out/genome_summary/genome_plasmid_proteins.faa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/genome_summary/genome_plasmid_summary.tsv",
+   "size": 122,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "seq_name\tlength\ttopology\tn_genes\tgenetic_code\tplasmid_score\tfdr\tn_hallmarks\tmarker_enrichment\tconjugation_genes\tamr_genes"
+   ],
+   "lines": 1,
+   "sha256": "1ecc546681777544b5f9c6fd2f2631dcd6a521af3fbf384b35fe9ddb71ad8719"
+  },
+  {
+   "path": "out/genome_summary/genome_summary.json",
+   "size": 546,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "    \"module\": \"summary\",",
+    "    \"input\": \"genome.fasta\","
+   ],
+   "sha256": "12d2d5a1f1bbd1891d6d78f2891170529bd3df468f5e1994861376128372772e"
+  },
+  {
+   "path": "out/genome_summary/genome_virus.fna",
+   "size": 30447,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1 Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/PC00101P/2020, complete genome",
+    "GTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCTGTTCTCT",
+    "AAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACTCACGCAG"
+   ],
+   "lines": 499,
+   "records": 1,
+   "residues": 29829,
+   "sha256": "43c70d8913133978807c19ced6f1695649aa713f2d8c0ee85885b881ab62a6b5"
+  },
+  {
+   "path": "out/genome_summary/genome_virus_genes.tsv",
+   "size": 1282,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "gene\tstart\tend\tlength\tstrand\tgc_content\tgenetic_code\trbs_motif\tmarker\tevalue\tbitscore\tuscg\tplasmid_hallmark\tvirus_hallmark\ttaxid\ttaxname\tannotation_conjscan\tannotation_amr\tannotation_accessions\tannota",
+    "MT192765.1_1\t259\t13476\t13218\t1\t0.377\t11\tAAA\tGENOMAD.077253.VV\t5.646e-116\t420\t0\t0\t0\t1320\tOrthocoronavirinae\tNA\tNA\tNA\tNA",
+    "MT192765.1_2\t13803\t21548\t7746\t1\t0.370\t11\tAAAT\tGENOMAD.045190.VV\t1.986e-206\t713\t0\t0\t1\t3023\tBetacoronavirus pandemicum\tNA\tNA\tPF00680\tViral RNA-dependent RNA polymerase"
+   ],
+   "lines": 9,
+   "sha256": "7d4dfd061501af48e698e40a6ef874c6e67b96ccb89b4f4a4e1f4e9739f8925f"
+  },
+  {
+   "path": "out/genome_summary/genome_virus_proteins.faa",
+   "size": 10603,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1_1 # 259 # 13476 # 1 # ID=1_1;partial=00;start_type=ATG;rbs_motif=AAA;rbs_spacer=6bp;genetic_code=11;gc_cont=0.377",
+    "MESLVPGFNEKTHVQLSLPVLQVRDVLVRGFGDSVEEVLSEARQHLKDGTCGLVEVEKGV",
+    "LPQLEQPYVFIKRSDARTAPHGHVMVELVAELEGIQYGRSGETLGVLVPHVGEIPVAYRK"
+   ],
+   "lines": 170,
+   "records": 8,
+   "residues": 9417,
+   "sha256": "11e38e31009cdf5fabe6dbd8c0bf3f259ad254697a4a800db91c7263990ad9df"
+  },
+  {
+   "path": "out/genome_summary/genome_virus_summary.tsv",
+   "size": 265,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "seq_name\tlength\ttopology\tcoordinates\tn_genes\tgenetic_code\tvirus_score\tfdr\tn_hallmarks\tmarker_enrichment\ttaxonomy",
+    "MT192765.1\t29829\tNo terminal repeats\tNA\t8\t11\t0.9828\tNA\t5\t10.3097\tViruses;Riboviria;Orthornavirae;Pisuviricota;Pisoniviricetes;Nidovirales;Coronaviridae"
+   ],
+   "lines": 2,
+   "sha256": "416356bd91ea53723d39668ff52632424b1de7d9f2c961b947d88f9a43b40224"
+  }
+ ],
+ "n_outputs": 39,
+ "output_bytes": 77129,
+ "time": {
+  "elapsed": "9:17.18",
+  "max_rss_kb": "19139468",
+  "cpu_pct": "337",
+  "exit_status": "0",
+  "user_s": "1815.51",
+  "sys_s": "66.45",
+  "elapsed_s": 557.18,
+  "max_rss_mb": 18690.9
+ },
+ "stdout_tail": "ation:        \u2502\n\u2502        binary format)                                                        \u2502\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n[15:47:54] Executing genomad aggregated-classification.                         \n[15:47:54] Creating the out/genome_aggregated_classification directory.         \n[15:47:54] The total marker frequencies of the input sequences were computed.   \n[15:47:54] Sequences classified.                                                \n[15:47:54] Sequence classification in binary format written to                  \n           genome_aggregated_classification.npz.                                \n[15:47:54] Sequence classification in tabular format written to                 \n           genome_aggregated_classification.tsv.                                \n[15:47:54] geNomad aggregated-classification finished!                          \n\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502  Executing geNomad summary (v1.12.0). This will summarize the results        \u2502\n\u2502  across modules into a classification report.                                \u2502\n\u2502  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500  \u2502\n\u2502  Outputs:                                                                    \u2502\n\u2502    out/genome_summary                                                        \u2502\n\u2502    \u251c\u2500\u2500 genome_summary.json (execution parameters)                            \u2502\n\u2502    \u251c\u2500\u2500 genome_virus_summary.tsv (virus classification summary)               \u2502\n\u2502    \u251c\u2500\u2500 genome_plasmid_summary.tsv (plasmid classification summary)           \u2502\n\u2502    \u251c\u2500\u2500 genome_virus.fna (virus nucleotide FASTA file)                        \u2502\n\u2502    \u251c\u2500\u2500 genome_plasmid.fna (plasmid nucleotide FASTA file)                    \u2502\n\u2502    \u251c\u2500\u2500 genome_virus_proteins.faa (virus protein FASTA file)                  \u2502\n\u2502    \u251c\u2500\u2500 genome_plasmid_proteins.faa (plasmid protein FASTA file)              \u2502\n\u2502    \u251c\u2500\u2500 genome_virus_genes.tsv (virus gene annotation data)                   \u2502\n\u2502    \u2514\u2500\u2500 genome_plasmid_genes.tsv (plasmid gene annotation data)               \u2502\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n[15:47:54] Executing genomad summary.                                           \n[15:47:54] Creating the out/genome_summary directory.                           \n[15:47:54] Using scores from aggregated-classification.                         \n[15:47:54] 0 plasmid(s) and 1 virus(es) were identified.                        \n[15:47:54] Nucleotide sequences were written to genome_plasmid.fna and          \n           genome_virus.fna.                                                    \n[15:47:54] Protein sequences were written to genome_plasmid_proteins.faa and    \n           genome_virus_proteins.faa.                                           \n[15:47:54] Gene annotation data was written to genome_plasmid_genes.tsv and     \n           genome_virus_genes.tsv.                                              \n[15:47:54] Summary files were written to genome_plasmid_summary.tsv and         \n           genome_virus_summary.tsv.                                            \n[15:47:54] geNomad summary finished!                                            \n",
+ "stderr_tail": "2026-11-02 15:47:35.029686: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered\n2026-11-02 15:47:41.372277: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered\n2026-11-02 15:47:41.530834: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:47:56"
+}

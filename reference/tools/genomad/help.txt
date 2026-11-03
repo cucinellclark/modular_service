@@ -1,0 +1,113 @@
+# /opt/patric-common/runtime/bin/genomad cmd: genomad --help; genomad end-to-end --help
+                                                                                
+ Usage: genomad [OPTIONS] COMMAND [ARGS]...                                     
+                                                                                
+ geNomad: Identification of mobile genetic elements                             
+ Read the documentation at: https://portal.nersc.gov/genomad/                   
+                                                                                
+Traceback (most recent call last):
+  File "/opt/patric-common/runtime/bin/genomad", line 8, in <module>
+    sys.exit(cli())
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 367, in __call__
+    return super().__call__(*args, **kwargs)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 151, in main
+    with self.make_context(prog_name, args, **extra) as ctx:
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 260, in make_context
+    return super().make_context(info_name, args, parent, **extra)  # type: ignore[return-value]
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1186, in make_context
+    self.parse_args(ctx, args)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1786, in parse_args
+    rest = super().parse_args(ctx, args)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1197, in parse_args
+    value, args = param.handle_parse_result(ctx, opts, args)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 2416, in handle_parse_result
+    value = self.process_value(ctx, value)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 2355, in process_value
+    value = self.callback(ctx, self, value)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/decorators.py", line 539, in show_help
+    echo(ctx.get_help(), color=ctx.color)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 730, in get_help
+    return self.command.get_help(self)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1064, in get_help
+    self.format_help(ctx, formatter)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 359, in format_help
+    self.format_options(ctx, formatter)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 294, in format_options
+    get_rich_options(self, ctx, formatter)  # type: ignore[arg-type]
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_help_rendering.py", line 497, in get_rich_options
+    metavar_str = param.make_metavar()
+TypeError: Parameter.make_metavar() missing 1 required positional argument: 'ctx'
+                                                                                
+ Usage: genomad end-to-end [OPTIONS] INPUT OUTPUT DATABASE                      
+                                                                                
+ Takes an INPUT file (FASTA format) and executes all modules of the geNomad     
+ pipeline for plasmid and virus identification. Output files are written in the 
+ OUTPUT directory. A local copy of geNomad's database (DATABASE directory),     
+ which can be downloaded with the download-database command, is required. The   
+ end-to-end command omits some options. If you want to have a more granular     
+ control over the execution parameters, please execute each module separately.  
+                                                                                
+ ╭── geNomad pipeline ────────────────────────────────────╮                     
+ │                    ╭───────────╮                       │                     
+ │           ╭────────┤   INPUT   │                       │                     
+ │           │        ╰─────┬─────╯                       │                     
+ │           │  ╭───────────▼────────────╮                │                     
+ │           │  │        annotate        ├──┬──────────╮  │                     
+ │           │  ╰───────────┬────────────╯  │          │  │                     
+ │           │  ╭───────────▼────────────╮  │          │  │                     
+ │           │  │    find-proviruses     │  │          │  │                     
+ │           │  ╰┬──────────────────────┬╯  │          │  │                     
+ │  ╭────────▼───▼──────────╮╭──────────▼───▼────────╮ │  │                     
+ │  │   nn-classification   ││ marker-classification │ │  │                     
+ │  ╰────────────┬──────────╯╰──────────┬────────────╯ │  │                     
+ │            ╭──▼──────────────────────▼──╮           │  │                     
+ │            │ aggregated-classification  │           │  │                     
+ │            ╰─────────────┬──────────────╯           │  │                     
+ │            ╭ ─ ─ ─ ─ ─ ─ ▼ ─ ─ ─ ─ ─ ─ ─            │  │                     
+ │                  score-calibration      │           │  │                     
+ │            │ (optional, off by default)             │  │                     
+ │             ─ ─ ─ ─ ─ ─ ─┬─ ─ ─ ─ ─ ─ ─ ╯           │  │                     
+ │            ╭─────────────▼──────────────╮           │  │                     
+ │            │          summary           ◀───────────╯  │                     
+ │            ╰─────────────┬──────────────╯              │                     
+ │                    ╭─────▼─────╮                       │                     
+ │                    │  OUTPUTS  │                       │                     
+ │                    ╰───────────╯                       │                     
+ ╰────────────────────────────────────────────────────────╯                     
+                                                                                
+Traceback (most recent call last):
+  File "/opt/patric-common/runtime/bin/genomad", line 8, in <module>
+    sys.exit(cli())
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 367, in __call__
+    return super().__call__(*args, **kwargs)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 152, in main
+    rv = self.invoke(ctx)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1828, in invoke
+    sub_ctx = cmd.make_context(cmd_name, args, parent=ctx)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 260, in make_context
+    return super().make_context(info_name, args, parent, **extra)  # type: ignore[return-value]
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1186, in make_context
+    self.parse_args(ctx, args)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1197, in parse_args
+    value, args = param.handle_parse_result(ctx, opts, args)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 2416, in handle_parse_result
+    value = self.process_value(ctx, value)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 2355, in process_value
+    value = self.callback(ctx, self, value)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/decorators.py", line 539, in show_help
+    echo(ctx.get_help(), color=ctx.color)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 730, in get_help
+    return self.command.get_help(self)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1064, in get_help
+    self.format_help(ctx, formatter)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 215, in format_help
+    self.format_options(ctx, formatter)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 232, in format_options
+    get_rich_options(self, ctx, formatter)  # type: ignore[arg-type]
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_help_rendering.py", line 497, in get_rich_options
+    metavar_str = param.make_metavar()
+TypeError: Parameter.make_metavar() missing 1 required positional argument: 'ctx'

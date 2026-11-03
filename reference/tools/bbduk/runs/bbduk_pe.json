@@ -1,0 +1,94 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bbduk_pe",
+ "set": "readqc",
+ "tool": "bbduk",
+ "mode": "paired_adapter_trim",
+ "description": "bundled ref=adapters resource is missing from the container's bbmap.jar; uses an explicit adapter FASTA",
+ "tool_version": "38.95",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "pear",
+ "slurm_job": "21373444_9",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:44:35",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": "printf '>TruSeq_Universal\\nAGATCGGAAGAGCACACGTCTGAACTCCAGTCA\\n>TruSeq_R2\\nAGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT\\n>Nextera\\nCTGTCTCTTATACACATCT\\n' > adapters.fa",
+ "cmd": "bbduk.sh -Xmx${MEM_GB}g in1=$R1 in2=$R2 out1=clean_1.fastq.gz out2=clean_2.fastq.gz ref=adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo threads=$CPU stats=stats.txt",
+ "wall_s": 5.98,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "clean_1.fastq.gz",
+   "size": 8215630,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.401 FCD1DAFACXX:5:1101:3183:42579/1",
+    "CCGGTTTATCACCAGCAGTCTCCTTAAAGTTCCCGCCTTATGCGTTGGCAACTAAGGACAAGGGTTGCGCTCGTTACGGGACTTAACCCAACATTTCACAA",
+    "+"
+   ],
+   "lines": 390916,
+   "records": 97729,
+   "residues": 9870422,
+   "sha256": "ab214137b2f023b3b88cd5d711f3aed9adb5c69ee550a7e5e736dc243ae6f13c"
+  },
+  {
+   "path": "clean_2.fastq.gz",
+   "size": 8421693,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.401 FCD1DAFACXX:5:1101:3183:42579/2",
+    "TGGGGGGAACCCTGATCCAGTCATGCCGCGTGTGTGAAGAAGGCCTTTGGGTTGTAAAGCACTTTCAGCGAAGAAGAAAAGTTAGAAAATAAAAAGTTA",
+    "+"
+   ],
+   "lines": 390916,
+   "records": 97729,
+   "residues": 9675040,
+   "sha256": "6e044ba9c7d5d60e6643f0cc0d54f5a22b817ef3497ad5bc035c18fbec35f743"
+  },
+  {
+   "path": "stats.txt",
+   "size": 265,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#File\t/disks/tmp/cucinell/modpipe-discovery/readqc/bbduk_pe-21373444_9/inputs/test_1.fastq.gz\t/disks/tmp/cucinell/modpipe-discovery/readqc/bbduk_pe-21373444_9/inputs/test_2.fastq.gz",
+    "#Total\t195458",
+    "#Matched\t3\t0.00153%"
+   ],
+   "lines": 5,
+   "sha256": "da7ad4d2a931d36477a85d758a88f82d70a71a939a12cfcf3004fd0be89d2d0f"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 16637588,
+ "time": {
+  "elapsed": "0:05.93",
+  "max_rss_kb": "246968",
+  "cpu_pct": "170",
+  "exit_status": "0",
+  "user_s": "8.09",
+  "sys_s": "2.03",
+  "elapsed_s": 5.93,
+  "max_rss_mb": 241.2
+ },
+ "stdout_tail": "",
+ "stderr_tail": "java -ea -Xmx16g -Xms16g -cp /usr/share/java/bbmap.jar jgi.BBDuk -Xmx16g in1=/disks/tmp/cucinell/modpipe-discovery/readqc/bbduk_pe-21373444_9/inputs/test_1.fastq.gz in2=/disks/tmp/cucinell/modpipe-discovery/readqc/bbduk_pe-21373444_9/inputs/test_2.fastq.gz out1=clean_1.fastq.gz out2=clean_2.fastq.gz ref=adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo threads=4 stats=stats.txt\nExecuting jgi.BBDuk [-Xmx16g, in1=/disks/tmp/cucinell/modpipe-discovery/readqc/bbduk_pe-21373444_9/inputs/test_1.fastq.gz, in2=/disks/tmp/cucinell/modpipe-discovery/readqc/bbduk_pe-21373444_9/inputs/test_2.fastq.gz, out1=clean_1.fastq.gz, out2=clean_2.fastq.gz, ref=adapters.fa, ktrim=r, k=23, mink=11, hdist=1, tpe, tbo, threads=4, stats=stats.txt]\nVersion 38.95\n\nSet threads to 4\nmaskMiddle was disabled because useShortKmers=true\n0.028 seconds.\nInitial:\nMemory: max=17179m, total=17179m, free=17149m, used=30m\n\nAdded 3847 kmers; time: \t0.034 seconds.\nMemory: max=17179m, total=17179m, free=17116m, used=63m\n\nWarning - trouble parsing BGZIP version:\n1.13+ds\nInput is being processed as paired\nStarted output streams:\t0.176 seconds.\nProcessing time:   \t\t1.985 seconds.\n\nInput:                  \t195458 reads \t\t19545800 bases.\nKTrimmed:               \t6 reads (0.00%) \t70 bases (0.00%)\nTrimmed by overlap:     \t70 reads (0.04%) \t268 bases (0.00%)\nTotal Removed:          \t0 reads (0.00%) \t338 bases (0.00%)\nResult:                 \t195458 reads (100.00%) \t19545462 bases (100.00%)\n\nTime:                         \t2.220 seconds.\nReads Processed:        195k \t88.04k reads/sec\nBases Processed:      19545k \t8.80m bases/sec\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:44:42"
+}

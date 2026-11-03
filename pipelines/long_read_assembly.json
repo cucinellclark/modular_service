@@ -1,0 +1,16 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Long-read genome assembly",
+  "description": "Nanopore reads: Filtlong length/quality filter -> Flye assembly -> QUAST statistics.",
+  "inputs": {"long_reads": {"type": "reads.long.nanopore", "source": {"single_end_libs": [{"read": "/user@bvbrc/home/reads/sample.ont.fastq.gz"}]}}},
+  "steps": {
+    "filter":   {"module": "filtlong", "in": {"reads": "$inputs.long_reads"}},
+    "assemble": {"module": "flye", "in": {"reads": "filter.filtered_reads"}},
+    "qc":       {"module": "quast", "in": {"contigs": "assemble.contigs"}}
+  },
+  "outputs": {"contigs": "assemble.contigs", "assembly_graph": "assemble.graph", "assembly_info": "assemble.assembly_info",
+              "qc_report": "qc.report", "qc_metrics": "qc.metrics"},
+  "template": {"label": "Long-read assembly (Nanopore)", "category": "assembly",
+               "expose": ["filter.params.min_length", "filter.params.keep_percent", "assemble.params.read_mode",
+                          "assemble.params.genome_size", "assemble.params.meta", "qc.params.min_contig"]}
+}

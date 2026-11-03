@@ -1,0 +1,47 @@
+schema: modpipe/module/v1
+id: quast
+version: 1
+label: "QUAST: assembly quality assessment"
+description: Assembly statistics (N50, length, misassemblies vs a reference if given) for one or more assemblies.
+category: assembly_qc
+tool: {id: quast, binary: quast.py, version: 5.2.0}
+
+inputs:
+  - id: contigs
+    type: sequences.dna.contigs
+    cardinality: many
+    description: One or more assemblies to compare
+  - id: reference
+    type: sequences.dna
+    required: false
+  - id: features
+    type: annotation.gff
+    required: false
+    description: Reference gene annotation (GFF3); requires a reference
+
+outputs:
+  - {id: report, type: report.html, path: quast/report.html}
+  - {id: metrics, type: table.tsv.assembly_metrics, path: quast/report.tsv}
+  - {id: metrics_transposed, type: table.tsv.assembly_metrics, path: quast/transposed_report.tsv}
+  - {id: report_pdf, type: report.image, path: quast/report.pdf}
+  - {id: icarus, type: report.html, path: quast/icarus.html}
+
+parameters:
+  - {id: min_contig, type: int, default: 500, min: 0, label: "Ignore contigs shorter than (bp)"}
+
+resources: {cpu: 4, memory: 8G, runtime: 1h}
+
+command: |
+  {% if inputs.features and not inputs.reference %}{{ fail('QUAST features (-g) require a reference (-r)') }}{% endif %}
+  quast.py -t {{ cpu }} -o quast --min-contig {{ params.min_contig }}
+  {% if inputs.reference %}-r {{ inputs.reference | q }}{% endif %}
+  {% if inputs.features %}-g {{ inputs.features | q }}{% endif %}
+  -l {{ inputs.contigs | map(attribute='label') | map('replace', ',', '_') | join(',') | q }}
+  {% for c in inputs.contigs %}{{ c | q }} {% endfor %}
+
+tests:
+  discovery_runs: [quast_ref, quast_noref, quast_multi]
+  observed: {max_rss_mb: 129, max_wall_s: 6}
+provenance:
+  bvbrc_invocations: [p3x-assembly.py, run_viral_assembly.py, core-genome-mlst-utils.py]
+  nfcore: [quast]

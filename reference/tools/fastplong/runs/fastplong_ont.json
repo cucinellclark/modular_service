@@ -1,0 +1,84 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "fastplong_ont",
+ "set": "readqc",
+ "tool": "fastplong",
+ "mode": "nanopore",
+ "description": null,
+ "tool_version": "0.4.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_2",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:16",
+ "inputs": {
+  "R": {
+   "fixture": "portiera_nanopore",
+   "path": "inputs/test.fastq.gz",
+   "size": 13713449
+  }
+ },
+ "prep": null,
+ "cmd": "fastplong -w $CPU -i $R -o filtered.fastq.gz -h fastplong.html -j fastplong.json",
+ "wall_s": 0.77,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "fastplong.html",
+   "size": 297781,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<html><head><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" /><title>fastplong report at 2026-11-02      15:37:17 </title><script src='https://opengene.org/plotly-1.2.0.min.js'></scr",
+    "",
+    "<script type='text/javascript'>"
+   ],
+   "sha256": "7ddc8aa3ccf957cb933d2ac27bf71968b5ae45ae04a12acd8427fbc0d6c91677"
+  },
+  {
+   "path": "fastplong.json",
+   "size": 2779661,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "\t\"summary\": {",
+    "\t\t\"fastplong_version\": \"0.4.1\","
+   ],
+   "sha256": "462944154c8d632cc84f931de7b2647a4369e0161999c6eaf708938b561e157c"
+  },
+  {
+   "path": "filtered.fastq.gz",
+   "size": 79722,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@ERR3772599.17392",
+    "ATAATCCCATGGAATCTAGCATCTCACTACTTATTAACAAATACTTTTTTTAAACTATTATACAAACACACTATTTGTTTTATTTTTCTTTGTTGTATGTTTATCTGAGAAATACCGAGCTATATTTTAAAGTTATTTACAATTATTAGTTAATAAAACCTTACTTAACAAACTAGGTAACAACCATATATTTTATATAC",
+    "+"
+   ],
+   "lines": 400,
+   "records": 100,
+   "residues": 82717,
+   "sha256": "d65c17c3327da8f47614e2a7abf4fba8db91d1d8e9e10afb5ca4fbf14cfac54c"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 3157164,
+ "time": {
+  "elapsed": "0:00.72",
+  "max_rss_kb": "204944",
+  "cpu_pct": "198",
+  "exit_status": "0",
+  "user_s": "1.30",
+  "sys_s": "0.13",
+  "elapsed_s": 0.72,
+  "max_rss_mb": 200.1
+ },
+ "stdout_tail": "",
+ "stderr_tail": "Trying to detect adapter sequence at read start\nDetected: TACTTCGTTCAGTTACGTATTGCT\nTrying to detect adapter sequence at read end\nFound possible adapter sequence, but it's too short: AGCAATACGTAAC, specify -e AGCAATACGTAAC to force trimming using this adapter\n\nBefore filtering:\ntotal reads: 7100\ntotal bases: 14162700\nQ20 bases: 2951387(20.8392%)\nQ30 bases: 0(0%)\n\nAfter filtering:\ntotal reads: 100\ntotal bases: 82717\nQ20 bases: 27493(33.2374%)\nQ30 bases: 0(0%)\n\nFiltering result:\nreads passed filter: 100\nreads failed due to low quality: 7041\nreads failed due to too many N: 0\nreads failed due to too short: 0\nreads with adapter trimmed: 5570\nbases trimmed due to adapters: 226607\n\nJSON report: fastplong.json\nHTML report: fastplong.html\n\nfastplong -w 4 -i /disks/tmp/cucinell/modpipe-discovery/readqc/fastplong_ont-21373335_2/inputs/test.fastq.gz -o filtered.fastq.gz -h fastplong.html -j fastplong.json \nfastplong v0.4.1, time used: 1 seconds\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:17"
+}

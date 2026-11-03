@@ -1,0 +1,27 @@
+# P4 discovery set: runs that match v1 module descriptors exactly (bwa_mem, minimap2, amrfinder modules).
+set: modules_v1
+resources: {cpu: 4, mem: 16G, time: "01:00:00"}
+runs:
+  - id: bwa_mem_sorted
+    tool: bwa
+    mode: module_bwa_mem
+    description: matches modules/bwa_mem.yaml
+    inputs: {REF: portiera_genome, R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: >-
+      cp $REF ref.fa && bwa index ref.fa 2> bwa_index.log && bwa mem -t $CPU ref.fa $R1 $R2
+      | samtools sort -@ 3 -o aligned.bam - && samtools index aligned.bam && samtools flagstat aligned.bam > flagstat.txt
+  - id: minimap2_sorted_ont
+    tool: minimap2
+    mode: module_minimap2_map_ont
+    description: matches modules/minimap2.yaml
+    inputs: {REF: portiera_genome, L: portiera_nanopore}
+    cmd: >-
+      minimap2 -t $CPU -ax map-ont $REF $L | samtools sort -@ 3 -o aligned.bam -
+      && samtools index aligned.bam && samtools flagstat aligned.bam > flagstat.txt
+  - id: amrfinder_module
+    tool: amrfinder
+    mode: module_amrfinder_plus
+    description: matches modules/amrfinder.yaml
+    inputs: {G: hinfluenzae_genome}
+    prep: gunzip -c $G > genome.fna
+    cmd: amrfinder -n genome.fna --threads $CPU -o amrfinder.tsv --plus

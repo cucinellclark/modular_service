@@ -1,0 +1,598 @@
+{
+ "_comment": "Candidate tool modules. binary = name on container PATH. nfcore = nf-core module path(s) for step P3. category matches TOOL_INVENTORY.",
+ "tools": [
+  {
+   "id": "fastp",
+   "binary": "fastp",
+   "category": "read_qc",
+   "nfcore": [
+    "fastp"
+   ]
+  },
+  {
+   "id": "fastplong",
+   "binary": "fastplong",
+   "category": "read_qc",
+   "nfcore": [
+    "fastplong"
+   ]
+  },
+  {
+   "id": "trim_galore",
+   "binary": "trim_galore",
+   "category": "read_qc",
+   "nfcore": [
+    "trimgalore"
+   ]
+  },
+  {
+   "id": "cutadapt",
+   "binary": "cutadapt",
+   "category": "read_qc",
+   "nfcore": [
+    "cutadapt"
+   ]
+  },
+  {
+   "id": "fastqc",
+   "binary": "fastqc",
+   "category": "read_qc",
+   "nfcore": [
+    "fastqc"
+   ]
+  },
+  {
+   "id": "filtlong",
+   "binary": "filtlong",
+   "category": "read_qc",
+   "nfcore": [
+    "filtlong"
+   ]
+  },
+  {
+   "id": "bbduk",
+   "binary": "bbduk.sh",
+   "category": "read_qc",
+   "nfcore": [
+    "bbmap/bbduk"
+   ]
+  },
+  {
+   "id": "bbnorm",
+   "binary": "bbnorm.sh",
+   "category": "read_qc",
+   "nfcore": [
+    "bbmap/bbnorm"
+   ]
+  },
+  {
+   "id": "seqtk",
+   "binary": "seqtk",
+   "category": "read_qc",
+   "nfcore": [
+    "seqtk/sample",
+    "seqtk/seq",
+    "seqtk/subseq"
+   ],
+   "version_cmd": "seqtk 2>&1",
+   "help_cmd": "seqtk 2>&1"
+  },
+  {
+   "id": "hostile",
+   "binary": "hostile",
+   "category": "read_qc",
+   "nfcore": [
+    "hostile/clean"
+   ]
+  },
+  {
+   "id": "multiqc",
+   "binary": "multiqc",
+   "category": "reporting",
+   "nfcore": [
+    "multiqc"
+   ]
+  },
+  {
+   "id": "spades",
+   "binary": "spades.py",
+   "category": "assembly",
+   "nfcore": [
+    "spades"
+   ]
+  },
+  {
+   "id": "megahit",
+   "binary": "megahit",
+   "category": "assembly",
+   "nfcore": [
+    "megahit"
+   ]
+  },
+  {
+   "id": "flye",
+   "binary": "flye",
+   "category": "assembly",
+   "nfcore": [
+    "flye"
+   ]
+  },
+  {
+   "id": "unicycler",
+   "binary": "unicycler",
+   "category": "assembly",
+   "nfcore": [
+    "unicycler"
+   ]
+  },
+  {
+   "id": "canu",
+   "binary": "canu",
+   "category": "assembly",
+   "nfcore": [
+    "canu"
+   ]
+  },
+  {
+   "id": "racon",
+   "binary": "racon",
+   "category": "assembly",
+   "nfcore": [
+    "racon"
+   ]
+  },
+  {
+   "id": "pilon",
+   "binary": "pilon",
+   "category": "assembly",
+   "nfcore": [
+    "pilon"
+   ],
+   "version_cmd": "dpkg-query -W -f='pilon ${Version}\\n' pilon"
+  },
+  {
+   "id": "irma",
+   "binary": "IRMA",
+   "category": "assembly",
+   "nfcore": []
+  },
+  {
+   "id": "quast",
+   "binary": "quast.py",
+   "category": "assembly_qc",
+   "nfcore": [
+    "quast"
+   ]
+  },
+  {
+   "id": "bwa",
+   "binary": "bwa",
+   "category": "mapping",
+   "nfcore": [
+    "bwa/index",
+    "bwa/mem"
+   ],
+   "version_cmd": "bwa 2>&1",
+   "help_cmd": "bwa 2>&1; bwa mem 2>&1"
+  },
+  {
+   "id": "bowtie2",
+   "binary": "bowtie2",
+   "category": "mapping",
+   "nfcore": [
+    "bowtie2/build",
+    "bowtie2/align"
+   ]
+  },
+  {
+   "id": "hisat2",
+   "binary": "hisat2",
+   "category": "mapping",
+   "nfcore": [
+    "hisat2/build",
+    "hisat2/align"
+   ]
+  },
+  {
+   "id": "minimap2",
+   "binary": "minimap2",
+   "category": "mapping",
+   "nfcore": [
+    "minimap2/index",
+    "minimap2/align"
+   ]
+  },
+  {
+   "id": "samtools",
+   "binary": "samtools",
+   "category": "mapping",
+   "nfcore": [
+    "samtools/sort",
+    "samtools/index",
+    "samtools/view",
+    "samtools/faidx",
+    "samtools/stats",
+    "samtools/depth",
+    "samtools/consensus"
+   ],
+   "help_cmd": "samtools --help; for s in sort index view faidx depth consensus; do echo \"### samtools $s\"; samtools $s 2>&1 | head -60; done",
+   "notes": "PATH resolves /usr/bin/samtools 1.13; runtime also has samtools-1.11 and samtools-1.20 dirs."
+  },
+  {
+   "id": "bcftools",
+   "binary": "bcftools",
+   "category": "variants",
+   "nfcore": [
+    "bcftools/mpileup",
+    "bcftools/call",
+    "bcftools/consensus",
+    "bcftools/view"
+   ],
+   "help_cmd": "bcftools --help; for s in mpileup call consensus view; do echo \"### bcftools $s\"; bcftools $s 2>&1 | head -60; done"
+  },
+  {
+   "id": "freebayes",
+   "binary": "freebayes",
+   "category": "variants",
+   "nfcore": [
+    "freebayes"
+   ]
+  },
+  {
+   "id": "snippy",
+   "binary": "snippy",
+   "category": "variants",
+   "nfcore": [
+    "snippy/run",
+    "snippy/core"
+   ]
+  },
+  {
+   "id": "snpeff",
+   "binary": "snpEff.sh",
+   "category": "variants",
+   "nfcore": [
+    "snpeff/snpeff"
+   ],
+   "version_cmd": "snpEff.sh -version",
+   "help_cmd": "snpEff.sh -help"
+  },
+  {
+   "id": "bedtools",
+   "binary": "bedtools",
+   "category": "variants",
+   "nfcore": [
+    "bedtools/genomecov",
+    "bedtools/coverage"
+   ]
+  },
+  {
+   "id": "kma",
+   "binary": "kma",
+   "category": "mapping",
+   "nfcore": [
+    "kma/index",
+    "kma/kma"
+   ]
+  },
+  {
+   "id": "prodigal",
+   "binary": "prodigal",
+   "category": "annotation",
+   "nfcore": [
+    "prodigal"
+   ],
+   "help_cmd": "prodigal -h 2>&1"
+  },
+  {
+   "id": "glimmer3",
+   "binary": "glimmer3",
+   "category": "annotation",
+   "nfcore": [],
+   "version_cmd": "dpkg-query -W -f='tigr-glimmer ${Version}\\n' tigr-glimmer"
+  },
+  {
+   "id": "trnascan",
+   "binary": "tRNAscan-SE",
+   "category": "annotation",
+   "nfcore": [
+    "trnascanse"
+   ]
+  },
+  {
+   "id": "phispy",
+   "binary": "phispy",
+   "category": "annotation",
+   "nfcore": [
+    "phispy"
+   ]
+  },
+  {
+   "id": "minced",
+   "binary": "minced",
+   "category": "annotation",
+   "nfcore": []
+  },
+  {
+   "id": "vigor4",
+   "binary": "vigor4",
+   "category": "annotation",
+   "nfcore": []
+  },
+  {
+   "id": "amrfinder",
+   "binary": "amrfinder",
+   "category": "annotation",
+   "nfcore": [
+    "amrfinderplus/run",
+    "amrfinderplus/update"
+   ]
+  },
+  {
+   "id": "genomad",
+   "binary": "genomad",
+   "category": "annotation",
+   "nfcore": [
+    "genomad/endtoend",
+    "genomad/download"
+   ],
+   "help_cmd": "genomad --help; genomad end-to-end --help"
+  },
+  {
+   "id": "checkv",
+   "binary": "checkv",
+   "category": "annotation",
+   "nfcore": [
+    "checkv/endtoend"
+   ],
+   "version_cmd": "checkv -h",
+   "help_cmd": "checkv -h; checkv end_to_end -h"
+  },
+  {
+   "id": "hmmscan",
+   "binary": "hmmscan",
+   "category": "annotation",
+   "nfcore": [
+    "hmmer/hmmsearch",
+    "hmmer/hmmpress"
+   ],
+   "version_cmd": "hmmscan -h",
+   "help_cmd": "hmmscan -h"
+  },
+  {
+   "id": "blastn",
+   "binary": "blastn",
+   "category": "homology",
+   "nfcore": [
+    "blast/blastn",
+    "blast/makeblastdb"
+   ]
+  },
+  {
+   "id": "blastp",
+   "binary": "blastp",
+   "category": "homology",
+   "nfcore": [
+    "blast/blastp"
+   ]
+  },
+  {
+   "id": "diamond",
+   "binary": "diamond",
+   "category": "homology",
+   "nfcore": [
+    "diamond/blastp",
+    "diamond/makedb"
+   ],
+   "version_cmd": "diamond version",
+   "help_cmd": "diamond help",
+   "notes": "Crashed with 'Illegal instruction' on the dev host (2026-11-02); likely CPU-ISA dependent, verify on compute nodes."
+  },
+  {
+   "id": "mmseqs",
+   "binary": "mmseqs",
+   "category": "homology",
+   "nfcore": [
+    "mmseqs/easysearch",
+    "mmseqs/easycluster",
+    "mmseqs/createdb"
+   ],
+   "version_cmd": "echo mmseqs $(mmseqs version); ls -d /opt/patric-common/runtime/mmseqs2-*",
+   "help_cmd": "mmseqs -h; mmseqs easy-search -h | head -120; mmseqs easy-cluster -h | head -120",
+   "notes": "`mmseqs version` prints '17' but runtime dir is mmseqs2-13-45111; confirm which binary is on PATH."
+  },
+  {
+   "id": "cd-hit",
+   "binary": "cd-hit",
+   "category": "homology",
+   "nfcore": [
+    "cdhit/cdhit",
+    "cdhit/cdhitest"
+   ],
+   "version_cmd": "cd-hit -h"
+  },
+  {
+   "id": "mafft",
+   "binary": "mafft",
+   "category": "alignment",
+   "nfcore": [
+    "mafft/align"
+   ]
+  },
+  {
+   "id": "muscle",
+   "binary": "muscle",
+   "category": "alignment",
+   "nfcore": [
+    "muscle"
+   ]
+  },
+  {
+   "id": "clustalw",
+   "binary": "clustalw",
+   "category": "alignment",
+   "nfcore": [],
+   "version_cmd": "clustalw -help",
+   "help_cmd": "clustalw -options 2>&1; clustalw -help 2>&1"
+  },
+  {
+   "id": "progressivemauve",
+   "binary": "progressiveMauve",
+   "category": "alignment",
+   "nfcore": [],
+   "version_cmd": "for p in progressivemauve mauve-aligner; do dpkg-query -W -f='progressiveMauve ${Version}\\n' $p 2>/dev/null; done"
+  },
+  {
+   "id": "gblocks",
+   "binary": "Gblocks",
+   "category": "alignment",
+   "nfcore": [],
+   "interactive": true,
+   "notes": "Interactive menu when run without a file; batch usage: Gblocks <aln> -t=p|d -b5=... ; no help flag."
+  },
+  {
+   "id": "fasttree",
+   "binary": "FastTree",
+   "category": "phylogeny",
+   "nfcore": [
+    "fasttree"
+   ]
+  },
+  {
+   "id": "raxmlhpc",
+   "binary": "raxmlHPC-PTHREADS-SSE3",
+   "category": "phylogeny",
+   "nfcore": [
+    "raxmlng"
+   ]
+  },
+  {
+   "id": "raxml-ng",
+   "binary": "raxml-ng",
+   "category": "phylogeny",
+   "nfcore": [
+    "raxmlng"
+   ]
+  },
+  {
+   "id": "iqtree2",
+   "binary": "iqtree2",
+   "category": "phylogeny",
+   "nfcore": [
+    "iqtree"
+   ]
+  },
+  {
+   "id": "parsnp",
+   "binary": "parsnp",
+   "category": "phylogeny",
+   "nfcore": [
+    "parsnp"
+   ]
+  },
+  {
+   "id": "ksnp4",
+   "binary": "kSNP4",
+   "category": "phylogeny",
+   "nfcore": [],
+   "version_cmd": "ls -d /opt/patric-common/runtime/ksnp-*"
+  },
+  {
+   "id": "kraken2",
+   "binary": "kraken2",
+   "category": "taxonomy",
+   "nfcore": [
+    "kraken2/kraken2"
+   ]
+  },
+  {
+   "id": "bracken",
+   "binary": "bracken",
+   "category": "taxonomy",
+   "nfcore": [
+    "bracken/bracken"
+   ]
+  },
+  {
+   "id": "krona",
+   "binary": "ktImportText",
+   "category": "taxonomy",
+   "nfcore": [
+    "krona/ktimporttext"
+   ],
+   "version_cmd": "ktImportText 2>&1 | grep KronaTools",
+   "help_cmd": "ktImportText 2>&1"
+  },
+  {
+   "id": "mlst",
+   "binary": "mlst",
+   "category": "typing",
+   "nfcore": [
+    "mlst"
+   ]
+  },
+  {
+   "id": "chewbbaca",
+   "binary": "chewBBACA.py",
+   "category": "typing",
+   "nfcore": [
+    "chewbbaca/allelecall",
+    "chewbbaca/createschema"
+   ],
+   "help_cmd": "chewBBACA.py --help; for s in AlleleCall CreateSchema ExtractCgMLST; do echo \"### $s\"; chewBBACA.py $s --help 2>&1 | head -80; done"
+  },
+  {
+   "id": "freyja",
+   "binary": "freyja",
+   "category": "typing",
+   "nfcore": [
+    "freyja/variants",
+    "freyja/demix",
+    "freyja/boot"
+   ],
+   "help_cmd": "freyja --help; for s in variants demix boot; do echo \"### freyja $s\"; freyja $s --help 2>&1; done"
+  },
+  {
+   "id": "pangolin",
+   "binary": "pangolin",
+   "category": "typing",
+   "nfcore": [
+    "pangolin/run"
+   ]
+  },
+  {
+   "id": "stringtie",
+   "binary": "stringtie",
+   "category": "expression",
+   "nfcore": [
+    "stringtie/stringtie"
+   ]
+  },
+  {
+   "id": "htseq-count",
+   "binary": "htseq-count",
+   "category": "expression",
+   "nfcore": [
+    "htseq/count"
+   ]
+  },
+  {
+   "id": "primer3",
+   "binary": "primer3_core",
+   "category": "other",
+   "nfcore": []
+  },
+  {
+   "id": "antismash",
+   "binary": "antismash",
+   "category": "annotation",
+   "nfcore": [
+    "antismash/antismash"
+   ],
+   "path": "/opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash",
+   "notes": "Not on PATH; own venv under runtime/antismash-7-1-0-1. Core dumped on the dev host (2026-11-02), like diamond; verify on compute nodes.",
+   "version_cmd": "timeout 60 /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash --version 2>&1 | tail -3",
+   "help_cmd": "timeout 60 /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash --help 2>&1"
+  }
+ ]
+}

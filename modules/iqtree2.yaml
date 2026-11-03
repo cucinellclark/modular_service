@@ -1,0 +1,29 @@
+schema: modpipe/module/v1
+id: iqtree2
+version: 1
+label: "IQ-TREE 2: maximum-likelihood tree with model selection"
+description: ML phylogeny with ModelFinder (default) and optional ultrafast bootstrap; DNA or protein alignments.
+category: phylogeny
+tool: {id: iqtree2, binary: iqtree2, version: 2.4.0}
+inputs:
+  - {id: alignment, type: alignment.msa}
+outputs:
+  - {id: tree, type: tree.newick, path: iq.treefile}
+  - {id: consensus_tree, type: tree.newick, path: iq.contree, when: "params.bootstrap > 0",
+     description: "Ultrafast bootstrap consensus tree (support values)"}
+  - {id: report, type: report.text, path: iq.iqtree}
+  - {id: log, type: report.text, path: iq.log}
+parameters:
+  - {id: model, type: string, default: "MFP", label: "Model (MFP = ModelFinder Plus; e.g. GTR+G, LG+G)"}
+  - {id: bootstrap, type: int, default: 0, min: 0, label: "Ultrafast bootstrap replicates (0 = none, else >= 1000)"}
+  - {id: fast, type: bool, default: false, advanced: true, label: "Fast tree search (--fast)"}
+  - {id: seed, type: int, default: 12345, advanced: true, label: "Random seed"}
+resources: {cpu: 8, memory: 16G, runtime: 12h}
+command: |
+  {% if 0 < params.bootstrap < 1000 %}{{ fail('IQ-TREE ultrafast bootstrap needs >= 1000 replicates (or 0)') }}{% endif %}
+  iqtree2 -s {{ inputs.alignment | q }} -m {{ params.model | q }} -T {{ cpu }} --prefix iq --seed {{ params.seed }}
+  {% if params.bootstrap > 0 %}-B {{ params.bootstrap }}{% endif %}
+  {% if params.fast %}--fast{% endif %}
+tests:
+  discovery_runs: [iqtree2_fast, iqtree2_mfp_ufboot]
+provenance: {nfcore: [iqtree]}

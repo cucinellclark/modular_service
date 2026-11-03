@@ -1,0 +1,59 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "mafft_linsi_protein",
+ "set": "phylogeny",
+ "tool": "mafft",
+ "mode": "linsi_protein",
+ "description": null,
+ "tool_version": "7.526",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-04",
+ "slurm_job": "21373357_1",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:24",
+ "inputs": {
+  "P": {
+   "fixture": "sarscov2_proteome",
+   "path": "inputs/proteome.fasta",
+   "size": 18016
+  }
+ },
+ "prep": null,
+ "cmd": "mafft --localpair --maxiterate 1000 --thread $CPU $P > aligned.fasta",
+ "wall_s": 8.42,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aligned.fasta",
+   "size": 90024,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">ENSSASP00005000002.1 pep primary_assembly:ASM985889v3:MN908947.3:266:21555:1 gene:ENSSASG00005000002.1 transcript:ENSSAST00005000002.1 gene_biotype:protein_coding transcript_biotype:protein_coding ge",
+    "MESLVPGFNEKTHVQLSLPVLQVRDVLVRGFGDSVEEVLSEARQHLKDGTCGLVEVEKGV",
+    "LPQLEQPYVFIKRSDARTAPHGHVMVELVAELEGIQYGRSGETLGVLVPHVGEIPVAYRK"
+   ],
+   "lines": 1440,
+   "records": 12,
+   "residues": 85524,
+   "sha256": "c1bcf0cf27957736a0bb5f151297f5a3c9396fa17494a232b522f70bc5b36320"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 90024,
+ "time": {
+  "elapsed": "0:08.36",
+  "max_rss_kb": "2392840",
+  "cpu_pct": "235",
+  "exit_status": "0",
+  "user_s": "14.94",
+  "sys_s": "4.70",
+  "elapsed_s": 8.36,
+  "max_rss_mb": 2336.8
+ },
+ "stdout_tail": "",
+ "stderr_tail": "aa) Version 7.526\nalg=A, model=BLOSUM62, 1.53, -0.00, -0.00, noshift, amax=0.0\n4 thread(s)\n\nminimumweight = 0.000010\nautosubalignment = 0.000000\nnthread = 4\nrandomseed = 0\nblosum 62 / kimura 200\npoffset = 0\nniter = 16\nsueff_global = 0.100000\nnadd = 16\nLoading 'hat3' ... done.\nrescale = 1\n\n\r    0 / 12\r   10 / 12\nSegment   1/  1    1-7129\n001-0000-1 (thread    4) identical     \r001-0000-1 (thread    4) better     \r\r001-0001-0 (thread    4) identical     \r001-0001-0 (thread    4) worse      \r\r001-0002-1 (thread    4) identical     \r001-0002-1 (thread    4) worse      \r\r001-0003-0 (thread    4) identical     \r001-0003-0 (thread    4) worse      \r\r001-0004-1 (thread    4) identical     \r001-0004-1 (thread    4) worse      \r\r001-0005-0 (thread    3) identical     \r001-0005-0 (thread    3) worse      \r\r001-0006-1 (thread    3) identical     \r001-0006-1 (thread    3) worse      \r\r001-0007-0 (thread    4) identical     \r001-0007-0 (thread    4) worse      \r\r001-0008-1 (thread    1) identical     \r\r001-0009-0 (thread    2) identical     \r\r001-0010-0 (thread    3) identical     \r001-0010-0 (thread    3) worse      \r\r001-0011-1 (thread    4) identical     \r001-0011-1 (thread    4) better     \r\r001-0012-1 (thread    2) identical     \r001-0012-1 (thread    2) worse      \r\r001-0013-1 (thread    4) identical     \r001-0013-1 (thread    4) worse      \r\r001-0014-0 (thread    3) identical     \r001-0014-0 (thread    3) worse      \r\r001-0015-1 (thread    4) identical     \r001-0015-1 (thread    4) worse      \r\r001-0016-0 (thread    1) identical     \r001-0016-0 (thread    1) worse      \r\r001-0017-1 (thread    4) identical     \r001-0017-1 (thread    4) worse      \r\r001-0018-0 (thread    2) identical     \r001-0018-0 (thread    2) worse      \r\r001-0019-1 (thread    1) identical     \r001-0019-1 (thread    1) worse      \r\r001-0020-0 (thread    3) identical     \r001-0020-0 (thread    3) worse      \r\r002-0000-1 (thread    3) identical     \r\r002-0001-0 (thread    3) identical     \r002-0001-0 (thread    3) worse      \r\r002-0002-1 (thread    3) identical     \r002-0002-1 (thread    3) worse      \r\r002-0003-0 (thread    3) identical     \r002-0003-0 (thread    3) worse      \r\r002-0004-1 (thread    3) identical     \r002-0004-1 (thread    3) worse      \r\r002-0005-0 (thread    4) identical     \r002-0005-0 (thread    4) worse      \r\r002-0006-1 (thread    4) identical     \r002-0006-1 (thread    4) worse      \r\r002-0007-0 (thread    3) identical     \r002-0007-0 (thread    3) worse      \r\r002-0008-1 (thread    2) identical     \r\r002-0009-0 (thread    1) identical     \r\r002-0010-1 (thread    1) identical     \r002-0010-1 (thread    1) worse      \r\r002-0011-0 (thread    4) identical     \r002-0011-0 (thread    4) worse      \r\r002-0012-1 (thread    4) identical     \r002-0012-1 (thread    4) worse      \r\r002-0013-0 (thread    2) identical     \r002-0013-0 (thread    2) worse      \r\r002-0014-1 (thread    3) identical     \r\r002-0015-1 (thread    2) identical     \r002-0015-1 (thread    2) worse      \r\r002-0016-0 (thread    1) identical     \r002-0016-0 (thread    1) worse      \r\r002-0017-0 (thread    4) identical     \r002-0017-0 (thread    4) worse      \r\r002-0018-1 (thread    2) identical     \r002-0018-1 (thread    2) worse      \r\r002-0019-0 (thread    3) identical     \r002-0019-0 (thread    3) worse      \r\r002-0020-1 (thread    1) identical     \r002-0020-1 (thread    1) worse      \r\r\nConverged.\ndone\ndvtditr (aa) Version 7.526\nalg=A, model=BLOSUM62, 1.53, -0.00, -0.00, noshift, amax=0.0\n4 thread(s)\n\n\nStrategy:\n L-INS-i (Probably most accurate, very slow)\n Iterative refinement method (<16) with LOCAL pairwise alignment information\n\nIf unsure which option to use, try 'mafft --auto input > output'.\nFor more information, see 'mafft --help', 'mafft --man' and the mafft page.\n\nThe default gap scoring scheme has been changed in version 7.110 (2013 Oct).\nIt tends to insert more gaps into gap-rich regions than previous versions.\nTo disable this change, add the --leavegappyregion option.\n\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:33"
+}

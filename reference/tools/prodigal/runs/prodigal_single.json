@@ -1,0 +1,101 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "prodigal_single",
+ "set": "annotation",
+ "tool": "prodigal",
+ "mode": "single",
+ "description": null,
+ "tool_version": "2.6.3",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373347_0",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:37:20",
+ "inputs": {
+  "G": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "prodigal -i $G -a proteins.faa -d genes.fna -o genes.gff -f gff -s starts.txt",
+ "wall_s": 0.82,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "genes.fna",
+   "size": 282954,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1_1 # 1 # 1926 # 1 # ID=1_1;partial=10;start_type=Edge;rbs_motif=None;rbs_spacer=None;gc_cont=0.310",
+    "ATGATAAGAATTATAGGTATTGATTTAGGTACTACTAACTCGTGTGTTGCAGTTTTAGAAAATGGAAAAA",
+    "GTCGTGTTATAGAAAATTCAGAAGGTGCCCGTACTACTCCTTCTATAATTGCATATACTGATGATAATGA"
+   ],
+   "lines": 3917,
+   "records": 266,
+   "residues": 246249,
+   "sha256": "4810213ff2d0e4cd2092b9a4c31749f2f9c9a8db9d7e65a4ab8ebd3139343874"
+  },
+  {
+   "path": "genes.gff",
+   "size": 60543,
+   "new": true,
+   "kind": "gff",
+   "preview": [
+    "##gff-version  3",
+    "# Sequence Data: seqnum=1;seqlen=358242;seqhdr=\"NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence\"",
+    "# Model Data: version=Prodigal.v2.6.3;run_type=Single;model=\"Ab initio\";gc_cont=26.17;transl_table=11;uses_sd=1"
+   ],
+   "lines": 269,
+   "records": 266,
+   "sha256": "0c988294d48d516ed66d17fb26d29927028e0bab863a4c9798af4a1c42b44d42"
+  },
+  {
+   "path": "proteins.faa",
+   "size": 116630,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1_1 # 1 # 1926 # 1 # ID=1_1;partial=10;start_type=Edge;rbs_motif=None;rbs_spacer=None;gc_cont=0.310",
+    "MIRIIGIDLGTTNSCVAVLENGKSRVIENSEGARTTPSIIAYTDDNEILIGQTAKRQAVT",
+    "NPSNTLYAIKRLIGRKFNDDIVQKDIKMVPYKIVSAENGDAWVQVKNRKLAPPQISAEIL"
+   ],
+   "lines": 1759,
+   "records": 266,
+   "residues": 82083,
+   "sha256": "39edd8911f13ffcaa3ee1a208485b4491c93475c0f507fa895cfbf246ce448cd"
+  },
+  {
+   "path": "starts.txt",
+   "size": 405393,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "# Sequence Data: seqnum=1;seqlen=358242;seqhdr=\"NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence\"",
+    "# Run Data: version=Prodigal.v2.6.3;run_type=Single;model=\"Ab initio\";gc_cont=26.17;transl_table=11;uses_sd=1",
+    ""
+   ],
+   "lines": 7192,
+   "sha256": "df2cc7e9961e8b27bb128bd35872053cf05934f84b074d9a6c3ae0de49fed770"
+  }
+ ],
+ "n_outputs": 4,
+ "output_bytes": 865520,
+ "time": {
+  "elapsed": "0:00.81",
+  "max_rss_kb": "9948",
+  "cpu_pct": "37",
+  "exit_status": "0",
+  "user_s": "0.24",
+  "sys_s": "0.06",
+  "elapsed_s": 0.81,
+  "max_rss_mb": 9.7
+ },
+ "stdout_tail": "",
+ "stderr_tail": "-------------------------------------\nPRODIGAL v2.6.3 [February, 2016]         \nUniv of Tenn / Oak Ridge National Lab\nDoug Hyatt, Loren Hauser, et al.     \n-------------------------------------\nRequest:  Single Genome, Phase:  Training\nReading in the sequence(s) to train...358242 bp seq created, 26.17 pct GC\nLocating all potential starts and stops...7187 nodes\nLooking for GC bias in different frames...frame bias scores: 2.36 0.52 0.13\nBuilding initial set of genes to train from...done!\nCreating coding model and scoring nodes...done!\nExamining upstream regions and training starts...done!\n-------------------------------------\nRequest:  Single Genome, Phase:  Gene Finding\nFinding genes in sequence #1 (358242 bp)...done!\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:21"
+}

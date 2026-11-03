@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash cmd: timeout 60 /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash --version 2>&1 | tail -3
+timeout: the monitored command dumped core

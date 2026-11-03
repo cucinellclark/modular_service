@@ -1,0 +1,67 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "mlst_hinfluenzae",
+ "set": "typing_expression",
+ "tool": "mlst",
+ "mode": "auto_scheme",
+ "description": null,
+ "tool_version": "2.23.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-05",
+ "slurm_job": "21373358_3",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:27",
+ "inputs": {
+  "G": {
+   "fixture": "hinfluenzae_genome",
+   "path": "inputs/genome.fna.gz",
+   "size": 556632
+  }
+ },
+ "prep": null,
+ "cmd": "mlst --threads $CPU --json mlst.json $G > mlst.tsv",
+ "wall_s": 13.31,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "mlst.json",
+   "size": 511,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "[",
+    "   {",
+    "      \"alleles\" : {"
+   ],
+   "sha256": "92e15d69b64c74f547d28c039d774c896d375acfde3cec4b1480a94220437f1f"
+  },
+  {
+   "path": "mlst.tsv",
+   "size": 175,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "/disks/tmp/cucinell/modpipe-discovery/typing_expression/mlst_hinfluenzae-21373358_3/inputs/genome.fna.gz\thinfluenzae\t44\tadk(10)\tatpG(14)\tfrdB(4)\tfucK(3)\tmdh(4)\tpgi(3)\trecA(8)"
+   ],
+   "lines": 1,
+   "sha256": "578cd8c9867ebd0338d02b07be90b3917bea0f240721a9eee9f3eb1af02f008d"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 686,
+ "time": {
+  "elapsed": "0:13.27",
+  "max_rss_kb": "133000",
+  "cpu_pct": "49",
+  "exit_status": "0",
+  "user_s": "1.06",
+  "sys_s": "5.46",
+  "elapsed_s": 13.27,
+  "max_rss_mb": 129.9
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[15:37:29] This is mlst 2.23.0 running on linux with Perl 5.040000\n[15:37:29] Checking mlst dependencies:\n[15:37:29] Found 'blastn' => /opt/patric-common/runtime/bin/blastn\n[15:37:29] Found 'any2fasta' => /opt/patric-common/runtime/mlst-v2.23.0/bin/any2fasta\n[15:37:34] Found blastn: 2.15.0+ (002015)\n[15:37:34] Excluding 3 schemes: ecoli vcholerae_2 abaumannii\n[15:37:40] Found exact allele match hinfluenzae.frdB-4\n[15:37:40] Found exact allele match hinfluenzae.adk-10\n[15:37:40] Found exact allele match hinfluenzae.pgi-3\n[15:37:40] Found exact allele match hinfluenzae.atpG-14\n[15:37:40] Found exact allele match hinfluenzae.recA-8\n[15:37:40] Found exact allele match hinfluenzae.mdh-4\n[15:37:40] Found exact allele match hinfluenzae.fucK-3\n[15:37:40] Writing JSON: mlst.json\n[15:37:40] You can use --label XXX to replace an ugly filename in the output.\n[15:37:40] Done.\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:40"
+}

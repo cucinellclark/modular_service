@@ -1,0 +1,222 @@
+{
+ "source": "https://github.com/nf-core/modules",
+ "commit": "b4070340f85cc0822351c854733820811ac4339a 2026-11-02",
+ "tools": {
+  "fastp": [
+   "fastp"
+  ],
+  "fastplong": [
+   "fastplong"
+  ],
+  "trim_galore": [
+   "trimgalore"
+  ],
+  "cutadapt": [
+   "cutadapt"
+  ],
+  "fastqc": [
+   "fastqc"
+  ],
+  "filtlong": [
+   "filtlong"
+  ],
+  "bbduk": [
+   "bbmap/bbduk"
+  ],
+  "bbnorm": [
+   "bbmap/bbnorm"
+  ],
+  "seqtk": [
+   "seqtk/sample",
+   "seqtk/seq",
+   "seqtk/subseq"
+  ],
+  "hostile": [
+   "hostile/clean"
+  ],
+  "multiqc": [
+   "multiqc"
+  ],
+  "spades": [
+   "spades"
+  ],
+  "megahit": [
+   "megahit"
+  ],
+  "flye": [
+   "flye"
+  ],
+  "unicycler": [
+   "unicycler"
+  ],
+  "canu": [
+   "canu"
+  ],
+  "racon": [
+   "racon"
+  ],
+  "pilon": [
+   "pilon"
+  ],
+  "irma": [],
+  "quast": [
+   "quast"
+  ],
+  "bwa": [
+   "bwa/index",
+   "bwa/mem"
+  ],
+  "bowtie2": [
+   "bowtie2/build",
+   "bowtie2/align"
+  ],
+  "hisat2": [
+   "hisat2/build",
+   "hisat2/align"
+  ],
+  "minimap2": [
+   "minimap2/index",
+   "minimap2/align"
+  ],
+  "samtools": [
+   "samtools/sort",
+   "samtools/index",
+   "samtools/view",
+   "samtools/faidx",
+   "samtools/stats",
+   "samtools/depth",
+   "samtools/consensus"
+  ],
+  "bcftools": [
+   "bcftools/mpileup",
+   "bcftools/call",
+   "bcftools/consensus",
+   "bcftools/view"
+  ],
+  "freebayes": [
+   "freebayes"
+  ],
+  "snippy": [
+   "snippy/run",
+   "snippy/core"
+  ],
+  "snpeff": [
+   "snpeff/snpeff"
+  ],
+  "bedtools": [
+   "bedtools/genomecov",
+   "bedtools/coverage"
+  ],
+  "kma": [
+   "kma/index",
+   "kma/kma"
+  ],
+  "prodigal": [
+   "prodigal"
+  ],
+  "glimmer3": [],
+  "trnascan": [
+   "trnascanse"
+  ],
+  "phispy": [
+   "phispy"
+  ],
+  "minced": [],
+  "vigor4": [],
+  "amrfinder": [
+   "amrfinderplus/run",
+   "amrfinderplus/update"
+  ],
+  "genomad": [
+   "genomad/endtoend",
+   "genomad/download"
+  ],
+  "checkv": [
+   "checkv/endtoend"
+  ],
+  "hmmscan": [
+   "hmmer/hmmsearch",
+   "hmmer/hmmpress"
+  ],
+  "blastn": [
+   "blast/blastn",
+   "blast/makeblastdb"
+  ],
+  "blastp": [
+   "blast/blastp"
+  ],
+  "diamond": [
+   "diamond/blastp",
+   "diamond/makedb"
+  ],
+  "mmseqs": [
+   "mmseqs/easysearch",
+   "mmseqs/easycluster",
+   "mmseqs/createdb"
+  ],
+  "cd-hit": [
+   "cdhit/cdhit",
+   "cdhit/cdhitest"
+  ],
+  "mafft": [
+   "mafft/align"
+  ],
+  "muscle": [
+   "muscle"
+  ],
+  "clustalw": [],
+  "progressivemauve": [],
+  "gblocks": [],
+  "fasttree": [
+   "fasttree"
+  ],
+  "raxmlhpc": [
+   "raxmlng"
+  ],
+  "raxml-ng": [
+   "raxmlng"
+  ],
+  "iqtree2": [
+   "iqtree"
+  ],
+  "parsnp": [
+   "parsnp"
+  ],
+  "ksnp4": [],
+  "kraken2": [
+   "kraken2/kraken2"
+  ],
+  "bracken": [
+   "bracken/bracken"
+  ],
+  "krona": [
+   "krona/ktimporttext"
+  ],
+  "mlst": [
+   "mlst"
+  ],
+  "chewbbaca": [
+   "chewbbaca/allelecall",
+   "chewbbaca/createschema"
+  ],
+  "freyja": [
+   "freyja/variants",
+   "freyja/demix",
+   "freyja/boot"
+  ],
+  "pangolin": [
+   "pangolin/run"
+  ],
+  "stringtie": [
+   "stringtie/stringtie"
+  ],
+  "htseq-count": [
+   "htseq/count"
+  ],
+  "primer3": [],
+  "antismash": [
+   "antismash/antismash"
+  ]
+ },
+ "missing": []
+}

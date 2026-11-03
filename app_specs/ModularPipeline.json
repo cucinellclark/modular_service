@@ -1,0 +1,66 @@
+{
+  "id": "ModularPipeline",
+  "script": "App-ModularPipeline",
+  "label": "Modular pipeline",
+  "description": "Run a custom pipeline of connected tool modules (fastp, SPAdes, QUAST, MAFFT, FastTree, ...). Provide either a full pipeline definition or a curated template plus its exposed parameters.",
+  "default_memory": "16G",
+  "default_cpu": 4,
+  "parameters": [
+    {
+      "id": "pipeline",
+      "label": "Pipeline definition",
+      "required": 0,
+      "default": null,
+      "desc": "A modpipe/pipeline/v1 JSON object (see docs/MODULE_SCHEMA.md). Mutually exclusive with pipeline_template.",
+      "type": "object"
+    },
+    {
+      "id": "pipeline_template",
+      "label": "Curated pipeline template",
+      "required": 0,
+      "default": null,
+      "desc": "Name of a curated pipeline (pipelines/<name>.json in the service). Its inputs are replaced by `inputs`, and its exposed parameters can be set with `template_params`.",
+      "type": "string"
+    },
+    {
+      "id": "inputs",
+      "label": "Template inputs",
+      "required": 0,
+      "default": null,
+      "desc": "For pipeline_template: map of template input name -> source object (e.g. {\"reads\": {\"paired_end_libs\": [...]}}).",
+      "type": "object"
+    },
+    {
+      "id": "template_params",
+      "label": "Template parameters",
+      "required": 0,
+      "default": null,
+      "desc": "For pipeline_template: map of \"<step>.params.<id>\" -> value; only parameters listed in the template's expose list are accepted.",
+      "type": "object"
+    },
+    {
+      "id": "keep_intermediates",
+      "label": "Keep intermediate outputs",
+      "required": 0,
+      "default": false,
+      "desc": "Also save every step's outputs, not only the pipeline's declared outputs.",
+      "type": "bool"
+    },
+    {
+      "id": "output_path",
+      "label": "Output Folder",
+      "required": 1,
+      "default": null,
+      "desc": "Workspace folder for the results.",
+      "type": "folder"
+    },
+    {
+      "id": "output_file",
+      "label": "File Basename",
+      "required": 1,
+      "default": null,
+      "desc": "Name of the job result; outputs go to <output_path>/.<output_file>/",
+      "type": "wsid"
+    }
+  ]
+}

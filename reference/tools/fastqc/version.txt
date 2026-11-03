@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/fastqc --version
+FastQC v0.12.1

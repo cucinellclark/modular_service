@@ -1,0 +1,60 @@
+# P4 discovery set: homology search and clustering.
+set: homology
+resources: {cpus: 4, mem: 16G, time: "01:00:00"}
+runs:
+  - id: makeblastdb_prot
+    tool: blastp
+    mode: makeblastdb_prot
+    inputs: {P: portiera_proteome}
+    cmd: makeblastdb -in $P -dbtype prot -out protdb -parse_seqids
+  - id: makeblastdb_nucl
+    tool: blastn
+    mode: makeblastdb_nucl
+    inputs: {G: portiera_genome}
+    cmd: makeblastdb -in $G -dbtype nucl -out nucdb
+  - id: blastp_tab
+    tool: blastp
+    mode: outfmt6
+    inputs: {P: portiera_proteome}
+    prep: |
+      makeblastdb -in $P -dbtype prot -out protdb
+      awk '/^>/{n++} n<=20' $P > query.faa
+    cmd: blastp -query query.faa -db protdb -evalue 1e-5 -num_threads $CPU -outfmt "6 std qlen slen" -out hits.tsv
+  - id: blastn_tab
+    tool: blastn
+    mode: outfmt6
+    inputs: {G: sarscov2_genome, T: sarscov2_transcriptome}
+    prep: makeblastdb -in $G -dbtype nucl -out nucdb
+    cmd: blastn -query $T -db nucdb -evalue 1e-10 -num_threads $CPU -outfmt "6 std qlen slen" -out hits.tsv
+  - id: blastp_xml
+    tool: blastp
+    mode: outfmt5
+    inputs: {P: sarscov2_proteome}
+    prep: makeblastdb -in $P -dbtype prot -out protdb
+    cmd: blastp -query $P -db protdb -num_threads $CPU -outfmt 5 -out hits.xml
+  - id: diamond_blastp
+    tool: diamond
+    mode: makedb+blastp
+    description: crashed on the dev host (illegal instruction); checking compute nodes
+    inputs: {P: portiera_proteome}
+    cmd: diamond makedb --in $P -d protdb && diamond blastp -q $P -d protdb -o hits.tsv --threads $CPU
+  - id: mmseqs_easy_search
+    tool: mmseqs
+    mode: easy-search
+    inputs: {P: portiera_proteome}
+    cmd: mmseqs easy-search $P $P hits.m8 tmp --threads $CPU
+  - id: mmseqs_easy_cluster
+    tool: mmseqs
+    mode: easy-cluster
+    inputs: {P: portiera_proteome}
+    cmd: mmseqs easy-cluster $P clu tmp --min-seq-id 0.5 --threads $CPU
+  - id: cdhit_prot
+    tool: cd-hit
+    mode: protein
+    inputs: {P: portiera_proteome}
+    cmd: cd-hit -i $P -o clusters.faa -c 0.9 -T $CPU -M 0
+  - id: cdhit_est
+    tool: cd-hit
+    mode: nucleotide
+    inputs: {T: sarscov2_transcriptome}
+    cmd: cd-hit-est -i $T -o clusters.fna -c 0.95 -T $CPU -M 0

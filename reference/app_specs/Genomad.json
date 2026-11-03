@@ -1,0 +1,98 @@
+{
+    "id": "Genomad",
+    "script": "App-Genomad",
+    "label": "geNomad end-to-end",
+    "description": "Currently Executes all modules of the geNomad pipeline for plasmid and virus identification from FASTA formatted contigs",
+    "default_memory": "32G",
+    "parameters": [
+        {
+            "id": "input_file",
+            "label": "Input FASTA file",
+            "required": 1,
+            "default": null,
+            "desc": "Input file of contigs in FASTA format containing sequences to analyze",
+            "type": "wsid"
+        },
+        {
+            "id": "output_path",
+            "label": "Output Folder",
+            "required": 1,
+            "default": null,
+            "desc": "Path to which the output will be written",
+            "type": "folder"
+        },
+        {
+            "id": "output_file",
+            "label": "Output File Name",
+            "required": 1,
+            "default": null,
+            "desc": "File to which the output will be written",
+            "type": "wsid"
+        },
+        {
+            "id": "filtering-preset",
+            "label": "Filtering preset",
+            "required": 0,
+            "desc": "Conservative preset makes filters more aggressive for high-confidence results, relaxed preset disables post-classification filters",
+            "type": "enum",
+            "enum": ["conservative", "relaxed"]
+        },
+        {
+            "id": "cleanup",
+            "label": "Cleanup intermediate files",
+            "required": 0,
+            "default": true,
+            "desc": "Delete intermediate files after execution",
+            "type": "bool"
+        },
+        {
+            "id": "restart",
+            "label": "Restart analysis",
+            "required": 0,
+            "default": true,
+            "desc": "Overwrite existing intermediate files",
+            "type": "bool"
+        },
+        {
+            "id": "verbose",
+            "label": "Verbose output",
+            "required": 0,
+            "default": true,
+            "desc": "Display the execution log",
+            "type": "bool"
+        },
+        {
+            "id": "lenient-taxonomy",
+            "label": "Lenient taxonomy",
+            "required": 0,
+            "default": false,
+            "desc": "Allow classification of virus genomes to taxa below the family rank",
+            "type": "bool"
+        },
+        {
+            "id": "full-ictv-lineage",
+            "label": "Full ICTV lineage",
+            "required": 0,
+            "default": true,
+            "desc": "Output the full ICTV lineage of each virus genome",
+            "type": "bool"
+        },
+        {
+            "id": "composition",
+            "label": "Sample composition",
+            "required": 0,
+            "default": "auto",
+            "desc": "Method for estimating sample composition",
+            "type": "enum",
+            "enum": ["auto", "metagenome", "virome"]
+        },
+        {
+            "id": "force-auto",
+            "label": "Force automatic composition",
+            "required": 0,
+            "default": false,
+            "desc": "Force automatic composition estimation regardless of sample size",
+            "type": "bool"
+        }
+    ]
+}

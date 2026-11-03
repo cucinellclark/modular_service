@@ -1,0 +1,7 @@
+{
+  "pipeline_template": "wgs_assembly_qc",
+  "inputs": {"reads": {"srr_ids": ["SRR2838702"]}, "reference": {"genome_ids": ["1206109.14"]}},
+  "template_params": {"assemble.params.mode": "isolate", "qc.params.min_contig": 300},
+  "output_path": "/clark.cucinell@patricbrc.org/home/ModularService_tests",
+  "output_file": "template_wgs_srr"
+}

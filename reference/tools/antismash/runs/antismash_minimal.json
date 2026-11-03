@@ -1,0 +1,43 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "antismash_minimal",
+ "set": "annotation",
+ "tool": "antismash",
+ "mode": "minimal_prodigal",
+ "description": "crashed on the dev host (illegal instruction); checking compute nodes",
+ "tool_version": null,
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373347_14",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:39:22",
+ "inputs": {
+  "G": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "/opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash --cpus $CPU --minimal --genefinding-tool prodigal --output-dir out $G",
+ "wall_s": 8.68,
+ "exit_code": 1,
+ "outputs": [],
+ "n_outputs": 0,
+ "output_bytes": 0,
+ "time": {
+  "elapsed": "0:08.64",
+  "max_rss_kb": "135996",
+  "cpu_pct": "26",
+  "exit_status": "1",
+  "user_s": "1.37",
+  "sys_s": "0.94",
+  "elapsed_s": 8.64,
+  "max_rss_mb": 132.8
+ },
+ "stdout_tail": "",
+ "stderr_tail": "ERROR    02/11 15:39:30   antismash.detection.hmm_detection: preqrequisite failure: Failed to generate file '/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/detection/hmm_detection/data/bgc_seeds.hmm'\nERROR    02/11 15:39:30   antismash.detection.nrps_pks_domains: preqrequisite failure: Failed to hmmpress '/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/detection/nrps_pks_domains/data/abmotifs.hmm': failed to open SSI index /opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/detection/nrps_pks\n\nERROR    02/11 15:39:30   antismash.detection.nrps_pks_domains: preqrequisite failure: Failed to hmmpress '/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/detection/nrps_pks_domains/data/dockingdomains.hmm': failed to open SSI index /opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/detection/nrps_pks\n\nERROR    02/11 15:39:30   antismash.detection.nrps_pks_domains: preqrequisite failure: Failed to hmmpress '/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/detection/nrps_pks_domains/data/ksdomains.hmm': failed to open SSI index /opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/detection/nrps_pks\n\nERROR    02/11 15:39:30   antismash.detection.nrps_pks_domains: preqrequisite failure: Failed to hmmpress '/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/detection/nrps_pks_domains/data/nrpspksdomains.hmm': failed to open SSI index /opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/detection/nrps_pks\n\nERROR    02/11 15:39:30   antismash.detection.nrps_pks_domains: preqrequisite failure: No matching database in location /opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/databases/nrps_pks/transATor\nTraceback (most recent call last):\n  File \"/opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash\", line 33, in <module>\n    sys.exit(load_entry_point('antismash==7.1.0', 'console_scripts', 'antismash')())\n  File \"/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/__main__.py\", line 121, in entrypoint\n    sys.exit(main(sys.argv[1:]))\n  File \"/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/__main__.py\", line 111, in main\n    return antismash.run_antismash(sequence, options)\n  File \"/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/main.py\", line 688, in run_antismash\n    result = _run_antismash(sequence_file, options)\n  File \"/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/main.py\", line 720, in _run_antismash\n    check_prerequisites(options.all_enabled_modules, options)\n  File \"/opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/main.py\", line 617, in check_prerequisites\n    raise RuntimeError(\"Modules failing prerequisites\")\nRuntimeError: Modules failing prerequisites\n",
+ "status": "failed",
+ "finished": "2026-11-02T15:39:30"
+}

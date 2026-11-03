@@ -1,0 +1,55 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "amrfinder_protein",
+ "set": "annotation",
+ "tool": "amrfinder",
+ "mode": "protein",
+ "description": null,
+ "tool_version": "4.0.3",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373347_8",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:38:11",
+ "inputs": {
+  "G": {
+   "fixture": "hinfluenzae_genome",
+   "path": "inputs/genome.fna.gz",
+   "size": 556632
+  }
+ },
+ "prep": "gunzip -c $G > genome.fna && prodigal -q -i genome.fna -a proteins.faa -o /dev/null",
+ "cmd": "amrfinder -p proteins.faa --threads $CPU -o amr_protein.tsv",
+ "wall_s": 8.68,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "amr_protein.tsv",
+   "size": 266,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Protein id\tElement symbol\tElement name\tScope\tType\tSubtype\tClass\tSubclass\tMethod\tTarget length\tReference sequence length\t% Coverage of reference\t% Identity to reference\tAlignment length\tClosest referen"
+   ],
+   "lines": 1,
+   "sha256": "3cdb68648e52636a2bf46cd0f3b3b6d0cef1cb36520a3df7fd3487555f2a72fb"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 266,
+ "time": {
+  "elapsed": "0:08.65",
+  "max_rss_kb": "105364",
+  "cpu_pct": "318",
+  "exit_status": "0",
+  "user_s": "26.52",
+  "sys_s": "0.98",
+  "elapsed_s": 8.65,
+  "max_rss_mb": 102.9
+ },
+ "stdout_tail": "",
+ "stderr_tail": "Running: amrfinder -p proteins.faa --threads 4 -o amr_protein.tsv\nSoftware directory: '/opt/patric-common/runtime/bin/'\nSoftware version: 4.0.3\nDatabase directory: '/home/ac.cucinell/miniforge3/share/amrfinderplus/data/2025-07-16.1'\nDatabase version: 2025-07-16.1\nAMRFinder protein-only search\n  - include -n NUC_FASTA, --nucleotide NUC_FASTA and -g GFF_FILE, --gff GFF_FILE options to add translated searches\n  - include -O ORGANISM, --organism ORGANISM option to add mutation searches and suppress common proteins\nRunning blastp\nRunning hmmsearch\nMaking report\namrfinder took 8 seconds to complete\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:21"
+}

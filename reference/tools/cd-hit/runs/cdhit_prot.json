@@ -1,0 +1,74 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "cdhit_prot",
+ "set": "homology",
+ "tool": "cd-hit",
+ "mode": "protein",
+ "description": null,
+ "tool_version": "4.8.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373352_8",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:55",
+ "inputs": {
+  "P": {
+   "fixture": "portiera_proteome",
+   "path": "inputs/proteome.fasta",
+   "size": 104161
+  }
+ },
+ "prep": null,
+ "cmd": "cd-hit -i $P -o clusters.faa -c 0.9 -T $CPU -M 0",
+ "wall_s": 0.17,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "clusters.faa",
+   "size": 104161,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">WP_014894920.1 molecular chaperone DnaK [Candidatus Portiera aleyrodidarum]",
+    "MIRIIGIDLGTTNSCVAVLENGKSRVIENSEGARTTPSIIAYTDDNEILIGQTAKRQAVTNPSNTLYAIKRLIGRKFNDD",
+    "IVQKDIKMVPYKIVSAENGDAWVQVKNRKLAPPQISAEILKKMKKTAEDYLGEKITEAVITVPAYFNDSQRQATKDAGRI"
+   ],
+   "lines": 1405,
+   "records": 258,
+   "residues": 81424,
+   "sha256": "aa7e45821f80bb1243e6b92a09c4c2a1d32eeb9f52aece2f5d3ba84c9cd4b6a6"
+  },
+  {
+   "path": "clusters.faa.clstr",
+   "size": 10949,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">Cluster 0",
+    "0\t1372aa, >WP_014894984.1... *",
+    ">Cluster 1"
+   ],
+   "lines": 516,
+   "records": 258,
+   "residues": 7447,
+   "sha256": "b9fb5da8e7019bcce23a497ede524e38c8a9785daa2ca49bd149f0611e3b84ba"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 115110,
+ "time": {
+  "elapsed": "0:00.13",
+  "max_rss_kb": "177836",
+  "cpu_pct": "93",
+  "exit_status": "0",
+  "user_s": "0.06",
+  "sys_s": "0.06",
+  "elapsed_s": 0.13,
+  "max_rss_mb": 173.7
+ },
+ "stdout_tail": "================================================================\nProgram: CD-HIT, V4.8.1 (+OpenMP), May 08 2026, 02:46:10\nCommand: cd-hit -i\n         /disks/tmp/cucinell/modpipe-discovery/homology/cdhit_prot-21373352_8/inputs/proteome.fasta\n         -o clusters.faa -c 0.9 -T 4 -M 0\n\nStarted: Mon Nov  2 15:37:55 2026\n================================================================\n                            Output                              \n----------------------------------------------------------------\ntotal seq: 258\nlongest and shortest : 1372 and 34\nTotal letters: 81424\nSequences have been sorted\n\nApproximated minimal memory consumption:\nSequence        : 0M\nBuffer          : 4 X 10M = 43M\nTable           : 2 X 65M = 130M\nMiscellaneous   : 0M\nTotal           : 173M\n\nTable limit with the given memory limit:\nMax number of representatives: 1500000\nMax number of word counting entries: 100382250\n\n\r# comparing sequences from          0  to        258\n---------- new table with      258 representatives\n\n      258  finished        258  clusters\n\nApproximated maximum memory consumption: 174M\nwriting new database\nwriting clustering information\nprogram completed !\n\nTotal CPU time 0.12\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:55"
+}

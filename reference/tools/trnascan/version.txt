@@ -1,0 +1,36 @@
+# /usr/bin/tRNAscan-SE --version
+Unknown option: version
+
+tRNAscan-SE 2.0.9 (July 2021)
+
+FATAL: No sequence file(s) specified.
+
+Usage: tRNAscan-SE [-options] <FASTA file(s)>
+
+  Scan a sequence file for tRNAs 
+          -- default: use Infernal & tRNA covariance models
+             with eukaryotic sequences 
+             (use -B, -A, -M, -O or -G to scan other types of sequences)
+
+Basic Options
+  -E         : search for eukaryotic tRNAs (default)
+  -B         : search for bacterial tRNAs
+  -A         : search for archaeal tRNAs
+  -M <model> : search for mitochondrial tRNAs
+                 options: mammal, vert
+  -O         : search for other organellar tRNAs
+  -G         : use general tRNA model (cytoslic tRNAs from all 3 domains included)
+  -L         : search using the legacy method (tRNAscan, EufindtRNA, and COVE)
+                 use with -E, -B, -A, -O, or -G
+  -I         : search using Infernal (default)
+                 use with -E, -B, -A, -O, or -G
+  -o <file>  : save final results in <file>
+  -f <file>  : save tRNA secondary structures to <file>
+  -m <file>  : save statistics summary for run in <file>
+               (speed, # tRNAs found in each part of search, etc)
+  -H         : show both primary and secondary structure components to
+               covariance model bit scores
+  -q         : quiet mode (credits & run option selections suppressed)
+
+  -h         : print full list (long) of available options
+

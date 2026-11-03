@@ -1,0 +1,404 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "snippy_pe",
+ "set": "mapping_variants",
+ "tool": "snippy",
+ "mode": "paired",
+ "description": null,
+ "tool_version": "4.6.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-01",
+ "slurm_job": "21373340_19",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:45",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  },
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "snippy --cpus $CPU --ram $MEM_GB --outdir out --ref $REF --R1 $R1 --R2 $R2",
+ "wall_s": 27.54,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/ref.fa",
+   "symlink_to": "reference/ref.fa"
+  },
+  {
+   "path": "out/ref.fa.fai",
+   "symlink_to": "reference/ref.fa.fai"
+  },
+  {
+   "path": "out/reference/genomes/ref.fa",
+   "size": 364288,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence",
+    "ATGATAAGAATTATAGGTATTGATTTAGGTACTACTAACTCGTGTGTTGCAGTTTTAGAA",
+    "AATGGAAAAAGTCGTGTTATAGAAAATTCAGAAGGTGCCCGTACTACTCCTTCTATAATT"
+   ],
+   "lines": 5972,
+   "records": 1,
+   "residues": 358242,
+   "sha256": "2bb1901e611f6c3526228a4c45aa9005eeec99c9cd50123656b1f869e482f55b"
+  },
+  {
+   "path": "out/reference/ref.fa",
+   "size": 364288,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence",
+    "ATGATAAGAATTATAGGTATTGATTTAGGTACTACTAACTCGTGTGTTGCAGTTTTAGAA",
+    "AATGGAAAAAGTCGTGTTATAGAAAATTCAGAAGGTGCCCGTACTACTCCTTCTATAATT"
+   ],
+   "lines": 5972,
+   "records": 1,
+   "residues": 358242,
+   "sha256": "2bb1901e611f6c3526228a4c45aa9005eeec99c9cd50123656b1f869e482f55b"
+  },
+  {
+   "path": "out/reference/ref.fa.amb",
+   "size": 11,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "358242 1 0"
+   ],
+   "sha256": "ebd3523425bab1cddcd710febd8aea1334f18f20f0b32fad6b98874db6c2ba46"
+  },
+  {
+   "path": "out/reference/ref.fa.ann",
+   "size": 99,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "358242 1 11",
+    "0 NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence",
+    "0 358242 0"
+   ],
+   "sha256": "5af9384676104d1f03df3c29a23e3b94ce98a43815c7a602a87821aa992e61d3"
+  },
+  {
+   "path": "out/reference/ref.fa.bwt",
+   "size": 358332,
+   "new": true,
+   "kind": "index",
+   "sha256": "ecc15dded126f56062397b69937dca2e6e1b49e50f2b21395f83408862bf04aa"
+  },
+  {
+   "path": "out/reference/ref.fa.fai",
+   "size": 28,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NC_018507.1\t358242\t75\t60\t61"
+   ],
+   "lines": 1,
+   "sha256": "322afa96e9a2a5369b5f965565df31028fd3da9dd6a1f42dff43018c08d1b8e5"
+  },
+  {
+   "path": "out/reference/ref.fa.pac",
+   "size": 89562,
+   "new": true,
+   "kind": "index",
+   "sha256": "6c285d401dad4452acac7707b330d186e4178c8758ddd851f8ee98e14f079221"
+  },
+  {
+   "path": "out/reference/ref.fa.sa",
+   "size": 179176,
+   "new": true,
+   "kind": "index",
+   "sha256": "82f31b1ab7ac274d22d51a6117ac0f4777d5aca654da6c430e8554c73c73504a"
+  },
+  {
+   "path": "out/reference/ref.gff",
+   "size": 0,
+   "new": true,
+   "kind": "gff",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/reference/ref.txt",
+   "size": 175,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NC_018507.1:0-52041",
+    "NC_018507.1:52041-104082",
+    "NC_018507.1:104082-156123"
+   ],
+   "lines": 7,
+   "sha256": "7f2e7be4512700f531dd3f979bf913aa6fd6bab3d493ab6c10dd8c9479d84e53"
+  },
+  {
+   "path": "out/reference/ref/genes.gff.gz",
+   "size": 28,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "gff",
+   "sha256": "69f0a961ae16055f4b3984f52f364589a32ecfcf2566bfae5e2e5eaa6f3f26bf"
+  },
+  {
+   "path": "out/snps.aligned.fa",
+   "size": 364226,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1",
+    "ATGATAAGAATTATAGGTATTGATTTAGGTACTACTAACTCGTGTGTTGCAGTTTTAGAA",
+    "AATGGAAnAAGTCnTGTTATAGAAAATTCAGAAGGTGCCCGTACTACTCCTTCTATAATT"
+   ],
+   "lines": 5972,
+   "records": 1,
+   "residues": 358242,
+   "sha256": "2928178e7865d56b79facb41b887542e071a2536bcb07405230dd2d3eff1a9e7"
+  },
+  {
+   "path": "out/snps.bam",
+   "size": 12760362,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "bam",
+   "sha256": "436ab33f8fa9cd5dea246fb96c4e32aa8e21b879df0ed77d61bdf794ef68fcd7"
+  },
+  {
+   "path": "out/snps.bam.bai",
+   "size": 1016,
+   "new": true,
+   "kind": "index",
+   "sha256": "bffc0da4794a147f767d9a51ec859548c11ae1a0e6eedb62959a33e503872051"
+  },
+  {
+   "path": "out/snps.bed",
+   "size": 4902,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NC_018507.1\t2849\t2850",
+    "NC_018507.1\t17531\t17532",
+    "NC_018507.1\t21073\t21074"
+   ],
+   "lines": 192,
+   "sha256": "cac07154fcb06c789c1a5a197edc42c631e3d7f6eb26b9dcd395934e30d30c87"
+  },
+  {
+   "path": "out/snps.consensus.fa",
+   "size": 364091,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence",
+    "ATGATAAGAATTATAGGTATTGATTTAGGTACTACTAACTCGTGTGTTGCAGTTTTAGAA",
+    "AATGGAAAAAGTCGTGTTATAGAAAATTCAGAAGGTGCCCGTACTACTCCTTCTATAATT"
+   ],
+   "lines": 5969,
+   "records": 1,
+   "residues": 358048,
+   "sha256": "746a62aabc64905075e9dea459edbb9f3cd8810ec7d2a95854171d7b93f83309"
+  },
+  {
+   "path": "out/snps.consensus.subs.fa",
+   "size": 364288,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence",
+    "ATGATAAGAATTATAGGTATTGATTTAGGTACTACTAACTCGTGTGTTGCAGTTTTAGAA",
+    "AATGGAAAAAGTCGTGTTATAGAAAATTCAGAAGGTGCCCGTACTACTCCTTCTATAATT"
+   ],
+   "lines": 5972,
+   "records": 1,
+   "residues": 358242,
+   "sha256": "f85fb87b0e6cf170735b072cadb3e19c9fd7120ef386160720c3cb68de9144c2"
+  },
+  {
+   "path": "out/snps.csv",
+   "size": 7734,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "CHROM,POS,TYPE,REF,ALT,EVIDENCE,FTYPE,STRAND,NT_POS,AA_POS,EFFECT,LOCUS_TAG,GENE,PRODUCT",
+    "NC_018507.1,2850,snp,A,T,T:32 A:0",
+    "NC_018507.1,17532,snp,G,T,T:10 G:0"
+   ],
+   "lines": 193,
+   "sha256": "06f46592965351feeb3b021037327a24c635a85ce2179441e95ba7b26ba09b55"
+  },
+  {
+   "path": "out/snps.filt.vcf",
+   "size": 29477,
+   "new": true,
+   "kind": "vcf",
+   "preview": [
+    "##fileformat=VCFv4.2",
+    "##FILTER=<ID=PASS,Description=\"All filters passed\">",
+    "##fileDate=20261102"
+   ],
+   "lines": 219,
+   "records": 192,
+   "sha256": "d44ff20b0672ec779fd8c653e3af294ccb70a1dafb989a46a99e2f19f1defd5c"
+  },
+  {
+   "path": "out/snps.gff",
+   "size": 15680,
+   "new": true,
+   "kind": "gff",
+   "preview": [
+    "##gff-version 3",
+    "NC_018507.1\tsnippy:4.6.0\tvariation\t2850\t2850\t.\t.\t0\tnote=snp A=>T T:32 A:0",
+    "NC_018507.1\tsnippy:4.6.0\tvariation\t17532\t17532\t.\t.\t0\tnote=snp G=>T T:10 G:0"
+   ],
+   "lines": 193,
+   "records": 192,
+   "sha256": "3a2da6dd282815976d3295e4abf428e9239dfdca2d2c97e71154bf53e85a0d3f"
+  },
+  {
+   "path": "out/snps.html",
+   "size": 13399,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<TABLE ID='snps' BORDER=1>",
+    "<TR>",
+    "<TH>CHROM"
+   ],
+   "sha256": "bc858857f224bfb160c8056c9a895af58ebf4c6f37b6c08fe839c505b5e0e0a5"
+  },
+  {
+   "path": "out/snps.log",
+   "size": 3932,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "### echo snippy 4.6.0",
+    "### cd /disks/tmp/cucinell/modpipe-discovery/mapping_variants/snippy_pe-21373340_19",
+    ""
+   ],
+   "lines": 99,
+   "sha256": "10d6d0a82cecc4d59916a9cce7caa49322b1a89e9cc699553bf0409e673f4374"
+  },
+  {
+   "path": "out/snps.raw.vcf",
+   "size": 185686,
+   "new": true,
+   "kind": "vcf",
+   "preview": [
+    "##fileformat=VCFv4.2",
+    "##fileDate=20261102",
+    "##source=freeBayes v1.3.6"
+   ],
+   "lines": 479,
+   "records": 418,
+   "sha256": "451f448756063ea993904039cba183221c6ad3b58f43f884a8981fea089c668b"
+  },
+  {
+   "path": "out/snps.subs.vcf",
+   "size": 20724,
+   "new": true,
+   "kind": "vcf",
+   "preview": [
+    "##fileformat=VCFv4.2",
+    "##snippy=\"snippy-vcf_extract_subs snps.filt.vcf\"",
+    "##fileformat=VCFv4.2"
+   ],
+   "lines": 207,
+   "records": 181,
+   "sha256": "39104c89d93db77834599ee3c42a3b59b313ef66040219a9a64c03aaed92bef9"
+  },
+  {
+   "path": "out/snps.tab",
+   "size": 9270,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "CHROM\tPOS\tTYPE\tREF\tALT\tEVIDENCE\tFTYPE\tSTRAND\tNT_POS\tAA_POS\tEFFECT\tLOCUS_TAG\tGENE\tPRODUCT",
+    "NC_018507.1\t2850\tsnp\tA\tT\tT:32 A:0\t\t\t\t\t\t\t\t",
+    "NC_018507.1\t17532\tsnp\tG\tT\tT:10 G:0\t\t\t\t\t\t\t\t"
+   ],
+   "lines": 193,
+   "sha256": "2fec73921f882281cb0a105f9d1d0c844033d4de095416866d81c68c9c538e8b"
+  },
+  {
+   "path": "out/snps.txt",
+   "size": 484,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "DateTime\t2026-11-02T15:37:48",
+    "ReadFiles\t/disks/tmp/cucinell/modpipe-discovery/mapping_variants/snippy_pe-21373340_19/inputs/test_1.fastq.gz /disks/tmp/cucinell/modpipe-discovery/mapping_variants/snippy_pe-21373340_19/inputs/test_2",
+    "Reference\t/disks/tmp/cucinell/modpipe-discovery/mapping_variants/snippy_pe-21373340_19/inputs/genome.fasta"
+   ],
+   "lines": 11,
+   "sha256": "2705f61fa7d614dc67dc92c208639120f407bc0e50cb32a030b61294ccdbbb59"
+  },
+  {
+   "path": "out/snps.vcf",
+   "size": 29477,
+   "new": true,
+   "kind": "vcf",
+   "preview": [
+    "##fileformat=VCFv4.2",
+    "##FILTER=<ID=PASS,Description=\"All filters passed\">",
+    "##fileDate=20261102"
+   ],
+   "lines": 219,
+   "records": 192,
+   "sha256": "d44ff20b0672ec779fd8c653e3af294ccb70a1dafb989a46a99e2f19f1defd5c"
+  },
+  {
+   "path": "out/snps.vcf.gz",
+   "size": 7774,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "vcf",
+   "preview": [
+    "##fileformat=VCFv4.2",
+    "##FILTER=<ID=PASS,Description=\"All filters passed\">",
+    "##fileDate=20261102"
+   ],
+   "lines": 219,
+   "records": 192,
+   "sha256": "e5c74c71bcd9a8445757205d6b445391326aaf56176fef4d4d2515ded7ea306c"
+  },
+  {
+   "path": "out/snps.vcf.gz.csi",
+   "size": 306,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "index",
+   "sha256": "699c9bcadd7cf6d6743f7782749228221a8c61d4c78e81f4e304c603239325d7"
+  }
+ ],
+ "n_outputs": 31,
+ "output_bytes": 15538815,
+ "time": {
+  "elapsed": "0:27.51",
+  "max_rss_kb": "162232",
+  "cpu_pct": "96",
+  "exit_status": "0",
+  "user_s": "20.25",
+  "sys_s": "6.35",
+  "elapsed_s": 27.51,
+  "max_rss_mb": 158.4
+ },
+ "stdout_tail": "",
+ "stderr_tail": "snps.bam 2>> snps.log\n[15:38:08] Running: fasta_generate_regions.py reference/ref.fa.fai 52041 > reference/ref.txt 2>> snps.log\n[15:38:08] Running: freebayes-parallel reference/ref.txt 4 -p 2 -P 0 -C 2 -F 0.05 --min-coverage 10 --min-repeat-entropy 1.0 -q 13 -m 60 --strict-vcf   -f reference/ref.fa snps.bam > snps.raw.vcf 2>> snps.log\n[15:38:11] Running: bcftools view --include 'FMT/GT=\"1/1\" && QUAL>=100 && FMT/DP>=10 && (FMT/AO)/(FMT/DP)>=0' snps.raw.vcf  | vt normalize -r reference/ref.fa - | bcftools annotate --remove '^INFO/TYPE,^INFO/DP,^INFO/RO,^INFO/AO,^INFO/AB,^FORMAT/GT,^FORMAT/DP,^FORMAT/RO,^FORMAT/AO,^FORMAT/QR,^FORMAT/QA,^FORMAT/GL' > snps.filt.vcf 2>> snps.log\nnormalize v0.5\n\noptions:     input VCF file                                  -\n         [o] output VCF file                                 -\n         [w] sorting window size                             10000\n         [m] no fail on masked reference inconsistency       false\n         [n] no fail on reference inconsistency              false\n         [q] quiet                                           false\n         [d] debug                                           false\n         [r] reference FASTA file                            reference/ref.fa\n\n\nstats: biallelic\n          no. left trimmed                      : 1\n          no. right trimmed                     : 29\n          no. left and right trimmed            : 3\n          no. right trimmed and left aligned    : 0\n          no. left aligned                      : 0\n\n       total no. biallelic normalized           : 33\n\n       multiallelic\n          no. left trimmed                      : 0\n          no. right trimmed                     : 0\n          no. left and right trimmed            : 0\n          no. right trimmed and left aligned    : 0\n          no. left aligned                      : 0\n\n       total no. multiallelic normalized        : 0\n\n       total no. variants normalized            : 33\n       total no. variants observed              : 192\n       total no. reference observed             : 0\n\nTime elapsed: 0.09s\n\n[15:38:12] Running: cp snps.filt.vcf snps.vcf 2>> snps.log\n[15:38:12] Running: /opt/patric-common/runtime/snippy-v4.6.0/bin/snippy-vcf_to_tab --gff reference/ref.gff --ref reference/ref.fa --vcf snps.vcf > snps.tab 2>> snps.log\n[15:38:12] Running: /opt/patric-common/runtime/snippy-v4.6.0/bin/snippy-vcf_extract_subs snps.filt.vcf > snps.subs.vcf 2>> snps.log\n[15:38:12] Running: bcftools convert -Oz -o snps.vcf.gz snps.vcf 2>> snps.log\n[15:38:12] Running: bcftools index -f snps.vcf.gz 2>> snps.log\n[15:38:12] Running: bcftools consensus --sample out -f reference/ref.fa -o snps.consensus.fa snps.vcf.gz 2>> snps.log\n[15:38:12] Running: bcftools convert -Oz -o snps.subs.vcf.gz snps.subs.vcf 2>> snps.log\n[15:38:12] Running: bcftools index -f snps.subs.vcf.gz 2>> snps.log\n[15:38:12] Running: bcftools consensus --sample out -f reference/ref.fa -o snps.consensus.subs.fa snps.subs.vcf.gz 2>> snps.log\n[15:38:12] Running: rm -f snps.subs.vcf.gz snps.subs.vcf.gz.csi snps.subs.vcf.gz.tbi 2>> snps.log\n[15:38:12] Generating reference aligned/masked FASTA relative to reference: snps.aligned.fa\n[15:38:12] Marked 501 heterozygous sites with 'n'\n[15:38:12] Creating extra output files: BED GFF CSV TXT HTML\n[15:38:12] Identified 192 variants.\n[15:38:12] Result folder: out\n[15:38:12] Result files:\n[15:38:12] * out/snps.aligned.fa\n[15:38:12] * out/snps.bam\n[15:38:12] * out/snps.bam.bai\n[15:38:12] * out/snps.bed\n[15:38:12] * out/snps.consensus.fa\n[15:38:12] * out/snps.consensus.subs.fa\n[15:38:12] * out/snps.csv\n[15:38:12] * out/snps.filt.vcf\n[15:38:12] * out/snps.gff\n[15:38:12] * out/snps.html\n[15:38:12] * out/snps.log\n[15:38:12] * out/snps.raw.vcf\n[15:38:12] * out/snps.subs.vcf\n[15:38:12] * out/snps.tab\n[15:38:12] * out/snps.txt\n[15:38:12] * out/snps.vcf\n[15:38:12] * out/snps.vcf.gz\n[15:38:12] * out/snps.vcf.gz.csi\n[15:38:12] Walltime used: 24 seconds\n[15:38:12] May the SNPs be with you.\n[15:38:12] Done.\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:12"
+}

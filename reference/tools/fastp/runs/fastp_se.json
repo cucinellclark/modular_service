@@ -1,0 +1,84 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "fastp_se",
+ "set": "readqc",
+ "tool": "fastp",
+ "mode": "single",
+ "description": null,
+ "tool_version": "1.3.2",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_1",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:16",
+ "inputs": {
+  "R": {
+   "fixture": "portiera_illumina_se",
+   "path": "inputs/test_se.fastq.gz",
+   "size": 7744597
+  }
+ },
+ "prep": null,
+ "cmd": "fastp -w $CPU -i $R -o trimmed.fastq.gz -h fastp.html -j fastp.json",
+ "wall_s": 10.89,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "fastp.html",
+   "size": 226504,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<html><head><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" /><title>fastp report at 2026-11-02      15:37:27 </title><script src='https://opengene.org/plotly-1.2.0.min.js'></script>",
+    "",
+    "<script type='text/javascript'>"
+   ],
+   "sha256": "d898f007fc051fada04a254ec0a75e7058e67ab20f3226ff6ae396aa758484f9"
+  },
+  {
+   "path": "fastp.json",
+   "size": 52789,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "\t\"summary\": {",
+    "\t\t\"fastp_version\": \"1.3.2\","
+   ],
+   "sha256": "698eebaeed1cd31b31460dee5aa0f1075ed56f872fe42d090e3d613a68f87a28"
+  },
+  {
+   "path": "trimmed.fastq.gz",
+   "size": 8361005,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@SRR2838702.1 FCD1DAFACXX:5:1101:14124:2241/1",
+    "AAGAAATTAAAATTAGGCTGGTATTTCAATATTGACTCCATACAAACTTGCGTTTGTACTTCATTGTCTCCCAGCTATTCTACACAAACAATAACCACTTA",
+    "+"
+   ],
+   "lines": 390604,
+   "records": 97651,
+   "residues": 9862751,
+   "sha256": "3e26e5e1fcd30f184711b657b4f0a97607d464f3939800fee65f296c0cdec1c8"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 8640298,
+ "time": {
+  "elapsed": "0:10.88",
+  "max_rss_kb": "1154792",
+  "cpu_pct": "103",
+  "exit_status": "0",
+  "user_s": "10.78",
+  "sys_s": "0.51",
+  "elapsed_s": 10.88,
+  "max_rss_mb": 1127.7
+ },
+ "stdout_tail": "",
+ "stderr_tail": "Detecting adapter sequence for read1...\nNo adapter detected for read1\n\nRead1 before filtering:\ntotal reads: 97729\ntotal bases: 9870629\nQ20 bases: 9678096(98.0494%)\nQ30 bases: 9203462(93.2409%)\nQ40 bases: 3339328(33.831%)\n\nRead1 after filtering:\ntotal reads: 97651\ntotal bases: 9862751\nQ20 bases: 9673975(98.086%)\nQ30 bases: 9200529(93.2856%)\nQ40 bases: 3339105(33.8557%)\n\nFiltering result:\nreads passed filter: 97651\nreads failed due to low quality: 78\nreads failed due to too many N: 0\nreads failed due to too short: 0\nreads failed due to adapter dimer: 0\nreads with adapter trimmed: 0\nbases trimmed due to adapters: 0\n\nDuplication rate (may be overestimated since this is SE data): 28.3324%\n\nJSON report: fastp.json\nHTML report: fastp.html\n\nfastp -w 4 -i /disks/tmp/cucinell/modpipe-discovery/readqc/fastp_se-21373335_1/inputs/test_se.fastq.gz -o trimmed.fastq.gz -h fastp.html -j fastp.json \nfastp v1.3.2, time used: 11 seconds\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:27"
+}

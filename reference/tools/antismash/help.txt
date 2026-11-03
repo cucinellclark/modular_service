@@ -1,0 +1,3 @@
+# /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash cmd: timeout 60 /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash --help 2>&1
+timeout: the monitored command dumped core
+bash: line 1: 718662 Illegal instruction     timeout 60 /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash --help 2>&1

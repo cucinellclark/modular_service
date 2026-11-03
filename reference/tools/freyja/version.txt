@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/freyja --version
+freyja, version 1.5.1

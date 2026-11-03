@@ -1,0 +1,95 @@
+# P4 discovery set: assembly, polishing, assembly QC (heavier).
+set: assembly
+resources: {cpus: 8, mem: 32G, time: "04:00:00"}
+runs:
+  - id: spades_isolate_pe
+    tool: spades
+    mode: isolate_paired
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: spades.py --isolate -t $CPU -m $MEM_GB -1 $R1 -2 $R2 -o out
+  - id: spades_meta_pe
+    tool: spades
+    mode: meta_paired
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: spades.py --meta -t $CPU -m $MEM_GB -1 $R1 -2 $R2 -o out
+  - id: spades_isolate_se
+    tool: spades
+    mode: isolate_single
+    inputs: {R: portiera_illumina_se}
+    cmd: spades.py --isolate -t $CPU -m $MEM_GB -s $R -o out
+  - id: spades_hybrid
+    tool: spades
+    mode: hybrid_paired_nanopore
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2, L: portiera_nanopore}
+    cmd: spades.py -t $CPU -m $MEM_GB -1 $R1 -2 $R2 --nanopore $L -o out
+  - id: spades_rnaviral_ont
+    tool: spades
+    mode: rnaviral_single
+    inputs: {R: sarscov2_ont}
+    cmd: spades.py --rnaviral -t $CPU -m $MEM_GB -s $R -o out
+  - id: megahit_pe
+    tool: megahit
+    mode: paired
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: megahit -t $CPU -1 $R1 -2 $R2 -o out
+  - id: unicycler_short
+    tool: unicycler
+    mode: short_paired
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: unicycler -t $CPU -1 $R1 -2 $R2 -o out
+  - id: unicycler_hybrid
+    tool: unicycler
+    mode: hybrid
+    inputs: {R1: portiera_illumina_1, R2: portiera_illumina_2, L: portiera_nanopore}
+    cmd: unicycler -t $CPU -1 $R1 -2 $R2 -l $L -o out
+  - id: unicycler_long
+    tool: unicycler
+    mode: long_only
+    inputs: {L: portiera_nanopore}
+    cmd: unicycler -t $CPU -l $L -o out
+  - id: flye_nano
+    tool: flye
+    mode: nano_raw
+    inputs: {L: portiera_nanopore}
+    cmd: flye --nano-raw $L --out-dir out --threads $CPU
+  - id: flye_nano_sarscov2
+    tool: flye
+    mode: nano_raw_small_genome
+    inputs: {L: sarscov2_ont}
+    cmd: flye --nano-raw $L --genome-size 30k --out-dir out --threads $CPU
+  - id: canu_nano
+    tool: canu
+    mode: nanopore
+    timeout: 12000
+    inputs: {L: portiera_nanopore}
+    cmd: canu -p asm -d out genomeSize=360k -nanopore $L maxThreads=$CPU maxMemory=$MEM_GB useGrid=false
+  - id: racon_polish
+    tool: racon
+    mode: ont_polish
+    inputs: {DRAFT: portiera_genome, L: portiera_nanopore}
+    prep: minimap2 -x map-ont -t $CPU $DRAFT $L > overlaps.paf
+    cmd: racon -t $CPU $L overlaps.paf $DRAFT > polished.fasta
+  - id: pilon_polish
+    tool: pilon
+    mode: paired_frags
+    inputs: {DRAFT: portiera_genome, R1: portiera_illumina_1, R2: portiera_illumina_2}
+    prep: |
+      bwa index $DRAFT
+      bwa mem -t $CPU $DRAFT $R1 $R2 | samtools sort -@ 2 -o aln.bam -
+      samtools index aln.bam
+    cmd: _JAVA_OPTIONS=-Xmx${MEM_GB}g pilon --genome $DRAFT --frags aln.bam --output pilon --outdir out --changes --vcf --threads $CPU
+  - id: quast_ref
+    tool: quast
+    mode: with_reference_and_genes
+    inputs: {C: sarscov2_contigs, REF: sarscov2_genome, GFF: sarscov2_gff3}
+    cmd: quast.py -t $CPU -o quast -r $REF -g $GFF $C
+  - id: quast_noref
+    tool: quast
+    mode: no_reference
+    inputs: {C: portiera_genome}
+    cmd: quast.py -t $CPU -o quast $C
+  - id: quast_multi
+    tool: quast
+    mode: multiple_assemblies
+    inputs: {A: sarscov2_contigs, B: sarscov2_scaffolds, REF: sarscov2_genome}
+    cmd: quast.py -t $CPU -o quast -r $REF $A $B

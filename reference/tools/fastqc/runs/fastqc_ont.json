@@ -1,0 +1,63 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "fastqc_ont",
+ "set": "readqc",
+ "tool": "fastqc",
+ "mode": "nanopore",
+ "description": null,
+ "tool_version": "0.12.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_7",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:40",
+ "inputs": {
+  "R": {
+   "fixture": "portiera_nanopore",
+   "path": "inputs/test.fastq.gz",
+   "size": 13713449
+  }
+ },
+ "prep": null,
+ "cmd": "mkdir fastqc && fastqc -t $CPU -o fastqc $R",
+ "wall_s": 3.42,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "fastqc/test_fastqc.html",
+   "size": 673189,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!DOCTYPE html><html><head><title>test.fastq.gz FastQC Report</title><style type=\"text/css\">",
+    " @media screen {",
+    "  div.summary {"
+   ],
+   "sha256": "8eadc9d6fd46762ed1ef8c4c101abb2687c687a2d0ac4df621d169b835510874"
+  },
+  {
+   "path": "fastqc/test_fastqc.zip",
+   "size": 432197,
+   "new": true,
+   "kind": "archive",
+   "sha256": "e9deb3dcba932d40b3cd70788e25fd4b2ded0ae404a34d2803fe18a3588a7d4d"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 1105386,
+ "time": {
+  "elapsed": "0:03.39",
+  "max_rss_kb": "406928",
+  "cpu_pct": "146",
+  "exit_status": "0",
+  "user_s": "4.49",
+  "sys_s": "0.48",
+  "elapsed_s": 3.39,
+  "max_rss_mb": 397.4
+ },
+ "stdout_tail": "application/gzip\nAnalysis complete for test.fastq.gz\n",
+ "stderr_tail": "Started analysis of test.fastq.gz\nApprox 10% complete for test.fastq.gz\nApprox 25% complete for test.fastq.gz\nApprox 40% complete for test.fastq.gz\nApprox 50% complete for test.fastq.gz\nApprox 65% complete for test.fastq.gz\nApprox 85% complete for test.fastq.gz\nApprox 95% complete for test.fastq.gz\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:44"
+}

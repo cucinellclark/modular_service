@@ -1,0 +1,17 @@
+# /opt/patric-common/runtime/bin/checkv cmd: checkv -h
+CheckV v0.7.0: assessing the quality of metagenome-assembled viral genomes
+https://bitbucket.org/berkeleylab/checkv
+
+usage: checkv <program> [options]
+
+programs:
+    end_to_end          run full pipeline to estimate completeness, contamination, and identify closed genomes
+    contamination       identify and remove host contamination on integrated proviruses
+    completeness        estimate completeness for genome fragments
+    complete_genomes    identify complete genomes based on terminal repeats and flanking host regions
+    quality_summary     summarize results across modules
+    download_database   download the latest version of CheckV's database
+    update_database     update CheckV's database with your own complete genomes
+
+options:
+  -h, --help  show this help message and exit

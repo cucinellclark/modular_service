@@ -1,0 +1,32 @@
+schema: modpipe/module/v1
+id: minimap2
+version: 1
+label: "minimap2: map short or long reads to a reference (sorted, indexed BAM)"
+description: Maps reads with the preset matching the read type (sr / map-ont / map-hifi / map-pb), then sorts and indexes.
+category: mapping
+tool: {id: minimap2, binary: minimap2, version: "2.24"}
+inputs:
+  - {id: reads, type: reads}
+  - {id: reference, type: sequences.dna}
+outputs:
+  - id: alignment
+    type: alignment.reads.bam
+    parts: {bam: aligned.bam, index: aligned.bam.bai}
+    attributes: {sorted: coordinate, indexed: true}
+  - {id: flagstat, type: report.text, path: flagstat.txt}
+parameters:
+  - {id: preset, type: enum, enum: [auto, sr, map-ont, map-hifi, map-pb, asm5, asm20], default: auto,
+     label: "minimap2 preset", description: "auto: sr for short reads, map-ont for nanopore, map-pb for PacBio"}
+resources: {cpu: 8, memory: 16G, runtime: 6h}
+command: |
+  {% set t = inputs.reads.type %}
+  {% set auto = 'sr' if t.startswith('reads.short') else ('map-ont' if t == 'reads.long.nanopore' else 'map-pb') %}
+  {% set preset = auto if params.preset == 'auto' else params.preset %}
+  minimap2 -t {{ cpu }} -ax {{ preset }} {{ inputs.reference | q }}
+  {% if inputs.reads.paired %}{{ inputs.reads.r1 | q }} {{ inputs.reads.r2 | q }}{% else %}{{ inputs.reads | q }}{% endif %}
+  | samtools sort -@ {{ [cpu - 1, 1] | max }} -o {{ outputs.alignment.bam }} -
+  && samtools index {{ outputs.alignment.bam }} && samtools flagstat {{ outputs.alignment.bam }} > {{ outputs.flagstat }}
+tests:
+  discovery_runs: [minimap2_sorted_ont]
+provenance: {bvbrc_invocations: [p3x-assembly.py, fastq_utils.py], nfcore: [minimap2/align]}
+notes: "Interleaved short reads are mapped as single-end (minimap2 has no interleaved flag)."

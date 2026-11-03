@@ -1,0 +1,37 @@
+# /opt/patric-common/runtime/bin/kSNP4 --help
+Error: Unrecognized argument (no valid argument: --help)
+Error: Must specify -k, -outdir, and -in.  At least one is missing.
+Usage: kSNP3 -k <kmer length> -outdir <output directory> -in <input fasta file> [<optional arguments>...]
+
+Required arguments:
+ -k <kmer_length>
+ -outdir <output_directory>
+ -in <input_fastaFile_list>	
+
+The input_fastaFile_list is a file listing the full path location of each genome
+and the genome name, one line per genome, tab delimited between full path to
+genome fasta file in column 1 and genome name in column 2. This format allows
+multi-read,multi-chromosome, and multi-contig genomes, each genome in separate
+fasta. If multiple chromosomes are listed as separate fasta entries in a single
+genome file, positions and annotations are found for each gi number
+
+Optional arguments:
+ -min_frac <minimum_fraction_genomes_with_locus>  Create a parsimony tree based
+ 	   		 only on SNP loci that occur in at least this fraction of
+			 genomes, for example -min_frac 0.5
+
+ -annotate <annotate_list>  File listing genome names for which to find positions
+ 	   		 and annotate SNPs, names match column 2 of the -in file.
+
+ -core	                 Calculate core SNPs and core SNP parsimony tree
+ -ML	                 Calculate Maximum Likelihood tree
+ -CPU <num_CPU>		 Number of CPU's to use, (default to all)
+ -NJ  			 Calculate a neighbor joining tree
+ -vcf			 Create a vcf file using the first genome specified in 
+ 			 the -positions file as the reference genome
+
+
+
+If you want a suggestion of an appropriate value for -k, you might try
+running this command to analyze the input file and suggest a value:
+    Kchooser4 <inputfile>

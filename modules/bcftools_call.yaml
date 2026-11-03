@@ -1,0 +1,28 @@
+schema: modpipe/module/v1
+id: bcftools_call
+version: 1
+label: "bcftools: call SNPs and indels"
+description: bcftools mpileup + call (multiallelic caller), variant sites only, bgzipped and indexed.
+category: variants
+tool: {id: bcftools, binary: bcftools, version: "1.13"}
+inputs:
+  - {id: alignment, type: alignment.reads.bam, requires: {sorted: coordinate}}
+  - {id: reference, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - id: variants
+    type: variants.vcf
+    parts: {vcf: calls.vcf.gz, index: calls.vcf.gz.csi}
+    attributes: {compression: bgzip, indexed: true}
+parameters:
+  - {id: ploidy, type: int, default: 1, min: 1, max: 8, label: "Ploidy (1 for bacteria/viruses)"}
+  - {id: min_base_quality, type: int, default: 13, min: 0, advanced: true, label: "Minimum base quality (-Q)"}
+  - {id: min_mapping_quality, type: int, default: 0, min: 0, advanced: true, label: "Minimum mapping quality (-q)"}
+resources: {cpu: 2, memory: 8G, runtime: 4h}
+command: |
+  cp {{ inputs.reference | q }} ref.fa &&
+  bcftools mpileup -f ref.fa -Q {{ params.min_base_quality }} -q {{ params.min_mapping_quality }} {{ inputs.alignment.bam | q }}
+  | bcftools call -mv --ploidy {{ params.ploidy }} -Oz -o {{ outputs.variants.vcf }}
+  && bcftools index {{ outputs.variants.vcf }}
+tests:
+  discovery_runs: [bcftools_call]
+provenance: {bvbrc_invocations: [App-Variation.pl, reference_guided_assembly.py], nfcore: [bcftools/mpileup, bcftools/call]}

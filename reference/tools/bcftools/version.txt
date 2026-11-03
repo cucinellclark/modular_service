@@ -1,0 +1,7 @@
+# /usr/bin/bcftools --version
+bcftools 1.13
+Using htslib 1.13+ds
+Copyright (C) 2021 Genome Research Ltd.
+License Expat: The MIT/Expat license
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

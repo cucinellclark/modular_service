@@ -1,0 +1,153 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bwa_mem_sorted",
+ "set": "modules_v1",
+ "tool": "bwa",
+ "mode": "module_bwa_mem",
+ "description": "matches modules/bwa_mem.yaml",
+ "tool_version": "0.7.17",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "pear",
+ "slurm_job": "21374919_0",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T09:08:39",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  },
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "cp $REF ref.fa && bwa index ref.fa 2> bwa_index.log && bwa mem -t $CPU ref.fa $R1 $R2 | samtools sort -@ 3 -o aligned.bam - && samtools index aligned.bam && samtools flagstat aligned.bam > flagstat.txt",
+ "wall_s": 4.28,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aligned.bam",
+   "size": 13102733,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "bam",
+   "sha256": "db9cc590ef81e6546681deec5c6966f1bf941a246c1330410fafde280523cb0f"
+  },
+  {
+   "path": "aligned.bam.bai",
+   "size": 952,
+   "new": true,
+   "kind": "index",
+   "sha256": "138848f54f1bb27841556e2010d53931aa248c22c2967a1762ada665da411ebd"
+  },
+  {
+   "path": "bwa_index.log",
+   "size": 360,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "[bwa_index] Pack FASTA... 0.00 sec",
+    "[bwa_index] Construct BWT for the packed sequence...",
+    "[bwa_index] 0.07 seconds elapse."
+   ],
+   "lines": 9,
+   "sha256": "3c86458213ccdc872ff701607ade991198790f33f07f69b301dc182696de4993"
+  },
+  {
+   "path": "flagstat.txt",
+   "size": 502,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "195604 + 0 in total (QC-passed reads + QC-failed reads)",
+    "195458 + 0 primary",
+    "0 + 0 secondary"
+   ],
+   "lines": 16,
+   "sha256": "d99f77ec3b866bfa937e8fff300a4cb967b7923c893cf3e91cee61645a60b192"
+  },
+  {
+   "path": "ref.fa",
+   "size": 362796,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence",
+    "ATGATAAGAATTATAGGTATTGATTTAGGTACTACTAACTCGTGTGTTGCAGTTTTAGAAAATGGAAAAAGTCGTGTTAT",
+    "AGAAAATTCAGAAGGTGCCCGTACTACTCCTTCTATAATTGCATATACTGATGATAATGAAATATTAATTGGACAAACCG"
+   ],
+   "lines": 4480,
+   "records": 1,
+   "residues": 358242,
+   "sha256": "daba6e7d3db1ab2907d50a71e12cc78ac2ac5f0ea2dc223d0c7e4f454b6651ac"
+  },
+  {
+   "path": "ref.fa.amb",
+   "size": 11,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "358242 1 0"
+   ],
+   "sha256": "ebd3523425bab1cddcd710febd8aea1334f18f20f0b32fad6b98874db6c2ba46"
+  },
+  {
+   "path": "ref.fa.ann",
+   "size": 99,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "358242 1 11",
+    "0 NC_018507.1 Candidatus Portiera aleyrodidarum BT-B-HRs, complete sequence",
+    "0 358242 0"
+   ],
+   "sha256": "5af9384676104d1f03df3c29a23e3b94ce98a43815c7a602a87821aa992e61d3"
+  },
+  {
+   "path": "ref.fa.bwt",
+   "size": 358332,
+   "new": true,
+   "kind": "index",
+   "sha256": "ecc15dded126f56062397b69937dca2e6e1b49e50f2b21395f83408862bf04aa"
+  },
+  {
+   "path": "ref.fa.pac",
+   "size": 89562,
+   "new": true,
+   "kind": "index",
+   "sha256": "6c285d401dad4452acac7707b330d186e4178c8758ddd851f8ee98e14f079221"
+  },
+  {
+   "path": "ref.fa.sa",
+   "size": 179176,
+   "new": true,
+   "kind": "index",
+   "sha256": "82f31b1ab7ac274d22d51a6117ac0f4777d5aca654da6c430e8554c73c73504a"
+  }
+ ],
+ "n_outputs": 10,
+ "output_bytes": 14094523,
+ "time": {
+  "elapsed": "0:04.22",
+  "max_rss_kb": "160748",
+  "cpu_pct": "291",
+  "exit_status": "0",
+  "user_s": "11.84",
+  "sys_s": "0.46",
+  "elapsed_s": 4.22,
+  "max_rss_mb": 157.0
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[M::bwa_idx_load_from_disk] read 0 ALT contigs\n[M::process] read 195458 sequences (19545800 bp)...\n[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (9, 96079, 14, 3)\n[M::mem_pestat] skip orientation FF as there are not enough pairs\n[M::mem_pestat] analyzing insert size distribution for orientation FR...\n[M::mem_pestat] (25, 50, 75) percentile: (760, 773, 787)\n[M::mem_pestat] low and high boundaries for computing mean and std.dev: (706, 841)\n[M::mem_pestat] mean and std.dev: (774.59, 18.65)\n[M::mem_pestat] low and high boundaries for proper pairs: (679, 868)\n[M::mem_pestat] analyzing insert size distribution for orientation RF...\n[M::mem_pestat] (25, 50, 75) percentile: (5681, 5706, 5711)\n[M::mem_pestat] low and high boundaries for computing mean and std.dev: (5621, 5771)\n[M::mem_pestat] mean and std.dev: (5697.54, 16.87)\n[M::mem_pestat] low and high boundaries for proper pairs: (5591, 5801)\n[M::mem_pestat] skip orientation RR as there are not enough pairs\n[M::mem_pestat] skip orientation RF\n[M::mem_process_seqs] Processed 195458 reads in 9.634 CPU sec, 2.441 real sec\n[main] Version: 0.7.17-r1188\n[main] CMD: bwa mem -t 4 ref.fa /disks/tmp/cucinell/modpipe-discovery/modules_v1/bwa_mem_sorted-21374919_0/inputs/test_1.fastq.gz /disks/tmp/cucinell/modpipe-discovery/modules_v1/bwa_mem_sorted-21374919_0/inputs/test_2.fastq.gz\n[main] Real time: 3.036 sec; CPU: 10.227 sec\n[bam_sort_core] merging from 0 files and 3 in-memory blocks...\n",
+ "status": "ok",
+ "finished": "2026-11-03T09:08:43"
+}

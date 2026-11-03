@@ -1,0 +1,116 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "unicycler_long",
+ "set": "assembly",
+ "tool": "unicycler",
+ "mode": "long_only",
+ "description": null,
+ "tool_version": "0.4.8",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373339_8",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:38:00",
+ "inputs": {
+  "L": {
+   "fixture": "portiera_nanopore",
+   "path": "inputs/test.fastq.gz",
+   "size": 13713449
+  }
+ },
+ "prep": null,
+ "cmd": "unicycler -t $CPU -l $L -o out",
+ "wall_s": 9.24,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/001_string_graph.gfa",
+   "size": 258602,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S\tERR3772599.533982:97-8302\tTAAATATTAATGGTTATATTAAAATGTTAAAAATAGAAATTTAAAGGTTAATATAAAAAAAAAATAATATATTACAAAGAAATATTAACATAAAGATAAAAACAGGTGAATTACATGTAATAGTAGGGCCAAATGGGTCAGAAATCAAGTTTAAGTATCAACATTGGTTGGA"
+   ],
+   "lines": 124,
+   "sha256": "546b5ead6b33ccc27427f36c04e4f6b0e01b122ceed1c4d0ff9ca7dc26413780"
+  },
+  {
+   "path": "out/002_unitig_graph.gfa",
+   "size": 80655,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S\t1\tATACCATACATCTAACAAATATCACAAAAGAAAAAATGCAGAGGAATAGCTTTTTTTATATATATTAAAGCATATGTAAAACAAAATATTAAGAAATATAAGAACTATGCAAGATATAAGTTTAAAGCGTGAGGGATGAAAAAAGATAATTACTATATGTTACCGTTAGGTTTATCAATGTATGTATAATGGTAGT"
+   ],
+   "lines": 10,
+   "sha256": "9124c6eafdd7e775811cf4d1530bd90e47e6bc90b63c433d6e23a517b6b4151e"
+  },
+  {
+   "path": "out/003_racon_polished.gfa",
+   "size": 80832,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S\t1\tATACCATACATCTAACAAATATCACAAAAGAAAAAATGCAGAGGAATAGCTTTTTTTATATATATTAAAGCATATGTAAAACAAAATATTAAGAAATATAAGAACTATGCAAGATATAAGTTTAAAGCGTGAGGGATGAAAAAAGATAATTACTATATGTTACCGTTAGGTTTATCAATGTATGTATAATGGTAGT"
+   ],
+   "lines": 10,
+   "sha256": "a4d64abda3ceb6cf9350c4386ee5e32faf8cd67fb3d467d21727da891c097874"
+  },
+  {
+   "path": "out/assembly.fasta",
+   "size": 81683,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">1",
+    "ATACCATACATCTAACAAATATCACAAAAGAAAAAATGCAGAGGAATAGCTTTTTTTATATATATTAAAG",
+    "CATATGTAAAACAAAATATTAAGAAATATAAGAACTATGCAAGATATAAGTTTAAAGCGTGAGGGATGAA"
+   ],
+   "lines": 1162,
+   "records": 8,
+   "residues": 80505,
+   "sha256": "30b287629d8c07de6b6e5190f715f1130cab5cd719ca1368cdccf2aaede26faa"
+  },
+  {
+   "path": "out/assembly.gfa",
+   "size": 80832,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S\t1\tATACCATACATCTAACAAATATCACAAAAGAAAAAATGCAGAGGAATAGCTTTTTTTATATATATTAAAGCATATGTAAAACAAAATATTAAGAAATATAAGAACTATGCAAGATATAAGTTTAAAGCGTGAGGGATGAAAAAAGATAATTACTATATGTTACCGTTAGGTTTATCAATGTATGTATAATGGTAGT"
+   ],
+   "lines": 10,
+   "sha256": "a4d64abda3ceb6cf9350c4386ee5e32faf8cd67fb3d467d21727da891c097874"
+  },
+  {
+   "path": "out/unicycler.log",
+   "size": 3869,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "Starting Unicycler (2026-11-02 15:38:00)",
+    "----------------------------------------"
+   ],
+   "lines": 83,
+   "sha256": "74c206020e6a20c35832a18409d43737571698d87851f627c47a8fc35365685d"
+  }
+ ],
+ "n_outputs": 6,
+ "output_bytes": 586473,
+ "time": {
+  "elapsed": "0:09.20",
+  "max_rss_kb": "318664",
+  "cpu_pct": "130",
+  "exit_status": "0",
+  "user_s": "11.15",
+  "sys_s": "0.89",
+  "elapsed_s": 9.2,
+  "max_rss_mb": 311.2
+ },
+ "stdout_tail": "757 / 7,100 (67.0%) - 9,014,192 bp\r4,828 / 7,100 (68.0%) - 9,161,290 bp\r4,899 / 7,100 (69.0%) - 9,311,127 bp\r4,970 / 7,100 (70.0%) - 9,508,139 bp\r5,041 / 7,100 (71.0%) - 9,706,001 bp\r5,112 / 7,100 (72.0%) - 9,956,626 bp\r5,183 / 7,100 (73.0%) - 10,142,725 bp\r5,254 / 7,100 (74.0%) - 10,310,666 bp\r5,325 / 7,100 (75.0%) - 10,495,194 bp\r5,396 / 7,100 (76.0%) - 10,666,276 bp\r5,467 / 7,100 (77.0%) - 10,831,894 bp\r5,538 / 7,100 (78.0%) - 11,043,008 bp\r5,609 / 7,100 (79.0%) - 11,191,558 bp\r5,680 / 7,100 (80.0%) - 11,383,905 bp\r5,751 / 7,100 (81.0%) - 11,543,497 bp\r5,822 / 7,100 (82.0%) - 11,697,208 bp\r5,893 / 7,100 (83.0%) - 11,898,479 bp\r5,964 / 7,100 (84.0%) - 12,131,316 bp\r6,035 / 7,100 (85.0%) - 12,276,606 bp\r6,106 / 7,100 (86.0%) - 12,442,747 bp\r6,177 / 7,100 (87.0%) - 12,586,830 bp\r6,248 / 7,100 (88.0%) - 12,687,305 bp\r6,319 / 7,100 (89.0%) - 12,811,772 bp\r6,390 / 7,100 (90.0%) - 12,946,198 bp\r6,461 / 7,100 (91.0%) - 13,091,248 bp\r6,532 / 7,100 (92.0%) - 13,212,788 bp\r6,603 / 7,100 (93.0%) - 13,314,022 bp\r6,674 / 7,100 (94.0%) - 13,433,775 bp\r6,745 / 7,100 (95.0%) - 13,530,360 bp\r6,816 / 7,100 (96.0%) - 13,645,686 bp\r6,887 / 7,100 (97.0%) - 13,744,643 bp\r6,958 / 7,100 (98.0%) - 13,907,800 bp\r7,029 / 7,100 (99.0%) - 14,053,077 bp\r7,100 / 7,100 (100.0%) - 14,162,700 bp\r7,100 / 7,100 (100.0%) - 14,162,700 bp\n\n\n\u001b[93m\u001b[1m\u001b[4mAssembling contigs and long reads with miniasm\u001b[0m \u001b[2m(2026-11-02 15:38:01)\u001b[0m\nSaving to /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_long-21373339_8/out/miniasm_assembly/01_assembly_reads.fastq:\n  7,100 long reads\n\nFinding overlaps with minimap... \u001b[32msuccess\u001b[0m\n  311,529 overlaps\n\nAssembling reads with miniasm... \u001b[32msuccess\u001b[0m\n  46 segments, 39 links\n\nSaving /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_long-21373339_8/out/miniasm_assembly/11_branching_paths_removed.gfa\nMerging segments into unitigs:\n  1 circular unitig\n  7 linear unitigs\n  total size = 80,505 bp\nSaving /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_long-21373339_8/out/miniasm_assembly/12_unitig_graph.gfa\nSaving /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_long-21373339_8/out/002_unitig_graph.gfa\n\n\n\u001b[93m\u001b[1m\u001b[4mPolishing miniasm assembly with Racon\u001b[0m \u001b[2m(2026-11-02 15:38:03)\u001b[0m\n\u001b[2m    Unicycler now uses Racon to polish the miniasm assembly. It does multiple\u001b[0m\n\u001b[2mrounds of polishing to get the best consensus. Circular unitigs are rotated\u001b[0m\n\u001b[2mbetween rounds such that all parts (including the ends) are polished well.\u001b[0m\n\nSaving to /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_long-21373339_8/out/miniasm_assembly/racon_polish/polishing_reads.fastq:\n  7,100 long reads\n\nPolish       Assembly          Mapping\u001b[0m\n\u001b[4mround            size          quality\u001b[0m\nbegin          80,505         1,390.45\n\nBest polish: /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_long-21373339_8/out/miniasm_assembly/racon_polish/001_unpolished_unitigs.fasta\nSaving /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_long-21373339_8/out/miniasm_assembly/13_racon_polished.gfa\nSaving /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_long-21373339_8/out/003_racon_polished.gfa\n\n\n\u001b[93m\u001b[1m\u001b[4mRotating completed replicons\u001b[0m \u001b[2m(2026-11-02 15:38:03)\u001b[0m\n\u001b[2m    Any completed circular contigs (i.e. single contigs which have one link\u001b[0m\n\u001b[2mconnecting end to start) can have their start position changed without altering\u001b[0m\n\u001b[2mthe sequence. For consistency, Unicycler now searches for a starting gene (dnaA\u001b[0m\n\u001b[2mor repA) in each such contig, and if one is found, the contig is rotated to\u001b[0m\n\u001b[2mstart with that gene on the forward strand.\u001b[0m\n\n\u001b[4mSegment   Length   Depth   Starting gene   Position   Strand   Identity   Coverage\u001b[0m\n      6    7,764   1.85x   \u001b[31mnone found\u001b[0m                                             \n\n\n\u001b[93m\u001b[1m\u001b[4mAssembly complete\u001b[0m \u001b[2m(2026-11-02 15:38:09)\u001b[0m\nSaving /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_long-21373339_8/out/assembly.gfa\n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:09"
+}

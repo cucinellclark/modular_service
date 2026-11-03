@@ -1,0 +1,59 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "mafft_auto_dna",
+ "set": "phylogeny",
+ "tool": "mafft",
+ "mode": "auto_dna",
+ "description": null,
+ "tool_version": "7.526",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-04",
+ "slurm_job": "21373357_0",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:24",
+ "inputs": {
+  "A": {
+   "fixture": "sarscov2_aln_all_sites",
+   "path": "inputs/all_sites.fas",
+   "size": 119652
+  }
+ },
+ "prep": "sed '/^>/!s/-//g' $A > unaligned.fna",
+ "cmd": "mafft --auto --thread $CPU unaligned.fna > aligned.fasta",
+ "wall_s": 1.57,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aligned.fasta",
+   "size": 121644,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">sample1",
+    "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+   ],
+   "lines": 2000,
+   "records": 4,
+   "residues": 119612,
+   "sha256": "8664fbfba3fdb1473e14e2e3ac5c3ac8c926c10a5a7d6a1cc328e5c6623bd3f0"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 121644,
+ "time": {
+  "elapsed": "0:01.53",
+  "max_rss_kb": "30948",
+  "cpu_pct": "72",
+  "exit_status": "0",
+  "user_s": "0.82",
+  "sys_s": "0.28",
+  "elapsed_s": 1.53,
+  "max_rss_mb": 30.2
+ },
+ "stdout_tail": "",
+ "stderr_tail": "nthread = 4\nnthreadpair = 4\nnthreadtb = 4\nppenalty_ex = 0\nstacksize: 8192 kb\ngenerating a scoring matrix for nucleotide (dist=200) ... done\nGap Penalty = -1.53, +0.00, +0.00\n\n\n\nMaking a distance matrix ..\n\nThere are 4273 ambiguous characters.\n\r    1 / 4 (thread    0)\ndone.\n\nConstructing a UPGMA tree (efffree=0) ... \n\r    0 / 4\ndone.\n\nProgressive alignment 1/2... \n\rSTEP     1 / 3 (thread    0) f\b\b\rSTEP     2 / 3 (thread    1) f\b\b\rSTEP     3 / 3 (thread    2) f\b\b\ndone.\n\nMaking a distance matrix from msa.. \n\r    0 / 4 (thread    1)\ndone.\n\nConstructing a UPGMA tree (efffree=1) ... \n\r    0 / 4\ndone.\n\nProgressive alignment 2/2... \n\rSTEP     1 / 3 (thread    0) f\b\b\rSTEP     2 / 3 (thread    1) f\b\b\rSTEP     3 / 3 (thread    2) f\b\b\ndone.\n\ndisttbfast (nuc) Version 7.526\nalg=A, model=DNA200 (2), 1.53 (4.59), -0.00 (-0.00), noshift, amax=0.0\n4 thread(s)\n\n\nStrategy:\n FFT-NS-2 (Fast but rough)\n Progressive method (guide trees were built 2 times.)\n\nIf unsure which option to use, try 'mafft --auto input > output'.\nFor more information, see 'mafft --help', 'mafft --man' and the mafft page.\n\nThe default gap scoring scheme has been changed in version 7.110 (2013 Oct).\nIt tends to insert more gaps into gap-rich regions than previous versions.\nTo disable this change, add the --leavegappyregion option.\n\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:26"
+}

@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/mafft --version
+v7.526 (2024/Apr/26)

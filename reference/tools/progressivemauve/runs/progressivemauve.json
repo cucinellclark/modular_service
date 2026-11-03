@@ -1,0 +1,127 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "progressivemauve",
+ "set": "phylogeny",
+ "tool": "progressivemauve",
+ "mode": "genomes",
+ "description": null,
+ "tool_version": "1.2.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-04",
+ "slurm_job": "21373357_4",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:34",
+ "inputs": {
+  "G1": {
+   "fixture": "bvbrc_1206109.14",
+   "path": "inputs/1206109.14.fna",
+   "size": 364235
+  },
+  "G2": {
+   "fixture": "bvbrc_1239881.13",
+   "path": "inputs/1239881.13.fna",
+   "size": 356809
+  },
+  "G3": {
+   "fixture": "bvbrc_1297582.10",
+   "path": "inputs/1297582.10.fna",
+   "size": 285369
+  }
+ },
+ "prep": null,
+ "cmd": "progressiveMauve --output=aln.xmfa --output-guide-tree=guide.tree --backbone-output=aln.backbone $G1 $G2 $G3",
+ "wall_s": 14.92,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aln.backbone",
+   "size": 12288,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "seq0_leftend\tseq0_rightend\tseq1_leftend\tseq1_rightend\tseq2_leftend\tseq2_rightend",
+    "163250\t163472\t156697\t156919\t0\t0",
+    "159145\t159370\t152602\t152827\t0\t0"
+   ],
+   "lines": 397,
+   "sha256": "81082b53f197d6c4f5b867adb81e154501f04ed5e5f45f176521f50d65554dd1"
+  },
+  {
+   "path": "aln.xmfa",
+   "size": 1225924,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    "#FormatVersion Mauve1",
+    "#Sequence1File\t/disks/tmp/cucinell/modpipe-discovery/phylogeny/progressivemauve-21373357_4/inputs/1206109.14.fna",
+    "#Sequence1Format\tFastA"
+   ],
+   "lines": 15183,
+   "records": 68,
+   "residues": 1202864,
+   "sha256": "e05eec84be31109a527bbf0a8d3c033fe6f5db7ab4046053707ff6ca3f9a48b6"
+  },
+  {
+   "path": "aln.xmfa.bbcols",
+   "size": 4872,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0\t1\t1806\t0\t1\t2",
+    "0\t1807\t71\t0\t1",
+    "0\t1878\t1764\t0\t1\t2"
+   ],
+   "lines": 292,
+   "sha256": "bd7b3801fd18b642e9f7f53f912b7c8af7a3ec4d945b8a03eff691fd0c8d094f"
+  },
+  {
+   "path": "guide.tree",
+   "size": 63,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(seq3:0.0981135,(seq1:0.00681695,seq2:0.00318394):0.00318394);"
+   ],
+   "lines": 1,
+   "sha256": "b557e6b873fd9e9560db06755d52ddbb5b1e5a290ece3a953438ad38221d0546"
+  },
+  {
+   "path": "inputs/1206109.14.fna.sslist",
+   "size": 1524828,
+   "new": true,
+   "kind": "binary",
+   "sha256": "3494e2760c34bacd1c429c1d4d6e8e9b7e5968708854fd006816f02292594d9b"
+  },
+  {
+   "path": "inputs/1239881.13.fna.sslist",
+   "size": 1493740,
+   "new": true,
+   "kind": "binary",
+   "sha256": "b634ecf9fc1a64ec1ec6db664ba4ab8df9e8568c7a63864f5ab9b12573a7f098"
+  },
+  {
+   "path": "inputs/1297582.10.fna.sslist",
+   "size": 1195116,
+   "new": true,
+   "kind": "binary",
+   "sha256": "5f7d06bad2ebd3005fedb7823c613f58a294bfefb0432e737abaaa959aa34908"
+  }
+ ],
+ "n_outputs": 7,
+ "output_bytes": 5456831,
+ "time": {
+  "elapsed": "0:14.89",
+  "max_rss_kb": "99740",
+  "cpu_pct": "93",
+  "exit_status": "0",
+  "user_s": "13.58",
+  "sys_s": "0.39",
+  "elapsed_s": 14.89,
+  "max_rss_mb": 97.4
+ },
+ "stdout_tail": "enalty by bp weight: \n0.225\n0.225\n\nGreedy BPE\nScoring with scaled breakpoint penalty: 31162\n1%..2%..3%..4%..5%..6%..7%..8%..9%..\n10%..11%..12%..13%..14%..15%..16%..17%..18%..19%..\n20%..21%..22%..23%..24%..25%..26%..27%..28%..29%..\n30%..31%..32%..33%..34%..35%..36%..37%..done\nArrived at 18 intervals\nAdding unaligned intervals\naddUnalignedIntervals yields 54 intervals\nMerging unaligned intervals\nMarbling gaps\nPropagating descendant breakpoints\ndescendant 0(1) has 1 intervals\ndescendant 1(2) has 1 intervals\npropagateDescendantBreakpoints yields 18 intervals\nCreating ancestral ordering\nPrevious anchoring score: 1.62915e+06, new anchor score: 5.99922e+06\nBacking up alignment tree...\npropagating ancestral breakpoints\nrecursive anchor search\n0,0 have 430 new matches outside LCBs\n1,0 have 461 new matches outside LCBs\n0,0 has an additional 1481 matches\n1,0 has an additional 1551 matches\nRestoring backed up alignment tree...\n1,2 has 1481 pairwise matches\n0,2 has 1551 pairwise matches\nPerforming Sum-of-pairs Greedy Breakpoint Elimination\nconstruct LCB tracking matches\nThere are 4067 tracking matches\nThere are 16172 / 20335 components used\ninit tracking match LCB tracking\npairwise score tracking matches\nget pairwise LCBs\nthere are 2467 pairwise LCBs\nscaling bp penalty by conservation weight:\n0.202594\n0.203044\n\n\nscaling bp penalty by bp weight: \n0.225\n0.225\n\nGreedy BPE\nScoring with scaled breakpoint penalty: 31162\n1%..2%..3%..4%..5%..6%..7%..8%..9%..\n10%..11%..12%..13%..14%..15%..16%..17%..18%..19%..\n20%..21%..22%..23%..24%..25%..26%..27%..28%..29%..\n30%..31%..32%..33%..34%..35%..36%..37%..38%..39%..\n40%..done\nArrived at 16 intervals\nAdding unaligned intervals\naddUnalignedIntervals yields 48 intervals\nMerging unaligned intervals\nMarbling gaps\nPropagating descendant breakpoints\ndescendant 0(1) has 1 intervals\ndescendant 1(2) has 1 intervals\npropagateDescendantBreakpoints yields 16 intervals\nCreating ancestral ordering\nPrevious anchoring score: 5.99922e+06, new anchor score: 6.04527e+06\nBacking up alignment tree...\npropagating ancestral breakpoints\nrecursive anchor search\n0,0 have 276 new matches outside LCBs\n1,0 have 296 new matches outside LCBs\n0,0 has an additional 915 matches\n1,0 has an additional 935 matches\nRestoring backed up alignment tree...\n1,2 has 915 pairwise matches\n0,2 has 935 pairwise matches\nPerforming Sum-of-pairs Greedy Breakpoint Elimination\nconstruct LCB tracking matches\nThere are 3705 tracking matches\nThere are 14759 / 18525 components used\ninit tracking match LCB tracking\npairwise score tracking matches\nget pairwise LCBs\nthere are 1702 pairwise LCBs\nscaling bp penalty by conservation weight:\n0.202594\n0.203044\n\n\nscaling bp penalty by bp weight: \n0.225\n0.225\n\nGreedy BPE\nScoring with scaled breakpoint penalty: 31162\n1%..2%..3%..4%..5%..6%..7%..8%..9%..\n10%..11%..12%..13%..14%..15%..16%..17%..18%..19%..\n20%..21%..22%..23%..24%..25%..26%..27%..28%..29%..\n30%..31%..32%..33%..34%..35%..36%..37%..38%..39%..\n40%..done\nArrived at 17 intervals\nAdding unaligned intervals\naddUnalignedIntervals yields 51 intervals\nMerging unaligned intervals\nMarbling gaps\nPropagating descendant breakpoints\ndescendant 0(1) has 1 intervals\ndescendant 1(2) has 1 intervals\npropagateDescendantBreakpoints yields 17 intervals\nCreating ancestral ordering\nPrevious anchoring score: 6.04527e+06, new anchor score: 5.97072e+06\npropagating ancestral breakpoints\nperforming a gapped alignment\n\n0%..1%..5%..8%..\n11%..15%..16%..17%..18%..\n21%..23%..24%..26%..29%..\n31%..34%..36%..38%..\n42%..45%..49%..\n51%..55%..59%..\n60%..61%..63%..65%..66%..67%..68%..\n72%..75%..79%..\n81%..83%..84%..86%..87%..88%..\n92%..93%..94%..95%..96%..97%..98%..99%..\n100%..Fix left ends\n\ndone.\nPerforming final pass iterative refinement\n\n0%..1%..\n15%..17%..18%..\n21%..25%..\n35%..38%..\n44%..47%..\n50%..53%..57%..\n61%..66%..67%..\n74%..77%..\n81%..83%..84%..86%..87%..\n91%..96%..97%..98%..\n100%..Fix left ends\n\ndone.\nroot alignment has 16 superintervals\nroot alignment length: 390109\nOrganisms have 25.7% GC\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:49"
+}

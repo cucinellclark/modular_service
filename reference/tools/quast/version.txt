@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/quast.py --version
+QUAST v5.2.0

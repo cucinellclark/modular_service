@@ -1,0 +1,62 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "amrfinder_nucleotide",
+ "set": "annotation",
+ "tool": "amrfinder",
+ "mode": "nucleotide",
+ "description": null,
+ "tool_version": "4.0.3",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373347_9",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:38:24",
+ "inputs": {
+  "G": {
+   "fixture": "hinfluenzae_genome",
+   "path": "inputs/genome.fna.gz",
+   "size": 556632
+  }
+ },
+ "prep": "gunzip -c $G > genome.fna",
+ "cmd": "amrfinder -n genome.fna --threads $CPU -o amr_nuc.tsv --nucleotide_output amr_nuc.fna",
+ "wall_s": 8.93,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "amr_nuc.fna",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "amr_nuc.tsv",
+   "size": 294,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Protein id\tContig id\tStart\tStop\tStrand\tElement symbol\tElement name\tScope\tType\tSubtype\tClass\tSubclass\tMethod\tTarget length\tReference sequence length\t% Coverage of reference\t% Identity to reference\tAlig"
+   ],
+   "lines": 1,
+   "sha256": "fdfec5f7924367729493b9a91622ca6a85a08f1c8cb1f3e5a6f54a3aa8bd9078"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 294,
+ "time": {
+  "elapsed": "0:08.92",
+  "max_rss_kb": "45340",
+  "cpu_pct": "290",
+  "exit_status": "0",
+  "user_s": "23.86",
+  "sys_s": "2.10",
+  "elapsed_s": 8.92,
+  "max_rss_mb": 44.3
+ },
+ "stdout_tail": "",
+ "stderr_tail": "Running: amrfinder -n genome.fna --threads 4 -o amr_nuc.tsv --nucleotide_output amr_nuc.fna\nSoftware directory: '/opt/patric-common/runtime/bin/'\nSoftware version: 4.0.3\nDatabase directory: '/home/ac.cucinell/miniforge3/share/amrfinderplus/data/2025-07-16.1'\nDatabase version: 2025-07-16.1\nAMRFinder translated nucleotide search\n  - include -O ORGANISM, --organism ORGANISM option to add mutation searches and suppress common proteins\nRunning tblastn\nMaking report\namrfinder took 9 seconds to complete\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:33"
+}

@@ -1,0 +1,11 @@
+# /opt/patric-common/runtime/bin/minced --version
+minced 0.4.2
+MinCED - Mining CRISPRs in Environmental Datasets (version 0.4.2)
+Copyright 2011      Florent Angly     <florent.angly@gmail.com>
+          2013-2018 Connor Skennerton <c.skennerton@gmail.com>
+
+Minced is a modified version of CRT (www.room220.com/crt)
+Charles Bland et al., CRISPR Recognition Tool (CRT): a tool for automatic
+detection of clustered regularly interspaced palindromic repeats
+BMC Bioinformatics 8, no. 1 (2007): 209.
+Distributed under the GNU General Public License version 3

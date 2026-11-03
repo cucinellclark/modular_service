@@ -1,0 +1,100 @@
+# P4 discovery set: taxonomy, typing, surveillance, expression, primers.
+set: typing_expression
+resources: {cpus: 4, mem: 16G, time: "01:00:00"}
+runs:
+  - id: kraken2_mini_pe
+    tool: kraken2
+    mode: paired_mini_db
+    inputs: {DB: "sarscov2_kraken2_db:dir", R1: sarscov2_illumina_test_1, R2: sarscov2_illumina_test_2}
+    cmd: kraken2 --db $DB --threads $CPU --paired --report report.txt --output classified.tsv --classified-out cl#.fq --unclassified-out un#.fq $R1 $R2
+  - id: bracken_mini
+    tool: bracken
+    mode: species
+    inputs: {DB: "sarscov2_kraken2_bracken_db:dir", R1: sarscov2_illumina_test_1, R2: sarscov2_illumina_test_2}
+    prep: kraken2 --db $DB --paired --report report.txt --output /dev/null $R1 $R2
+    cmd: bracken -d $DB -i report.txt -o bracken.tsv -w bracken_report.txt -r 100 -l S -t 0
+  - id: bracken_est_abundance
+    tool: bracken
+    mode: est_abundance_direct
+    description: how BV-BRC runs it; the `bracken` wrapper looks for src/est_abundance.py, which the container doesn't have
+    inputs: {DB: "sarscov2_kraken2_bracken_db:dir", R1: sarscov2_illumina_test_1, R2: sarscov2_illumina_test_2}
+    prep: kraken2 --db $DB --paired --report report.txt --output /dev/null $R1 $R2
+    cmd: est_abundance.py -i report.txt -k $DB/database100mers.kmer_distrib -o bracken.tsv -l S -t 0 --out-report bracken_report.txt
+  - id: krona_text
+    tool: krona
+    mode: ktImportText
+    prep: printf '100\tViruses\tRiboviria\tCoronaviridae\tSARS-CoV-2\n20\tBacteria\tProteobacteria\n' > krona.txt
+    cmd: ktImportText krona.txt -o krona.html
+  - id: mlst_hinfluenzae
+    tool: mlst
+    mode: auto_scheme
+    inputs: {G: hinfluenzae_genome}
+    cmd: mlst --threads $CPU --json mlst.json $G > mlst.tsv
+  - id: chewbbaca_createschema
+    tool: chewbbaca
+    mode: CreateSchema
+    inputs: {G1: bvbrc_1206109.14, G2: bvbrc_1239881.13, G3: bvbrc_1297582.10, G4: bvbrc_91844.21}
+    prep: mkdir genomes && cp $G1 $G2 $G3 $G4 genomes/
+    cmd: chewBBACA.py CreateSchema -i genomes -o schema --cpu $CPU
+  - id: chewbbaca_allelecall
+    tool: chewbbaca
+    mode: AlleleCall
+    inputs: {G1: bvbrc_1206109.14, G2: bvbrc_1239881.13, G3: bvbrc_1297582.10, G4: bvbrc_91844.21}
+    prep: |
+      mkdir genomes && cp $G1 $G2 $G3 $G4 genomes/
+      chewBBACA.py CreateSchema -i genomes -o schema --cpu $CPU
+    cmd: chewBBACA.py AlleleCall -i genomes -g schema/schema_seed -o calls --cpu $CPU
+  - id: freyja_variants
+    tool: freyja
+    mode: variants
+    inputs: {REF: sarscov2_genome, BAM: sarscov2_bam_pe}
+    cmd: freyja variants $BAM --variants variants.tsv --depths depths.tsv --ref $REF
+  - id: freyja_demix
+    tool: freyja
+    mode: demix_bvbrc_barcodes
+    inputs: {REF: sarscov2_genome, BAM: sarscov2_bam_pe}
+    prep: freyja variants $BAM --variants variants.tsv --depths depths.tsv --ref $REF
+    cmd: |
+      BC=$(ls -d /vol/bvbrc/production/application-backend/bvbrc_SARS2Wastewater/20*/ | sort | tail -1)
+      B=$(ls $BC/usher_barcodes.* | head -1); echo "barcodes: $B"
+      freyja demix variants.tsv depths.tsv --output demix.tsv --barcodes $B
+  - id: freyja_demix_csv
+    tool: freyja
+    mode: demix_csv_barcodes
+    description: CSV barcodes (the feather barcodes need pyarrow, which is missing from the container's python) plus BV-BRC curated lineage files (freyja's bundled data dir is missing)
+    inputs: {REF: sarscov2_genome, BAM: sarscov2_bam_pe}
+    prep: freyja variants $BAM --variants variants.tsv --depths depths.tsv --ref $REF
+    cmd: freyja demix variants.tsv depths.tsv --output demix.tsv --barcodes /vol/bvbrc/production/application-backend/bvbrc_taxonomic_classification_2/data/usher_barcodes.csv --meta /vol/bvbrc/production/application-backend/bvbrc_taxonomic_classification_2/data/curated_lineages.json --lineageyml /vol/bvbrc/production/application-backend/bvbrc_taxonomic_classification_2/data/lineages.yml
+  - id: pangolin_skip_scorpio
+    tool: pangolin
+    mode: skip_scorpio
+    inputs: {G: sarscov2_genome}
+    cmd: pangolin $G --outfile lineage_report.csv -t $CPU --tempdir $TMPDIR --skip-scorpio
+  - id: pangolin
+    tool: pangolin
+    mode: container_data
+    inputs: {G: sarscov2_genome}
+    cmd: pangolin $G --outfile lineage_report.csv -t $CPU --tempdir $TMPDIR
+  - id: stringtie_guided
+    tool: stringtie
+    mode: reference_guided
+    inputs: {BAM: hs_bam_pe, GTF: hs_gtf}
+    cmd: stringtie $BAM -G $GTF -o assembled.gtf -A gene_abund.tab -p $CPU
+  - id: stringtie_ballgown
+    tool: stringtie
+    mode: estimate_only_ballgown
+    inputs: {BAM: hs_bam_pe, GTF: hs_gtf}
+    cmd: mkdir bg && stringtie $BAM -G $GTF -e -B -o bg/transcripts.gtf -A gene_abund.tab -p $CPU
+  - id: htseq_count
+    tool: htseq-count
+    mode: bam_pos_unstranded
+    inputs: {BAM: hs_bam_pe, BAI: hs_bam_pe_bai, GTF: hs_gtf}
+    cmd: htseq-count -f bam -r pos -s no $BAM $GTF > counts.tsv
+  - id: primer3_generic
+    tool: primer3
+    mode: generic
+    inputs: {G: sarscov2_genome}
+    prep: |
+      SEQ=$(awk '!/^>/{printf "%s",$0}' $G | cut -c1-1500)
+      printf 'SEQUENCE_ID=sarscov2_5p\nSEQUENCE_TEMPLATE=%s\nPRIMER_TASK=generic\nPRIMER_PICK_LEFT_PRIMER=1\nPRIMER_PICK_RIGHT_PRIMER=1\nPRIMER_PRODUCT_SIZE_RANGE=150-400\nPRIMER_NUM_RETURN=5\n=\n' "$SEQ" > input.boulder
+    cmd: primer3_core --output=primers.txt < input.boulder

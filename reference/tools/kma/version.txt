@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/kma -v
+KMA-1.4.15

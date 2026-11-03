@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/freebayes --version
+version:  v1.3.6

@@ -1,0 +1,4363 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "chewbbaca_allelecall",
+ "set": "typing_expression",
+ "tool": "chewbbaca",
+ "mode": "AlleleCall",
+ "description": null,
+ "tool_version": "3.3.10",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-04",
+ "slurm_job": "21373358_5",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:28",
+ "inputs": {
+  "G1": {
+   "fixture": "bvbrc_1206109.14",
+   "path": "inputs/1206109.14.fna",
+   "size": 364235
+  },
+  "G2": {
+   "fixture": "bvbrc_1239881.13",
+   "path": "inputs/1239881.13.fna",
+   "size": 356809
+  },
+  "G3": {
+   "fixture": "bvbrc_1297582.10",
+   "path": "inputs/1297582.10.fna",
+   "size": 285369
+  },
+  "G4": {
+   "fixture": "bvbrc_91844.21",
+   "path": "inputs/91844.21.fna",
+   "size": 360458
+  }
+ },
+ "prep": "mkdir genomes && cp $G1 $G2 $G3 $G4 genomes/\nchewBBACA.py CreateSchema -i genomes -o schema --cpu $CPU\n",
+ "cmd": "chewBBACA.py AlleleCall -i genomes -g schema/schema_seed -o calls --cpu $CPU",
+ "wall_s": 23.23,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "calls/cds_coordinates.tsv",
+   "size": 49456,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Genome\tContig\tStart\tStop\tProtein_ID\tCoding_Strand",
+    "1206109\t1206109.14.con.0001\t1\t1926\t1\t1",
+    "1206109\t1206109.14.con.0001\t1942\t2985\t2\t1"
+   ],
+   "lines": 1066,
+   "sha256": "60643be34e2c365dc1e3ffb7d00e529211a38325f22a0d31b6f7cb77bb0246e9"
+  },
+  {
+   "path": "calls/invalid_cds.txt",
+   "size": 1,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    ""
+   ],
+   "lines": 1,
+   "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+   "path": "calls/loci_summary_stats.tsv",
+   "size": 12777,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Locus\tEXC\tINF\tPLOT3\tPLOT5\tLOTSC\tNIPH\tNIPHEM\tALM\tASM\tPAMA\tLNF\tTotal_CDS",
+    "1206109-protein1\t2\t2\t0\t0\t0\t0\t0\t0\t0\t0\t0\t4",
+    "1206109-protein102\t1\t3\t0\t0\t0\t0\t0\t0\t0\t0\t0\t4"
+   ],
+   "lines": 300,
+   "sha256": "00b04adb3f6f00932c106d5130c14eda35c6996d31f9c6cd59bae44619fa78c8"
+  },
+  {
+   "path": "calls/logging_info.txt",
+   "size": 171,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Started script at: 15:37:59-02/11/2026",
+    "Finished script at: 15:38:22-02/11/2026",
+    "Number of inputs: 4"
+   ],
+   "lines": 6,
+   "sha256": "8b08fda4cadb0b76608fafde71cd5d707f4f8fe7436110396e6bf577f4f2dfb2"
+  },
+  {
+   "path": "calls/paralogous_counts.tsv",
+   "size": 12,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Locus\tCount"
+   ],
+   "lines": 1,
+   "sha256": "8c4df2f99a2e19d98c6c5522f941808782348ebe8d81ae251470e44dd922b8eb"
+  },
+  {
+   "path": "calls/paralogous_loci.tsv",
+   "size": 16,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Genome\tLoci\tCDS"
+   ],
+   "lines": 1,
+   "sha256": "71c3d9a94e5c45ad968916fd56b82cc32a094853e169ed95ded906662bc07f81"
+  },
+  {
+   "path": "calls/results_alleles.tsv",
+   "size": 10373,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "FILE\t1206109-protein1\t1206109-protein102\t1206109-protein105\t1206109-protein106\t1206109-protein107\t1206109-protein108\t1206109-protein11\t1206109-protein110\t1206109-protein113\t1206109-protein114\t1206109-"
+   ],
+   "lines": 5,
+   "sha256": "d06a15632c58f57d43bb3184b3c25624e69e40c94619bb510308972492722442"
+  },
+  {
+   "path": "calls/results_contigsInfo.tsv",
+   "size": 40888,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "FILE\t1206109-protein1\t1206109-protein102\t1206109-protein105\t1206109-protein106\t1206109-protein107\t1206109-protein108\t1206109-protein11\t1206109-protein110\t1206109-protein113\t1206109-protein114\t1206109-"
+   ],
+   "lines": 5,
+   "sha256": "6b1c3cb11f8cc74e5975f18ee1692932d600c68a919aac0e57de0837763bf9ff"
+  },
+  {
+   "path": "calls/results_statistics.tsv",
+   "size": 275,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "FILE\tEXC\tINF\tPLOT3\tPLOT5\tLOTSC\tNIPH\tNIPHEM\tALM\tASM\tPAMA\tLNF\tInvalid CDSs\tClassified_CDSs\tTotal_CDSs",
+    "1206109\t158\t84\t0\t0\t0\t0\t0\t0\t0\t0\t57\t0\t242\t266",
+    "1239881\t155\t82\t0\t0\t0\t0\t0\t0\t1\t0\t61\t0\t238\t262"
+   ],
+   "lines": 5,
+   "sha256": "edf8922a0767bdf6c3cea38506e94dc28ccee68eaa5a0b7f84aaba40c64fe342"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein1.fasta",
+   "size": 5805,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein1_1",
+    "ATGATAAGAATTATAGGTATTGATTTAGGTACTACTAACTCGTGTGTTGCAGTTTTAGAAAATGGAAAAAGTCGTGTTATAGAAAATTCAGAAGGTGCCCGTACTACTCCTTCTATAATTGCATATACTGATGATAATGAAATATTAATTGGACAAACCGCAAAACGGCAGGCTGTAACTAATCCGTCTAATACTTTATA",
+    ">1206109-protein1_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 5742,
+   "sha256": "4557dc95be6ad89a1ec7f6e5f00c90bf1e6c1cf6ffe394af9f439316625ef235"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein102.fasta",
+   "size": 11471,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein102_1",
+    "GTGATTAATGTTCGTTATAATAATACATTAAATTTACCAAAAACAACTTTTCCAATGAGAGGAAATTTGTCAATTAAAGAACCTATTCGTTTGAATAAATGGAAACAAAGTGAAATTTACAAAAAATTACGGCAAGATCGTAAAGGTTGTAAGAAATTTATTTTACACGATGGTCCACCTTATGCAAATGGTCACATACA",
+    ">1206109-protein102_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 11379,
+   "sha256": "12af01fca286f2ee86bbca12f9b273dbf7212932502f581146d4221d260a630f"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein105.fasta",
+   "size": 6056,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein105_1",
+    "ATGATTATAAAAAATTATTTAATTAAAGATCGTTTAAATAAGTTACAAGTATTGAGTAAAACCGCGAATAAAGCTGGAAAAAGTGCATTTTATAATAAATTTCGTCGTACTAGTTTAGCAAAAAGTTTAAAAAAAATTTTTGGAGAAAAGAATAAAAAACAATTGGTTAATTTAAAGTTAACAACAGCAGTTGCAGGACG",
+    ">1206109-protein105_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5964,
+   "sha256": "6c9f1d4600c06fad14407a990c3df431c3588211138da4774487cd7bf1f11ad1"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein106.fasta",
+   "size": 1276,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein106_1",
+    "ATGATTAATTATTTTAATGTGATTAGATTAATTGGAGGTTGTAAAAAACGTAGTATCCTTAATTTACCATATACCAATCTTCATGGCGGTAGATGCGTTAGACCTACATTAATTAATGTGCGAGAAATTTTCTTTGATTTGATAAAAAATGATATAACCAATAAAACTATTTTTGATTTATACGCTGGTAGCGGTTCACT",
+    ">1206109-protein106_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1230,
+   "sha256": "60c8e8f6bbe8351ab7bef7ae49a47ba4a94a79be6d3b2c07c9a7183d7098fdad"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein107.fasta",
+   "size": 2586,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein107_1",
+    "ATGATACAAAATTATCCAGAAACGAATATAGAAGGTTATATTAAAACAGTTTTAGGTTTTCCTATAATTTCTGCACAAGACGAGTATGATTTAGCAAGAAGGTTAAGAAATAAAGGAGATTTAGATGCAGCTCGTTGTTTAGTAATATCTAATTTACGATTTGTTATTCATATAGCTCGTAGTTATTCAGGATATGGATT",
+    ">1206109-protein107_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2517,
+   "sha256": "54a654f6f9f57dee318e982e3bf5f70458a8d18af58990d5b4b8749141a9ccbb"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein108.fasta",
+   "size": 717,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein108_1",
+    "ATGACTAAAAGATGTCAAATAACTTATAAAAAGCCAATGCAAGGTAATAATGTTTCTCATTCACATAGAAAAACACGTAGAAGGTTTATGCCAAATTTACAAAAACATAGGTTTTGGATAAAGAAAGAAAAACGCTATATAAAAATGCATATAACTACAAAAGGTATGCGGATAATAGATAAATATGGTATAGAAAAAGT",
+    ">1206109-protein108_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 648,
+   "sha256": "61a4005724672fbe6ec76febd1f4f6b2e400c43cbf1583bb9093241fb687a635"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein11.fasta",
+   "size": 3972,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein11_1",
+    "ATGATTGTAAATAAACGCATAAAGTCAGTTTGTACAGCAAATATAGTAAAAAAATCAAAAGAAACTCATCCATTGACTTGGCGATTAAATAAAGAAGGTAAAACAATATGGTTAAATGAATACGTACAAAAAGAAGGATATATTGCTGTGAAACGTATATTAAAAAAATCAACACCAGAAGAGGTAAAAACAGAAATAAA",
+    ">1206109-protein11_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3906,
+   "sha256": "73fe5523be661a054646948994dcb14f1f3338da18eda7ac63d448e4f2d2b880"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein113.fasta",
+   "size": 10676,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein113_1",
+    "ATGAAAATAGCATTAGATAATGTTAGTTATTTAGAAGAACTATACGAACAATACAAAAATAAAGGTAATGTTACTGAAGAATGGCGGCAAATTTTTGACTATATTACTAAACAAGAATGCAGGTTTAAAACTATAAAAACATGTGAAAAAAACACAATAAAACAAATGAGCGTTTTGAAACTTATAACAAATTATCGCTA",
+    ">1206109-protein113_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 10584,
+   "sha256": "93099f07606cea7e7c396ea0e26b9c202f8efe0a70dfa9f811f8bb41949b990c"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein114.fasta",
+   "size": 4307,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein114_1",
+    "TTGCTTGAGGTTGTTTCACCAACTGAAGGGTTTCTTCAAATTATAAAGATACCAGTAGGTAAAAAATGCAAATCCGAGCAATTGTTAGGTATTATTGTAGCACAAAAAGAAGAAGGTTTTTATAGTTCAGGTTCATCAAGCACAAGCACAAACATCAAACAGCAAAAATTGTGTAAAAAAGAGCAAAAGGTAGATGAATC",
+    ">1206109-protein114_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4215,
+   "sha256": "e0b1b112f6729483de7e7b4ccb2af261770adb566390e3595eb7bedeae6077de"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein115.fasta",
+   "size": 5753,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein115_1",
+    "ATGGTATCTCTTTTTGATGTAATTGTCATAGGTTCAGGTCCAGCTGGTTACGTCGCTGCAATAAGATCTGCGCAATTAGGACTTAAAACTGCTTGTGTTGAACAATGGATGAATAATGGAAGAGTTGTTTATGGCGGTACTTGCTTAAATGTTGGGTGTATACCTTCAAAAACTTTATTAGAAATATCACATAAGTTTAT",
+    ">1206109-protein115_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5661,
+   "sha256": "12d68bebebde511d428613bc47ecabf8e8b59f9d690a82c6d0ba75f8e9272102"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein118.fasta",
+   "size": 508,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein118_1",
+    "ATGTTATTTCGTAAAAAAAAATATTGTAGATTTACGGCTGAAAAAGTTAAAGAAATAGATTATAAAAAAAATGATATATTAAAATTATATATTGCTGAAAATGGAAAAATAATTCCAAGTAGAATAACAGGTACTAAAGTAAGATACCAGAGAAAATTAACTAAAGCAATAAAAAAAGCAAGATACTTTGGATTATTACC",
+    ">1206109-protein118_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 462,
+   "sha256": "f05c21767c7814c302c289260cb13ec2f4a93887087e4eb54bb47fb6da02ebd3"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein119.fasta",
+   "size": 1365,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein119_1",
+    "ATGAATGTTATATTAATTTCGAAAAATAGTAACAGTGGAAAAAAAGGTACGATAGTAAGTGTAAATAAAGGTTATGCTAGAAACTTTTTAATAAGAAAAGGTTTTGCAATTATAGCAAAGAAAAAAAATATAGAATATTTAAAACAAATGCGTAAGCACTATTTAAAGGAATATAAGCTATATATATACAAAATAAAAAC",
+    ">1206109-protein119_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1296,
+   "sha256": "589ae0df0404155ad063d756f39eb9ad0a53d0b3835ab41083f187a1c43cb67a"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein12.fasta",
+   "size": 1575,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein12_1",
+    "ATGGAAAATAGTTACCTTAAAAGGTTTAAAAAATTAACTAAAGAAGAAATTACAGAAATTATTATTGAAAAAAACAATTATAAAAATAGTAAAGCAGCTTCAATTGGTGCTTTGAAAATAATACAAAAATATAGAGGATGGATATCTGATAATATTATTAATGATCTTGCAAAGATAATAGGAATAACTCCAACGGAACT",
+    ">1206109-protein12_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1509,
+   "sha256": "5e9157696701eb5d704e7e090fa78058683fc19b4e427571f154d6df850dba9f"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein120.fasta",
+   "size": 4146,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein120_1",
+    "ATGAAAAAAATCATTAATGATAAAAAACAAACCAAAACACCTCCTCATTCAGTAGAAGCAGAAAAAGCACTACTAGGTGGTGTAATGCTTGATAATGCCGCGTGGAAAAAAATATCTGAAATTATTAAAAATGAAGATTTCTATAGTATAGAACATAAATATATATTTGATGCCATTACACATATAGCAGAAAAAAATAA",
+    ">1206109-protein120_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4077,
+   "sha256": "47eea73d5b0d1599ed23833efd8c7424e0933ed6949bc1c1c056ce821c1214db"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein121.fasta",
+   "size": 3138,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein121_1",
+    "ATGATTATTTTAGGAATTGAAACATCTTGTGATGACACATGCATTGCCATATATGATACTAAGTCTGGTTTAATTACAACAAAAAAATATACTCAAACTATACATACTATTTTTGGAGGCGTCATACCAAAATTTTCTTCATTTTATCATTTAAATAAAATAATTCCTATTATTAAATCTTTATTCTTTAAATTTCAAAT",
+    ">1206109-protein121_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3069,
+   "sha256": "aeba82ca3cf45d27baf3b69cd834e9ff340c4666d584f16709f887d7537c35ac"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein122.fasta",
+   "size": 478,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein122_1",
+    "ATGCCTTATATTAAAATAAGAGAGAATGAATCATTTGAGGTTGCTTTAAGACGTTTTAAAAGATCTTGTGAAAAAGGAGGGTTATTGGCAGAAGTACGTCGCAGAGAATTTTATGAAAAACCTACAACTGTTCGTAAACGAAAAGCAGCTGCTGCTATAAAGCGTTATATTAAAAAGATTAAGCGTGAACATACCCGGTT",
+    ">1206109-protein122_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 432,
+   "sha256": "e4164b6271206b5f834cf51d1cc0dc9b22848ec36ea9a29d60784c6b5bc2e09b"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein124.fasta",
+   "size": 3365,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein124_1",
+    "ATGAATAAAAGAATATATTTAAGTTTATTACTTATTTTGATCTTAAATAAGGAAGGATATATACATGTATTAACTCCAGGTGGAAAAGTATGTTTAGAACAGAAGTATTTGATCTTTATAGCAACTTTGTTAATGTTGATTATTGTACTCCCTGTTATATTGATGACAATAAAATTTAATTATAAATATAGAGAAACAAA",
+    ">1206109-protein124_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3273,
+   "sha256": "bef2f2b680391ae9e821cec03db3c7994e33aa661a3d93623f2b32d9f568739f"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein127.fasta",
+   "size": 646,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein127_1",
+    "TTGAATTTAATAAATCATCTAAAAGATTGTATATTTGGATTTTTAATTTCATTTATATTAACAACATTAGCATATATGTTTGTAGTAAACATAAGTTTTCCAATATTAGTAATTAAACTAGTCACTTTATTATTTGCTGCAATACAAATATTTGTTCAACTTATATATTTTATAAATATAAAAGAAGTTTCTAAGTTAGA",
+    ">1206109-protein127_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 600,
+   "sha256": "e3649620bbb251df449913442a9de50e5b3ab4ecd50102922481ca28ea9312c4"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein128.fasta",
+   "size": 3602,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein128_1",
+    "GTGGTTCATTATGGATTTTTTATAATATTAATGGTAAATAAAAACTATTTAGTAATAGCAAAACCAAATATAATAATAGGAAATGTTATTTCAATTTTAGGGGGAATTTTTTTATCTTATAAATGGAATATAAAAATATTAATAGGAAGTTTGTTAGGTATAATTTTAATTATAGTATTTAGTTGTATATTAAATAATTA",
+    ">1206109-protein128_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3510,
+   "sha256": "83f44879ffe2d4587f9e3ad6b66aac8bb554df7cdc6f2907aa7158439559b6cd"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein13.fasta",
+   "size": 7144,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein13_1",
+    "ATGTTTAATAAACAAGTAAGAAAACAAGAACAAATGGTTTTAAAAATATTATATAAAAAATTTGGAAAAAAAAACATTTTGTATTCACAAAAGACTTTAATGGGAATACCTGTTGTATGGGTAAAAAAAAATAAAATGTTTGATATAATAAAATATTTACGTAATGGAAACAAACAATATAAAATAGACATGTTATATGA",
+    ">1206109-protein13_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 7056,
+   "sha256": "5617cb4f5f67193409ce0c5423b3411b72c799492b62bb743510ba049e21cc1e"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein133.fasta",
+   "size": 1329,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein133_1",
+    "ATGAGTAACATTAAAGCTGTTCAAAAAAAAATTATAAAGGAATTAAAGTTTTTTGATAACTGGATAGACCGTTATAAATATATACTTGATTTAGGTAAAAAATTGCCTTCAATGCCCGCTAAATGGAAAAAACCTAAATATCTTATTTCTGGTTGTCAATCTAATGTATGGATTCATCATAAATTTATTGATAATAAAGT",
+    ">1206109-protein133_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1260,
+   "sha256": "ac8ec8094c2ec7b3fc419b7e86c4554478d4caea7405da9ea369874839a21575"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein134.fasta",
+   "size": 1392,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein134_1",
+    "ATGAAACAACGAATTTTATTTCAATCAATAGACTTTTATATTGTTGATGATAACTATTTAAATGATATTGTTATTGAATCTATAAATTGGAATCAAGAAGGGTTAATACCTGTAATTACTCAACAATATGATAGTGGTGAAGTCTTAATGTTAGCTTGGATAAATAAATTTATTTTATTAGATACACAACTTGGAATTTA",
+    ">1206109-protein134_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1323,
+   "sha256": "5420abd8a3b708f4c13f790d5bd46afc7860a05213562efa9439ef3008134991"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein135.fasta",
+   "size": 1336,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein135_1",
+    "ATGAAAAATTTTTTATCATTAGATATATCTTATACGTATTTTTCTATGTCTTTATATACATTAAAAAACAAGATTCTTATAAACAAGCTATGTTTTTATAAGAAGAATATTTCTACAAACAATGTTTTGTTTTTTTTATTTTTAAAAAGCATTTTAAATAAAACACAAATTGATTTATCAGAAATAAATTATATTAGTTG",
+    ">1206109-protein135_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1290,
+   "sha256": "a7072d92e5e411937a5ccc7447f3b64bbd8b83f84dcdf65d7d27fe36a179fc8a"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein136.fasta",
+   "size": 3390,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein136_1",
+    "GTGATAATAAAGCTACCTGAAATAGGTGATATAAATAAAAAAGTTGAAGTTATAGAAATACCCGTAAAAGTAGGAGAATTTATAAAAAAAGATGACACTATAGTTGTTTTAGAGTCAGAAAAAGCTACTATTGATTTACCTTCACCAAACGAAGGAACAATAACTAAAATTTTAATTAAAGAAGGTGAAAACATATATTC",
+    ">1206109-protein136_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3321,
+   "sha256": "d556e38423dcfd484390eb3d6bdfa6f37e4b2a72c594b010a64912e236f0269b"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein137.fasta",
+   "size": 8010,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein137_1",
+    "ATGGATCGAGAGGGTATGTATAGGGTAAAAAGTTTAGTGAAAAATTATGTAAAGAAGAAATATATAATTAAAAACAATATTTTAAATAAAGATTATAATGATTATAAAAATACAATACCAAAAAGTTGTGAAAAACGAAATCCAGGAAATAAATATTTGGAAAGAAAAATCAGGTCTGCCGTTAGGTGGAACACGATAGC",
+    ">1206109-protein137_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 7941,
+   "sha256": "33c764ef9b86d6879c1515f947084b388fc0892e76c9d1bbdd706c4d2cd59976"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein139.fasta",
+   "size": 4671,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein139_1",
+    "ATGAGCGAAAGCTTTGCTGAGTTGTTCGAAAAGTCACTAAACAAGATCAATCTAAAGCCAGGATCTATAATAAAAGCAAAAATCGTTTATATAGACAAAGATTGGATAAAAGTTAACGCAGGTTTAAAATCAGAAGTAAAAATTAATATTGATCAATTTAAAAATGATAAAGATGACGTGTTTTTAAAAATAGGTGATAG",
+    ">1206109-protein139_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4602,
+   "sha256": "7e5abc2323abcd5a5287d8d619417323f2da654aeb5a6e9bdbfb83247683ee0e"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein14.fasta",
+   "size": 2004,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein14_1",
+    "ATGAAATACATATTAAATAACTTAGATTTTAAAAAAACCACTAGAGAGAAAGATAAAAACTTTGAGCAACTAAGAAACAATATTTGGTTATGTAAACTTAAAAAACTTTCAAAGTTATTAATTAATTGGGGGCGTAAAAATTCTTTATGGCCTTTTAATTTTGGATTATCCTGTTGTTATGTAGAAATGACAACTTCCTT",
+    ">1206109-protein14_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1938,
+   "sha256": "ed059deb81e233b197f9546c2f3e749d94f35c00fb896ed30f0bc35c019939f8"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein140.fasta",
+   "size": 5372,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein140_1",
+    "ATGAAAAACAAAGTTAAGTATATAGTACAAAGAGCAATTAAACCAATTAAGGGAATAATAATTGTTCCAGGTGATAAATCTATTTCTCATAGGGCACTGATGTTTGGATCGTTAGCTACTGGTCTCACAAAGATTACTGGTTTTTTAGATGGATATGATAGTTTATCAACATTACAATCATTTAGAGAAATGGGAGTTGA",
+    ">1206109-protein140_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5280,
+   "sha256": "7c33717bbc5f271b70eeff6fab7a4131583edea176a79753538e3252e00097e7"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein146.fasta",
+   "size": 3336,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein146_1",
+    "ATGTCAGGTAATACATTTGGTAAATTGTTTACAGTAACTACATTTGGTGAAAGTCATGGATTTGCTTTAGGTGCTATTATAGATGGTTGTCCTCCAGGAATAGAAATAAGTGAAAAATATATTCAAAAACAATTAAATAGAAGAAAACCAGGTAGTTCAAAATATACTACTCAACGGCGAGAACCAGACAAAGTAAAGAT",
+    ">1206109-protein146_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3267,
+   "sha256": "2275397132005a3f1002e34df0440ca9ba6c339574771bffbe3c2ba10882eff5"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein147.fasta",
+   "size": 723,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein147_1",
+    "ATGGCAACAGGCACTGTAAAATGGTTCAATGACACTAAAGGCTACGGTTTTATATCACCAGACGATTGTGGTGGAGATTTATTTGCTCATTTCTCAGAAATACAAGATGATGGTTTTAAGTCACTTCAAGATGGTCAAAAAGTAACGTTTGAAGTAACGCAAGGAAAAAAAGGCCTTCAAGCAGCTTCTATTAAAGTCAT",
+    ">1206109-protein147_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 654,
+   "sha256": "307eb7b54e4edee5440eff2cf7089c891f848fefa2d1e2dc29ee36eff7a91802"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein148.fasta",
+   "size": 5049,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein148_1",
+    "ATGAAGTTTAAATTTAACAATAAAAAATATTGTTATTTCGATGAGTTTCCAAAACTTAAAAACAGAGACTGGATTGATAAAAAAATAAGTAAAACACCTATTTTGGTTAGTGAAGATTTACGAGATGGAAATCAATCTTTAATAGAACCAATGACTGTTGAAACAAAAAAAACAATGTGGACTTTATTAATAAATATTGG",
+    ">1206109-protein148_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4980,
+   "sha256": "ca2c59b83206f7d476a97a7ef2e5ede83849aeef232c9340312302f04787aed4"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein154.fasta",
+   "size": 3363,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein154_1",
+    "TTGAAAATCATTAAAATAAATCTTTTAAATAGTAAATATCCAATCTATATTGGATCAGGTTTATTAAAAAAAGGTGTGTATATACCTTATATTTTTGGCAAACAAATAATAATTATAACAAACAAAAAAATAGCATCATTATATTTAGATATTTTAAAAAAAAAATTACTTTTATATAATGTAAAAGTAGTTATATTGCC",
+    ">1206109-protein154_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3294,
+   "sha256": "d41f83d353777beef5b9c6616f87d70f9d969d5b4f98d2f0c20910fb6a5cc8c2"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein156.fasta",
+   "size": 454,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein156_1",
+    "ATGAAAAAAAATATTCATCCTAAATATAAGAATGTTATTATAAAATGTTCTTGTGGTAATTTGTTTAATATCAAATCGACTTTAAAGAAAAATTTATTTGTTGAGATTTGCTCACATTGTCATCCAGTTTATTGTGGCAAACAAAAACAACTTAATATAGGCAATAGAATTGACAGATTTAATAAACAGTTTGGTAAAAA",
+    ">1206109-protein156_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 408,
+   "sha256": "cfe5fa77af01634c2de697705edc6c3e47fb13bba4282e362f3dcaccf66256c0"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein157.fasta",
+   "size": 1641,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein157_1",
+    "ATGACTACCATCGTGTCTGTAAGACGAAATAATAAAGTTGCTATAGCTGGAGATGGCCAAGTTACACTTGGTAACACAGTAGTAAAAAGTAATGCTTCTAAAGTTCGAAAAGTTTATAAAGGTCAAGTCTTATCTGGTTTTGCTGGAAGTACAGCAGATGCTTTTACTTTATTTGAACTATTTGAAGCACAACTTGAAAA",
+    ">1206109-protein157_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1572,
+   "sha256": "316b0f6c57b7ce3e0f034978350efb687d44b58c8e4b1da238d8a0e75c610d55"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein158.fasta",
+   "size": 5300,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein158_1",
+    "ATGACTCCAAAAAAAATAGTAGAAGAATTAAATAAATATATTATTGGACAAGAAAAAGCAAAAAAAGCTGTTGCTATTGCATTAAGAAATAGATGGAGACGAATGCAGTTAGATTATAAGTTACGTTCCGAAATAACACCAAAAAATATTTTAATGATTGGTCCTACAGGGGTAGGAAAAACAGAAATTGCTAGAAGATT",
+    ">1206109-protein158_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5208,
+   "sha256": "bb55bf9a809ecfe3fb2beaf7fcef592ef61ad5348b0b98905322cdfcd1b0b009"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein159.fasta",
+   "size": 742,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein159_1",
+    "ATGGATAAAAAAATAGAGAGTTTGTTTATTATATTACAAAATCGTAAACAATCAGATCACAAAACTTCTTATTTAAGTGGGTTGTATAACAAAGACTTAATAAAAACGTTAAATAAAATAAAAGAAGAAATAAATGAGTTAATTGTAACTATAAAAAAGTTTAAAGATAACAAATATAAAGAAAAATATTTACGTTATGA",
+    ">1206109-protein159_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 696,
+   "sha256": "c64f2fccbe92205d84bee716301ab2a48205d4c9744d41cc8c549644f11ae0bb"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein16.fasta",
+   "size": 692,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein16_1",
+    "ATGAATTATAAAGTAATTAAACCTTTTAATGTTCATAAAACCATCAATAAAGCTTATAATTTTAAAGCAATCAACAAGCATTTTTTTTGTGTTGGTTTTTTTATAACTAATGAAACTTCGATAATATATAAAGCTTTTATAACTAAGATAATAAACAAAGCAAATTATCGTAATATTTTAAAAAGATTATTAAAAGAATA",
+    ">1206109-protein16_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 648,
+   "sha256": "8763fdeb93d41b9c148249ff2b5de3b9ef94f39f8ae0bfe4eb31a7ac4b11609a"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein160.fasta",
+   "size": 9257,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein160_1",
+    "ATGATAAAAACACATATATTAGGATATCCTCGTATTGGAAATAATAGAGAATTAAAAAAAGCTTTAGAAGCATTTTGGAAAAAAGATATTAATTTAAAAACTTTAGAAAAAATTGGAAAAAAAATTAGAGAAAAAAATTGGATTACACAATATAAAACAGGATTGTCTTATGTCAATGTAGGGGATTTCTCTTATTATGA",
+    ">1206109-protein160_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 9165,
+   "sha256": "778a2e902ac527751d86e62339ca4961557cd182f01c100060b4f87da558589c"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein161.fasta",
+   "size": 3345,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein161_1",
+    "ATGAAATACAATTCATATTATGAAAGTTATTATACAAAGTTAAAAAAAAATGAGAAAATAAAAAGTTATAAACAACTACAAAGCGTAGTAGAATTACGTAAAACTATTCCTATAAATAATGTAATAAGTAATATAATAAAATTTAAAAGAAAAGCAATAAATAATATAATAAATGGTAAAGATAAAAGATTATTAGTGAT",
+    ">1206109-protein161_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3276,
+   "sha256": "2e1b26d73db0fefc1d564835686549e32d1a6866d0ba37be73b83d894c2c6d79"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein168.fasta",
+   "size": 3198,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein168_1",
+    "ATGATATTAAGTTACGGCTTAGGAATTGCAAGTAAAAATTATAAAAATGAAATTTTAGAAGTTTATTATCCTTTTACAGTTTTATATCCTCATCCAACAGTTATAAAAAATATATTAAGGAAGTTAACGTTTAAATTAAACATAATTTCAAATAGTTTTAATTTATATTTATCAAATAATAACGATTTATTTTTTTTATA",
+    ">1206109-protein168_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3129,
+   "sha256": "c37fc8d2314c9e12bb69a3ba8059915437b0af7ee200b2d158316a0e1810c7dd"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein169.fasta",
+   "size": 4712,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein169_1",
+    "ATGTATTATCTTTTAAAACTAGTATTAAATTTACTTTCAAAAAACTCTATTACACCTAATGACAAAGGATGTCAATATTTGCTTAGTAATATATTTAAACGTTTATGTTTTCGTGTAGAAGTTTTTAATAAAAAAGGAGTTCATAATTTATGGGTTACAAACGGATTTTGTAAAAAAACATTGTTATTTGTTGGTCATAC",
+    ">1206109-protein169_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4620,
+   "sha256": "3edb7ce92198b8254df9e44e4cf335ab2f1eaef757c007357501170090a2f761"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein171.fasta",
+   "size": 1815,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein171_1",
+    "ATGGAAAATATTGGATTATCTTTAATAAATACATTAATTAATTTATATACATTTATGTTAATGTTACGTTTTGCTTTACATATTTCATATGTAGATAATAAAAATCCTATAACTCAAAACATAAGAAAACTTACATCGGTTATGGTAAATCCAGTAAAGAAATGTATTAAATCTATTGGATGTTTTGAATTAGCAACATT",
+    ">1206109-protein171_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1746,
+   "sha256": "e0064f19200394f2a18663007ebf523e9afcfa3ae2d3615dd5dea4a860ec39ef"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein174.fasta",
+   "size": 3372,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein174_1",
+    "ATGTACTTAAAGAGGAAAATAAATTTGTATAAATTAGCTTTATTAGCATTAGAGGATGGGAGTATTTATAAAGGTATTTCTATAGGTTATTGTGGCAACACTTCAGGTGAAGTGATATTTAATACTTCAATTACAGGATATCAAGAGATTATAACGGATCCTTCTTATATTAAACAAATCGTAAACTTTACGAATCCTCA",
+    ">1206109-protein174_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3303,
+   "sha256": "acbf3586c5b455a15fe7d80a3b58a1d36d5bcfae1978b64393ad8be248c246d0"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein176.fasta",
+   "size": 1024,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein176_1",
+    "ATGATGGATTCAGCAAAAAAAATTCATATGACAAAAGAGGGTGAAAGACAATTAAAAAAAGAACTGAAGAAGTTAAAAACTATTGATAGAAAGAAAATCATAAAGGATATTTATGAAGCAAGAAAACATGGTGATTTAAAAGAAAACGCAGAATATCATTCTGCTATTGAACAACAATGTTTATTAGAAAGACGTATTAA",
+    ">1206109-protein176_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 978,
+   "sha256": "5377fc4c27380bf46913091e669bf51f172a3551e52dd9242421061c732e1a55"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein180.fasta",
+   "size": 1050,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein180_1",
+    "ATGATTAGTTATCGTCTTGTAAAAGTTTCAAAACAAATTAAAAGAAACTTAACGCAATTAATAAACTACAATTTAAATGATCCACGAATAAAAAAAAATATTATAATACATTCTGTAAAACTTAGTAAAGACCTCAGTCTTGCTGATATATATTGGACTCTTTTGTATGATAACAAATTTAAAAATATATATGAAAGTAT",
+    ">1206109-protein180_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 981,
+   "sha256": "aadb9e19e958943e70c92d4697d2a6f88ac15db2413f620510efa6e0c46e2a9e"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein181.fasta",
+   "size": 7245,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein181_1",
+    "ATGAAAGTTTCTGAAAAGTGGATACAGGAATGGGTTACATTAAAAAATAGTTCTAAGTTTGTTGCAGATCAAATAACTATGTTGGGTTTAAAATCATCATATATAGTTAATAAAGAAGTTAATGGTGTGGTTATATCTTGTATAAAAAAAATTATTAATTATACAGATACGTTAAATTTGTGTATTATTGAAGATGGGAA",
+    ">1206109-protein181_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 7176,
+   "sha256": "13cb2bd254ed39bba71b62a3fd7ed6e21a76f4c2ab046e5c44203821f28f5757"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein182.fasta",
+   "size": 4052,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein182_1",
+    "ATGTATTATACGATCATAAAATTAGTAGAAGAAGCAGAAAAAAAAATTAAAGCAGCTAAGAATATAAAAAAACTAGAGGAAATTCGTATAAGATATTTTGGTAAGAAAGGTAAGTTAACAATACAATTAAAATATATTAAGCAATTAAATTCATATGACAAACCAGTAATTGGAGACGCAATTAATAAAACTAAAAAAGC",
+    ">1206109-protein182_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3960,
+   "sha256": "9a9cbfdb7efa94c28a58e78bff07bf275465c28b0df717d2029580773ac8f3a9"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein183.fasta",
+   "size": 1113,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein183_1",
+    "ATGGCTCGTGTAAAGCGTGGTGTTGTTGCAAACAAACATCATAAAAAAATTATTAAGCAGGCTAAAGGATATTATGGAGCAAGGTCTAGAGTATACAGAGTTGCTAAACAAGCAGTAATAAAAGCAAAACAATATGCTTATAGAGATAGGCGTCAACGTAAACGGCAATTTAGAAGTTTATGGATTATGCGCATAAATGC",
+    ">1206109-protein183_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1044,
+   "sha256": "98081e04255e7bc9f56c0c7e05ad41c3579faec63cdc89c28f818262b45ef058"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein188.fasta",
+   "size": 898,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein188_1",
+    "ATGCCAACTTCTACTTTATTTTTAATAGAAAAACCGTATTTAGCTATTGATTCTTTAAGACAAGTTATAGCATATCCAAATAAGGTAAAATATTCTTCTCAAAAAAACATGGAATTAATATTTAAATTATGTAAAATGGATACATTAATCAATGAACTTGATTGTGTTTGTAATTGGGCACAAATATTTTCTGGAAGAGA",
+    ">1206109-protein188_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 852,
+   "sha256": "12e6ab20115802621b9fbd186638f0b80480237bbf39548127d4201f1ae3553a"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein189.fasta",
+   "size": 6812,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein189_1",
+    "ATGCGCGCTAGTAATTTATTGATTTTAACATCAAAAGAAATACCATCAAAAGCTGAATTTATTAGTCATAAATTAATGCTACGTTCAGGTATGATTAGAAGTTTAGCTTCTGGAATTTATACTTGGTTACCTATTGGCATAAGAGTTTTAAAAAATTTTAAGAAGCTAGTACGCAAGGAAATGGACTTTATTTGTGCTAA",
+    ">1206109-protein189_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 6720,
+   "sha256": "f7bf48a4c5f5f5917db269e47019203c91584ef76419cb9cc61614a0fbcfe23a"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein190.fasta",
+   "size": 901,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein190_1",
+    "ATGAAAATATTTTTAATAAACGGACCTAACTTAAATTATTTAGGAAAAAGACAAACTAATATATACGGATATAATACATTACAAGATATAGAAAGATTTATGATAAAAAAAGCAAAAAGATTTAACGTAAACTTAGAATGTTATCAATCTAATCATGAGGGGTATATAATCGACATTGTTCACAGAGCTTACTATATTAA",
+    ">1206109-protein190_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 855,
+   "sha256": "a3a7b73c367288949670d38c87ec495065a49c10e2d79bcf48d0d842b72a0a9c"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein193.fasta",
+   "size": 1066,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein193_1",
+    "ATGAACTTAACGAAAATTTTAACAGCATCAATTTTTAAAATAAAAGCTTTGGATTTAATTTCTTTTAAAAAAAATATTAACTTTCGTAGATCTGTACTTAAAGGCATTTTTTTACAATTTATACAGCAATTGACAGGCATGAACGTTTTGATATACTTTTCTCCTAAAATTTTTGAATTTTATGGTTTTACAGGAACTAA",
+    ">1206109-protein193_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1020,
+   "sha256": "3c74d88b6c7e5dcd596f5f4d4fd421936e0a03a959cf9d4f24cd2227be141db8"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein196.fasta",
+   "size": 5546,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein196_1",
+    "ATGAAAATAATTGTAAAGAATATAACAAGTTTAAGTTTAATCATGTTTGGGGCATTAGGAGATTTAGCATTAAGAAAATTATATAATTCACTATTTATATTATATAAAAAGAATATAATAAATAAAAAAATTAATATTTTATGTTTAGCACGAAAAGTTGAAACATTAAACACATTTAGATATACCATTTATAAAAGATT",
+    ">1206109-protein196_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5454,
+   "sha256": "c869e1736f3e602ee5e9a53c1a5ef97c2a8ac79ef3851dbd5707f7242996f18e"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein197.fasta",
+   "size": 2982,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein197_1",
+    "ATGAATCATTTAGCATTAGTAGGTGATATAGGCGGAACGAATGTTCGTTTAGCTTTAGCTTTAGTATCAACAAATCAATTAAAATTATATAAAATAAAAATATTTAAATGTATTAATTATCTAAATGTTTATGAAGTTATAAAACAATATATTTCTTTAGTTGGTTGTGATTATCCTAAACAAGCTTGTTTAGCGTTTGC",
+    ">1206109-protein197_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2913,
+   "sha256": "2045f7ea7e751a9f3bbcab1db25af7d47d4b76f824b209c03b56ee71d9a051cb"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein198.fasta",
+   "size": 1431,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein198_1",
+    "ATGAATATTTTAAAATACCCAGATAAACGTCTTAAATTTATAGCCAAACCAATTAAACTTATAAATTATAAGATAAGAACTTTAATCTTTAAAATGCTAAATACTATGTACGCACATAACGGCATTGGATTAGCAGCTACACAAATAAACAAACATATCAGAATCTTTGTTATGGACATTAGTAAAAATTCTAATCAACC",
+    ">1206109-protein198_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1362,
+   "sha256": "63517b7d969d66eea52f2883925330ee111239fdc3591c19498e31ff3913e198"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein20.fasta",
+   "size": 7924,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein20_1",
+    "ATGAATAATTTATTTATTGAAGTTGGTTTTGAAAACTTACCTATAAAAGCTAATGAAATTATCATCAACAATATTATAAGAATTTTAAACCAAAAATTCAGAACATATACCTATAAACAAAATAAAGAAAATTTTTATTTTAATACAATAAATGTTTTTACAACAGCTAGACGTATTGCCATACATATAGACAGTATACA",
+    ">1206109-protein20_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 7836,
+   "sha256": "f1f877d2de37215e0e8e09cceae5cbfbcf9ca8d45cd2d844446a804344b02bd8"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein202.fasta",
+   "size": 1308,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein202_1",
+    "ATGCGTCCAGCAGGACTTGAACCTGCAACCTACGACTTAGAAGGCCGTTGCTCTTTCCTATTGAGCTATGGGCGCTATAACTATAACTATAACGGTTACGGTTACGGTTATTCAAACAATATTACGTATATAACTAATTGTGCTGCACATATACTACATTCGTTAACGATATACAAAATTTATGTATACGAAACAAATCA",
+    ">1206109-protein202_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1239,
+   "sha256": "86fed1a0799b2c1d05d6214bd523a71ee64cd6923c3f08023ba9d224d96b3cd8"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein207.fasta",
+   "size": 5157,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein207_1",
+    "ATGCGTATTAATTATTGTGGTAAAGTCAATCAAACAATTTTAAATTCATATGTCAAGTTATACGGTTGGGTAAATAAAATACGAGATCATGGTGGCATTTTGTTTTTAGATTTACGTGATATGTATGGTAGAACTCAATTAGTGATTGATTCTAAAAAGCTTGATTTTACAAATTTTGTGTTAGCAAAAAAACTCAAATC",
+    ">1206109-protein207_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 5088,
+   "sha256": "4e770fa7c639a75a154b34bca2dfe86e7ead7be7499cbe4c2193e087aa0ca308"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein208.fasta",
+   "size": 934,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein208_1",
+    "ATGATAAAAAAATATATGCTTAAAAGGCTAATACTAGCAATTTCTTTATTACTGGTTTTAAAAAATAATAATGTTATTTTAAACGAAATAAAATTAAACAAATTCTTTATTTTTAACAAAGCACCTTTTATTAAAACTATTTATTTTAATTATGATTTGTACTATTTTAGTAATAAGATAAATAATATTTTAAAGCAATA",
+    ">1206109-protein208_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 888,
+   "sha256": "2f5b50ccd54f6d5cf9968d61b9c32a1aed6a5bd8d4280cf0e6d69eabb454cd4d"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein21.fasta",
+   "size": 3541,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein21_1",
+    "ATGAAAAAAAAATATATTACTATTGAAAAAATAATTTTAAGTTTAAAAAAGTTTTGGTCTAATTTGGGTTGTATTATTTTACAACCTTTTGATCTAGAAATAGGTGCTGCTACATTTCATCCTTTTACTTTTTTTACGTCTATAAATAAAACTATAAAAGTTGTTAAAACTTGTTTTGTTCAATCTTGTAGAAGGCCTAA",
+    ">1206109-protein21_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3453,
+   "sha256": "ac7bff72d46f4ea173e032f628e99169ecd6ace0c84cc6f08426fed88b5abff9"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein210.fasta",
+   "size": 2649,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein210_1",
+    "ATGAGACATAAACCTAGTTGGATAAAAATACGTGTTCCTCTATATAATGAAATTAATAATATAAAAAACAAAATAAGAAAAACATACTTACATACAGTTTGTGAAGAATCATCTTGCCCTAACATACTAAATTGTTTTAATGAAAAAATTGCAACCATTATGATCTTAGGAAATAAATGTACTAGAAAATGTCCTTTTTG",
+    ">1206109-protein210_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2580,
+   "sha256": "17ff86a105cb4e11ae1d2586a336b0abbee1635b6ab13297ddd43eedfdd6bf0e"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein212.fasta",
+   "size": 2152,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein212_1",
+    "GTGATTAAACATAATTCTTTGTTTTTTCATGTAGGAACTTTATTGAAAGGTTATTTTTCAAATACAACACACGTTAATTGTTATATAGACAAAATTATTCGTTATAATATAAGTGTTGCTCATTCAGCTATACATTTATTAAATGTAACAATACAAAGAGTGGCTAAAAAAAAACTAATAAAAAAAGGATTTTTTATTAA",
+    ">1206109-protein212_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2106,
+   "sha256": "e4f2517dff7021ab9ee4322b0150c2dd44ea4ed55a5484585b0ba028537b7ee1"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein213.fasta",
+   "size": 10445,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein213_1",
+    "ATGATGTATCCTTTTTCTTATAAAAAAATTGAACTAGAAGCTCAAAATTTTTGGTACAATCACAATTGTTTTGAAATAGTAGAAATACCTAATAAGGAAAAGTTTTATTGTTTATGTATGTTTCCATATCCTAGCGGCAATCTACATATAGGACACGTTCGTAACTACACAATAGGTGATGTTATTTCTCGTTCACAACG",
+    ">1206109-protein213_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 10353,
+   "sha256": "daa1114e3847ba997f6792d0e9ab4b0ea86006fd4e4679b9354f3434dfeef815"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein214.fasta",
+   "size": 934,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein214_1",
+    "ATGCAGTTTATAAAAAATAATACAATTAAAAAAATCGTGCCAAATGAGTCATTACTAAGTTCTTGGTTTTGTTCGTTTTTAAAGCCAAAATATAAACATTATAAAGATATTGTTTTTAATATTCGTTTTGTTGAATATAAGGAAATTATTGGCTTAAATAGTTATTATCGTGGTTTTAATTCTTTAACAAATATAATTTC",
+    ">1206109-protein214_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 888,
+   "sha256": "dfa4b17ba1b7aceee597668de0070d36aba86d8131a28bf750d562dc7537a1c7"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein218.fasta",
+   "size": 1761,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein218_1",
+    "ATGGCTATCATAAATAAAAAAATACGTCCCTTTACTGCTACGGCTTATTTAAATGGAAAATTCATAAATATTTCAAATGAAGATTTGCAAGGTAAGTGGTCTGTTATATTTTTTTATCCTGCTGATTTTAGTTTTGTATGCCCTACTGAACTTTTAGATTTATCTGAAAATTATTCAACATTTAAAACTTTAGGTGTTGA",
+    ">1206109-protein218_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1692,
+   "sha256": "37e1b044881484897aad6b97122f56c71ee93bceaeb46a934d9c2d5390e21592"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein22.fasta",
+   "size": 4767,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein22_1",
+    "ATGAATAACAGTGAATATAAAAGATATAACTTCATAGTAGAGAATTATGTAAAAAAAATACTTAAAGCAAAAGTGTATGAACTTGCTAAAGAAACACCTTTAGCTTGTACGCCGTTACTTTCTACTTATTTAAAAAACAACATATTTATAAAGCGTGAAGATTTACAACTAAACTTTTCGTTTAAAGTTAGAGGCGCTTA",
+    ">1206109-protein22_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4701,
+   "sha256": "fa27fd9b93a25bf67b32147ed8a49cb25fe8facfb3ad85aeeae3a9916da3d887"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein220.fasta",
+   "size": 5033,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein220_1",
+    "ATGAGCATTAACCCTAAAACTAAATTTAAAGATTTTTATAAATATATTTTACCACTTTATTCGCCTCAAAATAAAATTCCAGTTAAAGGGTATGGTAGTACAATCTGGGTACAAGATGGCAGAGATTATATTGATTTTTCAGGTGGAATAGCTGTTAACGCATTAGGACATAGTAATCCTGTTTTACTAGAAGCATTAAA",
+    ">1206109-protein220_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4941,
+   "sha256": "a599791008bae2215d336e5659ae21b88ed4998e8939655459907776af9506bd"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein221.fasta",
+   "size": 7391,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein221_1",
+    "ATGTTAATAAATACAAAAAACATTCGTAATTTTGCAATTATAGCACATATAAATCATGGAAAGTCAACATTAGCTGATAGATTAATTCAACTGTGTGGTGGTTTGTACAAACGAGATTTTAAAAATCAAGTTTTAGACTCTTTGGATATAGAACGTGAACGAGGAATTACAATTAAATCACAAGCTGTAACATTGTTCTA",
+    ">1206109-protein221_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 7299,
+   "sha256": "7a07001fec499f068e8bfe53870db90973e58f094b3ea5072e7a9b7ee6de3c34"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein222.fasta",
+   "size": 4959,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein222_1",
+    "ATGGCAGCAAAACAGATTAGATTTTCTGAAGATGCGCGAACACGTATGGTACGAGGTGTAAATGCACTAGCAGATGCAGTTAAAACAACTTTAGGTCCAAAAGGTCGTAATGTGGTTTTAGAAAAATCATTTGGTGCCCCTACAATAACAAAAGATGGAGTTTCTGTAGCGAAAGAAATAGAACTAAAAGATAAATTTGA",
+    ">1206109-protein222_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4890,
+   "sha256": "a321527f9cc40b197059c98b8a3d59a777e2f8a9df2435e04d1812f214125007"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein223.fasta",
+   "size": 942,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein223_1",
+    "ATGAAAATACGTCCTTTACATGATCGTGTTGTGGTTCGTTGTATTGAAGTTGAACAAAAAACTTCTGGTGGTATTGTTTTGCCAGGAAATGCACAAGAAAAACAAAATCGCGGTGAGGTTGTAGCTATTGGAAAAGGAAAAATACTAAATAATGGTGCTATCCGTCCTTTAGATGTTAAAATTGGTGATACAGTGATTTT",
+    ">1206109-protein223_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 873,
+   "sha256": "0f4fa83c5cfe6bbd8e0a15004463eaf1e9ace794498593abab8ef381f8b5a118"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein226.fasta",
+   "size": 2352,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein226_1",
+    "ATGATAAATATAAATTATATTATAGCTATAGCTTCTGGAAAAGGCGGAGTAGGGAAATCAACAATAACAGCTAATTTAGCGTTAGCGATGAACGTAAAAGGATATAAAGTAGGTTTGTTAGATGCTGATATCTATGGGTATAGTCAATCAACAATATTAAATGTAAAAAAAAAGATATTTATTAATAAAAAAAAAAGAAT",
+    ">1206109-protein226_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2283,
+   "sha256": "840489bbd2cd0cf4af6b2cecf42c57051aac97f683426c57d4cbb433ed1679ec"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein229.fasta",
+   "size": 2408,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein229_1",
+    "TTGAGAATATTAATTATAGATAATTATGATAGTTTTACATTTAACATTGTACATTATTTTTTTGAATTAGGTGTTGATGTCAATATTATTCGTAATAATCTAAATATAAAAAATATAGAAAACGGTTATTTTACTCATTTAGTTATTTCACCAGGACCATGTACTCCGAATAAGGCTGGTTTTTCCATAGAAGTAATTAA",
+    ">1206109-protein229_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 2316,
+   "sha256": "fc257fa2f3a32d5c1c01ebae567b1146ba64c5cc5676d581a9c636f6e50a8c12"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein231.fasta",
+   "size": 3365,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein231_1",
+    "ATGAAAATATTGTTTAATATTTTAAAATATAAACGTAATACAATTAATGTTTGTATAAATAAATTATCTTTAAAAATTTTACGTAAAGGGTTTTATTCAAATAAAGAGCAGTTTTCTAATAACAAATTTATTAAATCCATAAAAAACAAACAATATAAGAATCAAACTTCAATAATTGCAGAAATTAAACGATGTTCACC",
+    ">1206109-protein231_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3273,
+   "sha256": "6a2693a490c6bc901035660154b99435422e1306756d8e8d183aa83b3a6ec40b"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein233.fasta",
+   "size": 1942,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein233_1",
+    "ATGATTCTTTCTAAGTTAATGTTATTTACTGGAAATTCCAATATTGAATTAGCAAAACAAATTTCTATTTGTTTAAAAACAAATCTAGGTAGATCGACAGTTAATAAATTTAGTGATGGTGAAATTTCTGTTGAAATAGAAGAAAATGTAAGAGGTAAAGATATATTTATAATACAATCAACTTGTGTACCTACTAATAA",
+    ">1206109-protein233_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1896,
+   "sha256": "ed8928b618bdfce94778250b74704dff109c3c1766a61be96ad684e625195bf0"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein234.fasta",
+   "size": 4463,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein234_1",
+    "TTGATAAAAACCAATTTAATACATTTTTTTTATAAACTTGAAAAAAAGTTTTATTGTTTATCTATTTTACTTTCTAAATATGAAATTAGTTATAAACAGGATAAATATATAAAATATGCACAGGATTATTCACGATTGGCAAAGTTAGTTAGCTTGTGGAAACTTTATCAAAATTTAGAAATAGAACTTAGTTATAATAA",
+    ">1206109-protein234_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4371,
+   "sha256": "016b5019537a76a7369cafe61096f62f83e59d96531599f1eee1a319b7bfe050"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein236.fasta",
+   "size": 1774,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein236_1",
+    "ATGAAAGAAACGGTTTTTAAAAAATCAAAAAAGTTAGTAAAAATTTATAGTAAAAATATTAACTTTACAAGTTTTTTTATAAAAAAGAAATATTCTACCTATATACAAAATTTGTATTTAATTTGTAGAACTCTTGATGAACTTGCTGATAATAATTTAACAGCTAAAACAAAATCATTAAAAAGATTTATTTTAATTTT",
+    ">1206109-protein236_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1728,
+   "sha256": "7ccdb22580ca9b3525388a36a239d424b8993e9906d21c95a8b54928deb2d056"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein237.fasta",
+   "size": 4458,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein237_1",
+    "ATGAACAATATAGTTACTATTATTGGTTCTGGTTTTGGTGGTATTGCTGCTGCTTTAAGAGCAAAAAAAAAAGGATTTGATGTCATAATAATAGAACGTAATAATAATATAGGTGGTAAAGCGCAACTATTTAAAGATGATCTTTTCTTCTTTGATGCTGGTCCTACAATTATTACAGCACCTTATTTATTTGAAGAATT",
+    ">1206109-protein237_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4389,
+   "sha256": "06a97d67c470fca132e96d4c8453af8866ff3d33f562321aa343c816b4e9c516"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein24.fasta",
+   "size": 1304,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein24_1",
+    "TTGGAAAACTTTATAAAATATGGTAGTTTTAGATTAATAGCTGAACATATTAGTTGGATACTTTTAAATATAAACTTAGTTGTTGTTAACTGGGGTTTTTCAGTAATATTATTAACAATTATTATTAAAGTTGCTTTATTACCGTTGTCATACATGTCTTACAACTCTTTGTTGAAACTACAAAAAAAACAACCTGAATT",
+    ">1206109-protein24_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1260,
+   "sha256": "b0951f4c6c5952e1f23763de00afcc2aa348e40dc180deffcd356b1b7e219a0c"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein240.fasta",
+   "size": 574,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein240_1",
+    "ATGAAAATAAATAACAAGTTGTTATATAGGTTATCTAAAATTAAAACAAAAAAGATTAAATTAAAAACGTTTATAAATAGAATAGTAAAAAAAATAGTTAATATAAAATTAATAAAAATTAAACCGATTACAAATACATTAAATGCTAAAACTTATGTTGGGTTACGAAAAGATCAAGTAAAAAGCAATAATAAGCTAAA",
+    ">1206109-protein240_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 528,
+   "sha256": "2a5defd4d1fb34eece1698a686ef60440cf0bd3b9e4763130f0db2949263d5db"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein241.fasta",
+   "size": 1300,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein241_1",
+    "ATGATAGAGCCTTTAGTAATTGCTTTATCAAAAGGACGTATCCTTTTTAAAAGTTTATCATTGTTAAAAAAAGCAGGAATAATTCCTATAGAATCTGTAGAAAACAATAGAAAATTATTATTTAATACTAAAAAAAAATATTTAAATTTAATAATTTTAAGAGCTATAGATGTGCCTACTTATGTTAAATTAGGTGCAGC",
+    ">1206109-protein241_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1254,
+   "sha256": "3ccc5f9a1c12c9fe29589801a8cbae4e577664ba72aabfd514fa561a7b7fa8f0"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein242.fasta",
+   "size": 1356,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein242_1",
+    "ATGAAAACTTTAAATGTTAAAATTAATGATTTAAAAACAGAATGGTATATTATAAATGCATATAACAAAAAATTGGGTAGGTTATCTACTAAAATAGTTCATTTTTTATTAGGTAAAAATAAAGTTATTTATAATAGTTATTTAAATATTGGAGATAATATTATTGTTATAAATGCCGATCAAATAAAAATAACTGGAAA",
+    ">1206109-protein242_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1287,
+   "sha256": "7466af3956ffc4bb881c2fdecc9d9cc5acc0438e9374ffe23dc6a69cc00fa548"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein243.fasta",
+   "size": 1209,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein243_1",
+    "ATGTATTTTTATGGTACAGGACGTAGAAAAACAGCTAGTGCAAGAGTATTTCTTAAAATAGGTAATGGTAAATTTATAATAAATAACAACACCTTAAAAAAATATTTTCATAACATAAATCTCTATTATCTAATGATTCAACCTTTAGAATTAACAAATAATGTAAACACTTTTAATATTAAAATTACTGTTAATGGTGG",
+    ">1206109-protein243_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1140,
+   "sha256": "272e1476ce15a8582e9618206023e60998f6a5b85d4f8eeeeaf82a126d8a4622"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein244.fasta",
+   "size": 2164,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein244_1",
+    "ATGACACATAAAAGTTTGTTTTTTAATAAAGCAATTGATTATTTGATAACTAATAAAGATGGTTTATATATTGATTGTACTTTGGGTTTGGGTGGCCATAGTAAACAAATTTTAAATAGATTGTCTATAAATGGTCTGTTAATTGCACTAGATAATGACTTAAATACAAAAACATTGGTTAAAAATTTAGAATTCTATTT",
+    ">1206109-protein244_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2118,
+   "sha256": "113de3733ae7ccd512a799254b2a07b1015ac0b1188f652a20dab2d77819d3bd"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein245.fasta",
+   "size": 7695,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein245_1",
+    "ATGAAGACAAAAATAAAAAAAAACATATATAATGCAACCCCAGCAATAACACAATACCTTAGGATAAAAAACCATTATCACAAAATTTTGTTAATGTATCGTATGGGTGATTTTTATGAATTTCTTTTTGAAGATGCGCACACAGCCTCTGCTTTATTAAATATTCAATTAACTAGCAAAGGAAAATATAATAATAAACG",
+    ">1206109-protein245_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 7626,
+   "sha256": "a3ebe8609d93ab5f8cc41b608efa31328a20e175a562b2ebfbde7e57b8e3d640"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein248.fasta",
+   "size": 3869,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein248_1",
+    "ATGGCTGTATTTACTAAAATAAAAAAACAAAAATTAAGTTTATTTTTAAAAAGTTTTAATATAAAAAAACAAATAAAATTTAAAGAAGTAAAACAAGGAACAGAAAATTCAACATTTTTTATTCAAACAGAAACTAAAAAGTTTGTATTAACCTTATTTGAACAAGGTTCTTATAAGGATTTAACGGGGTTTATAGACTT",
+    ">1206109-protein248_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3777,
+   "sha256": "e4c2dd985dc4c2f9da39d452f4970832ad195e36ec52f16b4325bb4fcfb1953b"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein25.fasta",
+   "size": 4137,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein25_1",
+    "ATGAGGAACAATGATATTATTTGTGCAAAAGCTACTTTGTATGGATTTTCAGGCATAGGCATTGTTAAAATTTCAGGAAATGAAAAAGTATTTATAATTTCAAAGCAAGTATTGGGTTTTATCCCCCAACACAGCAATGCTTGTTATGTTCCTTTTGTTGATAGCAAGAAAAAAATCATCGATAAAGGTATAGCTATATT",
+    ">1206109-protein25_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4071,
+   "sha256": "1663a44380eca24e100ba0b6df26540c1e9415ce351dd96b2904a5190bf5eae2"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein250.fasta",
+   "size": 1588,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein250_1",
+    "ATGAGCTTGTCTAAACGTATAATTCCATGCTTGGATATTGATTGTGGAAAAGTAGTAAAAGGTATAAAGTTTGAAAACACTCGTTATGCAGGCGATCCTTTAAAAATTGCTAAGTTTTATAACGAACAAAAGGCAGATGAAATCGCATTATTAGATATAAAAGCAAGTTATAGTGGAAAAAATAATACTATAGAAGTAGT",
+    ">1206109-protein250_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1542,
+   "sha256": "e40bec3c3c59422c7763e5f470961637bb24def56e38e96568394813f6dac9f6"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein253.fasta",
+   "size": 2573,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein253_1",
+    "ATGGCAATAATAATTATTGATTATGGAATTGGTAATTTATATTCTGTAGCAAATGCAATAAAAAAAGTTACGAAGGAAAAGGTTTATATTACTAATGATGCTAAAAAAATAAAACTTTCTAATCGCATAATACTACCAGGTCAAGGCGCTATAAAAGATTGTATAAAAGAACTAAAAAAAAAAGAACTATATTGGTTATT",
+    ">1206109-protein253_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 2481,
+   "sha256": "ae77d9767620af0ce4b420e97b7f57c1599397b2aa99092e90b13249ff4a811b"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein256.fasta",
+   "size": 1336,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein256_1",
+    "ATGTTTATAGAATATATACATTCAGTTCTATTTTTTTTTATAACATTATTACCTGTTGCTAACCCTATTGCAAGCACGACCTTATTGTTGACTTTAGGAAAGAAAATTAAAGCAAAGGAACGAAAAAAACAAATCTATTTTGCTACTTTATATGTTGGTATTATTATTCTTGTTTGTTTTTATGCAGGAAAAAATATACT",
+    ">1206109-protein256_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1290,
+   "sha256": "04045a43850525a57564b439621461f0c8c9db936dffd3e1e443946fd457858c"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein257.fasta",
+   "size": 7058,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein257_1",
+    "GTGGAATTGTTGTCAGGAGCAGATATGATAATACGGTTTTTAAAAGATGAAAACGTGAAATATGTTTATGGGTATCCAGGTGGAGCAGCTCTTCATATTTATGATGCTTTATTTCGTCAAAAAGTTGTTAAACACATTTTGGTTCGCCATGAACAAGCAGCTACACATATGGCAGACGGATATGCAAGGGCTAGTGTAAA",
+    ">1206109-protein257_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 6966,
+   "sha256": "909d83a5a8e3c8e83a62007183f81eb861414b383f64e9081855af20d4799de3"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein258.fasta",
+   "size": 1533,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein258_1",
+    "ATGCGGCATATTATATCTATTTTATTAGAAAACGAGCCAGGGGCATTATCAAAAATAGTAGGAGTATTTTCACAACGTAATTTTAACATAGAAACTCTAAATGTAGCTCACACAGAAGATATAACATTGTCTAGATTGACATTAACGACAAATGGAGATGCATGTGTAATAGAGCAAATTATAAAACAGTTAAATAAATT",
+    ">1206109-protein258_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1464,
+   "sha256": "2d42fdb376ea6c8252c2bf93e440a33c27378512493faa0df434f13a54aa30b4"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein259.fasta",
+   "size": 4160,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein259_1",
+    "ATGAAAATATATTACGAAAAAGATTGTAATAGATCTTTAATTAAACAAAAAAGAGTAGTAGTAATTGGTTATGGATCACAAGGGCATGCTCATGCTAATAATTTAAAAGATTCAGGAGTAAATATAAAGGTAGCCTTATATAAAGGTTCACGCTCATGGAAAAAAGCAGAAGTAGCTGGTTTGAAGGTAGAAGTAATAGA",
+    ">1206109-protein259_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4068,
+   "sha256": "5aa610373db843fd657f7e862daafc11a8a0237926bf8add0ecfa8aadcf84098"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein260.fasta",
+   "size": 816,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein260_1",
+    "ATGGTTAAAATACGGATGACGCGTTGTGGATGTAAAAATAGGCCATTTTATCAGATTAATGTTAAAGATTCTAGAAGTTCACGTGATGGAAAATTTATTGAAAAAATAGGTTATTATAATCCATTAGTTATAAGTGAAAAAAGATTTTGTATAAACAGTAGTAGATTAGGTTATTGGAAAAATAAAGGTGCAAAAATTTC",
+    ">1206109-protein260_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 747,
+   "sha256": "9eecdb887d06c88a067759d51c76c3dd8b82314351e4cbc4f6017a43cee6b613"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein263.fasta",
+   "size": 5165,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein263_1",
+    "TTGATACGAATAGGTATTTGTGGATTAGGAACTGTAGGTGGAGGGACTTTTAATCTTTTAAAAAAAAATTATAATGAAATTTTTCGGAGAATAGGTAGTCAATTTATTATAGAACAGATAGGTACACGTAGTGATAATCCAATTTGTAATTTAACAGGTATTAAAGTAACGAGAAATATTTTTGAAGTTGTGCGAAATCC",
+    ">1206109-protein263_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5073,
+   "sha256": "e02917b0bc2acc2f558fad58e41128b5efd4419d8b0d0f3a8defe78bdb73a63b"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein264.fasta",
+   "size": 4224,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein264_1",
+    "ATGCGTTACGTTAGTACTCGCGGTGTTGCTCCTGTACTTTCATTTGAAGATACAGTATTGACTGGTTTAGCAAGTGATGGTGGTTTATATGTTCCAGAAATAATTCCTAAACTTTCGCATAAAGAATTTATCGAATTAAGTAAGTGTTCATATATTGAATCAGCATATCGTATAATGCGTCTTTTTATTGATGATGTTGA",
+    ">1206109-protein264_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4155,
+   "sha256": "eb26c918107a5ed612558cacf12d8e000d9dfcdcdd8ddc10e433ba6d3298f4dc"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein265.fasta",
+   "size": 946,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein265_1",
+    "ATGTCAATAATATATTTTAATCGTAAAGCAAAACATAAGTTTTTGATTTTTGACAAACTAGAAGCAGGAATTTCTTTTTTTGGTTGGGAAATAAAAAGTATACGCTGTAAAAAGTTTAATCTGGATAATACGTATGTAATAATTAAAGCCAATGAAGCTTTGTTATTAGGAGCTAACTTTATCCCAATAAATACTACTAA",
+    ">1206109-protein265_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 900,
+   "sha256": "563b837b20c4fd440dffdff78723e86953589ada6e63215f9e1412a116b2140f"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein28.fasta",
+   "size": 741,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein28_1",
+    "ATGGAAATTTATATAGCAGCAGCTATAATGATAGGTTTAGGTGCGGTAGGAACGGGAATAGGCTTTGGTATTATAGGGGGTAGATTGTTAGAATCAACTGCACGACAACCAGAATTAAGTAATTTATTATTAACTCGTACTTTTTTAATGACAGGATTAATAGATGCTGTACCAATGATTGGTGTAGGTATTGCTTTATA",
+    ">1206109-protein28_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 675,
+   "sha256": "cb20d05303faee52c40783bd7e711abde67126cf10aa9580076e526400ae0237"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein29.fasta",
+   "size": 986,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein29_1",
+    "GTGAATATTAATTTAACTATTTTATGTGAAGTTATAAACTTTTCTATTTTAATATGGTGTTGTAAAAATTTCATTTGGCCGCCAATAAAAAAAAATATATTAGATAGAGAAAAAACAATAAATAATGCTTTAACAGCTGCTAATATAGCAAAAAAAGAATTATATAAAGCAAAAAAAGAATCAAAATATATTTTATGTAT",
+    ">1206109-protein29_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 942,
+   "sha256": "a18a5c382bf6ecfa45d22b352a060005c57f0b4d9806007c1b30887b09e47383"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein3.fasta",
+   "size": 2826,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein3_1",
+    "ATGATTAAGAATGCACAAATATTACCTATTAGTTTTTTATTTATAACATTAATAATATTAATTATTACTATATCATTTAATCGTAAAAATTTAATTATATTTATAATAACCATAATAGGGTTATTAATTTCATTATTATCTATATTTTTGATTAAACATACTTTATTTTATCCTTTAATAATGATAGATAATTATTCCTT",
+    ">1206109-protein3_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2784,
+   "sha256": "48ae915f06a6350bdd1bdbc1883dacea71ef2752be8fdc2d9d3d541ad418f766"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein31.fasta",
+   "size": 3110,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein31_1",
+    "ATGAAACAATTAAAGTTTTCTGAACTTAGTAATATAATCAAAAAAGAACTTACAAATATTAAGTTTCAATTAGATTTGAAAAATGAAGGAATCATTATAAATGTATTTGATGGAATCGTTCGAATGTATGGATTATATGATGCTATGTATGGTGAAATAATAGAATTTGTGGACAATATTTTTGGTTTAGTCTTTAATAT",
+    ">1206109-protein31_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 3066,
+   "sha256": "1e9555912ad5e1792752d408c83e3db289899bf61d0034cd2b7b71a11bbfd4ea"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein32.fasta",
+   "size": 3547,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein32_1",
+    "TTGATAATAGCGACAAAAGAAATAAAAGTACAAATTGAAACTATAAATAATACAAAAAAAATTACTAGTGCTATGGAAATGGTATCAGCTTCTAAATTGCGTAAAATACAAAATAGAATGTTATTAAGTAGGTATTATACTCAAAAAATAACAGCGTTATGTATCCGTATTTTAACTGATCAAAATATAAATTATAAAAA",
+    ">1206109-protein32_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3459,
+   "sha256": "4e2d6236d58ee8a8da9fee14272cf42d6605af4c6c0af9a6e633180935a5db12"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein33.fasta",
+   "size": 4170,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein33_1",
+    "ATGAATGGAAAAATTGTCCAAATTATTGGTGCAGTAATTGACGTAGAATTTAAAAATAATAACTTACCTAAAATTTATTATGCATTAAAAGTAGTAAACCTTAGTTTAACTTTAGAAGTTCAACAACACATCGGTGATAATATAGTAAGAACTATAGCTATGGGATCAACTGAAGGTATAAAGCGAAATTTAAAAGTGAT",
+    ">1206109-protein33_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4104,
+   "sha256": "a38babe748ccddf5df9df7e55ac3fe46cc25891fb29751c0cf448db27e03611c"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein35.fasta",
+   "size": 4162,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein35_1",
+    "ATGAATTTACGTAATAGGAATCTTTTAAGCTTAATGAATCATACTAAAGAAGAAATCAATTATTTATTAAATCTAGCAAGTTATTTAAAAAAGTCAAAATATATAGGTAATGAATATCCTAGATTAAAAGGTAAAAATTTAGCTTTGCTTTTTGAAAAACCATCAACTAGGACTCGGTGTGCTTTTGAAATTGCAGCTAA",
+    ">1206109-protein35_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4074,
+   "sha256": "a9f883248e87f6b9e2ee032991a268919fa47c419af309757dadbe40ab3ec4cd"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein36.fasta",
+   "size": 1947,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein36_1",
+    "ATGGAAAAAATTATTAAGCACAAAGGATTAGTTGTACCTATAAATAGATCAAACATAGATACTGATTTAATAATTCCTAAGCAATTTTTAAAAGCAATAAATAGTAGTGGATTTGGTTTAAATTTATTTGATGGATTGCGGTATATTGATGAAGGTTATCCAGGAAAAAAAAACAGATTAATAAATAAAGATTTTGTTTT",
+    ">1206109-protein36_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1881,
+   "sha256": "4d4049bdcfc89e8cf715eb06fe7dea46f78b9658dd8dd8d09c4fb96b5729396a"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein37.fasta",
+   "size": 3324,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein37_1",
+    "ATGAAAAATGAAATTTTGATTTTACCTGGTGATGGTATAGGGCCCGAAGTGATCAATGAAGCAGTTAAAGTAATTAAAGTTTTGCAAAAAAAGAAATTAATTAATTCAGTTATTCGTTATGCGAAAATTGGCGGCTATGCAATAGATACAGTTGGTTTACCACTTCCAAATGATACATTAAAAGCAGCAAAAGCATCTCG",
+    ">1206109-protein37_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3258,
+   "sha256": "29d3fdfd48bcad63b1466185719e69cd3715b8cab8d495e91febc1fcb456c022"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein4.fasta",
+   "size": 4491,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein4_1",
+    "ATGATATTGTTATGTTTTTTATTTATACCCTTTATCGGTGGATTGTTATCTTTAAGTTTTGAAAAAATAAATATAAAATATTCACGTTGTTCAGCTCTTTTTACTATGATTATACTGTTAGTTTTATCCATATATTTATGTTATTTAAATCTAAATACAACCAATATATGGGTGGTTAAATACCGAACAATATGGATTGA",
+    ">1206109-protein4_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4428,
+   "sha256": "704e59f9ceea2d2a830aa25ee3f6c77e4396e361c758951170ed33dd7a5615ba"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein40.fasta",
+   "size": 1968,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein40_1",
+    "ATGAAAACTAAACGAGTAAAAGTAAAATATTGTGGAATCACTAATAAAGAAGATCTAAAAGATGCTGTAAATTCTGGAGTTGACGCACTAGGTTTTATACTTTGGCCTGGTAGTAAACGTTCTGTTGATATTCATCGGTTAATTCTTTTATCTACTAAAGTTCCTGTTTTTGTTTGTCGTGTTGGTGTTTTTTTTAATCA",
+    ">1206109-protein40_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1902,
+   "sha256": "2d4bb06776feadccc6c544c3c86c3b687c0c7e22d444c98344320fe3ae0bfd6f"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein41.fasta",
+   "size": 1875,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein41_1",
+    "ATGGGTTTATTATCTGGATGCAATGGTTTAATATTAGGTGGAGCTTTAATTATAGTTATAGGAGCACAAAATGCATTTGTTTTAAATCAAGGATTACGTGGTAATTATCCTTGGATGGTTGCATTTATATGTGCATTGTGTGATGTAATATTAACTGCAACCGGTGTTGCAGGACTTTCAGTTTTTATTCAAAACCATAA",
+    ">1206109-protein41_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1809,
+   "sha256": "460a43208c99825cb7ecf55757720a3acddd8c79c36aa3ba7898682cc0c7b7ef"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein42.fasta",
+   "size": 3855,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein42_1",
+    "ATGTTAGATATTAAATTAATTTGCAACAATTTTAATAATGTTGTTAAAAAATTAGCCAGCCGTGGTTATGAATTAGATATTAAAAAAATTAAAACGTTGCTAGAAATACGCAATAAGTTTAAAACTAATACTGAAACTTTACAAAATAAACGCAATATTATATCTAAAACTATAGGAAACAACAAGAATTATATATTAAA",
+    ">1206109-protein42_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3789,
+   "sha256": "f07219ff9b6ac8beafffd7d0e275c6eb34a05e9411ffa347124dcb2e7bbb2803"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein45.fasta",
+   "size": 9382,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein45_1",
+    "GTGTCAAATAATCAAATATTGCCAGAAAGTATTTATTTACTGCCCATAAATAATAGGCCGTTTTTTCCAGCACAAATACAGCCATTACTAATAGATAAAAATAGATGGGTTGAAACTATAAAAAGAGTGTTTAATACAAAACATGGTTGTTTAGGCTTAAGTTATGTTGGAAACAATAAGATTGTTGAAGAAAGTCCAAA",
+    ">1206109-protein45_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 9294,
+   "sha256": "8097f85f4abab1e2866d37fb81c5c9222d7689adb9ea459926a61ff5812743b6"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein46.fasta",
+   "size": 5580,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein46_1",
+    "ATGAATACTTATAGATCGTATACAACGACAAAAAAAACCATGGTTGGAGCACGAGCTTTATGGCGTGCGACGGGAATGAAAGATAATGATTTTTATAAGCCAATAATAGCAATTGCTAATTCTTATACAGATTTTGTGCCTGGTCATATCAATCTAGATAAGGTAGGAACTATTATAAAAAAGTCAATTATAAAAAATGG",
+    ">1206109-protein46_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 5514,
+   "sha256": "880723b62f363e8b1616d57c30753d3827ceb87afcb2681f984757dbb9ec091c"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein49.fasta",
+   "size": 3591,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein49_1",
+    "ATGAAAAATTATGAAAAAAATTTATTACCTGATGGTATAAAGGAAATATTACCCCCACAATCTATAAATATAGAGAATTTAAGAAAAAAATTATTAAATTTATATTATAAATATGGTTATAACTTAATTATACCTCCCCATATAGAGTTTTTAGAAACATTATTGAATGTTGTAGGATATGATTTAGAACTACAAACAGT",
+    ">1206109-protein49_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3525,
+   "sha256": "4133b872a87d08fedf1136f1a3ee2e7d86338a40ede97483c759a5623183a165"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein50.fasta",
+   "size": 5785,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein50_1",
+    "GTGAGAAATACAGATAAAACTTTAGTAAAATTGTTTGATAAAAAAGACTATAAATATGGTTTTAAAATAAACATCGCTAGTAACGTACAGTTACCAGGTTTAAATAAAAAAATAATACGTAATTTATCGAAACAGAAAAAAGAACCAAAATGGATGTTAAAATGGCGATTAGAAGCTTATTTAAAATGGTTAAAGATGAA",
+    ">1206109-protein50_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5697,
+   "sha256": "1cae87a650184e678c3b3771193da8ef5afce56457662f800f264de655b6e896"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein51.fasta",
+   "size": 1520,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein51_1",
+    "ATGTTAAAAATAGAGAATTTAAAGGTTAATATAAAAAAAAATAATATATTACAAAGTATTAACATAAAGATAAAAACAGGTGAATTACATGTAATAATGGGGCCAAATGGGTCAGGGAAATCAAGTTTAGTATCAACATTGGTTGGAAAAGAAAATTATACAATAAAGAACGGGAAATTGTTTTTTAATGGTATTAATAT",
+    ">1206109-protein51_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1476,
+   "sha256": "08ae8cca6d88cdb2a135584763b0fd23b6533a713bf201d5bec570f6bd7a4ad7"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein52.fasta",
+   "size": 3135,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein52_1",
+    "ATGTGTGATTTATTAAATATTGATGCTTATATGATTGTATTTATAGATGGTAAACTGTCAAAAAAATACTCAAATGTAATTAACTCATGTGAAGTAAATATAATTTATTTAAAAAATAATCTTATGAATAAAGAAACTGATAAAATAAAAAAAAAATATTACACTTATAGTGGTTTAATACTTAATTTAAAATCAAATAT",
+    ">1206109-protein52_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3069,
+   "sha256": "e06b05a134d81f35d5ec89f16174a1d7711c2127838889f74e2182dc2ff121a7"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein53.fasta",
+   "size": 5044,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein53_1",
+    "ATGTTAATAAATTATATAAAACTAAAAAACAAAATTCTTAAAATAAGAGAAGAGTTTCCTATATTAAAAAATTGTATACACAAACTATATGAGTTAATTTTTTTTGATAATGCAGCGACAAGTCAAATGCCAAACAATGTAATTAACATAATGAATGAATATAATAACTATTATAATGCTAATATACATAGAGGAATAAC",
+    ">1206109-protein53_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4956,
+   "sha256": "48b45f95b1a96d39753f2f598cae1ff589682efbab50be4428e097e5d6d1a1c5"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein55.fasta",
+   "size": 723,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein55_1",
+    "ATGAAAAAAAAAGACACAATAGAAATGGAAGGAAGAATTATAGACACATTACCAAACACCATGTTTAGAGTTAAATTAGACAATGGGCATGTTATAACAGCACATATATCTGGTAAAATTAGAAAAAATTATATAAAAATTTTAACAGGAGATAAAGTAAAAGTTGAAATAACACATTATGATCTTACAAAAGGTCGTAT",
+    ">1206109-protein55_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 657,
+   "sha256": "c1c2bbe82a59595e9f2f12e4a1e4742d6f15621f12bac9d74acced1478b717f1"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein56.fasta",
+   "size": 2874,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein56_1",
+    "ATGAAAAAATTAGCATTAAATATAAAAAAATTAACAAAAATTTATAAAAAAAAGAATTATGCGTTAAAAAATATAAATTTAGAGGTTAGAAAAGGAGATTTTTTTGCAATATTGGGACAAAATGGAGCAGGAAAATCAACAACAATAGGAATAATAAGCTCTTTAATAAAAAAGACTTGTGGAAAAATAAAAATTTTTGA",
+    ">1206109-protein56_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2808,
+   "sha256": "196e31f13fd912c69b53683c062c6dcf27c08f9609bfd603376dff036bac5500"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein58.fasta",
+   "size": 2871,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein58_1",
+    "ATGCAAATAGGTATTATTGGTTTAGGTAAAATGGGAGGTAATATTTCTAAAAAATTTTTAAAAAATAAATATACTTGTTATGTTTTTGATAAAAATAGAAAGAATATAAAACACATAGAAAAAAGGGGAGCACTAGGCGTAAACTCTTTAAAATGCTTGGTTTTAAGTTTATCGAACCCTAGAACAATTTTGTTAATGTT",
+    ">1206109-protein58_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2805,
+   "sha256": "6e4913b6671b0d5163c2e2a03b82794d36c5e93f451e4f7cd11a36376cfbba51"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein59.fasta",
+   "size": 734,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein59_1",
+    "ATGAAAAAAAACAAGCAAAGCAAAAAAAAAGATTATTTAAAGTTGTTGTTTTCTATTCTGAATATATTAATTGCAATGTATTTATTAAAAAAAAATAAATATATATTTTTATGTTTGTATAGTTTGAGTTTATATTTAATGTTAGTTACTGTAAAAGGAAAAGAATTAAGAATTATAGGAAAGATTGCAAAAAAAGAAAT",
+    ">1206109-protein59_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 690,
+   "sha256": "bf7302ec2ccc335fb3a9c5e97668b101dd25622b543f7ccf1292d58add6072aa"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein6.fasta",
+   "size": 660,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein6_1",
+    "ATGACGTTAATCCCCATAGATTATGTTTTTATATTATCTTTAATTTTATTTTTTATAGGTATATTCGGTTTATTAATTCGTCGAAATATAATTGTTATATTTATTTGTTTAGAAATAATGTTAAATTCTTCAGCTTATGTTTATGTTATATCTGGAGAGTATTGGGGGCAACCAGATGGTCAGGTTATGTTTATTTTAAT",
+    ">1206109-protein6_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 618,
+   "sha256": "0c68c125506d86ace8dd30d3fc68bed6c53751b94e37619ec2ea26250196797b"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein60.fasta",
+   "size": 2287,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein60_1",
+    "GTGAAAAAAAGATGGTATGTTGTTAATATATATTCAGGTTATGAAAAACAAGTTATAAGTGATTTAAAAACTAGAATTAAAAGATATAAATTAGAAACAGCATTTGGAAAAATGATAGTACCTTCAGAAACTTTGTTTGAAAAGATAATAGTACCTTCAGAAACTTTGTTTGAAAAGATATCAGGTAAAATACGTAAAAG",
+    ">1206109-protein60_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 2199,
+   "sha256": "1860f73a888d0cd46821412c8e057fd44e547c8e44251970bfc8c1159a9c3780"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein61.fasta",
+   "size": 1377,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein61_1",
+    "ATGATTGATAAAAAAAAAATAATAAATGTAGTTAAAATACAAGTAGAAGCAGGTAAAGCAAATCCTAGTCCACCAATAGGACCTATCTTAGGACAACAAGGAATAAATATAATGGAGTTTTGTAAGAAATTTAATTTAGAAACTCAACATATAGAAACTGGTATGCCAATTCCCGTAATAATAACGATATATTCAGATAG",
+    ">1206109-protein61_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1311,
+   "sha256": "b02062b52c702cd92230cfe6bebb44b0f9cf8a991e0181d3b8099ea57025b8a1"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein62.fasta",
+   "size": 2136,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein62_1",
+    "ATGGGACCGTTTTCCAAAAGAAAAAAAATAATACAAAATAATATTAACAAACATCAAAACTATAAAATAAAGGAAGCGATAGAACAGTTAAAAAAATATAGTTTAGTAAATTTTGTTGAAACAGTAGAAGTTGTTATAAAATTAGGAAAAAAAAAAGTTTTAAATAAAGTAATAAAAAATACATTAAATATACCTTATGG",
+    ">1206109-protein62_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2070,
+   "sha256": "f699e5c5b639e4f859c4497791d8d3f6cc445beafd55e63baa4dc74e55ea19e4"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein63.fasta",
+   "size": 1046,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein63_1",
+    "TTGAAAAAAAAAATAAAAAACAAAGCATTAATAATAAAAACAATAAATAAAAATATAATTGAATCAACATCAATTATGGTAGTAAACTATAAGTATATTAATTCAATAAATATGAATGTATTATATACAACAGCAAAAAAAAAAGATGTTAAGTTGTATGTTGTTAGAAATAGATTACTTATCAAAGCAATAAAAGGAAC",
+    ">1206109-protein63_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1002,
+   "sha256": "d6faa6dfc1456d8b02d0f75c1584e829b5a1e38425e79b921ca5d99b077dac12"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein64.fasta",
+   "size": 773,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein64_1",
+    "ATGAATAAAGAAGAGATTATAGAAATTTTATCTAAAATGAATGTATTAGAATTGATAGAGTTAGTGTCTGAAATGGAAAAAAGATTTAAGATTAACAAAGATAATATATTTAATAATAACACTAATAATAATAATATTAAGAAAAAAGAGAAAAAGTTAGAATTTGATTTGATTTTAAAATCAATCGGTGAAAAAAAAAT",
+    ">1206109-protein64_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 729,
+   "sha256": "6d128ee799d8085dc454d6ebf7952d337f4c0637dbf327a8c52a58c66f914a4c"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein65.fasta",
+   "size": 16357,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein65_1",
+    "ATGGGTTCTTCATACACGAAAAAAACCAATATTCGTAAAATTTTTGGTAAAATACCTCAGATAATGGAGGTACCTTATTTATTATCTATTCAAATAGAATCATATAAAAATTTTTTAAAAAAAAAAACAAATATAGGAATAAACGCAGCATTAAATTCAATATTTCCTATAAAAAGTTTATCAGGAAAAGCATTATTAGA",
+    ">12061"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 16269,
+   "sha256": "f6a48b08958ebbfbc1e68fcb7b9056005f893630e769de4fbb6ac490046d7fd2"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein68.fasta",
+   "size": 1488,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein68_1",
+    "ATGTCAAGACGAAATATAGCCAGGAAAAGAGAAAAAAAAACAGATAATAGATTTAAAAGTGTAAGATTAGCTAAGTTTATAAATCATATAATGTTGAATGGAAAAAAAGAATTGGCAGAGAGAATAGTGTATGGTGCATTAAACAAAATAAATAAAGTTTTTAAAAAAAATATAGCACTAAGTTTGTTTGAAAAAGCATT",
+    ">1206109-protein68_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1422,
+   "sha256": "86626517b32b42966c899a7595aa57a06dee602e8aff81194506d8d5ce3fb725"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein69.fasta",
+   "size": 6462,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein69_1",
+    "GTGGCTAGAAAAACCTCAATAAATAGATATAGAAATATAGGCATAATTGCACATGTTGATGCTGGAAAAACAACAACTACAGAACGTATTTTATTCTATACAGGGAGATCTCATAAGTTAGGAGAGGTACATGATGGGACTGCAGCTACAGATTGGATGGAACAAGAGCAAGAAAGAGGTATAACTATAACATCAGCAGC",
+    ">1206109-protein69_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 6396,
+   "sha256": "4e8bc374e30416adad5167f149d7f5025033deeb05982fc218d5b7b645341f74"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein7.fasta",
+   "size": 2028,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein7_1",
+    "GTGTTATTTTATATTTCAGCAATAATTGCAATAGTTTCAACGTTGAACGTTATTATAAGTAATAATATTATACATGCTTTGTTGCACTTTATTATATCATTGATTTCAATTTCTATGATATTTTTTTTTATTGGAGCAAATTATGCTGGAGTCTTAGAAATTATTATTTATGCTGGTGCAATTATGGTCTTATTTGTTTT",
+    ">1206109-protein7_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 1944,
+   "sha256": "e72f84d6a5f6cea0f75ea2f14247e56e9ab6e11b17827d36abf56e7ef3057dd4"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein71.fasta",
+   "size": 1348,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein71_1",
+    "ATGAAAAAGCAAAAAATTCGTATACGTTTGAAATCGTTCTCGAAAATATTAATAGAGAAGTCAGCGAAAGAAATAGTAGAAACAGCAAAACGTACCGGAGCACAAATAAAAGGACCAATTTCGCTACCAAATAAGGTAGAAAGGTATACAATTTTAATATCTCCACATGTTGATAAGGATGCCAGGGATCAATATGAAAT",
+    ">1206109-protein71_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 1260,
+   "sha256": "ef9b150f037e8b85adedccc900f8c5fca221adb3f487c7fa41ce65978591d913"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein73.fasta",
+   "size": 2548,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein73_1",
+    "ATGAAGATCAAACTTAGAGATACAACTGATACAATTAAAGTATCAAAAGAAGTATTTGATATAGATTTTAAACCGGCATTAATTCATCAAGTAATAACGTCGTATATACATAATTCAAGGCAAGGAACAAAAGCACAAAAAAATTATAAAACTATTCGTGGTGGTGGCAAAAAACCTTGGAAGCAAAAAGGAACAGGACG",
+    ">1206109-protein73_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 2460,
+   "sha256": "8ece7169a99d2f53d772f324ece1280a7cfdb9958205127ffb6a27eee1e87ca0"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein75.fasta",
+   "size": 3280,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein75_1",
+    "ATGTCGTTATTAGTTAAAGTAAAACCAACATCGGCTGGCATAAGGCATGCTATAAAATTAAAACAAAGAAAAATATTTAAAGGTAGGCCAATTAAGCAGTTGATAGTAATAAAAAAAAAACATGGTGGACGAAACAATAAAGGTAGAATTACTGTGCGTCATATTGGGGGGGGACACAAACAATATTATAGACAAATTGA",
+    ">1206109-protein75_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3192,
+   "sha256": "7daf1eb25b74c17eea0c3394270402abeeebfb8078d05cefd987e2bd16165571"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein77.fasta",
+   "size": 1456,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein77_1",
+    "ATGGAAGAAGTAAGTGCAAAGTTATGTGGTGTACGGTTATCTGCCCAAAAAGCTAGATTGGTAGTGAATCTAATTAGAGGTAAATCAGTAAATAGAGCATTAGAAATTTTAAATTTTACATCAAAAAAAGCAGCGAAGTTTATAAACCAAACACTTAAAACAGTAATGTACAATGCGAAAAATAATAAGGGTATGAATAT",
+    ">1206109-protein77_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 1368,
+   "sha256": "776feb666cad0fbcd478ce90f815e1b76e1ec5582f0bbef85333668aabd7a472"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein79.fasta",
+   "size": 1308,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein79_1",
+    "ATGTTACAGCCTAAAAAGACAAAATATCGCAAACAACAAAAAGGACGTAATAGAGGTGTAGCTAATCGTGGAAATGATGTGAAATTTGGTGAATTTGGTATGAAAGCATTGGTTAATAGCAAAATAACTTCAAGACAAATAGAAGCAGGTCGAAGAGCTATTACTAGGCATGTAAAGCGTGGTGGCAAAATTTGGATACG",
+    ">1206109-protein79_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1242,
+   "sha256": "a14699620bf8709815cac3060ac0905e118495672fc3f03bada40aff4de0ed1d"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein8.fasta",
+   "size": 1116,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein8_1",
+    "ATGATAAGAAAATTAATTATTTCAATATTTAGTATTTTTCGTACGATTTATATAATATTTACACATTCTTTTAATAAAAGAGTTACGTTACAATATCCAGAAGAATCTGTATATTTATCACCACGTTATAGAGGTCGTATTGTATTAACTAGAGATAATACCGGTAAAGAACGGTGTGTTGCTTGCAATCTTTGTGCAGT",
+    ">1206109-protein8_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1074,
+   "sha256": "012f9afb201b1ff27b085967fa1dde4e6b7cb2e4d07da1c8a10ac7f9a1605145"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein82.fasta",
+   "size": 1182,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein82_1",
+    "ATGATACAAACACAAACTAACTTAGAATTAGCCGATAATAGTGGCGCAAAAAAAGTACAATGTATAAAAGTATTAGGCGGTTCTCGTCGTAGATATGCTAATATAGGCGATTTGATAAAAATAACAGTTAAAGAAGCAATACCTAAGGGTAAAGTAAAGAAAGGGCAAGTAATGAAAGCCGTAGTTGTACGCACAAAAAA",
+    ">1206109-protein82_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1116,
+   "sha256": "6c33423e6f7f7241da8a739bc35e69242ab236fa3113e9fbd34bbc855cf398c0"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein83.fasta",
+   "size": 975,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein83_1",
+    "ATGTATAAACTTAGACGTAAGGATGAAGTAATCGTTATATCTGGTAAAGACAAAGGTAAAGTTGGAAAAATTAAACGGATTTTAAAACAGAAAGTTTGGGTAGTAGGGATAAATATAAGAAAATTTCATAAAAAAAATAAAGGTAATAGCATAGGAGGTATAATTAAACAAGAAGCATCAATTAATTGTTCAAATATAGC",
+    ">1206109-protein83_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 909,
+   "sha256": "cf0a261b5c496ae2b9e8aa6495840d80625e9dba84a58696e6049ed189df72ba"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein84.fasta",
+   "size": 2092,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein84_1",
+    "ATGAAGAGTATAAAATTGAAGTATATTAACATAATGAGAATACCAACTATAAGTAAAGTTACTTTAAATATTGGTTTGGGTAAATCAGTAGAACAAAATGATAAACGTTTACTTGAAACAGCAGAACAAGACTTCAGAAAAATTACAGGACAGCAACCAATTATTACAATGGCTCGCAAATCTATTGCTAGTTTTAAATT",
+    ">1206109-protein84_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 2004,
+   "sha256": "afb3803b60c51a61ebda05b8dcf0deb42523301b59e182c56ebe094b5719cdb5"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein85.fasta",
+   "size": 984,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein85_1",
+    "ATGGCAAAGAAGAGCGTTATAGAGAGAGATCTTAAAAGAAGACGTCTCGTTAAAAAATATTATTTGCGTCGAAGGACTTTAAAACAAATAATTAATAATATAAAAACATCTTATGAAGAAAGATTTAAAGCACAGTTAAAATTACAAGGTTTACCTAGAGATTCAAATCCAATAAGACAAAGGAATAGATGTTTTATTAC",
+    ">1206109-protein85_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 918,
+   "sha256": "203f723abca0c517852d15ee265a9dc936720eec786b21d1a3d6ef13e8fd1182"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein86.fasta",
+   "size": 1218,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein86_1",
+    "ATGAGTATGCAGGATACTATTGCAGATATGTTAACAAGATTGCGTAACGCACAATTAGTTTGTAAATCAGAAGTTGTGATACCAATATCAAAATTAAAGTTAGAAATATCACGTATTTTAAAAGAAGAAGGTTATATTTTATATTATGCAAACGATAAAACAAATATAACAGTAAAATTAAAATATTTTAAAGGTCAACC",
+    ">1206109-protein86_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1152,
+   "sha256": "931491093213bd787615fe20cd8a1058ddd29bfd6e78f10fbfaf9b6c0583fba0"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein87.fasta",
+   "size": 1656,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein87_1",
+    "GTGTCAAAAATAGCGAAATGTCCAATAAAAGTACCAAAGAACGTAGAGATACTATTAGATAAAGAAGTTGTTATTGTAATTGGAAAGAATGGAAGATTGTTTTTAAGTAAACCTTCTTCAGTAGTAATAGTAAAAGATCAACAAAAATTAATATTTAATTCTAAAAAAAAAGATTGGGTAATAACTGGAACAATAAGGGC",
+    ">1206109-protein87_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1590,
+   "sha256": "c2a2184650ace82bd80963541da8a701ef4a0a5c163b610a43c4d5a4c36a8716"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein9.fasta",
+   "size": 1935,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein9_1",
+    "ATGAACAATATAATAAAACATATTATATTTATAGTTGTTATATTTATAAGTGGAGCTTTTATGAGTTTTATCGAGCGTAGGGCTTTAGGTTTGTGGCAAGATAGATATGGTCCTAACAGAGTGGGATTGTTTGGAATATTTCAATTTATTGCTGATGTTATTAAAATTATATTTAAAGAAGATTGGATTCCACCTTTTTC",
+    ">1206109-protein9_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1893,
+   "sha256": "2ee20c36466aa395ab62bbc582df10f1c1f6d99964a87e0ec36fe3fde33be8b0"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein90.fasta",
+   "size": 1401,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein90_1",
+    "TTGAAATTAAATAAACTAATAAATTGTGTTATAGGATATAAAAAAGAAAAAAAAAGACTAGGTAGAGGGATAGGATCAGGAACAGGAAAAACGTGTGGTAAAGGGCATAAAGGTCAAAAAGCAAGGTCAGGAAAGAAACTTAAAAGAGGTTTTGAGGGTGGTCAATTACCTTTAAAACGTACAATACCTAAAATGGGTTT",
+    ">1206109-protein90_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1335,
+   "sha256": "9e420a23a6d9f4def0494829cd7e2e431e90050e114f096edf0680f713a7605a"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein93.fasta",
+   "size": 1119,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein93_1",
+    "ATGGCACGTATTGCAGGAAGAAATATACCAGATAACAAGCAAGTCTGGGTTTCATTAACATATATCTATGGAATAGGAAAGTATAGAGCTAATAGTATTTGTAAAAGAATAGGTATAGACAGAAATGTAAAAGTAAGAGATTTAAATTCTATACAATTAGATAAAGTACGTAAACAAATTTGTAAATTTGTAGTAGAAGG",
+    ">1206109-protein93_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1053,
+   "sha256": "837bba88823ae1dbcffae5afe3fc792d7c3dfe65b965ef2a70de07a4106e22cc"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein94.fasta",
+   "size": 1239,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein94_1",
+    "ATGGTAACAAGAAAATCTAGAAAAAAAAAAGTACTAAAAAAAAAAGAAATTATAAATGCAGTAGCACATATAAATGCTTCTTTTAACAATACTATTGTTACAATAACAGATAAAAATGGTAATACTTTAGCTTGGGCAACTTCAGGGGGGGCTGGTTTTAAAGGATCGAGAAAAAGTACTCCGTTTGCTGCGCAAACGGC",
+    ">1206109-protein94_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1173,
+   "sha256": "a32667717786d51422de973b17e695bb606d5aa8608039038252433915660d8d"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein95.fasta",
+   "size": 1902,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein95_1",
+    "ATGGCACGGTATTTGGGACCAAAATGCAAATTGTCTCGTAGAGAAGGAACAGATCTATTTTTAAAAAGTGGAATGGTATCTATTGAAGAAAAATGTAAATTTGATAAGATTCCGGGACAAAATAAAAAACATCGTACAAGAATAACAGAATATGGAAAGCAATTACGTGAGAAACAAAAAGTTCGAAGAATATATGGAGT",
+    ">1206109-protein95_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1836,
+   "sha256": "0a45a1bf601cf97eca4e684ac0ddec0265ff89c2dd97ad86514b4ed115c4a6ba"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein96.fasta",
+   "size": 4036,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein96_1",
+    "ATGAGTTCAGTTAACGAGTTTGTACGTCCAAGTAAAATAAATGTAGAAGCGATTAGTAATAATCATGCAATTATAAGTTTAGAACCTTTAGAACGTGGATTTGGTCATACTTTAGGAAATGCATTGCGTCGTATTTTATTATCTTATATGCCTGGGTGTGCAGTTGTTGAAGCGGAAATAAAGGGAGTACAGCATGAATA",
+    ">1206109-protein96_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3948,
+   "sha256": "90220cef15d352cd635d05bdfe4be40cf88b80c012647c88eb4edfe480fb1bc7"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein97.fasta",
+   "size": 1119,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein97_1",
+    "ATGCGTCATCGTAAAAAAGGTCGTCATTTAAATAAAAGTGTTTCACATCGTAAAGCATTGTTTAAAAATTTGTGTTTTTCATTAATCAAACATGAAATGATAAGAACAACATTGTCAAAAGCTAAGGAATTACGTCACTATATAGAGCCGTTAATTACCTTATCTAAAAAAGACACCGTATCTAATCGTAGATTAGCCTT",
+    ">1206109-protein97_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1053,
+   "sha256": "f7a191c4c0f9e21b8390f60aed2dd20c63bcbab6267769a7dc3cf2f019f502e3"
+  },
+  {
+   "path": "schema/schema_seed/1206109-protein99.fasta",
+   "size": 852,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein99_1",
+    "ATGGCTCAAAAAAAAGCTGCAGGTAGTTCAAGAAATGGAAGAGATTCAAATTCTAAACGATTAGGTATTAAGATATATGGTGGCCAATATGTTATTTCTGGAAATATAATCGTTAGACAACGTGGTACTAAAGTTCTTGCTGGACACGGTGTGGGAATTGGAAGAGATCATACATTGTTTGCATTAATTAACGGTTGCAT",
+    ">1206109-protein99_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 786,
+   "sha256": "b37868ce8174b7b638f5d6228e3e5ddc553c45ea7af0291e4db197d63f8414f3"
+  },
+  {
+   "path": "schema/schema_seed/1239881-protein112.fasta",
+   "size": 565,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1239881-protein112_1",
+    "ATGTGTTGTAGTTGTGTATTTGATGATTTGTGTAAATGTGTTGTAGTAGTATATGGTGTAAGAGTTTTAAAAAGGTTGCTGGTTTGTGTAGTTGTTTTAAAAGAAAGTAAAAGATTGCTGGTTTGTGTAGTTGTTTTAAAAAAACAAGTAAGAAGTTGTAAAAAAAAAGAAGGAAAAGGAAAAAATTGGCAGTTGGCAGT",
+    ">1239881-protein112_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 519,
+   "sha256": "4228bd8932fdd7d908e173c4b199b7851b0f326d2e84883c8d4420e918d327d5"
+  },
+  {
+   "path": "schema/schema_seed/1239881-protein113.fasta",
+   "size": 948,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1239881-protein113_1",
+    "ATGAATTATGAAATAAATATATTATTAAATGTAAATAATGACAATTTAACATCAGAAAATATAAAAAAGTTAATTAAAATTATTATTGAAAATAATGGAAGAATAACCAAGTTGGAAGACTTAGGGAATTTAAATTTATATTATTTAATAAAAAAGCAAAAACAAGCTAATATTATATTAATAAACATAGATTGTGAAAA",
+    ">1239881-protein113_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 879,
+   "sha256": "3ca05915cc8e4e973a5358ff058bca0e74bb75c2cb775414d1e3167c53f2b07f"
+  },
+  {
+   "path": "schema/schema_seed/1239881-protein138.fasta",
+   "size": 10208,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1239881-protein138_1",
+    "ATGCTTGAAAAATATAAAAAATTTTTATCAATTGAAGATGAAGTAAAACAGTCATATTTGGATTATGCATTGAGTGTAATTATTGGCCGTGCAATTCCAGACATACGTGATGGTTTAAAACCTGTGCATCGCCGTGTAGTGTTTGCTATGCATGAATTAAAAAATACATGTAATAAAAAGCATTTAAAATCTGCTCGTGT",
+    ">1239881-protein138_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 10116,
+   "sha256": "eb43f9c6ac0ea79fe439dd84d850effbbb38ad0c6ffb7fa48a8c5bf99e76bdae"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein101.fasta",
+   "size": 1035,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein101_1",
+    "ATGAAAAAAATAATGTATGCAGTTATAAAATGTGGTAGTAAACAATATATTGTAAAGGAAGGACAAAAAATAAAAATAGAAAAAGTAAAATTAGAAATTGGAGAAGTAGTTGAAATAAATCAAGTACTTTTGCTTGATGAAAAAAATAATAAAATAAAAATAGGAAAACCATTTGTTAATAAAGCTAAGGTTAGTGCAGA",
+    ">1297582-protein101_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 966,
+   "sha256": "c172f754e29c9d7c28b7ca9a8cbe6e442fcef534edfa081a8cbd1dce6f79c514"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein109.fasta",
+   "size": 4910,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein109_1",
+    "ATGATTAATAGAAAGAATATAAGTAATATCTATAAAGAACTTATGAACAAAATTCGGTTTAGTTTAGTTTCAATTATAATTTATAGAATAGGGGCACATATACCTGTACCGGGAATTAATACATATCAATTATCTATAGAAAATAGTGCTAATATAATTAGTTTATTTAATATGTTTTCTGGTGGAGCCTTGGAGAGAAT",
+    ">1297582-protein109_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4818,
+   "sha256": "505df132322662c5312d7608944bb15803a6558de7c23d39c730daa528acd25b"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein11.fasta",
+   "size": 9744,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein11_1",
+    "ATGCCAAAATATACATATATAAAAAAAGTATTAATTATTGGCTCAGGACCTATTATTATTGGTCAAGCATGTGAATTTGATTATTCTGGTGTACAAGCATGTAAAGCTTTAAGAGAAGAAGGTATATATGTTATATTAGTTAATTCAAATCCAGCTACAATTATGACAGATCCGCAGATAGCTAATTCAACATATATTGA",
+    ">1297582-protein11_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 9678,
+   "sha256": "76e3bb9b8825f37d6ad02d8d12f82e1ababc8edeaec088bfc046b7258e82feda"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein111.fasta",
+   "size": 1629,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein111_1",
+    "ATGGTTAACAAAATGGTTAACAAAATGGTTAACAAGACAGAAAGTGAGTTTAAAGAAAAAATAGTAAAGATAAATCGTGTTTCTAAAGTAGTAAAAGGAGGAAGAATATTTGGATTTTCAGCTACAATAGTAAGAGGTAATGGAAAAGGTACAATTGGATTTGGAAAAGGAAAAGCTCGTGAGGTTTCAGTTGCTATTCA",
+    ">1297582-protein111_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1560,
+   "sha256": "29a53efd48c546f38e17ea74e3dc5a25747c525c4839135e17ef749961e9b1c2"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein112.fasta",
+   "size": 1179,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein112_1",
+    "GTGAAGAAAATATTATATATAAAGAAGTTAAAAAAAAATAAGAGTGAAAGTATGAAATTAAAAAAAGAAATTCGTAAAAAAAGAGTAAGATTTAAAATACGGAAAAAAATGATGGAACGTATATGTGTTAATAGAACAGCAAAAAATATATATGCGCAAATAATATCATCAGATGGTAAAAAGGTATTGGTAAGTGCTTC",
+    ">1297582-protein112_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1110,
+   "sha256": "473d51389b730e1a25e516651dbb0362e1c67244d0b17a294058b7052d9dbc4c"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein119.fasta",
+   "size": 828,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein119_1",
+    "ATGAAAAGTAATATAAAAGTAAGAAAAATAAAAGGAAAAGTAGTTAGTAATAAAATGAATAAAACAATTGTAGTTTTAATAGAAAGGATTATAAAACATAAAATATATGGTAAGTATGTAAAAAGATCAAATAAAATAAGTGTTCATGATGCAAAAAATAAAGCAGAAATAGGAGATTTAGTTGAATGTGCAGAAAGTTT",
+    ">1297582-protein119_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 759,
+   "sha256": "502ddbb897947d9cf5f883d9b08a71e996bd1f1787524272a3c4d25acf5b3bd1"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein122.fasta",
+   "size": 2139,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein122_1",
+    "ATGGGAAAAAAAGTAAATCCAATAGGTATGAGATTAGGGATTATAAAAAATCATTTATCAATATGGTATGCAGAACGAAAAAAGTATGCTTTATTATTAAAGAAAGATATTAAAGTTAGAAAAGTTATAGAAAAACGTTTAAAAAATGCTAATACTAATATTAGTAGGATATGTATAGAACGTACTGCTAATAATGCTAG",
+    ">1297582-protein122_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2070,
+   "sha256": "7998090e923b5d3e66c5a30667e50a85fbbf42f6d75b13271179156407010d38"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein124.fasta",
+   "size": 933,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein124_1",
+    "ATGCCACGTTCTATAAAAAAAGGTCCTTTTATAGATAAACATCTTTTTGAAAAAATAGAAAAAGCGTTAAAAAACAATGAAAAAAAACCAATAAAAACTTGGTCTCGAAGGTCTATGATATTACCTGATATGGTAGGATTAACAATAGCAATACATAATGGTAGAAAACATATACCGGTTTATATTACAGAAGAAATGGT",
+    ">1297582-protein124_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 864,
+   "sha256": "1b041b1a97940a5f8dc091575b24965f7594388cacdab7481d4e97cd7e8f1c5f"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein126.fasta",
+   "size": 876,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein126_1",
+    "ATGATGACATATAAAGAAAAAGAAAAATTATTAAAAGTTTTATTAGGACCACATATGAGTGAAAAAGCTTTATTAAAAGCATCTAAAGGTAAATATGTATTTAAAGTATCTAAAAAGGCTATAAAAAAAGAAATAAAAAAAGCTGTTAAGTTATTATTTGGAAAAAGAGTAGATTCAGTTAGAGTAGTGAATATACCAAA",
+    ">1297582-protein126_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 807,
+   "sha256": "6122741be6e04463f7609cc32a4710d1aaf2da1c97a40803406cac659948f78a"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein128.fasta",
+   "size": 1845,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein128_1",
+    "ATGATTGGAGTAATTGGAAAGAAAATAGGTATGAGTATAATATTGAAAGATAAAGGGATATCAATACCTGTTACTATAATAGAGGTATTACCTAATAGGATAGTAAATATAAAGACAAAAAAAAAAGATGGATATAATGCAATACAAGTTACAGACGGGAATTTCAAAAAGAAAAAAGTAGCAAGAATAAAGGAATTTAG",
+    ">1297582-protein128_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1776,
+   "sha256": "9ecad506f57ae55985026ba2348fab22402cbfb0171d2073fb82981763251c05"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein130.fasta",
+   "size": 4895,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein130_1",
+    "GTGGCTAAAGAAAAATTTAATAGGTCTAAAGAACATGTAAATGTTGGTACAATAGGACATGTAGATCATGGAAAAACAACATTAACAGCAGCATTAACTCGTGTATCATCAGAAGTATATGGTGGTGAATGGAGAAAATTTGATACAATAGATAATGCACCAGAAGAAAAGGAAAGAGGTATAACAATAGCGACAGCTCA",
+    ">1297582-protein130_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4803,
+   "sha256": "6371a9e503b9cec679548e6cfd6343fe019e7c056056072708eb742fcbc41f98"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein133.fasta",
+   "size": 1574,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein133_1",
+    "ATGATAACAATAAATCAATTAATTAGAAAAAAACGTATAAAAACAAAAAAAAAAAGTGATGTACCAGCATTAAAAGCAGGTCCACAACGAAGAGGAGTTTGTACAAGGGTTTATACAACAACACCAAAAAAACCCAATTCTGCTTTAAGAAAAGTATGTAGAGTTAGATTAAATAATGGATTGGAGGTAACATCTTATAT",
+    ">1297582-protein133_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 1482,
+   "sha256": "ed2e3007340962652414f1d86cde78b15e358ec469d0230f33ef06efdd7000be"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein134.fasta",
+   "size": 16625,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein134_1",
+    "ATGAAAAAAAAAATAAGTATGGTTGTTGGGGGGTTGTACAAAAGTATGAATGATTTGGTAAAAAAAATAAAATCTAAAACATATTATGAAGAATTTGATGCAATAAAAATTTCATTAGCTTCTCCAGAAATGATAAGATCATGGTCATATGGGGAGGTAAAAAAACCAGAAACAATTAATTATCGTACATTAAAACCAGA"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 16533,
+   "sha256": "6cabdd48e1878dfb146b835ae727407a8b395b241825c12c4104b1884a15f3b8"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein143.fasta",
+   "size": 1716,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein143_1",
+    "ATGTATAAAATAGACAATGTAAGTGAAAAAAAATATAATAATAAAATCTTATTAGGTTTTTGGATATATATTTTAAGTGATTGTATAATATTTTCTGTAATCTTTGCTGTATATGTTTTATTAAGTAAAAAAAATATTATATATAATATGTATATGGTAAATATAGAAACATTAATATTATTATTAAGTAGTTTTATTAT",
+    ">1297582-protein143_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1647,
+   "sha256": "70d9eef9d96b5ab1f18cbdc7f1f2bdf6b1788c7a0725956352ea2b44b142f055"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein144.fasta",
+   "size": 5946,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein144_1",
+    "ATGTTAGGTAGATTAACTTGGGAATCTATACCTTATAAAGAACCTATAATTTTATTTACAGGAATCTTAGTAGTTTTTGTTAGTGTTTTTATTGTTATTATAATAACGTATTTAAAAAAATGGAAAGATATTTGGAAAAATTGGATAACAACCTTAGATCATAAAAAAATAGGTATAATTTATATTATCTTTGCATTTAT",
+    ">1297582-protein144_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 5877,
+   "sha256": "280254842ed4cb777ddd1100eb5fc84c58c584c1093d002cb5049f0dba82b4bf"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein146.fasta",
+   "size": 5292,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein146_1",
+    "ATGTTGGAAATATTAGAATTAAATATAAAAGAATTAATAAATAAAGGTAAAGAACAAGGATTTTTGATTTATTCAGAAATTTTTGATTTATTTGATGATGATATGACTAATAGAGAAAAAATAGAGGATATCATATGTATTTTTAAAGAAAAAGGAATTAATATTATTGATAAAATATCTGAAGAAGATAAAAATTATAA",
+    ">1297582-protein146_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 5223,
+   "sha256": "c450953570238c448940d2fd3f8ee8ee11cff203ddd80b7dcbe82d7dcb303f25"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein157.fasta",
+   "size": 2700,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein157_1",
+    "ATGATTAGGGGAAGTATAGTTGCAATGGCTACACCAATGAAAAAAAATGGTGTAATAGATTGGGAATCCTTAAGAAAATTAGTAAAATTTCATTTAGAAAATAAAACGGATGCAATATTAGCAGCTGGAACAACAGGTGAAAATACTACAATGACATTAGAGGAACATTTTAAAGTAATACGTACAATTGTTAATGAAGT",
+    ">1297582-protein157_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2631,
+   "sha256": "94ffbfcac8cf2a98329cff9301c341b48006c961fd7ee706edb12164dc43c45e"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein160.fasta",
+   "size": 2367,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein160_1",
+    "TTGAACAAACAAAGAAAACTTATAGCGCTTAGTACATTAATACAAAGAGAAGTTCGTAGATTTTTACGTATTTGGCCACAAACGTTATTACCATCTTCAGTTACGACTACAATGTATTTTATAATTTTTGGCAAATTACTAGGTTGTAAATTAGGTAATATGGGTGGTGTGAGTTATATCAATTATCTAATTCCAGGATT",
+    ">1297582-protein160_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2298,
+   "sha256": "a39a4045327146838225cd40deba262e37ecc15ad015c099ee7e9f926f7a7c72"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein163.fasta",
+   "size": 3276,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein163_1",
+    "ATGAATAAAAACAATAAGAAAATTCTTGTATGTATGTCTGGAGGAATTGATTCTTCTTTATGTGCTTTTTTACTTGTACAAAAAGGATATAATGTTGAAGGTTTATTTATGAAAAATTGGGAGTTTCAAAATAATTGTACAATACAAACCGATTTTGATGATGTCAAATATATCTGTAATAAATTAAAAATAATTTTGCA",
+    ">1297582-protein163_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3207,
+   "sha256": "c2b8f21b137b81b0ba8b66c932fe42d37b3d5d66df2308049d221d24cc619897"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein175.fasta",
+   "size": 3990,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein175_1",
+    "ATGATTACAATCACATCTATCAAAGGTATGAAAGATATTTTACCTACCAAATCGGTTATTTGGCAATACATAGAAAATAAAATTAAAATGATTTTATATAAATATTTTTATTTAGAAATTCGAACTCCCATTATGGAAAAAACACATTTATTTAATCTTTCTTTAGGACAAACTACCGATATCATAAAAAAAGAAATGTA",
+    ">1297582-protein175_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3921,
+   "sha256": "8c607f7a6f4b74e1d2a722d8be2084ab08e11e64c6e5a8e564b27f1cbb708ac7"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein177.fasta",
+   "size": 5114,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein177_1",
+    "ATGGGAATTTTTGTACAAAAATTTGGTGGCACATCAGTAGGTTCAATAAAAAATATCAAAAATATTGCTAAACAAATAAAATTATTTTATAAAAAAAAGAATAAAATAATTGTTGTAGTATCAGCGATGAGTGGAGAAACAAATAGATTATTATCTTTAGCTAAAAACATGTATAATGAAAAACAAGTAAATAATATTTA",
+    ">1297582-protein177_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5022,
+   "sha256": "1da26d87c60d671d3e7db467c38befee8cad3ce3444ac163286efd788f878dad"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein18.fasta",
+   "size": 2403,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein18_1",
+    "ATGAATATTAAAATTTATTCATTACAAGATATAACAAAATTAATAATTGTAGGAAAATTAGCAGCTAATATATTAGAAATGATTTCTGAATATATTAAACCTGGCATTAATACAGAAGAACTAAATAATATTTGTCATAAATATATTGAAACTAAAATAAAATGTAGTTCAGCTACAATAGGATATAAAGGTTTTCAACA",
+    ">1297582-protein18_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2337,
+   "sha256": "9ca1ceeaa5552bda3141aeef0fcc76a9551f41157671d3dafae3892d809cd4b1"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein186.fasta",
+   "size": 4245,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein186_1",
+    "ATGAATTTTTGTATTAATTCTATTAAAAATATTTTTAATCTACTAATATTTTTAATATTATTATTTTCTATAATAATAGCTATTATGATAAGTAGAACAGCTCAAGGTGCTATTGCTTGGTTAATATCTTTAATAACGTTTCCTTATTTATCCATTCCTATATTTTGGATTTTATCTTGTCCTAATTTTTGTGGATACAT",
+    ">1297582-protein186_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4176,
+   "sha256": "fd93ca11b87091c914461e1a8b520dcd2cfad5d78c09673e12ddd592752b4d20"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein189.fasta",
+   "size": 5555,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein189_1",
+    "GTGTTTATATATAATACATTAAAGAATTATAAAGATTTATTAATTCCTATAAAATATAATAAATTAAAAATATATGTTTGTGGTATTACGGTATATGATTATTGTCATATAGGTCATGGAAGAAATATGTTTATTTTTTATTTAATAAATAAATATTTAAAAATTAGAGGTTATAAAATCACGTATGTAAGAAATATAAC",
+    ">1297582-protein189_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5463,
+   "sha256": "dc55094c8fd49b4dd82bef16231ce218e55d73e55dc6b600983484ccfc4815eb"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein19.fasta",
+   "size": 1382,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein19_1",
+    "ATGATAATTAATATGCATGATTTATTAAAAGCTGGTGCACATTTTGGTCATCAAACACAATTTTGGAATCCAAAAATGCACAAATATATCTATGGAATAAATAATAAAATCCACATTCTAAATTTAGAATATACCTTTATTGCTCTGAAAAAAGTTAAGCCCATTATAAAAACAATTATAAGTAAGAAGAACAAAATAAT",
+    ">1297582-protein19_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1338,
+   "sha256": "a92a6c71b76feb025817798124ea2a71e1ccea319f607f6501af62f49372193d"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein190.fasta",
+   "size": 4902,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein190_1",
+    "ATGATAAAAAAAAATAAAACTATTATGGATTATATTAGTAAAGAAATAAAAAATCGATGTAGGTTTAAAACAACAATTATTACTAGGTTTTCTCCAGAACCCAATGGTTTTTTACATATTGGTCATGTTAAAGCAATATTGGTAAATTATAGTTTAGCCAAATATTTTAATGGAAAAAGTTATATTCGATTTGATGATAC",
+    ">1297582-protein190_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4833,
+   "sha256": "cc57c68dbe5e93534c0fb2f258d29b7f03866e02a324ae7d1ff8257d6ce1d1df"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein191.fasta",
+   "size": 2613,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein191_1",
+    "ATGGAAAAAAAAATTATTTGTGTTTTTGGTAAACCAATAAAACATTCTTTATCTCCTATAATACACAATTATTTTGGAAAAAAAAATAATATTGTTTTTTCTTATAAAGCTATAAATATTATAAATAAAAAAAACTTTAAAAAAGAATGGATAAAATTGTTAAAAACTGGTGGTATAGGTATTAATATTACCATACCATA",
+    ">1297582-protein191_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2544,
+   "sha256": "1ae02e099e235b3b92bb0171236980fc7ee4f0aa6c50009ec3b1dec90ca350df"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein196.fasta",
+   "size": 2565,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein196_1",
+    "ATGAATAATAATGAATTAGAAATTAGTGTCGAAGTTTTTCCACCTAACGAAAATGATAAAATCAAAGAATTAATAAGTTTAATAAAAATGTTATATAAAAAAATAAATATAACGTTTTGTTCAATTACTTTTGGAGCGGGAGGATCAAATAAAAAAAATACTTTAGATGTTATAAAAATGATAAAACAAAACAATATAGA",
+    ">1297582-protein196_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2496,
+   "sha256": "195202d8ed0e090722ead80c702600ce4e5361766990324b888de52fbcdbaff1"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein197.fasta",
+   "size": 3975,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein197_1",
+    "ATGAAAATCATTCAATCTAAAAATTTAGCTTTAAATATAATCATAGGTTTATTTTTAGGAATAATTACTGGATTAATATTACATCAAAATAATATTATTAACTCCTGGGTTATATTACATTTTTTACAACCCTGCGGAGAAATATTTATTCGATTAATAAAAATGATAGTAATACCAATTATAATTTCTTCGTTAATCAT",
+    ">1297582-protein197_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3906,
+   "sha256": "c39a253839d4af7fe87fd9e9de55d73abbb96dc9c123693c82dfb3a3bb5f78d7"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein2.fasta",
+   "size": 4272,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein2_1",
+    "ATGTCCAAACGTGATTATTATGAAGTATTAGGTATTAATAGAAAGGCTGATCAAAAAGAAATAAAACAAGCATATCGTAGATTAGCTCAAAAATATCATCCTGATAGAAATCCTAACGATAAACAAGCCGAAAAAAGTTTTCGTGAAATATCTGAAGCATATGAAATACTTTCAGTAAAGGAAAAAAGAAATGCTTATGA",
+    ">1297582-protein2_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4188,
+   "sha256": "e6f20589398c902a31316db485e66719cedd8675d1e38771231ec38bed1a0895"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein20.fasta",
+   "size": 2418,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein20_1",
+    "ATGAATAATATCAAGTTAATAAAAAAATTAAGACATAGTACCGGATTAGGTATTATGACATGTAAAAAAGCACTTAATAAATATAAAGGTAATATACAATTAGCTATAAATTATTTACTTACTATACATAGATTAAAATCAAACGTAAATTTTCCAAAAGAAGGAATAATAAAAATCAAAGTGTCACACAATTTAGTTTT",
+    ">1297582-protein20_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2352,
+   "sha256": "0ddcc6791eddddfa0fcbb6d78400830afff7ecded8640a08d688500da95eab4b"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein204.fasta",
+   "size": 4341,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein204_1",
+    "ATGACAATAATTGATATTATAAAAGGATTAAAAAATAAACATTTTTCTTGTTATGAATTAATAAACTTTTTATTAAATAAAATAAAAAAAAACAATACAAAATTAAATTGTTTTATAACTATTGAATATAAAAACGCTTTAAAAGAAGCAAAACAATGTGATTTTTTACGTAAATTTAATCAAAATACTTGCTTACATGG",
+    ">1297582-protein204_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4272,
+   "sha256": "ebce20af681c91a8d1675c9db860d486d3427e47ae461dc095d946a5022e4cad"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein205.fasta",
+   "size": 4353,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein205_1",
+    "ATGACAATAATGTTAAATAAATGGGAAACTATTATTGGTATTGAAACTCATATACAATTATCCACACAATCTAAATTATTTTCTAATTCGTCAACAACATTTTGTTTTTATCCTAATAAACAAATTTGTAATTTGGATATCGGTATGCCAGGTGTCTTACCAAGATTAAATAAAACTGCTATAGATATGGCTATTCGTTT",
+    ">1297582-protein205_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4284,
+   "sha256": "ad7da5ca52b932522ea9b0471cfb0badd4887a04f987020ca64becec08b1a44f"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein208.fasta",
+   "size": 4655,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein208_1",
+    "ATGTTAAAAACACTATATGACATAGATATATTAATTTTAGGAGGGGGATGTACTGGTTTATCTTTAGCATATTATTTAAGTTATTTACCAAATAAATGTAACATTTTAATTATTGAAAATAAAACATTATATCATAATGATAAAACATGGTGTGGGTGGAGAACAAAAAACCATGCATTTATAACATGTTGCACAATTTT",
+    ">1297582-protein208_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4563,
+   "sha256": "9ed8d8b848cea8de3d9fa8808d74fb5128e8a53fbe98bb093e3ba3ef98afbf33"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein211.fasta",
+   "size": 1171,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein211_1",
+    "ATGCAAATTAATCAAATTAATGCTTTTATTAGATATAATATAGGAAAAAAAGCAAATAAAAGATTACGTAAGAATACAATTATCCCAGGGATAATATATGGAGGTAATAAACAAAATTTACTTATTGCTATAGAACAAGAAAAATTTGTAAATTTTATAAAACAAGAAAATTGTTTTTCTTCTATATTATATATAACGAT",
+    ">1297582-protein211_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1125,
+   "sha256": "ccde424afb6fb1377fa9857f719d4c357ae35aaca21da428d0e68417de9e4501"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein213.fasta",
+   "size": 3141,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein213_1",
+    "ATGATTTATACAATATTACAAGATTTAATAAATAAAAAAAATATAAAATTTAATAAATTTTATAAACTAATGAAAGTTATAAATTTTGGTCAAATCAAATCAACACAAATAGCATCTATATTAACAGCATTATCTATAAAAAAAGAAACTAGTGAGGAAATAGCAGCAACAGCTAAGGTAATAAATGATTATTATAATTA",
+    ">1297582-protein213_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3072,
+   "sha256": "98959525ca77baa1e93b112446edb4edc3c7cc2f4f3de207bbcef7273591c6e3"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein215.fasta",
+   "size": 5969,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein215_1",
+    "ATGAACTTATTACAAAATAGAATTCTTATTTATAAAGACATCCTATCAGATATAGATACGCCTCTTTCTATATATATGAAAATAGCAAATTATCCTTGGACTTTTTTATTAGAATCAATAGAAGGAAAAAAAAATTGGGGTAGATATTCTATAATTGGTTTACGTTGTAATAAAAGAATAGAAGTACATGGTAACAAAAT",
+    ">1297582-protein215_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5877,
+   "sha256": "3fd2c5018d9b78903623690b16b04964e493cf4aca2874d2781df1e8423608a4"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein218.fasta",
+   "size": 1143,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein218_1",
+    "TTGGTAGAGCGCAACGCTGGCAGTGTTGAGGTTATCGGTTCAATTCCGATAAGCTCCATATATAATATAAAACTACTGATGAATAATAAAACTATAGAAATAATAAAAGAACAAATAAGAACAAATAAAATAATATTATATATGAAAGGAACACCAAAGTTTCCACAATGTGTTTTTTCAGCTAAAGCTGTTAACTGTTT",
+    ">1297582-protein218_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1074,
+   "sha256": "deb64b268133ee197ded2de3a94ba62b83470f34b7413bb387f02f3f5ba0b3be"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein22.fasta",
+   "size": 11326,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein22_1",
+    "ATGAATAATTTTATTCATTTACGTATACATAGTGAATATTCTTTAATAGATAGTATTATTAAAATAAAATCTTTAATTTATAATATAAAACAAATGAATATACCAGCAATTTGTATAACTGATGAACAAAATATATTTAGTTTAATAAAATATTATAAAACTTCTATAAAAAATGGTATTAAACCAATAATTGGTTGTGA",
+    ">1297582-protein22_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 11238,
+   "sha256": "545eedb9933b1f66cc97c03e1d1f660e00dd19836bfe238172c549ced4df6921"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein224.fasta",
+   "size": 3324,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein224_1",
+    "ATGAAAAAAGATTTAAAAACAATTATAAAATATATAGATAATATTGATTATCAATTATTAAATTTAATTAGTCAACGTGCTATTTGTGCTAAAAAAGTAGCAAAAATAAAATCTTGTTTATCAAAAGATCCAAAAACAAAATTTTATAGTCATGTACGTGAAAATCAGGTGTTAAGAAATATTATAAAATATAATAAAGG",
+    ">1297582-protein224_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3255,
+   "sha256": "d4f918da76ecd53cdaf9a0449aed24babf48769ebf7d9d1e126ff5e8209698f8"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein226.fasta",
+   "size": 9815,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein226_1",
+    "ATGTTTATTTATAATAAAAATGATCGTGAAATTAAACGAATAAGTAATATAGTTTATATAATCAATGATTTAGAAAATCATTTTATTTCACTTACTAATGATTTATTAAGTTATAAAACTATAGAATTTCGTAAAAGAATAATAAAAGGTGATGTACTAGATATGTTATTACCTGAAGCGTTTTCTACTATTAGAGAAGC",
+    ">1297582-protein226_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 9723,
+   "sha256": "290ce1e68b5d04ac798b80f312989d3ddda5057b27bbbbab109577e8af9552f6"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein23.fasta",
+   "size": 3822,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein23_1",
+    "ATGTCTTTATCACAATATTATTTATATTCAATAATCAAATCTTTAAATATAAACACATTATGGATTGCTTTATCTGGTGGAAGAGATAGTATATGTTTATTAGATATAACATATAAATCATTAAAAAAAATCAAAACCAAAAATTTAATACCTAAAATATATGCTATTCATATAAATCATTATATGAATAACTCCTCGGA",
+    ">1297582-protein23_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3756,
+   "sha256": "3f3e5b773d9da9b0f39042f3230d1e22015b3a0996d043c790aedae4399cbc35"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein235.fasta",
+   "size": 1699,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein235_1",
+    "ATGAACAATTTCTATTATACTAAATATATAAAACATCATTTACAAAATTTGACGTTTGGATATTATCCAAATCAAGGGTGGATATTTGCACAAAATATAGAACAGATAAAATCTATGGGTTTTGTTTCAATAAATTTAGATTCTATATTGGTTTCTATAGTAATGGGTTGGTTATTTTTATTTGTTTTTAAAAATTGTTC",
+    ">1297582-protein235_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1653,
+   "sha256": "bb3f7c92f22c5723c6936529969544f14ddf515b37fb30ddf1f94c0f4aeac4b4"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein236.fasta",
+   "size": 5343,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein236_1",
+    "ATGAATATTTATGAAATAATAGTCGTTGGAGGTGGACATGCAGGAATTGAAGCTAGTTTAGCATCATCTAAAATAGGGGTTAAAACTTTACTTATAACGGATAATATTGAAACCATAGGTAAGTTTTCTTGCAATCCAGCAATAGGGGGTATAGGAAAAAGTCAAATAGTAAAAGAAATAGATGCATTAGGGGGTATAAT",
+    ">1297582-protein236_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 5274,
+   "sha256": "90b422cc2c2d6aa61f94196a736424806f5584bea1c32ae0057d519590843b5b"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein24.fasta",
+   "size": 3828,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein24_1",
+    "ATGAATTTAAATGAACTTAAAAAAAAAAATGTACATGAATTATTAACATTAGCTATATCTATGAAGATAGATAATATATTACGTTCTAGAAAACAAGATATTATATTTGCTATTCTAAAAAAACAAGCTAAAGGTGGAGAAGATATTTATGGAGAAGGAGTTTTAGAAATTTTACAAGAAGGTTTTGGCTTTTTAAGAAG",
+    ">1297582-protein24_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3762,
+   "sha256": "57a47e249f9eb4e0f13e36e16b2be2ba06d966977ec0766911b661f78fb0c44e"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein242.fasta",
+   "size": 9014,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein242_1",
+    "ATGTCAAATTATTCATATAACTCATCTAATATAAAAATATTAAAAGGTTTAGACCCTGTTAAAAAAAGACCAGGAATGTATATTGGTAATATAGATGATGGTACTGGTTTACATCATATGTTTTTTGAAATTATTGATAATTCTATTGATGAATATTTATCTGGTTATTGCAATAAACTTATTATTCATATTATTCATAA",
+    ">1297582-protein242_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 8922,
+   "sha256": "0c39239f7e0ed3491c2d9099e2ee24d18db67feafc19119f0a60ab39a2266e76"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein246.fasta",
+   "size": 1624,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein246_1",
+    "TTGAAAACTTTTTGTATTGAAAAAATTTTAAAGGTTGTTCATTGGAATAATAAATTATTTAGTTTTTATACAACAAAAAATAAAAACTTACGGTTTAATAATGGTCAATTTTTACTTATTGGTTTAAATATTAATAAATACTATTATTTAATAATAAGAGCTTATTCAATAGTAAATCCTACTTATTCAAAGTTTTTTGA",
+    ">1297582-protein246_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1578,
+   "sha256": "a509f9c482579b238ec3c0b31902ce19b91d2ed05d15830258e16b4cc3720122"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein247.fasta",
+   "size": 730,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein247_1",
+    "ATGAATAAGTTATTTCTTTTTATTATAATTACAATAATCTTTATATTAATAATAAGTATTATATCATATTTAGTAGGTGGTTATAGTTGGTCACCAAATAAAGAAATTCCGTTTGAATCAGGAATCATTTCTATTGATTCAATCAAAAAAATTAATTATTTTGCAAAATTTTATATTTTAGCAATCTTATTTGTAATTTT",
+    ">1297582-protein247_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 684,
+   "sha256": "484511c86285558a22b5dd41a6614262701b960b74c42630c67daf67650e594d"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein252.fasta",
+   "size": 10823,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein252_1",
+    "ATGACAATTATAAATGTAGATAATAAAGATTATGAAATAAAAAATAATTATCAAAATTTATTAGAAATATGTTTATCTTTTGGTATTGATATACCTTATTTTTGTTGGCATCCAATATTAGGCAGTGTAGGGTCTTGTAGGCAATGTATAATTAAAAGATACAATAATAGAGATGATACAATAGGACATCTTATTATATC",
+    ">1297582-protein252_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 10731,
+   "sha256": "6b825804265c8f6ac7499e2c8ffde14e1d4296652fd1766b08cf827a338c4875"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein257.fasta",
+   "size": 7640,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein257_1",
+    "ATGAATAATATATTATTTTTTATTTGTTTATTTCCTTTAATTAGTACAATATTACTAGCTATATTTAGATATATGTCAATAATATTAGTAATTATTATTGGTGTTGGATCAATAGTATTATCTACAATATTTACAATTTTAATAGCAATTAATTATTATTTAAAACCTAATCCTTTTTTAGAACATATATATAATTGGAT",
+    ">1297582-protein257_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 7548,
+   "sha256": "16eaf9adde101a94c17f58c1eeebf6155493b3640a7ded1def48a860402312e4"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein263.fasta",
+   "size": 3105,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein263_1",
+    "ATGTTTAAAAGTTTGAAAATTAGTAAAATTACTATTATAAGTTTGTTAATTTTTTTTATGGGTTTGTTATTAATATTTCCTTTGCATCTTTTACCATGTTTATTATCGGGTTTATTAGTATTTGAATTAGTTAATGCAATTACACATTTATTACAAAAATTAATCCCAGTAAATAAAGCAAGATTGATTTCAGTAGTTTT",
+    ">1297582-protein263_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3036,
+   "sha256": "76c682b7206544a876c83cff4e2f0b4f197b11aede9dd74c9f3617d731022dc2"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein265.fasta",
+   "size": 3207,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein265_1",
+    "ATGAGAAAAACTTTGAGTTATAAACTTAATCAATTAAATCCCTATATACCTGGTGAACAACCATATAAAAAAATGATAAAATTAAATACAAATGAAAATCCTTATCCTCCTACTCCTAAAATAAATAAGTTATTAAAAAAAATTAATTATTATACTTTAAGACTTTATCCTGATCCATCAACTAGTAATCTTAGAAAAAC",
+    ">1297582-protein265_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3138,
+   "sha256": "ee37a1e996a9a35a4463ae99c5d22d39f68f8b07398ff96fd1aeb6613a165ab5"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein267.fasta",
+   "size": 2229,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein267_1",
+    "ATGTTAATAATACCTGCTATAGATTTAAAAGATTGTAGATGTGTTAGATTAAAACAAGGACGTATGTATAATGTTACAGATTATGGTAATCCTTTAAATATTATAAAACAATTTATAAAATTAGGTATAAAAAGATTACATATCATAGATTTAAATGGTGCTGTTTTAGGAGAACCAGTAAATATTTATATTATAAACAA",
+    ">1297582-protein267_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2160,
+   "sha256": "c97c60b92f1a58343a6b60a1284b2d367cadb017544637c956e338a53d254871"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein269.fasta",
+   "size": 1839,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein269_1",
+    "ATGTCGTTTTATAATAAACAATTAAAAAAATATCGTACTGCTAGTATATATCGAGAAACAAATGAAACTAAAATTAGGGTTTATATAAATTTAGATGGTCAAGGTAAATTAAATATTAATTGTGGAATAGAATTCTTAGAACATATGCTTGATCAATTAACTACTAATGGACAAATAGATATTACTATAAAAACAAAAGT",
+    ">1297582-protein269_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1770,
+   "sha256": "b1fac95c37f70f187e9e8fc0f752f04a66f532b66e3845e1699db1937914d35f"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein271.fasta",
+   "size": 1674,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein271_1",
+    "ATGTTTAATACAATTTTTTATAAAGAAAACATTTATTCGTATAAACGAATAGAAAAAAAAAACAATAAATTAATACAAAAAATTACAGATAAATTAAAATCACGTATATTTTATCTTGAGATTGAATTAGAAAATTCTAAAAATCAAACATTAAAATATATAGCAGATACAAAAAATTATATACGTAGAGCTGATAAAGA",
+    ">1297582-protein271_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1605,
+   "sha256": "e4c7888e0304fc1cc9778ed449cf985044c9d0876424a0e893d418f7e4b181d2"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein30.fasta",
+   "size": 2188,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein30_1",
+    "ATGTTATATCATAATATTGTTCTTATAGGTCCTATGGGAACAGGTAAAAGTACTATTGGAAAAATAGTATCTAATAAATTTAAATGTAAGTTTTATGATATAGATAAGGAAATTGAAAAAAAATGTGGTTGTAAAATTTATGATATTTTTTTATTAGAAGGAGAAAATAGTTTTCGTAAAAGAGAACATAAAATAATAAA",
+    ">1297582-protein30_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 2100,
+   "sha256": "2817358c8ac80c5e394ff9c9c5eb9d785bd9f7e9235ad64a8c7c6c8e3772531d"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein32.fasta",
+   "size": 4941,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein32_1",
+    "ATGCTTATCTCAACACAACAAGCTTTTCAAGCAAAAAATAAATTACCAAAGAAAAAAAATAGTTTATTTACCCCATTAACATTTAAACCTTTTAGAATAATATGGTTTGCAGATTTAATTGCAAATTTAGGTACATGGGCACAATCGGTAGCTTCTGTTTGGATATTAACTGAATATCATGCAAGTTCTATAACTTTAGC",
+    ">1297582-protein32_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4875,
+   "sha256": "7fcc0f30378ad43c86498e480dc39333be8fb203dce5f585082b16654eef9bae"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein33.fasta",
+   "size": 4980,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein33_1",
+    "ATGAAAAGAATTCTTATTAATGCGACCCAACCAGAAGAATTAAGAGTTGCACTGGTAGATGGTCAAGTATTATATGATTTAGATATTGAGTTTTGTGCTAAAGAACAAAAAAAATCTAATATATATCGTGCTAAAATTGTTAGAATAGAACCTAGCTTAGAAGCAGCTTTTGTTGATTTTGGAGCAGAAAGACATGGGTT",
+    ">1297582-protein33_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4914,
+   "sha256": "6d8bcb14195efa8426df413876f148408fe5b799a7191ddde33d3cdb0ad5e0df"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein34.fasta",
+   "size": 3075,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein34_1",
+    "ATGAATAATTTAAAAAATTATAAAATAATAATTTCTAACCAATTTAATCAAAGATTAGATAATTATTTAATTAAAAGTTTAAAAGGTATACCTAACAATTTAATTTATCGTCTTATTAGAAAAGGAATTATAAAAATAAATAATCAAACAGTTAAAGCTAAAAATAAATTACAAATAGGTGATAAAATTAGCATTCCTAT",
+    ">1297582-protein34_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 3009,
+   "sha256": "5a82741a7b25f9f1ff17f16ed2bc56d23c1c064bacd0bc4116d196cfa529e0de"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein4.fasta",
+   "size": 858,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein4_1",
+    "ATGGCTGTTAATAAAAAAAATAAAGCTGCCATTATTAATGAATTTGGTAAAAATAAATTTGATACAGGATATACTGAAGTTCAAATTGCTTTATTAACTAATAATATATATAATTTACAAATTCATTTACAAAAAAATAAATATGATTATCATTCGAAAATAGGATTGATTCGTATGGTAAATAAACGTAGAAAACTTTT",
+    ">1297582-protein4_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 795,
+   "sha256": "c964277082b87ebc29fe7112fb6896a7616a4ea8c119faeff1ee8dc70ca9d4da"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein41.fasta",
+   "size": 5698,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein41_1",
+    "ATGACAGGACAGACGCTTTATGATAAAATTTGGTCTTCTCATCTAATAAAATGTCGTGAAGATGGAACATCATTAATTTATATAGATCGTCATTTATTACATGAAGTAACATCACCTCAAGCTTTTGAAGGTTTACGTTTAAATAATAGAAAAATTTGGAGAGTAGATACAAATCTAGCTACTGTTGATCATAATGTACC",
+    ">1297582-protein41_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5610,
+   "sha256": "34770feb28b10bc507e7cd453041fe935c4cf7dcebe63b14ff33b7103c7159da"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein44.fasta",
+   "size": 4462,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein44_1",
+    "ATGCTTAAAATGGGTTTCGTTGGTTGGAGAGGTATGGTTGGTTCAGTTTTAATACAACGTATGATTGAAGAAAATGATTTTAATTATATTGAACCTATTTTTTTTTCTACTACTCAATTTGGTAAGAATTGTCCTATTATTGATACAAAGATACAAAATGCTTATGATATAAATAAACTAAAAAACTTAAATGTAATTAT",
+    ">1297582-protein44_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4374,
+   "sha256": "3ac9f3ebc82fbc3595b8fa3cad9f5aef4553d856ac7b4ed163383e5288ec5c58"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein45.fasta",
+   "size": 3397,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein45_1",
+    "ATGAAGGTTTTTTATAAATTAAATGAAAATTATTTTATTTATGGACGTATAGCTTTAGGTATTGAATATATTGGTAGTGAATATTTTGGTTGGCAAAGGCTTAAACAATATAATACTATACAACAAACTATAGAAGAAGCTTTAAAGATATTTACAGGACACTCAATTACTTTAAAAGCTAGTTCTCGTACAGATTCTGG",
+    ">1297582-protein45_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3309,
+   "sha256": "939a7d4d2121e6f55917f3e536d385a8849f0a604a76ba00357222a20f3b1f2b"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein65.fasta",
+   "size": 8109,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein65_1",
+    "ATGATAATGAATCATTTATATAAAAAATATAATCCAAATAAAATTGAAAATTATTGGTATAACAAATGGGAAAAAAATAAAAACTTTTTAAGTAATGTATCATGTATACCGTTTTCCATTATGATTCCTCCTCCTAATGTTAATGGAAACTTACATATGGGTCATGCTTTTGAATATACATTAATAGATACAATAATACG",
+    ">1297582-protein65_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 8043,
+   "sha256": "b0a18d22ffd3573c4ba00469b29812489ecce732b69f1c7331a8ff14d71f1fb7"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein67.fasta",
+   "size": 3319,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein67_1",
+    "ATGATTATTAATAAACGTATAAAAAAATGTTTTGAAAAAATATACAAGAAGAAAAGAGCTGCTATGGTAACTTTTATAACTGCAGGAGATATAGATTACGAAAATTCTTTAGAATTAATAAAAAAATTACCTAAAGCAGGAGCAGATATTATAGAATTGGGTATGCCTTTTACAGATCCTATAGCTGATGGTGAAATAAT",
+    ">1297582-protein67_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3231,
+   "sha256": "84a5136a6a2f3eaa53ae2c057d10a4a7f38c36c62eecb08facd364f01ba6d79c"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein68.fasta",
+   "size": 4822,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein68_1",
+    "ATGAATATTATACCTAATGATAAAGGTTTATTTGGTGATTTTGGTGGTCGTTTTGTATCAGAAACATTAATGCCTTTAATAATAGAGCTTGAACAAACTTACCAATCCGCGAAAATAGATAAATCATTCAAAAATGAATTATTATATTATCAAAAAAATTATATAGGCAGATCAAGTCCATTATATTTAGCTGATAGATT",
+    ">1297582-protein68_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4734,
+   "sha256": "f80ada291526916cb9c425b24dc4d26d39a0e6ed920d788074f44b81b8d74db5"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein75.fasta",
+   "size": 5875,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein75_1",
+    "TTGGATAAAACGTTTAAAACACCTCTACGCACACGTATTGCCCCTTCACCTACAGGAGAACCGCATATTGGTACAGCATATATTGCTTTATTAAATTTTTATTTTGCTCGTATTAATAATGGAAAAGTAATTCTTCGTATTGAAGATACAGATAGATTGCGATCAAAAAGTAAATTTGAAAAAAAAATTTTAGAATTATT",
+    ">1297582-protein75_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 5787,
+   "sha256": "5b737a5fcc23d024aae2385c1c1d56bd0e31552a28097bd846de1e206e197e51"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein84.fasta",
+   "size": 3205,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein84_1",
+    "TTGAATAATACTGAGCTATTACAGTTAGCTATAATGGAATCAGATGAAAAAACGTTAAGTTCAATAAAAGAAGAAATAAGAAGATTAGAAAAAGAATTATCAAAATTAGAATGTATTCGTATATTTTCAGGTAAAAGGGATAGAAATAATGCTTATGTAGAAATTCAATCGGGTTCGGGTGGTATAGAATCACAAGACTG",
+    ">1297582-protein84_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 3117,
+   "sha256": "688976fba2e528c42225d997e8bf7e20b21092989ae9f1becf687fc06a4ff2de"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein87.fasta",
+   "size": 755,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein87_1",
+    "ATGAGTATGAATAAATTGATTCAAGCAATAGAATTAGAACAAATGAAAAATAAAAGAATTCAAAACTTTAGAAATGGAGATACAGTTATAGTACAAGTAAAGGTTATTGAAGGTTCAATTGAAAGATTACAAGCTTTTGAAGGAATAGTTATTGGTAAGCGTAATAGGGGTTTAAATTCTTCTTTTACAGTACGTAAAAT",
+    ">1297582-protein87_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 711,
+   "sha256": "3731aec2b0256f79b675f9549fcad240bbe67dc767744c183e241c5494324b5c"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein9.fasta",
+   "size": 5502,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein9_1",
+    "ATGGCTAAAAACCTAATTAATTGGTTAATTATAATAGCAATTTTATTGACAATATTTAATAATATTAGTATTGATTCTAATACTAAAATATTAAGTTATTCTAAATTTGTACAACAAATACATAAAAATAAAATACGTAATGTTATTATTGATGGATATTTTATAAATGGGGAACATAAAGATGGATCTAATTTTAAAAC",
+    ">1297582-protein9_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 5439,
+   "sha256": "bb5483902ddfa12513fd0a6f732ad2814cd4c6b954977cb11c12f689907acea6"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein98.fasta",
+   "size": 807,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein98_1",
+    "ATGGATAAAATAAAAAAAAGAGCTATACGGTCAGAAGTAAGACGTAAACAGAATTCAAGTAAACGTTCAATGGTACGTACTTTTATTAAGCGGGTATTAAAAGCAATTAAATTAAAAAAATATAAGTTGTCTATGGAGGAATTTTATAAAGCACAATCGGTTATTGATAGGATAGCTGATAAAAACATTATCTCAAAGAG",
+    ">1297582-protein98_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 741,
+   "sha256": "bb25dc629ff393fd627fb1af3c7ff912ee886e2f43f3eca3540bc8de7781d45d"
+  },
+  {
+   "path": "schema/schema_seed/1297582-protein99.fasta",
+   "size": 3030,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein99_1",
+    "ATGCAATTTATAGATGAAGCTTGGATTGTAATTGAAGCAGGTAAAGGTGGTAACGGATGTTTAAGTTTTCGTAGAGAAAAACTTATAAAAAAAGGTGGTCCAGATGGAGGGAATGGAGGGAATGGAGGGAATATTTTTTGTATAGGAGATAAAGCTTTAAATACATTGATTTATTTGAATTATAAAAAAGTTTATAAAGC",
+    ">1297582-protein99_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 2964,
+   "sha256": "d3b6db993942ebf4fd3d986eac97f36f1b4a50872136f0b901c30da7cf3ba73b"
+  },
+  {
+   "path": "schema/schema_seed/91844-protein128.fasta",
+   "size": 8580,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein128_1",
+    "TTGAGTTCATTTGTAAAAAAACAGTTTAAGTATGGTGGAAAAACTATTTGTTTAGAAACTGGTAAAATAGCTAAAAACACTAAAGGTAGTGTAGTTATAACTATTGACAAAACAATAGTGTTGTGTACAGTAGTTGTAAACAAAGTTTTAAAAAACAAACAGTGTCTTCCTTTGTCTGTATTTTATCAAGAAAAATATTA",
+    ">91844-protein128_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 8496,
+   "sha256": "805f708db1afb0061c560df08360c279bcb9954e09a23cca152c4a84cce815ed"
+  },
+  {
+   "path": "schema/schema_seed/91844-protein130.fasta",
+   "size": 1770,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein130_1",
+    "ATGAAGAATATGAACAAATCAAAGATTATTATTACTAAAAGCGCACAAAAATATTTAGCTAATCTTTTATATAATCATAATATGGCAACTGGTGTTAGAATTTTTATAAACAAACAATATGCGGAGCCTAGTATAGAATTTTGTTATAAATTAACAGATAAGGACATAAAAATAAACTTAACAAAAATAAATGTATTCTT",
+    ">91844-protein130_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 1707,
+   "sha256": "0ef5a26a9b12525556716a0a5eafcb45b7665efcb70c23b25bf2e66a1fe209eb"
+  },
+  {
+   "path": "schema/schema_seed/91844-protein167.fasta",
+   "size": 5139,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein167_1",
+    "ATGAATACTATAAACGTAATTTTAAAACAAATTAAATTTAATACAAACAAATTTTTAATTGAAAAACTATTTAAAAAGCAAATTAAATCAAAAAAAATATTAAATATTAAAATAGGTATAGACCCTACTACTCCTAATTTACATTTAGGTCATTTTGTTTTGATAAAAAAATTAAAACTATTACAACAATTAGGCCATAA",
+    ">91844-protein167_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 5076,
+   "sha256": "52a6113e117e837bd1759ce2ec2c5e378b6d6b474436de5ebc083a706613e04d"
+  },
+  {
+   "path": "schema/schema_seed/91844-protein175.fasta",
+   "size": 4875,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein175_1",
+    "ATGATGAGTAAAGATATTTTATTTGTTATTGATTCTATTTTAAATGAAAAAGGTGTAGCACGGCAATTAGTTTTTAAAACAGTCGAAGAAGCTTTATCTAGTGCAACTATTCAAAGATTTGAAGAAAAAAAAGTCAATATCATAGTAAAGATGAATCGCATAAATGGTAAATATGATACTTTTCGTATATGGAAAGTTGT",
+    ">91844-protein175_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 4791,
+   "sha256": "6d6f56cf72d95c5e0d47448f3cb190712d89ad09ed85b4de6b3f41ae0b01b561"
+  },
+  {
+   "path": "schema/schema_seed/91844-protein176.fasta",
+   "size": 6747,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein176_1",
+    "ATGGTAGAAATAACTGTTAAAGATTTTGCAAAGAAACTAGGATGTAATACAAAGAGGTTAATAAGTTATTTAACAAATGCCGGTGTAAAAAATAAAAAGGCTGAGAATTTATTAACAGAAAAAGATAAACAAAGTTTATTAACTTATCTATTTTATAAACAAGGTATAACTAATTTTTATTTAACTAGAAAAAAATATAG",
+    ">91844-protein176_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 6684,
+   "sha256": "cef36eceb0775c5642bba38d8c2f80ad6615c7a7bb810b2c1072c18f39992aca"
+  },
+  {
+   "path": "schema/schema_seed/91844-protein191.fasta",
+   "size": 450,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein191_1",
+    "ATGTTTGAACTCTTAATTGTTCCTTCAATACTTTTATTTTTTTGCATATTATTAATTCCTGCTAGCCCTAGATGGCTAGCTTCTACAAATAAAAACCGTGAAGCCATAAAACTTTTACACAATTTAAGAGCATCTAAGTTTGAAGTTAATAATGAACTTAACGAAAATTTTAACAGCATCAATTTAAAAAATAAAAGCTT",
+    ">91844-protein191_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 408,
+   "sha256": "ff249ef6c36f31db4b47003ec3ec8ce19e9760ea81a2b4ab46c98d24254de35e"
+  },
+  {
+   "path": "schema/schema_seed/91844-protein204.fasta",
+   "size": 4155,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein204_1",
+    "ATGGACATATATATAAAATATATAAAAAAAAAATATAAACAAGAGATATTAATGAAAAAAAATAATATTATTCCTAACTTATGGAAAGCTTTATCTAACAAAAATTATAAAGAAATAAAGAGTTTATTAAAATATTTTCGTTCAGCTGATATAGCTGAAATGATCTCACGGACATCAAATAAGTTAATAATACAGATATT",
+    ">91844-protein204_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4092,
+   "sha256": "b29318b7c30c3693f560cd70b385378ace0042ffb3760c7b4e475d2dbd9be347"
+  },
+  {
+   "path": "schema/schema_seed/91844-protein33.fasta",
+   "size": 1805,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein33_1",
+    "ATGAACAGTATTCAATGTGATATTATGAGTATAGACTGTTTAATCTTTTCAAAAAAAATAAAACAAATAACAGCAATTGGTACGGAAGGGGAATTAGGAGTTTTATCAGGACATACCCCATTTATAACACAATTAAATTCAGGTCCTTTAATAATTACACATATTAATAATAAGAAAGAAATTTTTTATTTAGATGGTGG",
+    ">91844-protein33_2"
+   ],
+   "lines": 8,
+   "records": 4,
+   "residues": 1725,
+   "sha256": "53fea18019a98bee02829060e2099e6ee668b4b1c89d7283171c5cb657f5c5b2"
+  },
+  {
+   "path": "schema/schema_seed/91844-protein42.fasta",
+   "size": 4815,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein42_1",
+    "ATGAGTCAAATTATTACAATAATTGGTAAAACCAATGTAGGAAAATCAACATTGTTTAATTGCTTAACAAAAAATAAAGATTCTATAACAAACAATATTCCTTTTTTTACAAGAGATAGAAAGTATGGAATATTACAACTAAATAATAAAAACTGCACTTTAATAGATACAGCTGCACTTTCTACTGATTTCTTTTCTTA",
+    ">91844-protein42_2"
+   ],
+   "lines": 6,
+   "records": 3,
+   "residues": 4755,
+   "sha256": "812c4961e8b87a76fe75f3401163df4a12ec1f51ab4cc290afe0c45086f47dc4"
+  },
+  {
+   "path": "schema/schema_seed/loci_modes",
+   "size": 11700,
+   "new": true,
+   "kind": "binary",
+   "sha256": "918f9ddd6a521c28040543bc77c43caed62c010d45d211018d2dbd86e16d764c"
+  },
+  {
+   "path": "schema/schema_seed/pre_computed/DNAtable1",
+   "size": 61893,
+   "new": true,
+   "kind": "binary",
+   "sha256": "b89245e69ff51ca1eae178bace21ff8049c0a04a3f8a2338f171119dc7b17518"
+  },
+  {
+   "path": "schema/schema_seed/pre_computed/PROTEINtable1",
+   "size": 57168,
+   "new": true,
+   "kind": "binary",
+   "sha256": "27176b4f4bf0a760f8d38309f14dab45964718112fd1347009387ae10592cc3c"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein114_short.fasta",
+   "size": 2113,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein114_1",
+    "TTGCTTGAGGTTGTTTCACCAACTGAAGGGTTTCTTCAAATTATAAAGATACCAGTAGGTAAAAAATGCAAATCCGAGCAATTGTTAGGTATTATTGTAGCACAAAAAGAAGAAGGTTTTTATAGTTCAGGTTCATCAAGCACAAGCACAAACATCAAACAGCAAAAATTGTGTAAAAAAGAGCAAAAGGTAGATGAATC",
+    ">1206109-protein114_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2067,
+   "sha256": "22085911408a8d13c26dfe3add6b3e4cf7992cb52b41c218e375a594d53d0b37"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein128_short.fasta",
+   "size": 1786,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein128_1",
+    "GTGGTTCATTATGGATTTTTTATAATATTAATGGTAAATAAAAACTATTTAGTAATAGCAAAACCAAATATAATAATAGGAAATGTTATTTCAATTTTAGGGGGAATTTTTTTATCTTATAAATGGAATATAAAAATATTAATAGGAAGTTTGTTAGGTATAATTTTAATTATAGTATTTAGTTGTATATTAAATAATTA",
+    ">1206109-protein128_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1740,
+   "sha256": "fa051c44d9883ddbf51f5c84308f95cdeb8b7bd634bf01b960ddd88721a63254"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein136_short.fasta",
+   "size": 2254,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein136_1",
+    "GTGATAATAAAGCTACCTGAAATAGGTGATATAAATAAAAAAGTTGAAGTTATAGAAATACCCGTAAAAGTAGGAGAATTTATAAAAAAAGATGACACTATAGTTGTTTTAGAGTCAGAAAAAGCTACTATTGATTTACCTTCACCAAACGAAGGAACAATAACTAAAATTTTAATTAAAGAAGGTGAAAACATATATTC",
+    ">1206109-protein136_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2208,
+   "sha256": "aac7d6b7f2818ed698f0ffc4b8727ecdf6e9b44e3f5745413029192c427fab0c"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein168_short.fasta",
+   "size": 2131,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein168_1",
+    "ATGATATTAAGTTACGGCTTAGGAATTGCAAGTAAAAATTATAAAAATGAAATTTTAGAAGTTTATTATCCTTTTACAGTTTTATATCCTCATCCAACAGTTATAAAAAATATATTAAGGAAGTTAACGTTTAAATTAAACATAATTTCAAATAGTTTTAATTTATATTTATCAAATAATAACGATTTATTTTTTTTATA",
+    ">1206109-protein168_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2085,
+   "sha256": "6dee6594277d2115d63414816ddaaa90f6553845f489add92c59e3e704049d11"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein171_short.fasta",
+   "size": 1210,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein171_1",
+    "ATGGAAAATATTGGATTATCTTTAATAAATACATTAATTAATTTATATACATTTATGTTAATGTTACGTTTTGCTTTACATATTTCATATGTAGATAATAAAAATCCTATAACTCAAAACATAAGAAAACTTACATCGGTTATGGTAAATCCAGTAAAGAAATGTATTAAATCTATTGGATGTTTTGAATTAGCAACATT",
+    ">1206109-protein171_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1164,
+   "sha256": "cb2e4c556aab688d12655c296856f5cc822be2532751428050e065e251f0e56c"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein193_short.fasta",
+   "size": 1066,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein193_1",
+    "ATGAACTTAACGAAAATTTTAACAGCATCAATTTTTAAAATAAAAGCTTTGGATTTAATTTCTTTTAAAAAAAATATTAACTTTCGTAGATCTGTACTTAAAGGCATTTTTTTACAATTTATACAGCAATTGACAGGCATGAACGTTTTGATATACTTTTCTCCTAAAATTTTTGAATTTTATGGTTTTACAGGAACTAA",
+    ">1206109-protein193_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1020,
+   "sha256": "3c74d88b6c7e5dcd596f5f4d4fd421936e0a03a959cf9d4f24cd2227be141db8"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein207_short.fasta",
+   "size": 3436,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein207_1",
+    "ATGCGTATTAATTATTGTGGTAAAGTCAATCAAACAATTTTAAATTCATATGTCAAGTTATACGGTTGGGTAAATAAAATACGAGATCATGGTGGCATTTTGTTTTTAGATTTACGTGATATGTATGGTAGAACTCAATTAGTGATTGATTCTAAAAAGCTTGATTTTACAAATTTTGTGTTAGCAAAAAAACTCAAATC",
+    ">1206109-protein207_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 3390,
+   "sha256": "f13617032bbd17b6ac4fbf45a4515387a862384519fdd1ca7de8cbf117e8de88"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein20_short.fasta",
+   "size": 3965,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein20_1",
+    "ATGAATAATTTATTTATTGAAGTTGGTTTTGAAAACTTACCTATAAAAGCTAATGAAATTATCATCAACAATATTATAAGAATTTTAAACCAAAAATTCAGAACATATACCTATAAACAAAATAAAGAAAATTTTTATTTTAATACAATAAATGTTTTTACAACAGCTAGACGTATTGCCATACATATAGACAGTATACA",
+    ">1206109-protein20_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 3921,
+   "sha256": "a7c66267528f71b9dcb418e25d23a134761e04ddae97fa9c738f6a4d355c723d"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein234_short.fasta",
+   "size": 2227,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein234_1",
+    "TTGATAAAAACCAATTTAATACATTTTTTTTATAAACTTGAAAAAAAGTTTTATTGTTTATCTATTTTACTTTCTAAATATGAAATTAGTTATAAACAGGATAAATATATAAAATATGCACAGGATTATTCACGATTGGCAAAGTTAGTTAGCTTGTGGAAACTTTATCAAAATTTAGAAATAGAACTTAGTTATAATAA",
+    ">1206109-protein234_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2181,
+   "sha256": "75c1d4f496102dcb9a99af2539da5775b852bf374714779772870e1f36e1eee2"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein245_short.fasta",
+   "size": 5122,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein245_1",
+    "ATGAAGACAAAAATAAAAAAAAACATATATAATGCAACCCCAGCAATAACACAATACCTTAGGATAAAAAACCATTATCACAAAATTTTGTTAATGTATCGTATGGGTGATTTTTATGAATTTCTTTTTGAAGATGCGCACACAGCCTCTGCTTTATTAAATATTCAATTAACTAGCAAAGGAAAATATAATAATAAACG",
+    ">1206109-protein245_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 5076,
+   "sha256": "00b6f18ce5caab772843f78e7562f792ca5a102dab4df197ca4ea23796538d89"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein25_short.fasta",
+   "size": 2756,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein25_1",
+    "ATGAGGAACAATGATATTATTTGTGCAAAAGCTACTTTGTATGGATTTTCAGGCATAGGCATTGTTAAAATTTCAGGAAATGAAAAAGTATTTATAATTTCAAAGCAAGTATTGGGTTTTATCCCCCAACACAGCAATGCTTGTTATGTTCCTTTTGTTGATAGCAAGAAAAAAATCATCGATAAAGGTATAGCTATATT",
+    ">1206109-protein25_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2712,
+   "sha256": "5ad35f4df3b8f4485d5e108856a094e04c59f2cc1ddbcb6598f65e1c7ba04183"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein3_short.fasta",
+   "size": 2826,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein3_1",
+    "ATGATTAAGAATGCACAAATATTACCTATTAGTTTTTTATTTATAACATTAATAATATTAATTATTACTATATCATTTAATCGTAAAAATTTAATTATATTTATAATAACCATAATAGGGTTATTAATTTCATTATTATCTATATTTTTGATTAAACATACTTTATTTTATCCTTTAATAATGATAGATAATTATTCCTT",
+    ">1206109-protein3_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2784,
+   "sha256": "48ae915f06a6350bdd1bdbc1883dacea71ef2752be8fdc2d9d3d541ad418f766"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein60_short.fasta",
+   "size": 1127,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein60_1",
+    "GTGAAAAAAAGATGGTATGTTGTTAATATATATTCAGGTTATGAAAAACAAGTTATAAGTGATTTAAAAACTAGAATTAAAAGATATAAATTAGAAACAGCATTTGGAAAAATGATAGTACCTTCAGAAACTTTGTTTGAAAAGATAATAGTACCTTCAGAAACTTTGTTTGAAAAGATATCAGGTAAAATACGTAAAAG",
+    ">1206109-protein60_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1083,
+   "sha256": "c4a01c2d74bb2326ccfeff618750d8676fb1f411079baea75a56204d00801e1e"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein73_short.fasta",
+   "size": 1274,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein73_1",
+    "ATGAAGATCAAACTTAGAGATACAACTGATACAATTAAAGTATCAAAAGAAGTATTTGATATAGATTTTAAACCGGCATTAATTCATCAAGTAATAACGTCGTATATACATAATTCAAGGCAAGGAACAAAAGCACAAAAAAATTATAAAACTATTCGTGGTGGTGGCAAAAAACCTTGGAAGCAAAAAGGAACAGGACG",
+    ">1206109-protein73_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1230,
+   "sha256": "334dedfc16a599682a7128914016061272bd1d49a95a1b0f169208e989057d56"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein7_short.fasta",
+   "size": 1008,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein7_1",
+    "GTGTTATTTTATATTTCAGCAATAATTGCAATAGTTTCAACGTTGAACGTTATTATAAGTAATAATATTATACATGCTTTGTTGCACTTTATTATATCATTGATTTCAATTTCTATGATATTTTTTTTTATTGGAGCAAATTATGCTGGAGTCTTAGAAATTATTATTTATGCTGGTGCAATTATGGTCTTATTTGTTTT",
+    ">1206109-protein7_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 966,
+   "sha256": "0b4f1209a39eb477a2a15491e480126e523c30eeb7cdaa8bb29d0ea95d32f41c"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein83_short.fasta",
+   "size": 650,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein83_1",
+    "ATGTATAAACTTAGACGTAAGGATGAAGTAATCGTTATATCTGGTAAAGACAAAGGTAAAGTTGGAAAAATTAAACGGATTTTAAAACAGAAAGTTTGGGTAGTAGGGATAAATATAAGAAAATTTCATAAAAAAAATAAAGGTAATAGCATAGGAGGTATAATTAAACAAGAAGCATCAATTAATTGTTCAAATATAGC",
+    ">1206109-protein83_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 606,
+   "sha256": "74df17d921af19c955a29467735d568662d81936e4d74e1fcf3d84591841d641"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein90_short.fasta",
+   "size": 926,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein90_1",
+    "TTGAAATTAAATAAACTAATAAATTGTGTTATAGGATATAAAAAAGAAAAAAAAAGACTAGGTAGAGGGATAGGATCAGGAACAGGAAAAACGTGTGGTAAAGGGCATAAAGGTCAAAAAGCAAGGTCAGGAAAGAAACTTAAAAGAGGTTTTGAGGGTGGTCAATTACCTTTAAAACGTACAATACCTAAAATGGGTTT",
+    ">1206109-protein90_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 882,
+   "sha256": "3a21622a937addfa1f87773325a3af7a4616b580deac2ddf29a6beb31e755bd8"
+  },
+  {
+   "path": "schema/schema_seed/short/1206109-protein99_short.fasta",
+   "size": 563,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1206109-protein99_1",
+    "ATGGCTCAAAAAAAAGCTGCAGGTAGTTCAAGAAATGGAAGAGATTCAAATTCTAAACGATTAGGTATTAAGATATATGGTGGCCAATATGTTATTTCTGGAAATATAATCGTTAGACAACGTGGTACTAAAGTTCTTGCTGGACACGGTGTGGGAATTGGAAGAGATCATACATTGTTTGCATTAATTAACGGTTGCAT",
+    ">1206109-protein99_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 519,
+   "sha256": "293f560f7a79756c55250ee6dcd6a53e9076c2c18b2e12b7ef8a18baa7d1aa76"
+  },
+  {
+   "path": "schema/schema_seed/short/1239881-protein112_short.fasta",
+   "size": 565,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1239881-protein112_1",
+    "ATGTGTTGTAGTTGTGTATTTGATGATTTGTGTAAATGTGTTGTAGTAGTATATGGTGTAAGAGTTTTAAAAAGGTTGCTGGTTTGTGTAGTTGTTTTAAAAGAAAGTAAAAGATTGCTGGTTTGTGTAGTTGTTTTAAAAAAACAAGTAAGAAGTTGTAAAAAAAAAGAAGGAAAAGGAAAAAATTGGCAGTTGGCAGT",
+    ">1239881-protein112_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 519,
+   "sha256": "4228bd8932fdd7d908e173c4b199b7851b0f326d2e84883c8d4420e918d327d5"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein109_short.fasta",
+   "size": 2476,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein109_1",
+    "ATGATTAATAGAAAGAATATAAGTAATATCTATAAAGAACTTATGAACAAAATTCGGTTTAGTTTAGTTTCAATTATAATTTATAGAATAGGGGCACATATACCTGTACCGGGAATTAATACATATCAATTATCTATAGAAAATAGTGCTAATATAATTAGTTTATTTAATATGTTTTCTGGTGGAGCCTTGGAGAGAAT",
+    ">1297582-protein109_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2430,
+   "sha256": "79f50d9a2acccc26d180b20b4677ecdd1459c3b79383b605012610bde1143aa1"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein111_short.fasta",
+   "size": 1090,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein111_1",
+    "ATGGTTAACAAAATGGTTAACAAAATGGTTAACAAGACAGAAAGTGAGTTTAAAGAAAAAATAGTAAAGATAAATCGTGTTTCTAAAGTAGTAAAAGGAGGAAGAATATTTGGATTTTCAGCTACAATAGTAAGAGGTAATGGAAAAGGTACAATTGGATTTGGAAAAGGAAAAGCTCGTGAGGTTTCAGTTGCTATTCA",
+    ">1297582-protein111_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1044,
+   "sha256": "2d08b8c8722aa62c01bcbb98c515cc3bf0a5396404b7c11dbd17941412d6c65a"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein112_short.fasta",
+   "size": 802,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein112_1",
+    "GTGAAGAAAATATTATATATAAAGAAGTTAAAAAAAAATAAGAGTGAAAGTATGAAATTAAAAAAAGAAATTCGTAAAAAAAGAGTAAGATTTAAAATACGGAAAAAAATGATGGAACGTATATGTGTTAATAGAACAGCAAAAAATATATATGCGCAAATAATATCATCAGATGGTAAAAAGGTATTGGTAAGTGCTTC",
+    ">1297582-protein112_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 756,
+   "sha256": "8af4ef9ab87afd36379a788ef320d696eaceefbc81362501f033899636873478"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein163_short.fasta",
+   "size": 2188,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein163_1",
+    "ATGAATAAAAACAATAAGAAAATTCTTGTATGTATGTCTGGAGGAATTGATTCTTCTTTATGTGCTTTTTTACTTGTACAAAAAGGATATAATGTTGAAGGTTTATTTATGAAAAATTGGGAGTTTCAAAATAATTGTACAATACAAACCGATTTTGATGATGTCAAATATATCTGTAATAAATTAAAAATAATTTTGCA",
+    ">1297582-protein163_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2142,
+   "sha256": "04ee90a0a0744cf1fd13059127ebb583459b08d01ffa70ad7591a65c58d6e405"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein177_short.fasta",
+   "size": 2560,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein177_1",
+    "ATGGGAATTTTTGTACAAAAATTTGGTGGCACATCAGTAGGTTCAATAAAAAATATCAAAAATATTGCTAAACAAATAAAATTATTTTATAAAAAAAAGAATAAAATAATTGTTGTAGTATCAGCGATGAGTGGAGAAACAAATAGATTATTATCTTTAGCTAAAAACATGTATAATGAAAAACAAGTAAATAATATTTA",
+    ">1297582-protein177_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2514,
+   "sha256": "c87e7053e3db5185b2fb23a656662b1faba306063fdfb2ea5bde07d99d44553b"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein189_short.fasta",
+   "size": 2785,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein189_1",
+    "GTGTTTATATATAATACATTAAAGAATTATAAAGATTTATTAATTCCTATAAAATATAATAAATTAAAAATATATGTTTGTGGTATTACGGTATATGATTATTGTCATATAGGTCATGGAAGAAATATGTTTATTTTTTATTTAATAAATAAATATTTAAAAATTAGAGGTTATAAAATCACGTATGTAAGAAATATAAC",
+    ">1297582-protein189_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2739,
+   "sha256": "7bd391f5f4403aa08ac9c8f925a9edcdddb1d346e3984f1d7bee3e749212109e"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein18_short.fasta",
+   "size": 1604,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein18_1",
+    "ATGAATATTAAAATTTATTCATTACAAGATATAACAAAATTAATAATTGTAGGAAAATTAGCAGCTAATATATTAGAAATGATTTCTGAATATATTAAACCTGGCATTAATACAGAAGAACTAAATAATATTTGTCATAAATATATTGAAACTAAAATAAAATGTAGTTCAGCTACAATAGGATATAAAGGTTTTCAACA",
+    ">1297582-protein18_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1560,
+   "sha256": "caa2f54ba0098c6ab5d4410e3d17ea0e1c6d28851490d269d25bf779aa64b551"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein196_short.fasta",
+   "size": 1711,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein196_1",
+    "ATGAATAATAATGAATTAGAAATTAGTGTCGAAGTTTTTCCACCTAACGAAAATGATAAAATCAAAGAATTAATAAGTTTAATAAAAATGTTATATAAAAAAATAAATATAACGTTTTGTTCAATTACTTTTGGAGCGGGAGGATCAAATAAAAAAAATACTTTAGATGTTATAAAAATGATAAAACAAAACAATATAGA",
+    ">1297582-protein196_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1665,
+   "sha256": "27a0b67d4e8250b51b44697be036503fe96c6d8d1bf1bd0c6c4e7f1285a0afc6"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein208_short.fasta",
+   "size": 2329,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein208_1",
+    "ATGTTAAAAACACTATATGACATAGATATATTAATTTTAGGAGGGGGATGTACTGGTTTATCTTTAGCATATTATTTAAGTTATTTACCAAATAAATGTAACATTTTAATTATTGAAAATAAAACATTATATCATAATGATAAAACATGGTGTGGGTGGAGAACAAAAAACCATGCATTTATAACATGTTGCACAATTTT",
+    ">1297582-protein208_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2283,
+   "sha256": "95f0d0ee39c657f3c8995571c49f39960a70d71ca7ad0bca33d7262ecf1b1e33"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein20_short.fasta",
+   "size": 1613,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein20_1",
+    "ATGAATAATATCAAGTTAATAAAAAAATTAAGACATAGTACCGGATTAGGTATTATGACATGTAAAAAAGCACTTAATAAATATAAAGGTAATATACAATTAGCTATAAATTATTTACTTACTATACATAGATTAAAATCAAACGTAAATTTTCCAAAAGAAGGAATAATAAAAATCAAAGTGTCACACAATTTAGTTTT",
+    ">1297582-protein20_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1569,
+   "sha256": "e3cbecf255b3db119d5c9775928fa41fc43e8283137047096f9a9a80cf926ba1"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein211_short.fasta",
+   "size": 1171,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein211_1",
+    "ATGCAAATTAATCAAATTAATGCTTTTATTAGATATAATATAGGAAAAAAAGCAAATAAAAGATTACGTAAGAATACAATTATCCCAGGGATAATATATGGAGGTAATAAACAAAATTTACTTATTGCTATAGAACAAGAAAAATTTGTAAATTTTATAAAACAAGAAAATTGTTTTTCTTCTATATTATATATAACGAT",
+    ">1297582-protein211_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1125,
+   "sha256": "ccde424afb6fb1377fa9857f719d4c357ae35aaca21da428d0e68417de9e4501"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein215_short.fasta",
+   "size": 2989,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein215_1",
+    "ATGAACTTATTACAAAATAGAATTCTTATTTATAAAGACATCCTATCAGATATAGATACGCCTCTTTCTATATATATGAAAATAGCAAATTATCCTTGGACTTTTTTATTAGAATCAATAGAAGGAAAAAAAAATTGGGGTAGATATTCTATAATTGGTTTACGTTGTAATAAAAGAATAGAAGTACATGGTAACAAAAT",
+    ">1297582-protein215_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2943,
+   "sha256": "be932a41dfa05a4b4f4c5654a75a81f446e60884c37477f5adb4075674fc2f52"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein218_short.fasta",
+   "size": 781,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein218_1",
+    "TTGGTAGAGCGCAACGCTGGCAGTGTTGAGGTTATCGGTTCAATTCCGATAAGCTCCATATATAATATAAAACTACTGATGAATAATAAAACTATAGAAATAATAAAAGAACAAATAAGAACAAATAAAATAATATTATATATGAAAGGAACACCAAAGTTTCCACAATGTGTTTTTTCAGCTAAAGCTGTTAACTGTTT",
+    ">1297582-protein218_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 735,
+   "sha256": "89c1fd082adf957c8d472e9d39aa00a3b84a4c7325897d963e94ae8ed6e3e1c6"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein224_short.fasta",
+   "size": 2221,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein224_1",
+    "ATGAAAAAAGATTTAAAAACAATTATAAAATATATAGATAATATTGATTATCAATTATTAAATTTAATTAGTCAACGTGCTATTTGTGCTAAAAAAGTAGCAAAAATAAAATCTTGTTTATCAAAAGATCCAAAAACAAAATTTTATAGTCATGTACGTGAAAATCAGGTGTTAAGAAATATTATAAAATATAATAAAGG",
+    ">1297582-protein224_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2175,
+   "sha256": "eb9169512dba08c492594f73f8421b7e93bfab890446cde04d874fbfdf5e3e50"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein22_short.fasta",
+   "size": 5666,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein22_1",
+    "ATGAATAATTTTATTCATTTACGTATACATAGTGAATATTCTTTAATAGATAGTATTATTAAAATAAAATCTTTAATTTATAATATAAAACAAATGAATATACCAGCAATTTGTATAACTGATGAACAAAATATATTTAGTTTAATAAAATATTATAAAACTTCTATAAAAAATGGTATTAAACCAATAATTGGTTGTGA",
+    ">1297582-protein22_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 5622,
+   "sha256": "c0e9dbf85ee79ee1bf4106c8dce4368aa06fb51a39cdbdbc3e086eb02b326a11"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein23_short.fasta",
+   "size": 2549,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein23_1",
+    "ATGTCTTTATCACAATATTATTTATATTCAATAATCAAATCTTTAAATATAAACACATTATGGATTGCTTTATCTGGTGGAAGAGATAGTATATGTTTATTAGATATAACATATAAATCATTAAAAAAAATCAAAACCAAAAATTTAATACCTAAAATATATGCTATTCATATAAATCATTATATGAATAACTCCTCGGA",
+    ">1297582-protein23_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2505,
+   "sha256": "70db778ab41b50462b7a6afd817d4aa8da77ef9c42757ee5d2615b75f1a6a9f0"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein246_short.fasta",
+   "size": 1624,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein246_1",
+    "TTGAAAACTTTTTGTATTGAAAAAATTTTAAAGGTTGTTCATTGGAATAATAAATTATTTAGTTTTTATACAACAAAAAATAAAAACTTACGGTTTAATAATGGTCAATTTTTACTTATTGGTTTAAATATTAATAAATACTATTATTTAATAATAAGAGCTTATTCAATAGTAAATCCTACTTATTCAAAGTTTTTTGA",
+    ">1297582-protein246_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1578,
+   "sha256": "a509f9c482579b238ec3c0b31902ce19b91d2ed05d15830258e16b4cc3720122"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein30_short.fasta",
+   "size": 1100,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein30_1",
+    "ATGTTATATCATAATATTGTTCTTATAGGTCCTATGGGAACAGGTAAAAGTACTATTGGAAAAATAGTATCTAATAAATTTAAATGTAAGTTTTATGATATAGATAAGGAAATTGAAAAAAAATGTGGTTGTAAAATTTATGATATTTTTTTATTAGAAGGAGAAAATAGTTTTCGTAAAAGAGAACATAAAATAATAAA",
+    ">1297582-protein30_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1056,
+   "sha256": "45f2860aec63c1e14fd155af87917b047af34b01387302b30744911c8535cf8e"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein34_short.fasta",
+   "size": 2108,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein34_1",
+    "ATGAATAATTTAAAAAATTATAAAATAATAATTTCTAACCAATTTAATCAAAGATTAGATAATTATTTAATTAAAAGTTTAAAAGGTATACCTAACAATTTAATTTATCGTCTTATTAGAAAAGGAATTATAAAAATAAATAATCAAACAGTTAAAGCTAAAAATAAATTACAAATAGGTGATAAAATTAGCATTCCTAT",
+    ">1297582-protein34_2"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2064,
+   "sha256": "840a2b7baf8061231ccc62d0daa54dc83bce157d569b3a3223cf275c9ebafc24"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein4_short.fasta",
+   "size": 576,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein4_1",
+    "ATGGCTGTTAATAAAAAAAATAAAGCTGCCATTATTAATGAATTTGGTAAAAATAAATTTGATACAGGATATACTGAAGTTCAAATTGCTTTATTAACTAATAATATATATAATTTACAAATTCATTTACAAAAAAATAAATATGATTATCATTCGAAAATAGGATTGATTCGTATGGTAAATAAACGTAGAAAACTTTT",
+    ">1297582-protein4_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 534,
+   "sha256": "fdd0847b4b019029554d1d458ae54d9312a875bbd7b62c801588b5d9dc9bca46"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein65_short.fasta",
+   "size": 5438,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein65_1",
+    "ATGATAATGAATCATTTATATAAAAAATATAATCCAAATAAAATTGAAAATTATTGGTATAACAAATGGGAAAAAAATAAAAACTTTTTAAGTAATGTATCATGTATACCGTTTTCCATTATGATTCCTCCTCCTAATGTTAATGGAAACTTACATATGGGTCATGCTTTTGAATATACATTAATAGATACAATAATACG",
+    ">1297582-protein65_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 5394,
+   "sha256": "b40eb40c887d6d6d3a52b8d57f353c89601a8790111aeb38536dc28816ac1889"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein98_short.fasta",
+   "size": 545,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein98_1",
+    "ATGGATAAAATAAAAAAAAGAGCTATACGGTCAGAAGTAAGACGTAAACAGAATTCAAGTAAACGTTCAATGGTACGTACTTTTATTAAGCGGGTATTAAAAGCAATTAAATTAAAAAAATATAAGTTGTCTATGGAGGAATTTTATAAAGCACAATCGGTTATTGATAGGATAGCTGATAAAAACATTATCTCAAAGAG",
+    ">1297582-protein98_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 501,
+   "sha256": "10a3423503bde222ddbd57fa4ad59bb365c82ee6e5bde84ba960a3381cf8d023"
+  },
+  {
+   "path": "schema/schema_seed/short/1297582-protein99_short.fasta",
+   "size": 2024,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">1297582-protein99_1",
+    "ATGCAATTTATAGATGAAGCTTGGATTGTAATTGAAGCAGGTAAAGGTGGTAACGGATGTTTAAGTTTTCGTAGAGAAAAACTTATAAAAAAAGGTGGTCCAGATGGAGGGAATGGAGGGAATGGAGGGAATATTTTTTGTATAGGAGATAAAGCTTTAAATACATTGATTTATTTGAATTATAAAAAAGTTTATAAAGC",
+    ">1297582-protein99_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 1980,
+   "sha256": "5866c97d5e59dd0392377aa7b7a777fd397cd58ab0a28d6f716b78b1656657d8"
+  },
+  {
+   "path": "schema/schema_seed/short/91844-protein175_short.fasta",
+   "size": 2565,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein175_1",
+    "ATGATGAGTAAAGATATTTTATTTGTTATTGATTCTATTTTAAATGAAAAAGGTGTAGCACGGCAATTAGTTTTTAAAACAGTCGAAGAAGCTTTATCTAGTGCAACTATTCAAAGATTTGAAGAAAAAAAAGTCAATATCATAGTAAAGATGAATCGCATAAATGGTAAATATGATACTTTTCGTATATGGAAAGTTGT",
+    ">91844-protein175_4"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 2523,
+   "sha256": "cb6d946036b99413f51fd5afa6e7815e7bbbdbdc76aab4c3daabc2996960dc22"
+  },
+  {
+   "path": "schema/schema_seed/short/91844-protein176_short.fasta",
+   "size": 4434,
+   "new": false,
+   "kind": "fasta",
+   "preview": [
+    ">91844-protein176_1",
+    "ATGGTAGAAATAACTGTTAAAGATTTTGCAAAGAAACTAGGATGTAATACAAAGAGGTTAATAAGTTATTTAACAAATGCCGGTGTAAAAAATAAAAAGGCTGAGAATTTATTAACAGAAAAAGATAAACAAAGTTTATTAACTTATCTATTTTATAAACAAGGTATAACTAATTTTTATTTAACTAGAAAAAAATATAG",
+    ">91844-protein176_3"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 4392,
+   "sha256": "c53439d6de66f62020d65ffbf7f19f82ccf2203eef6ffa3daed9e6efdbc204dc"
+  },
+  {
+   "path": "schema/schema_seed/short/self_scores",
+   "size": 12514,
+   "new": true,
+   "kind": "binary",
+   "sha256": "fc0b20a43411235d5e82e0e20962e5248d1d58c0433310f55a1620eca7aa382c"
+  }
+ ],
+ "n_outputs": 291,
+ "output_bytes": 1149532,
+ "time": {
+  "elapsed": "0:23.21",
+  "max_rss_kb": "187824",
+  "cpu_pct": "327",
+  "exit_status": "0",
+  "user_s": "64.05",
+  "sys_s": "12.04",
+  "elapsed_s": 23.21,
+  "max_rss_mb": 183.4
+ },
+ "stdout_tail": "_seed/short/self_scores\nCreating minimizer index for representative alleles...\nCreated index with 29414 distinct minimizers for 299 loci.\nClustering proteins...\n\r [                    ] 0%\r [====================] 100%\nClustered 438 proteins into 234 clusters.\n68 proteins were not added to any cluster.\nAligning cluster representatives against clustered proteins...\n\r [                    ] 0%\r [==                  ] 10%\r [====                ] 20%\r [=====               ] 25%\r [======              ] 30%\r [=======             ] 35%\r [========            ] 40%\r [========            ] 44%\r [==========          ] 50%\r [============        ] 60%\r [=============       ] 65%\r [==============      ] 70%\r [===============     ] 75%\r [================    ] 80%\r [=================   ] 85%\r [==================  ] 90%\r [=================== ] 95%\r [====================] 100%\nClassifying high-scoring matches...\n\r [                    ] 0%\r [====================] 100%\nClassified 376 distinct proteins.\nUnclassified proteins: 130\n\n Representative determination \n==============================\nAligning representative alleles against unclassified proteins...\n===========================================================================\n Iteration    Loci     High-Scoring   Classified   Selected   Unclassified \n===========================================================================\n\r 1\t...\r      1         299         ...      \r      1         299          48           ...     \r      1         299          48            70         ...    \r      1         299          48            70          44          ...      \r      1         299          48            70          44           60      \n\r 2\t...\r      2         44          ...      \r      2         44           2            ...     \r      2         44           2             2          ...    \r      2         44           2             2           0           ...      \r      2         44           2             2           0            58      \n===========================================================================\n\n Wrapping up \n=============\nCreating file with genome coordinates profiles (results_contigsInfo.tsv)...\nIdentifying paralogous loci and creating files with the list of paralogous loci (paralogous_counts.tsv & paralogous_loci.tsv)...\nIdentified 0 paralogous loci.\nAssigning allele identifiers to inferred alleles...\nAssigned identifiers to 494 new alleles for 234 loci.\nGetting original sequence identifiers for new alleles...\nGetting data for new representative alleles...\nAdding the BLASTp self-score for the new representatives to schema/schema_seed/short/self_scores\nCreating FASTA files with the new alleles...\nAdding new alleles to schema...\nUpdating allele size mode values stored in schema/schema_seed/loci_modes\nUpdating pre-computed hash tables in schema/schema_seed/pre_computed\nCreating file with the allelic profiles (results_alleles.tsv)...\nCreating file with class counts per input (results_statistics.tsv)...\nCreating file with class counts per locus (loci_summary_stats.tsv)...\nCreating file with the coordinates of CDSs identified in inputs (cds_coordinates.tsv)...\nCreating file with invalid CDSs (invalid_cds.txt)...\nCounting number of classified CDSs...\nClassified a total of 980 CDSs.\n=========================================================================================\n  EXC      INF     PLOT3    PLOT5    LOTSC     NIPH    NIPHEM    ALM      ASM      PAMA  \n=========================================================================================\n  482      494       0        0        0        0        0        0        4        0    \n=========================================================================================\nAdded 494 new alleles to the schema.\nAdded 44 new representative alleles to the schema.\nRemoving temporary directory with intermediate files...\nCreating log file (logging_info.txt)...\n\nResults available in calls\n\nFinished at: 2026-11-02T15:38:22\nTook  0m 22s.\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:22"
+}

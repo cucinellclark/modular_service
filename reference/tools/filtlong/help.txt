@@ -1,0 +1,53 @@
+# /opt/patric-common/runtime/bin/filtlong --help
+usage: /opt/patric-common/runtime/bin/filtlong {OPTIONS} [input_reads]
+
+Filtlong:
+a
+quality
+filtering
+tool
+for
+Nanopore
+and
+PacBio
+reads
+
+positional arguments:
+ input_reads                            input long reads to be filtered
+
+optional arguments:
+ output thresholds:
+  -t[int], --target_bases [int]          keep only the best reads up to this many total bases
+  -p[float], --keep_percent [float]      keep only this percentage of the best reads (measured by bases)
+  --min_length [int]                     minimum length threshold
+  --max_length [int]                     maximum length threshold
+  --min_mean_q [float]                   minimum mean quality threshold
+  --min_window_q [float]                 minimum window quality threshold
+
+ external references (if provided, read quality will be determined using these instead of from the Phred scores):
+  -a[file], --assembly [file]            reference assembly in FASTA format
+  -1[file], --illumina_1 [file]          reference Illumina reads in FASTQ format
+  -2[file], --illumina_2 [file]          reference Illumina reads in FASTQ format
+
+ score weights (control the relative contribution of each score to the final read score):
+  --length_weight [float]                weight given to the length score (default: 1)
+  --mean_q_weight [float]                weight given to the mean quality score (default: 1)
+  --window_q_weight [float]              weight given to the window quality score (default: 1)
+
+ read manipulation:
+  --trim                                 trim non-k-mer-matching bases from start/end of reads
+  --split [split]                        split reads at this many (or more) consecutive non-k-mer-matching bases
+
+ other:
+  --window_size [int]                    size of sliding window used when measuring window quality (default: 250)
+  --verbose                              verbose output to stderr with info for each read
+  --version                              display the program version and quit
+
+ -h, --help                             display this help menu
+
+For
+more
+information,
+go
+to:
+https://github.com/rrwick/Filtlong

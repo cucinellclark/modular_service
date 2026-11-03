@@ -1,0 +1,776 @@
+{
+ "schema": "modpipe/fixtures/v1",
+ "description": "Test fixtures for ModularService. See docs/TEST_DATA.md. Data are fetched into tests/fixtures/data (gitignored) by fetch_fixtures.py.",
+ "tiers": {
+  "T0": "smoke: every module runs (seconds)",
+  "T1": "realistic-small: output discovery + e2e pipelines (minutes)",
+  "T2": "optional heavy data"
+ },
+ "sources": {
+  "nfcore": {
+   "url": "https://raw.githubusercontent.com/nf-core/test-datasets/{commit}/data/genomics/{path}",
+   "repo": "https://github.com/nf-core/test-datasets",
+   "branch": "modules",
+   "commit": "3170f64e3b73600f2cabe1db39a1d14bbae009e4",
+   "license": "MIT"
+  },
+  "bvbrc_genome": {
+   "command": [
+    "p3-genome-fasta",
+    "--contig",
+    "{genome_id}"
+   ],
+   "note": "Needs the BV-BRC CLI (run in the container or pass --container). Public genomes; no token required."
+  }
+ },
+ "fixtures": [
+  {
+   "id": "sarscov2_genome",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/genome.fasta",
+   "dest": "nfcore/sarscov2/genome/genome.fasta",
+   "type": "sequences.dna",
+   "organism": "SARS-CoV-2",
+   "size": 30322,
+   "sha256": "1833c8720be7a62a4f132beefb68d2cbc32c3e20bd85a8939dba178850ba1ba4",
+   "description": "Reference genome (MN908947.3)"
+  },
+  {
+   "id": "sarscov2_gff3",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/genome.gff3",
+   "dest": "nfcore/sarscov2/genome/genome.gff3",
+   "type": "annotation.gff",
+   "organism": "SARS-CoV-2",
+   "size": 2731,
+   "sha256": "20991e44efd8b173d9448b3e937cec12a891b80eba9fb7a6e655f931f0ae2f84"
+  },
+  {
+   "id": "sarscov2_gtf",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/genome.gtf",
+   "dest": "nfcore/sarscov2/genome/genome.gtf",
+   "type": "annotation.gtf",
+   "organism": "SARS-CoV-2",
+   "size": 8159,
+   "sha256": "1dcb53bc35a106ea70c55d994f5ba4afbb3c27aae72fef72b79805409a221c44",
+   "description": "Used by nf-core hisat2/stringtie tests"
+  },
+  {
+   "id": "sarscov2_proteome",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/proteome.fasta",
+   "dest": "nfcore/sarscov2/genome/proteome.fasta",
+   "type": "sequences.protein",
+   "organism": "SARS-CoV-2",
+   "size": 18016,
+   "sha256": "d78738c812fcd334ebddbdeb6cf4e68418568fab789af7faa0c6984b678c4c96"
+  },
+  {
+   "id": "sarscov2_transcriptome",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/transcriptome.fasta",
+   "dest": "nfcore/sarscov2/genome/transcriptome.fasta",
+   "type": "sequences.dna.genes",
+   "organism": "SARS-CoV-2",
+   "size": 31134,
+   "sha256": "5eecf151669a0774a870d60184011b318fec5be83dbb1ec3d2e1404fa572a948"
+  },
+  {
+   "id": "sarscov2_primers_v3",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/bed/v3.0.0.primer.bed",
+   "dest": "nfcore/sarscov2/genome/bed/v3.0.0.primer.bed",
+   "type": "table.bed",
+   "organism": "SARS-CoV-2",
+   "size": 15671,
+   "sha256": "99072afd2bdadda154f88b1fd2284525175648371fa1098c82ef67ff9b928f13",
+   "description": "ARTIC v3 primer scheme"
+  },
+  {
+   "id": "sarscov2_illumina_test_1",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/fastq/test_1.fastq.gz",
+   "dest": "nfcore/sarscov2/illumina/fastq/test_1.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "SARS-CoV-2",
+   "size": 9413,
+   "sha256": "0515ba304cb1bf7abcdd9c156b6affad7e580273f983dfed2e8fe2d918e800ff",
+   "description": "100 read pairs (smoke only)"
+  },
+  {
+   "id": "sarscov2_illumina_test_2",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/fastq/test_2.fastq.gz",
+   "dest": "nfcore/sarscov2/illumina/fastq/test_2.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "SARS-CoV-2",
+   "size": 9395,
+   "sha256": "0080f40cab58c7e7b85443e37de22775e3ed6b7afdef9a3271ac3147576f3027",
+   "description": "100 read pairs (smoke only)"
+  },
+  {
+   "id": "sarscov2_illumina_test2_1",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/fastq/test2_1.fastq.gz",
+   "dest": "nfcore/sarscov2/illumina/fastq/test2_1.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "SARS-CoV-2",
+   "size": 9415,
+   "sha256": "e4fae112b41bcbb2f8e2a30246f004df7070e396a13080242c0b22d7278f8db3",
+   "description": "100 read pairs (smoke only)"
+  },
+  {
+   "id": "sarscov2_illumina_test2_2",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/fastq/test2_2.fastq.gz",
+   "dest": "nfcore/sarscov2/illumina/fastq/test2_2.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "SARS-CoV-2",
+   "size": 9397,
+   "sha256": "d420eeac72d87df96662bb5bba6fc4fcd36efa413d74f2bb117f706121aae4df",
+   "description": "100 read pairs (smoke only)"
+  },
+  {
+   "id": "sarscov2_illumina_interleaved",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/fastq/test_interleaved.fastq.gz",
+   "dest": "nfcore/sarscov2/illumina/fastq/test_interleaved.fastq.gz",
+   "type": "reads.short.interleaved",
+   "organism": "SARS-CoV-2",
+   "size": 16510,
+   "sha256": "990d593172404ec63c33cfa830f3011da2da7add5160444f7fced19e6efc6d96"
+  },
+  {
+   "id": "sarscov2_contigs",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/fasta/contigs.fasta",
+   "dest": "nfcore/sarscov2/illumina/fasta/contigs.fasta",
+   "type": "sequences.dna.contigs",
+   "organism": "SARS-CoV-2",
+   "size": 36897,
+   "sha256": "f38855bef7b005b9b35b0ee683f52e81d1224fcdc52faaa19d399b306e74229a"
+  },
+  {
+   "id": "sarscov2_scaffolds",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/fasta/scaffolds.fasta",
+   "dest": "nfcore/sarscov2/illumina/fasta/scaffolds.fasta",
+   "type": "sequences.dna.contigs",
+   "organism": "SARS-CoV-2",
+   "size": 36897,
+   "sha256": "f38855bef7b005b9b35b0ee683f52e81d1224fcdc52faaa19d399b306e74229a"
+  },
+  {
+   "id": "sarscov2_bam_pe",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/bam/test.paired_end.sorted.bam",
+   "dest": "nfcore/sarscov2/illumina/bam/test.paired_end.sorted.bam",
+   "type": "alignment.reads.bam",
+   "organism": "SARS-CoV-2",
+   "size": 19725,
+   "sha256": "2bebae3cb61c7cb900ef1afa58f6260887664501bc3cf38b4d1a73a9cf60b040",
+   "description": "sorted"
+  },
+  {
+   "id": "sarscov2_bam_pe_bai",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/bam/test.paired_end.sorted.bam.bai",
+   "dest": "nfcore/sarscov2/illumina/bam/test.paired_end.sorted.bam.bai",
+   "type": "alignment.reads.bai",
+   "organism": "SARS-CoV-2",
+   "size": 128,
+   "sha256": "4438a4d84b1dff6afbcdd6226988904650f2338f605aced12554b7d26a3b15ba"
+  },
+  {
+   "id": "sarscov2_bam_se",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/bam/test.single_end.sorted.bam",
+   "dest": "nfcore/sarscov2/illumina/bam/test.single_end.sorted.bam",
+   "type": "alignment.reads.bam",
+   "organism": "SARS-CoV-2",
+   "size": 10687,
+   "sha256": "fff1f163fb1257b972ceca14e6a6f22ca025e36ce3ebb3d1ff100449badaa337",
+   "description": "sorted"
+  },
+  {
+   "id": "sarscov2_bam_se_bai",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/bam/test.single_end.sorted.bam.bai",
+   "dest": "nfcore/sarscov2/illumina/bam/test.single_end.sorted.bam.bai",
+   "type": "alignment.reads.bai",
+   "organism": "SARS-CoV-2",
+   "size": 128,
+   "sha256": "a7a860285f935373240f0627975ebce2890991cd675b87e94ea2cca178b15754"
+  },
+  {
+   "id": "sarscov2_vcf",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/vcf/test.vcf.gz",
+   "dest": "nfcore/sarscov2/illumina/vcf/test.vcf.gz",
+   "type": "variants.vcf",
+   "organism": "SARS-CoV-2",
+   "size": 1313,
+   "sha256": "a4b4560560fb08a44d76d8354cea89540f41403781be5a86f57db07985071bd5"
+  },
+  {
+   "id": "sarscov2_vcf_tbi",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/illumina/vcf/test.vcf.gz.tbi",
+   "dest": "nfcore/sarscov2/illumina/vcf/test.vcf.gz.tbi",
+   "type": "variants.vcf.tbi",
+   "organism": "SARS-CoV-2",
+   "size": 126,
+   "sha256": "764d327e1dcd46901119ef7e8e83953901168aff0c8f3b29a6beb446a92889f6"
+  },
+  {
+   "id": "sarscov2_aln_all_sites",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/alignment/all_sites.fas",
+   "dest": "nfcore/sarscov2/genome/alignment/all_sites.fas",
+   "type": "alignment.msa.dna",
+   "organism": "SARS-CoV-2",
+   "size": 119652,
+   "sha256": "d8e8b2788929ccb740419e11851cd2236aef088c1e04a2f77bed7bdac978dd5f"
+  },
+  {
+   "id": "sarscov2_aln_informative",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/alignment/informative_sites.fas",
+   "dest": "nfcore/sarscov2/genome/alignment/informative_sites.fas",
+   "type": "alignment.msa.dna",
+   "organism": "SARS-CoV-2",
+   "size": 256,
+   "sha256": "f353b096b2de6fc088561a255b026ff8c63a9ebdbe59ed0bcea251760034438c"
+  },
+  {
+   "id": "sarscov2_ont_small",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/nanopore/fastq/test.fastq.gz",
+   "dest": "nfcore/sarscov2/nanopore/fastq/test.fastq.gz",
+   "type": "reads.long.nanopore",
+   "organism": "SARS-CoV-2",
+   "size": 42965,
+   "sha256": "1618a10a4ffc87ad88e8fabb10c4bc19764b1abf7073c6602f2a678465143348"
+  },
+  {
+   "id": "sarscov2_kraken2_db",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/db/kraken2.tar.gz",
+   "dest": "nfcore/sarscov2/genome/db/kraken2.tar.gz",
+   "type": "database.kraken2",
+   "organism": "SARS-CoV-2",
+   "size": 48568,
+   "sha256": "0bda10320cf132fa71c219a2c9ca057cda11d9a93f1aa71565a925946c29ef4a",
+   "description": "Mini kraken2 DB",
+   "unpack": true
+  },
+  {
+   "id": "sarscov2_kraken2_bracken_db",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/db/kraken2_bracken.tar.gz",
+   "dest": "nfcore/sarscov2/genome/db/kraken2_bracken.tar.gz",
+   "type": "database.kraken2_bracken",
+   "organism": "SARS-CoV-2",
+   "size": 48975,
+   "sha256": "6adc8a102c1560d89895ea9e4d5fb07416ab928fd0964aea871ec3dcd92054b0",
+   "description": "Mini kraken2+bracken DB",
+   "unpack": true
+  },
+  {
+   "id": "hs_genome",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "homo_sapiens/genome/genome.fasta",
+   "dest": "nfcore/homo_sapiens/genome/genome.fasta",
+   "type": "sequences.dna",
+   "organism": "Homo sapiens (small test regions)",
+   "size": 40675,
+   "sha256": "48d0bbb875d37e529640d43f2751ec2a25e0ba1144f1994773e9c643d3cf9d05"
+  },
+  {
+   "id": "hs_gtf",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "homo_sapiens/genome/genome.gtf",
+   "dest": "nfcore/homo_sapiens/genome/genome.gtf",
+   "type": "annotation.gtf",
+   "organism": "Homo sapiens (small test regions)",
+   "size": 15025,
+   "sha256": "82f312b8b13e98199f530ca611b5e9162a9142cc3484017d476de953ba509447"
+  },
+  {
+   "id": "hs_rnaseq_1",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "homo_sapiens/illumina/fastq/test_rnaseq_1.fastq.gz",
+   "dest": "nfcore/homo_sapiens/illumina/fastq/test_rnaseq_1.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "Homo sapiens (small test regions)",
+   "size": 156910,
+   "sha256": "9119c9e68d7a326164728f645c6e90b7317ea3ad8a1c509926533560110a1c1a",
+   "description": "RNA-seq reads"
+  },
+  {
+   "id": "hs_rnaseq_2",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "homo_sapiens/illumina/fastq/test_rnaseq_2.fastq.gz",
+   "dest": "nfcore/homo_sapiens/illumina/fastq/test_rnaseq_2.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "Homo sapiens (small test regions)",
+   "size": 185801,
+   "sha256": "fe2130d59d71d2c3e8a1dfee2a8407a5f4449bdc4e779da878396b0b742d3d37",
+   "description": "RNA-seq reads"
+  },
+  {
+   "id": "hs_bam_pe",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "homo_sapiens/illumina/bam/test.paired_end.sorted.bam",
+   "dest": "nfcore/homo_sapiens/illumina/bam/test.paired_end.sorted.bam",
+   "type": "alignment.reads.bam",
+   "organism": "Homo sapiens (small test regions)",
+   "size": 179552,
+   "sha256": "1ab90e4d913e6078c5c5234322b3db4e0de1f5a09e923c21891b1f9e5a37cc77"
+  },
+  {
+   "id": "hs_bam_pe_bai",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "homo_sapiens/illumina/bam/test.paired_end.sorted.bam.bai",
+   "dest": "nfcore/homo_sapiens/illumina/bam/test.paired_end.sorted.bam.bai",
+   "type": "alignment.reads.bai",
+   "organism": "Homo sapiens (small test regions)",
+   "size": 96,
+   "sha256": "c7cc6e280bca92fd713cde8d317ce221b1e2280b73dbfef0aa241bbd9aa7f673"
+  },
+  {
+   "id": "flu_h5n1_italy",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "virus/influenza/fasta/H5N1_2.3.4.4b_Italy.fa",
+   "dest": "nfcore/virus/influenza/fasta/H5N1_2.3.4.4b_Italy.fa",
+   "type": "sequences.dna",
+   "organism": "Influenza A H5N1",
+   "size": 13861,
+   "sha256": "d1f81168954c3c956150f9409e207d24dadc6c96a4a5b4226de7528bc7805d29",
+   "description": "Segmented genome FASTA"
+  },
+  {
+   "id": "flu_test_genome_a1",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "virus/influenza/fasta/test-genome-A1.fasta",
+   "dest": "nfcore/virus/influenza/fasta/test-genome-A1.fasta",
+   "type": "sequences.dna",
+   "organism": "Influenza A",
+   "size": 14791,
+   "sha256": "5208583b5eeff2b98fa576ee0ffaf87377a5be966b75bf0a22cdb34d405eb6c6"
+  },
+  {
+   "id": "portiera_genome",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/candidatus_portiera_aleyrodidarum/genome/genome.fasta",
+   "dest": "nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/genome.fasta",
+   "type": "sequences.dna.contigs",
+   "organism": "Candidatus Portiera aleyrodidarum",
+   "size": 362796,
+   "sha256": "daba6e7d3db1ab2907d50a71e12cc78ac2ac5f0ea2dc223d0c7e4f454b6651ac",
+   "description": "358 kb; same length as BV-BRC 1206109.14"
+  },
+  {
+   "id": "portiera_proteome",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/candidatus_portiera_aleyrodidarum/genome/proteome.fasta",
+   "dest": "nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/proteome.fasta",
+   "type": "sequences.protein",
+   "organism": "Candidatus Portiera aleyrodidarum",
+   "size": 104161,
+   "sha256": "aa7e45821f80bb1243e6b92a09c4c2a1d32eeb9f52aece2f5d3ba84c9cd4b6a6"
+  },
+  {
+   "id": "portiera_gff",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/candidatus_portiera_aleyrodidarum/genome/gff/test1.gff",
+   "dest": "nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/gff/test1.gff",
+   "type": "annotation.gff",
+   "organism": "Candidatus Portiera aleyrodidarum",
+   "size": 437280,
+   "sha256": "985d9ae9a084e2f9bb991868fe7e64d93e021814f8a455c794c8f54c25a2c953"
+  },
+  {
+   "id": "portiera_aln",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/candidatus_portiera_aleyrodidarum/genome/genome.aln.gz",
+   "dest": "nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/genome.aln.gz",
+   "type": "alignment.msa.dna",
+   "organism": "Candidatus Portiera aleyrodidarum",
+   "size": 316555,
+   "sha256": "5c212775f61adfa5ff277f9cda1339db9016f28252a58bea60ee028c9a3c7ef0"
+  },
+  {
+   "id": "portiera_aln_tree",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/candidatus_portiera_aleyrodidarum/genome/genome.aln.nwk",
+   "dest": "nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/genome.aln.nwk",
+   "type": "tree.newick",
+   "organism": "Candidatus Portiera aleyrodidarum",
+   "size": 174,
+   "sha256": "5c327cbe3db9f0f4c044b6b5a565e6bfea11a3237a25752dbc3a391719c05a02"
+  },
+  {
+   "id": "portiera_illumina_1",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_1.fastq.gz",
+   "dest": "nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_1.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "Candidatus Portiera aleyrodidarum",
+   "size": 7744597,
+   "sha256": "904aaaae5b443880fbd16efaec93cc66c54b34122e9e129b5412a6782180b8d5",
+   "description": "97,729 x 101 bp per mate (~55x with mate)"
+  },
+  {
+   "id": "portiera_illumina_2",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_2.fastq.gz",
+   "dest": "nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_2.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "Candidatus Portiera aleyrodidarum",
+   "size": 8202837,
+   "sha256": "f9a4e93ef795dae066c54fb060050527cfa4c43ae6e4ba50421f69857d2b7c98",
+   "description": "97,729 x 101 bp per mate (~55x with mate)"
+  },
+  {
+   "id": "portiera_illumina_se",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_se.fastq.gz",
+   "dest": "nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_se.fastq.gz",
+   "type": "reads.short.single",
+   "organism": "Candidatus Portiera aleyrodidarum",
+   "size": 7744597,
+   "sha256": "904aaaae5b443880fbd16efaec93cc66c54b34122e9e129b5412a6782180b8d5"
+  },
+  {
+   "id": "portiera_nanopore",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/candidatus_portiera_aleyrodidarum/nanopore/fastq/test.fastq.gz",
+   "dest": "nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/nanopore/fastq/test.fastq.gz",
+   "type": "reads.long.nanopore",
+   "organism": "Candidatus Portiera aleyrodidarum",
+   "size": 13713449,
+   "sha256": "e49f77cc73f68b69d8934ca7c527b56c8be8ea0b984dcefe877adb9dd3420970",
+   "description": "7,100 reads, mean 2 kb (~40x)"
+  },
+  {
+   "id": "sarscov2_ont",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "sarscov2/nanopore/fastq/test_2.fastq.gz",
+   "dest": "nfcore/sarscov2/nanopore/fastq/test_2.fastq.gz",
+   "type": "reads.long.nanopore",
+   "organism": "SARS-CoV-2",
+   "size": 3342884,
+   "sha256": "85cf701cf50a8e396c45c6b49102d0a1ef82152cb2d6bc1a935cc98360cb7da8",
+   "description": "4,000 reads, mean 536 bp (~70x)"
+  },
+  {
+   "id": "hinfluenzae_genome",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/haemophilus_influenzae/genome/genome.fna.gz",
+   "dest": "nfcore/prokaryotes/haemophilus_influenzae/genome/genome.fna.gz",
+   "type": "sequences.dna.contigs",
+   "organism": "Haemophilus influenzae",
+   "size": 556632,
+   "sha256": "f4ad6cf38445caf90f4eaa3503cee7515d497f3670112493ab9e8fe1ceba15be",
+   "description": "mlst / amrfinder"
+  },
+  {
+   "id": "hinfluenzae_aln",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/haemophilus_influenzae/genome/genome.aln.gz",
+   "dest": "nfcore/prokaryotes/haemophilus_influenzae/genome/genome.aln.gz",
+   "type": "alignment.msa.dna",
+   "organism": "Haemophilus influenzae",
+   "size": 1452907,
+   "sha256": "8b33d4a6bae7d9f7d61703c466fa9405553c360984362490641b5987115c4041"
+  },
+  {
+   "id": "hinfluenzae_aln_tree",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/haemophilus_influenzae/genome/genome.aln.nwk",
+   "dest": "nfcore/prokaryotes/haemophilus_influenzae/genome/genome.aln.nwk",
+   "type": "tree.newick",
+   "organism": "Haemophilus influenzae",
+   "size": 66,
+   "sha256": "c67eb0b6b1fcc2c397888e7236a6c8efb962db6ed1de536f67c78b0a3a9242f3"
+  },
+  {
+   "id": "bfragilis_genome",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/bacteroides_fragilis/genome/genome.fna.gz",
+   "dest": "nfcore/prokaryotes/bacteroides_fragilis/genome/genome.fna.gz",
+   "type": "sequences.dna.contigs",
+   "organism": "Bacteroides fragilis",
+   "size": 1564005,
+   "sha256": "983b00ab06545493d620ae8f3e2ae960a45e41b7e9072c57206e259747a43f57"
+  },
+  {
+   "id": "bfragilis_gff",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/bacteroides_fragilis/genome/genome.gff.gz",
+   "dest": "nfcore/prokaryotes/bacteroides_fragilis/genome/genome.gff.gz",
+   "type": "annotation.gff",
+   "organism": "Bacteroides fragilis",
+   "size": 338064,
+   "sha256": "5d30ea8e827840549feec8dbab56099d038ef9070cbcaba08a7878a6abcd62b7"
+  },
+  {
+   "id": "bfragilis_test1_1",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/bacteroides_fragilis/illumina/fastq/test1_1.fastq.gz",
+   "dest": "nfcore/prokaryotes/bacteroides_fragilis/illumina/fastq/test1_1.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "Bacteroides fragilis",
+   "size": 3323528,
+   "sha256": "a90f4d48a3154886e72a5221b8dd6b1159ea090e5dbe20634e965b4ee80116ab",
+   "description": "~2.4x; mapping/QC only"
+  },
+  {
+   "id": "bfragilis_test1_2",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/bacteroides_fragilis/illumina/fastq/test1_2.fastq.gz",
+   "dest": "nfcore/prokaryotes/bacteroides_fragilis/illumina/fastq/test1_2.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "Bacteroides fragilis",
+   "size": 3398619,
+   "sha256": "2f149a3e4d384afc9d35b3778259c1cd24d7ea2fe9f808548be2728b23b35068",
+   "description": "~2.4x; mapping/QC only"
+  },
+  {
+   "id": "bfragilis_test2_1",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/bacteroides_fragilis/illumina/fastq/test2_1.fastq.gz",
+   "dest": "nfcore/prokaryotes/bacteroides_fragilis/illumina/fastq/test2_1.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "Bacteroides fragilis",
+   "size": 1600516,
+   "sha256": "33fde0b36996de4c28a2014023a2cf0c94bf936f66b33885d7b4931d6da20ab1",
+   "description": "~2.4x; mapping/QC only"
+  },
+  {
+   "id": "bfragilis_test2_2",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/bacteroides_fragilis/illumina/fastq/test2_2.fastq.gz",
+   "dest": "nfcore/prokaryotes/bacteroides_fragilis/illumina/fastq/test2_2.fastq.gz",
+   "type": "reads.short.paired",
+   "organism": "Bacteroides fragilis",
+   "size": 1807647,
+   "sha256": "d89daf678b222c5e43ab1c1f78ac7fcf7de008351748647370d1ac10fa6433bc",
+   "description": "~2.4x; mapping/QC only"
+  },
+  {
+   "id": "bfragilis_nanopore",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/bacteroides_fragilis/nanopore/fastq/test.fastq.gz",
+   "dest": "nfcore/prokaryotes/bacteroides_fragilis/nanopore/fastq/test.fastq.gz",
+   "type": "reads.long.nanopore",
+   "organism": "Bacteroides fragilis",
+   "size": 10258859,
+   "sha256": "61a695217bc60a500425130590d2e6e8f37b134e09653cd2ca76e39f1e8e854a"
+  },
+  {
+   "id": "pangolin_data",
+   "tier": "T2",
+   "source": "nfcore",
+   "path": "sarscov2/genome/db/pangolin-data.v1.29.tar.gz",
+   "dest": "nfcore/sarscov2/genome/db/pangolin-data.v1.29.tar.gz",
+   "type": "database.pangolin",
+   "organism": "SARS-CoV-2",
+   "size": 44573258,
+   "sha256": null,
+   "description": "pangolin-data v1.29 (44 MB)",
+   "unpack": true
+  },
+  {
+   "id": "bvbrc_1206109.14",
+   "tier": "T1",
+   "source": "bvbrc_genome",
+   "genome_id": "1206109.14",
+   "dest": "bvbrc/genomes/1206109.14.fna",
+   "type": "sequences.dna.contigs",
+   "organism": "Candidatus Portiera BT-B-HRs",
+   "sha256": "ebe04e1c675e78333bde4cfe1451878ae34a369d9b011a7f5ec1b74097d479c2"
+  },
+  {
+   "id": "bvbrc_1239881.13",
+   "tier": "T1",
+   "source": "bvbrc_genome",
+   "genome_id": "1239881.13",
+   "dest": "bvbrc/genomes/1239881.13.fna",
+   "type": "sequences.dna.contigs",
+   "organism": "Candidatus Portiera BT-QVLC",
+   "sha256": "4697b93b0942d5c7a16579aecf9c2af3091c7d2a4624576bf471dea865fd8f36"
+  },
+  {
+   "id": "bvbrc_1297582.10",
+   "tier": "T1",
+   "source": "bvbrc_genome",
+   "genome_id": "1297582.10",
+   "dest": "bvbrc/genomes/1297582.10.fna",
+   "type": "sequences.dna.contigs",
+   "organism": "Candidatus Portiera TV",
+   "sha256": "568ad7c33249839f9c51da6b61af9ae54373abe589d4e0a09614fcf057f9bb36"
+  },
+  {
+   "id": "bvbrc_91844.21",
+   "tier": "T1",
+   "source": "bvbrc_genome",
+   "genome_id": "91844.21",
+   "dest": "bvbrc/genomes/91844.21.fna",
+   "type": "sequences.dna.contigs",
+   "organism": "Candidatus Portiera BT-Z1",
+   "sha256": "b3d727ed0702acc0180d422281b679d6821c1c36d0b3a4154ccc2ef1bf30248a"
+  },
+  {
+   "id": "bfragilis_gbff",
+   "tier": "T1",
+   "source": "nfcore",
+   "path": "prokaryotes/bacteroides_fragilis/genome/genome.gbff.gz",
+   "dest": "nfcore/prokaryotes/bacteroides_fragilis/genome/genome.gbff.gz",
+   "type": "annotation.genbank",
+   "organism": "Bacteroides fragilis",
+   "size": 3698522,
+   "sha256": "3b9fa15a13dd91996ea274a639766cecb161cd9eba9bcc74e17f6476d03b36eb",
+   "description": "Annotated GenBank (phispy input)"
+  },
+  {
+   "id": "sarscov2_proteome_hmm",
+   "tier": "T0",
+   "source": "nfcore",
+   "path": "sarscov2/genome/proteome.hmm.gz",
+   "dest": "nfcore/sarscov2/genome/proteome.hmm.gz",
+   "type": "database.hmm",
+   "organism": "SARS-CoV-2",
+   "size": 652403,
+   "sha256": "61d4025d1b0200073a3d0b8b6e19f2683fac91a5816f2e45f1c650b8a6b8e03a",
+   "description": "HMM profiles of SARS-CoV-2 proteins (hmmscan/hmmsearch)"
+  }
+ ],
+ "sets": {
+  "sarscov2_samples": {
+   "type": "collection<reads.short.paired>",
+   "samples": [
+    {
+     "sample_id": "test",
+     "r1": "sarscov2_illumina_test_1",
+     "r2": "sarscov2_illumina_test_2"
+    },
+    {
+     "sample_id": "test2",
+     "r1": "sarscov2_illumina_test2_1",
+     "r2": "sarscov2_illumina_test2_2"
+    }
+   ],
+   "reference": "sarscov2_genome"
+  },
+  "bfragilis_samples": {
+   "type": "collection<reads.short.paired>",
+   "samples": [
+    {
+     "sample_id": "test1",
+     "r1": "bfragilis_test1_1",
+     "r2": "bfragilis_test1_2"
+    },
+    {
+     "sample_id": "test2",
+     "r1": "bfragilis_test2_1",
+     "r2": "bfragilis_test2_2"
+    }
+   ],
+   "reference": "bfragilis_genome"
+  },
+  "portiera_pe": {
+   "type": "reads.short.paired",
+   "r1": "portiera_illumina_1",
+   "r2": "portiera_illumina_2",
+   "reference": "portiera_genome",
+   "bvbrc_reference_genome_id": "1206109.14"
+  },
+  "portiera_hybrid": {
+   "type": "reads.hybrid",
+   "short": {
+    "r1": "portiera_illumina_1",
+    "r2": "portiera_illumina_2"
+   },
+   "long": "portiera_nanopore"
+  },
+  "portiera_genomes": {
+   "type": "collection<sequences.dna.contigs>",
+   "members": [
+    "bvbrc_1206109.14",
+    "bvbrc_1239881.13",
+    "bvbrc_1297582.10",
+    "bvbrc_91844.21"
+   ]
+  },
+  "hs_rnaseq": {
+   "type": "reads.short.paired",
+   "r1": "hs_rnaseq_1",
+   "r2": "hs_rnaseq_2",
+   "reference": "hs_genome",
+   "annotation": "hs_gtf"
+  },
+  "sarscov2_rnaseq_smoke": {
+   "type": "reads.short.paired",
+   "r1": "sarscov2_illumina_test_1",
+   "r2": "sarscov2_illumina_test_2",
+   "reference": "sarscov2_genome",
+   "annotation": "sarscov2_gtf",
+   "note": "inputs used by nf-core hisat2 tests"
+  }
+ }
+}

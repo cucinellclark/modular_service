@@ -1,0 +1,156 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "iqtree2_mfp_ufboot",
+ "set": "phylogeny",
+ "tool": "iqtree2",
+ "mode": "modelfinder+ufboot",
+ "description": null,
+ "tool_version": "2.4.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373357_11",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:38:18",
+ "inputs": {
+  "A": {
+   "fixture": "portiera_aln",
+   "path": "inputs/genome.aln.gz",
+   "size": 316555
+  }
+ },
+ "prep": "gunzip -c $A > aln.fas",
+ "cmd": "iqtree2 -s aln.fas -m MFP -B 1000 -T $CPU --prefix iq",
+ "wall_s": 1.12,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "iq.bionj",
+   "size": 171,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((GCF_000292685:5.607777e-05,GCF_000300075:-4.7261783e-05):0.00016156887,GCF_000298385:0.00046049085,(GCF_002849995:0.0037498623,GCF_902713755:0.18168913):0.00051866448);"
+   ],
+   "lines": 1,
+   "sha256": "26bda031997d7937989d633f27033834f2383fde9b2bc8444a5fcee3ed4a005e"
+  },
+  {
+   "path": "iq.ckp.gz",
+   "size": 12261,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "text",
+   "preview": [
+    "--- # IQ-TREE Checkpoint ver >= 1.6",
+    "CandidateSet:",
+    " 00: -415178.53016 (0:0.0000008657,(1:0.0003919233,(3:0.0025840263,4:0.1812842081):0.001632597477):0.000226852291,2:0.0000086193);"
+   ],
+   "lines": 1061,
+   "sha256": "92de85bbe86ecc03e74d8a2a9cca18e23f28cdde4e6f383da9b0aa4c0be09e75"
+  },
+  {
+   "path": "iq.contree",
+   "size": 174,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(GCF_000292685:0.0000009427,(GCF_000298385:0.0003914792,(GCF_002849995:0.0025832372,GCF_902713755:0.1812838623)100:0.0016328350)100:0.0002270038,GCF_000300075:0.0000086193);"
+   ],
+   "lines": 1,
+   "sha256": "0af0ebc4ebd528356f3734f8420a369bb60dd47378222c9d9b81b307c21ddaa1"
+  },
+  {
+   "path": "iq.iqtree",
+   "size": 10619,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "IQ-TREE 2.4.0 built May  8 2026",
+    "",
+    "Input file name: aln.fas"
+   ],
+   "lines": 223,
+   "sha256": "d8b1345186bd798ae96020a1e9e4c8809e1ef47d2a50d12db303cbc5d9e847e0"
+  },
+  {
+   "path": "iq.log",
+   "size": 16389,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "IQ-TREE multicore version 2.4.0 for Linux x86 64-bit built May  8 2026",
+    "Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,",
+    "Dominik Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong"
+   ],
+   "lines": 245,
+   "sha256": "db66297601373d44802b07408c4fb5b147ff0e0d5951c74a6fa1f7263d13e239"
+  },
+  {
+   "path": "iq.mldist",
+   "size": 352,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "5",
+    "GCF_000292685 0.00000000 0.00062247 0.00000882 0.00447473 0.18254822 ",
+    "GCF_000298385 0.00062247 0.00000000 0.00063047 0.00465464 0.18274268 "
+   ],
+   "lines": 6,
+   "sha256": "342e92b9ec607f915e7cb269ccb890983fe221435c1f5117d1dfc3c0afbe8950"
+  },
+  {
+   "path": "iq.model.gz",
+   "size": 1715,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "text",
+   "preview": [
+    "--- # IQ-TREE Checkpoint ver >= 1.6",
+    "F81+F+G4: -416123.184 11 0.1887984512",
+    "F81+F+I: -416122.9657 11 0.188206891"
+   ],
+   "lines": 95,
+   "sha256": "d686f0dc568fc00eedd5d92f52d0491ea3aae834d9faf0d7e5cbb446eb5dd6ba"
+  },
+  {
+   "path": "iq.splits.nex",
+   "size": 356,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "#nexus",
+    "",
+    "BEGIN Taxa;"
+   ],
+   "sha256": "377f11e146a64eee4e7a9443bb6c25be5646af8303b91ed61d5b3845a1e6ccf5"
+  },
+  {
+   "path": "iq.treefile",
+   "size": 174,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(GCF_000292685:0.0000008657,(GCF_000298385:0.0003919233,(GCF_002849995:0.0025840263,GCF_902713755:0.1812842081)100:0.0016325975)100:0.0002268523,GCF_000300075:0.0000086193);"
+   ],
+   "lines": 1,
+   "sha256": "f6fa4d708be3eda56d1eac675be3933b545a99fccc22d9ec76a9029a6c5df8dc"
+  }
+ ],
+ "n_outputs": 9,
+ "output_bytes": 42211,
+ "time": {
+  "elapsed": "0:01.06",
+  "max_rss_kb": "21000",
+  "cpu_pct": "332",
+  "exit_status": "0",
+  "user_s": "3.36",
+  "sys_s": "0.19",
+  "elapsed_s": 1.06,
+  "max_rss_mb": 20.5
+ },
+ "stdout_tail": "ood: -415178.596\nRate parameters:  A-C: 1.94083  A-G: 1.15984  A-T: 0.94729  C-G: 0.28061  C-T: 1.51787  G-T: 1.00000\nBase frequencies:  A: 0.410  C: 0.106  G: 0.157  T: 0.328\nGamma shape alpha: 0.505\nParameters optimization took 3 rounds (0.004 sec)\nWrote distance file to... \nComputing ML distances based on estimated model parameters...\nCalculating distance matrix: done in 7.41109e-05 secs using 9186% CPU\nComputing ML distances took 0.000111 sec (of wall-clock time) 0.006844 sec (of CPU time)\nSetting up auxiliary I and S matrices: done in 0.000226912 secs\nComputing RapidNJ tree took 0.000648 sec (of wall-clock time) 0.000000 sec (of CPU time)\nLog-likelihood of RapidNJ tree: -415178.571\n--------------------------------------------------------------------\n|             INITIALIZING CANDIDATE TREE SET                      |\n--------------------------------------------------------------------\nGenerating 99 parsimony trees... 0.216 second\nComputing log-likelihood of 4 initial trees ... 0.001 seconds\nCurrent best score: -415178.571\n\nDo NNI search on 5 best initial trees\nFinish initializing candidate tree set (5)\nCurrent best tree score: -415178.571 / CPU time: 0.223\nNumber of iterations: 5\n--------------------------------------------------------------------\n|               OPTIMIZING CANDIDATE TREE SET                      |\n--------------------------------------------------------------------\nIteration 10 / LogL: -415181.082 / Time: 0h:0m:0s\nIteration 20 / LogL: -415181.084 / Time: 0h:0m:0s\nIteration 30 / LogL: -415181.073 / Time: 0h:0m:0s (0h:0m:0s left)\nUPDATE BEST LOG-LIKELIHOOD: -415178.571\nIteration 40 / LogL: -415181.084 / Time: 0h:0m:0s (0h:0m:0s left)\nIteration 50 / LogL: -415181.084 / Time: 0h:0m:0s (0h:0m:0s left)\nLog-likelihood cutoff on original alignment: -415187.041\nIteration 60 / LogL: -415180.906 / Time: 0h:0m:0s (0h:0m:0s left)\nIteration 70 / LogL: -415178.648 / Time: 0h:0m:0s (0h:0m:0s left)\nIteration 80 / LogL: -415178.638 / Time: 0h:0m:0s (0h:0m:0s left)\nIteration 90 / LogL: -415181.106 / Time: 0h:0m:0s (0h:0m:0s left)\nIteration 100 / LogL: -415181.073 / Time: 0h:0m:0s (0h:0m:0s left)\nLog-likelihood cutoff on original alignment: -415187.041\nNOTE: Bootstrap correlation coefficient of split occurrence frequencies: 1.000\nTREE SEARCH COMPLETED AFTER 101 ITERATIONS / Time: 0h:0m:0s\n\n--------------------------------------------------------------------\n|                    FINALIZING TREE SEARCH                        |\n--------------------------------------------------------------------\nPerforms final model parameters optimization\nEstimate model parameters (epsilon = 0.010)\n1. Initial log-likelihood: -415178.571\n2. Current log-likelihood: -415178.550\n3. Current log-likelihood: -415178.537\nOptimal log-likelihood: -415178.530\nRate parameters:  A-C: 1.94168  A-G: 1.16148  A-T: 0.94650  C-G: 0.28244  C-T: 1.52436  G-T: 1.00000\nBase frequencies:  A: 0.410  C: 0.106  G: 0.157  T: 0.328\nGamma shape alpha: 0.503\nParameters optimization took 3 rounds (0.002 sec)\nBEST SCORE FOUND : -415178.530\nCreating bootstrap support values...\nSplit supports printed to NEXUS file iq.splits.nex\nTotal tree length: 0.186\n\nTotal number of iterations: 101\nCPU time used for tree search: 1.928 sec (0h:0m:1s)\nWall-clock time used for tree search: 0.487 sec (0h:0m:0s)\nTotal CPU time used: 3.182 sec (0h:0m:3s)\nTotal wall-clock time used: 0.838 sec (0h:0m:0s)\n\nComputing bootstrap consensus tree...\nReading input file iq.splits.nex...\n5 taxa and 7 splits.\nConsensus tree written to iq.contree\nReading input trees file iq.contree\nLog-likelihood of consensus tree: -415178.547\n\nAnalysis results written to: \n  IQ-TREE report:                iq.iqtree\n  Maximum-likelihood tree:       iq.treefile\n  Likelihood distances:          iq.mldist\n\nUltrafast bootstrap approximation results written to:\n  Split support values:          iq.splits.nex\n  Consensus tree:                iq.contree\n  Screen log file:               iq.log\n\nDate and Time: Mon Nov  2 15:38:19 2026\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:19"
+}

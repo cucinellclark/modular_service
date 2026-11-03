@@ -1,0 +1,148 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "vigor4_flua",
+ "set": "annotation",
+ "tool": "vigor4",
+ "mode": "flua_db",
+ "description": null,
+ "tool_version": "4.1.20220621",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373347_7",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:37:46",
+ "inputs": {
+  "G": {
+   "fixture": "flu_h5n1_italy",
+   "path": "inputs/H5N1_2.3.4.4b_Italy.fa",
+   "size": 13861
+  }
+ },
+ "prep": null,
+ "cmd": "mkdir vigor && vigor4 -i $G -o vigor/flua -d flua_db",
+ "wall_s": 23.88,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "vigor/flua-20261102-213753.ini",
+   "size": 2699,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; Effective configuration 20261102-213753",
+    "",
+    "; source: defaults"
+   ],
+   "lines": 104,
+   "sha256": "4b02009fb34dcfb801246da7cb8fa455449e1c729c23c7c688c5061818b1f5f6"
+  },
+  {
+   "path": "vigor/flua.aln",
+   "size": 461858,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    "Command line: [/usr/bin/exonerate --model protein2genome -q /opt/patric-common/runtime/vigor-4.1.20220621-163707-2385247/VIGOR_DB/Reference_DBs/flua_db -t /tmp/vigor47529758446379232240/sequence_temp.",
+    "Hostname: [bio-compute-02]",
+    ""
+   ],
+   "lines": 8087,
+   "records": 0,
+   "residues": 423343,
+   "sha256": "774f05847be8d65410733a6917a75e4f19bf6829aee196056f7bc22a1393ba1c"
+  },
+  {
+   "path": "vigor/flua.cds",
+   "size": 16769,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_HA.1 location=1..1704 codon_start=1 gene=\"HA\" product=\"hemagglutinin\" ref_db=\"flua_db\" ref_id=\"seg4prot5A\"",
+    "ATGGAGAACATAGTACTTCTTCTTGCAATAGTTAGCCTTGTTAAAAGTGATCAGATTTGC",
+    "ATTGGTTACCATGCAAATAATTCGACAGAGCAGGTTGACACGATAATGGAAAAGAACGTC"
+   ],
+   "lines": 257,
+   "records": 12,
+   "residues": 14460,
+   "sha256": "154eecead8b8c258fb64e1340e2fc88e0d9328743ed3dd31334b6d8cdee25f78"
+  },
+  {
+   "path": "vigor/flua.gff3",
+   "size": 11164,
+   "new": true,
+   "kind": "gff",
+   "preview": [
+    "##gff-version 3",
+    "A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_HA\tvigor\tgene\t1\t1704\t.\t+\t0\tID=A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_HA.1;Name=HA;",
+    "A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_HA\tvigor\tmRNA\t1\t1704\t.\t+\t0\tID=A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_HA.1.1;Parent=A/black-headed_gull/Italy/23VIR1099-4/"
+   ],
+   "lines": 53,
+   "records": 52,
+   "sha256": "55227d243a711c5ab4b2a5bb530eba7684a03b2ed588dac17a5cf12a78a9718f"
+  },
+  {
+   "path": "vigor/flua.pep",
+   "size": 8038,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    ">A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_HA.1 location=1..1704 codon_start=1 gene=\"HA\" product=\"hemagglutinin\" ref_db=\"flua_db\" ref_id=\"seg4prot5A\"",
+    "MENIVLLLAIVSLVKSDQICIGYHANNSTEQVDTIMEKNVTVTHAQDILEKTHNGKLCDL",
+    "NGVKPLILKDCSVAGWLLGNPMCDEFIEVPEWSYIVERANPANGLCYPGSLNDYEELKHL"
+   ],
+   "sha256": "6593c591acb69701c1f3cc385599ab73f0732606e83d132c4da72bdb6f231b9a"
+  },
+  {
+   "path": "vigor/flua.rpt",
+   "size": 15341,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Command line arguments: -i /disks/tmp/cucinell/modpipe-discovery/annotation/vigor4_flua-21373347_7/inputs/H5N1_2.3.4.4b_Italy.fa -o vigor/flua -d flua_db",
+    "Current working directory: /disks/tmp/cucinell/modpipe-discovery/annotation/vigor4_flua-21373347_7",
+    "Using Influenza A Virus database version 20181127"
+   ],
+   "lines": 158,
+   "sha256": "cccc79fc01e1bfdfa80e23d301600b376c1d2278d551a0d8d1a96da35fd12d2e"
+  },
+  {
+   "path": "vigor/flua.tbl",
+   "size": 3472,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">Features A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_HA",
+    "1\t1704\tgene",
+    "\t\t\tlocus_tag\tvigor_HA"
+   ],
+   "lines": 133,
+   "records": 9,
+   "residues": 2414,
+   "sha256": "f77140428b478898f314e41f7e44c54900b5aaba28bd2e7a38b7868d8a3957d5"
+  },
+  {
+   "path": "vigor/flua.warnings",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+ ],
+ "n_outputs": 8,
+ "output_bytes": 519341,
+ "time": {
+  "elapsed": "0:23.84",
+  "max_rss_kb": "2040408",
+  "cpu_pct": "114",
+  "exit_status": "0",
+  "user_s": "23.31",
+  "sys_s": "3.87",
+  "elapsed_s": 23.84,
+  "max_rss_mb": 1992.6
+ },
+ "stdout_tail": "          PA-X | PA-X protein \nA/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PA.195.80     98.32     99.86     0.0       0.0       0.0       1..2151             716       716       seg3prot            PA | polymerase PA  \n\nGetting alignments for A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB2\n1 alignment(s) found for sequence A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB2\n1 candidate model(s) found for sequence A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB2\n1 gene model(s) found for sequence A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB2\n\nSequence                        Length    Genes     Pseudogenes    CDS_Bases      Peptide_Bases  %Ref_Identity  %Ref_Similarity  %Ref_Coverage  Ref_DB              \nA/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB22280      1         0              2277           759            98.16          99.21            100.00         /opt/patric-common/runtime/vigor-4.1.20220621-163707-2385247/VIGOR_DB/Reference_DBs/flua_db\n\n\n\ngene_id             %id       %sim      %cov      %t5       %gap      %t3       start..stop         pep_size  ref_size  ref_id              definition          \nA/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB2.198.16     99.21     100.00    0.0       0.0       0.0       1..2280             759       759       Seg1prot            PB2 | polymerase PB2\n\nGetting alignments for A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB1\n15 alignment(s) found for sequence A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB1\n15 candidate model(s) found for sequence A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB1\n2 gene model(s) found for sequence A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB1\n\nSequence                        Length    Genes     Pseudogenes    CDS_Bases      Peptide_Bases  %Ref_Identity  %Ref_Similarity  %Ref_Coverage  Ref_DB              \nA/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB12274      2         0              2541           847            80.45          86.60            100.00         /opt/patric-common/runtime/vigor-4.1.20220621-163707-2385247/VIGOR_DB/Reference_DBs/flua_db\n\n\n\ngene_id             %id       %sim      %cov      %t5       %gap      %t3       start..stop         pep_size  ref_size  ref_id              definition          \nA/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB1.298.68     99.87     100.00    0.0       0.0       0.0       1..2274             757       757       seg2prot1B          PB1 | polymerase PB1\nA/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_PB1.162.22     73.33     100.00    0.0       0.0       0.0       95..367             90        90        seg2prot2A          PB1-F2 | PB1-F2 protein\n\nGetting alignments for A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_NA\n10 alignment(s) found for sequence A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_NA\n10 candidate model(s) found for sequence A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_NA\n1 gene model(s) found for sequence A/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_NA\n\nSequence                        Length    Genes     Pseudogenes    CDS_Bases      Peptide_Bases  %Ref_Identity  %Ref_Similarity  %Ref_Coverage  Ref_DB              \nA/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_NA1410      1         0              1407           469            84.68          91.28            100.00         /opt/patric-common/runtime/vigor-4.1.20220621-163707-2385247/VIGOR_DB/Reference_DBs/flua_db\n\n\n\ngene_id             %id       %sim      %cov      %t5       %gap      %t3       start..stop         pep_size  ref_size  ref_id              definition          \nA/black-headed_gull/Italy/23VIR1099-4/2023_H5N1_2023-02-03_NA.184.68     91.28     100.00    0.0       0.0       0.0       1..1410             469       470       seg6prot1A          NA | neuraminidase  \n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:10"
+}

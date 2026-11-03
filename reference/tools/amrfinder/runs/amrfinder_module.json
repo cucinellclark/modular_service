@@ -1,0 +1,56 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "amrfinder_module",
+ "set": "modules_v1",
+ "tool": "amrfinder",
+ "mode": "module_amrfinder_plus",
+ "description": "matches modules/amrfinder.yaml",
+ "tool_version": "4.0.3",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "pear",
+ "slurm_job": "21374919_2",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T09:08:37",
+ "inputs": {
+  "G": {
+   "fixture": "hinfluenzae_genome",
+   "path": "inputs/genome.fna.gz",
+   "size": 556632
+  }
+ },
+ "prep": "gunzip -c $G > genome.fna",
+ "cmd": "amrfinder -n genome.fna --threads $CPU -o amrfinder.tsv --plus",
+ "wall_s": 23.97,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "amrfinder.tsv",
+   "size": 518,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Protein id\tContig id\tStart\tStop\tStrand\tElement symbol\tElement name\tScope\tType\tSubtype\tClass\tSubclass\tMethod\tTarget length\tReference sequence length\t% Coverage of reference\t% Identity to reference\tAlig",
+    "NA\tNZ_LS483480.1\t1229909\t1231300\t+\thmrM\tsodium-coupled multidrug efflux MATE transporter HmrM\tplus\tAMR\tAMR\tEFFLUX\tEFFLUX\tBLASTX\t464\t464\t100.00\t99.35\t464\tAAC23256.1\tsodium-coupled multidrug efflux MATE"
+   ],
+   "lines": 2,
+   "sha256": "71159a28615d023b297d45fc5e6b79bdea77ecd312db0130a4304c3dcdffe3c2"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 518,
+ "time": {
+  "elapsed": "0:23.92",
+  "max_rss_kb": "43616",
+  "cpu_pct": "224",
+  "exit_status": "0",
+  "user_s": "46.66",
+  "sys_s": "6.94",
+  "elapsed_s": 23.92,
+  "max_rss_mb": 42.6
+ },
+ "stdout_tail": "",
+ "stderr_tail": "Running: amrfinder -n genome.fna --threads 4 -o amrfinder.tsv --plus\nSoftware directory: '/opt/patric-common/runtime/bin/'\nSoftware version: 4.0.3\nDatabase directory: '/home/ac.cucinell/miniforge3/share/amrfinderplus/data/2025-07-16.1'\nDatabase version: 2025-07-16.1\nAMRFinder translated nucleotide search\n  - include -O ORGANISM, --organism ORGANISM option to add mutation searches and suppress common proteins\nRunning tblastn\nMaking report\namrfinder took 23 seconds to complete\n",
+ "status": "ok",
+ "finished": "2026-11-03T09:09:01"
+}

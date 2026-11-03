@@ -1,0 +1,894 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "megahit_pe",
+ "set": "assembly",
+ "tool": "megahit",
+ "mode": "paired",
+ "description": null,
+ "tool_version": "1.2.9",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-01",
+ "slurm_job": "21373339_5",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:37:39",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "megahit -t $CPU -1 $R1 -2 $R2 -o out",
+ "wall_s": 6.53,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/checkpoints.txt",
+   "size": 230,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0\tdone",
+    "1\tdone",
+    "2\tdone"
+   ],
+   "lines": 30,
+   "sha256": "3f22a5a2dbc4af5811680fd0503345b7937899e5d0fef91c518495a8edbabac3"
+  },
+  {
+   "path": "out/done",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/final.contigs.fa",
+   "size": 225734,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k119_0 flag=1 multi=4.0000 len=398",
+    "AACAAACAACAAACAACAAACTAACCTCTAATAACTAACAGATAACCATTTTATTTATTACACCATCTAACATCTAACATCTAACAAACAACAAACAACAAACTAACCTCTTTAACATCTTTAAAGCAACCTCTTACCATCATCACATAACCTCTTAAAATACAAACTACAACCTTTATCTTCTACCAACATTCCTCTTT",
+    ">k119_95 flag=1 multi=4.0000 len=440"
+   ],
+   "lines": 304,
+   "records": 152,
+   "residues": 219785,
+   "sha256": "f710ed5524ea9c3a398550b3ef6146b32ed247517d23cfaa245571c7d7ed07a0"
+  },
+  {
+   "path": "out/intermediate_contigs/k119.addi.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k119.addi.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k119.bubble_seq.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k119.bubble_seq.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k119.contigs.fa",
+   "size": 225734,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k119_0 flag=1 multi=4.0000 len=398",
+    "AACAAACAACAAACAACAAACTAACCTCTAATAACTAACAGATAACCATTTTATTTATTACACCATCTAACATCTAACATCTAACAAACAACAAACAACAAACTAACCTCTTTAACATCTTTAAAGCAACCTCTTACCATCATCACATAACCTCTTAAAATACAAACTACAACCTTTATCTTCTACCAACATTCCTCTTT",
+    ">k119_95 flag=1 multi=4.0000 len=440"
+   ],
+   "lines": 304,
+   "records": 152,
+   "residues": 219785,
+   "sha256": "f710ed5524ea9c3a398550b3ef6146b32ed247517d23cfaa245571c7d7ed07a0"
+  },
+  {
+   "path": "out/intermediate_contigs/k119.contigs.fa.info",
+   "size": 9,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "152 4256"
+   ],
+   "lines": 1,
+   "sha256": "45d294d4591f4898f8c7a49606e2b56d3be4a2b8feeb3240e2cba66ed43fc6ea"
+  },
+  {
+   "path": "out/intermediate_contigs/k119.final.contigs.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k119.final.contigs.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.addi.fa",
+   "size": 15798,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k21_6 flag=0 multi=1.0000 len=32",
+    "AACCATAAACCACAAAACACCAAACACCAAAC",
+    ">k21_174 flag=0 multi=1.0000 len=40"
+   ],
+   "lines": 62,
+   "records": 31,
+   "residues": 14638,
+   "sha256": "48539bc4dae425879bc5161022eb0474bd009ff9637fb9bed974fbd3cf3e98fb"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.addi.fa.info",
+   "size": 7,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "31 868"
+   ],
+   "lines": 1,
+   "sha256": "dbd580bc8c6d4d8764deaa74ea5e15be8b3b2213e7ca31fa87f42003513bd7ca"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.bubble_seq.fa",
+   "size": 19954,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k21_0 flag=0 multi=1.0833 len=33",
+    "AGAAAAAGTAGAAAAAAAAAAACAACAAAAATA",
+    ">k21_0 flag=0 multi=1.0000 len=43"
+   ],
+   "lines": 174,
+   "records": 87,
+   "residues": 16871,
+   "sha256": "13fe7a1d099ced36778dace18a09e316b82918180579b1ebf96c476980a93a7b"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.bubble_seq.fa.info",
+   "size": 8,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "87 2436"
+   ],
+   "lines": 1,
+   "sha256": "19da83aad993eaa1911845dbe5f69de805f5dead91c4798e2da387d5c7b74cde"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.contigs.fa",
+   "size": 323222,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k21_825 flag=0 multi=2.0000 len=22",
+    "AACTTTAAGGAGACTGCTGGCG",
+    ">k21_1155 flag=1 multi=1.8026 len=97"
+   ],
+   "lines": 2638,
+   "records": 1319,
+   "residues": 273498,
+   "sha256": "decf09ed874739a0c12a8e50c0aae80698cb41243793e5b42015babb08dc0d61"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.contigs.fa.info",
+   "size": 11,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "1319 36932"
+   ],
+   "lines": 1,
+   "sha256": "fe7ecda996f51b36a8cce07b4f1c37731ff265a0aff2828eb58c6e54f1fd3699"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.final.contigs.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.final.contigs.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.local.fa",
+   "size": 174816,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">lc_0_strand_0_id_0 flag=0 multi=1",
+    "AATTTTATATTTTAGCCATATTATTTGTAATATTTGATTTAGAAGCGATTTATTTATTTAGCTGGGCAAGTGCAATTAGAGAGATTGGATGGCAAGGTTTTATAGAAATAGTTTTATTTATTATTATATTATTAGTAGGTTTAATATATGATGTATGTAATGGATTGTTTGAGTAACTTTAAATGGAGAAAACAATGAAA",
+    ">lc_0_strand_0_id_1 flag=0 multi=1"
+   ],
+   "lines": 706,
+   "records": 353,
+   "residues": 161569,
+   "sha256": "18d7590278d4e38278b189ba0565d43ffffd4a1e3682ff7aece4871747db9b3f"
+  },
+  {
+   "path": "out/intermediate_contigs/k21.local.fa.info",
+   "size": 11,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "353 161569"
+   ],
+   "lines": 1,
+   "sha256": "2806ceb308f3fc681339769a644383b0e2c36ac6e8645633d2553f05b5d5be9f"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.addi.fa",
+   "size": 648,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k29_8 flag=0 multi=1.0000 len=279",
+    "TCAACAATCAACAATCAACAATCAACAAAACTCTATCCTCTAAAAAGCAACTACTTAACACAAACCACAAAACACTAACCTATTTAAACAACAACTAACCCACTAACTTTTTTTATAACTAACCATTACCAACTAATAAACCTACCTTCCTCTAACCATCAACTAAGCTACCAATCAACTAACAAAACCATAACTTTTAA",
+    ">k29_89 flag=1 multi=1.0000 len=296"
+   ],
+   "lines": 4,
+   "records": 2,
+   "residues": 575,
+   "sha256": "faf6d7fadcf169feae18b2495883cfafd956f215f2b34e6433e899de03278888"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.addi.fa.info",
+   "size": 5,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "2 56"
+   ],
+   "lines": 1,
+   "sha256": "b9a2380bd23dc00e70acd6cf5d6fdf33e51b200b9cb85e7e520fd014fe9c2a47"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.bubble_seq.fa",
+   "size": 16191,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k29_0 flag=0 multi=0.0000 len=37",
+    "AAACAGATAACACCAAACACCAAACACCATTCAAACC",
+    ">k29_0 flag=0 multi=0.4667 len=59"
+   ],
+   "lines": 126,
+   "records": 63,
+   "residues": 13959,
+   "sha256": "0ca74c740e4898064585f3d0b2d839d31c34395ac4fc8da056ac882d75bc3585"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.bubble_seq.fa.info",
+   "size": 8,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "63 1764"
+   ],
+   "lines": 1,
+   "sha256": "f35d460a121e9a0265fee820dc51fa002aea1fc4c1bb49534d5f4d648fc64b57"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.contigs.fa",
+   "size": 263582,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k29_106 flag=1 multi=2.7231 len=94",
+    "TTACCTTTCTCCTTTCTCCTATCCTATCCTACAACCTAAAACCTAAAACCTAAAACCTCAAACCTACAACCTCAAACCTCAAACCTCAAACCTC",
+    ">k29_53 flag=0 multi=2.7576 len=128"
+   ],
+   "lines": 846,
+   "records": 423,
+   "residues": 247579,
+   "sha256": "4fe92cd97441689974e3d0294f6fb69a5f6cae1f0bf7f4ce0574019c60bfd757"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.contigs.fa.info",
+   "size": 10,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "423 11844"
+   ],
+   "lines": 1,
+   "sha256": "a62fa5e2236daafb76beff6c5308698a9b37e1dfb137f5400a7093ffe5dca57c"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.final.contigs.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.final.contigs.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.local.fa",
+   "size": 139587,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">lc_3_strand_0_id_1 flag=0 multi=1",
+    "ATGGAGCAAGAACAACAGAATCTCAAATTCATAGAGAAGTGGTAAGTGGTTTATCATTTCCAATTGGTTTTAAAAATGGAACAGATGGAAATATAGAAATAGCTATCGATGCAATAAAAACAGCAGTAAATAAACATTATCACATAGGTATAAATGATAAAGGATTTATTTCTATTATAAAAACAAAAGGTAATTTAAAT",
+    ">lc_6_strand_0_id_0 flag=0 multi=1"
+   ],
+   "lines": 580,
+   "records": 290,
+   "residues": 128739,
+   "sha256": "83a42a742a0fcdb8daecb19d420737e37d9c6291197ce46e1e12263778d1b8ed"
+  },
+  {
+   "path": "out/intermediate_contigs/k29.local.fa.info",
+   "size": 11,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "290 128739"
+   ],
+   "lines": 1,
+   "sha256": "19a4191c517f98855e655fb73f557505f4876a39e40cd1e03ca38f8ab8985cc8"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.addi.fa",
+   "size": 1698,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k39_188 flag=1 multi=1.0000 len=1659",
+    "CAAAGGTAGCACTAATTGCATACGTTTTAAAATTGATAATGTTTCTAAAATATTTTGTAACTCTTTACCTTTATTTGATGTAATTGCTGCTGCAAAATCAGTTAATGGGCCTGGATCACTAGGACTAAATCTATTTAAATATTTTTTTAATTCTTCACCATATAATGGATTATTTGGTAATAATTCTTTTATTCCTTTTA"
+   ],
+   "lines": 2,
+   "records": 1,
+   "residues": 1659,
+   "sha256": "84997bf1de312d8a362cadb9b10fcf2537d12e2889a47bc1757a048fc55407a5"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.addi.fa.info",
+   "size": 5,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "1 28"
+   ],
+   "lines": 1,
+   "sha256": "de044ad5d23cd7181660c5ed04858088140e1ba6b65541a821e5ce2a933e7878"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.bubble_seq.fa",
+   "size": 4914,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k39_0 flag=0 multi=1.0000 len=50",
+    "GTTTGATGTTTGCTGTTAGCTGTTAGCTGTTAGCTGTTATGCTTTATGCT",
+    ">k39_0 flag=0 multi=1.0000 len=62"
+   ],
+   "lines": 30,
+   "records": 15,
+   "residues": 4375,
+   "sha256": "dcd0b4a46d8a8c87858a370915aa9491292f4f43f86382f8792da1248458a6b8"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.bubble_seq.fa.info",
+   "size": 7,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "15 420"
+   ],
+   "lines": 1,
+   "sha256": "bb1a05a4f9861afb201c56b01b7395805651d5349843002aeb7ff030d45db17b"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.contigs.fa",
+   "size": 245124,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k39_0 flag=1 multi=2.0000 len=124",
+    "TGTATTAGCTGTTCTGTTGTTATGTTTTCTGATTTTGTGTTTTTGTTGTTATTTTTTTTTCTCTGTTGGATGTTGTTTTGTTTAGAGCTTTGTTTGGTGTTTGCTTAAATCTGTTAGTTATTGT",
+    ">k39_1 flag=0 multi=32.0000 len=51"
+   ],
+   "lines": 510,
+   "records": 255,
+   "residues": 235411,
+   "sha256": "0ca64a12d8f140f1e5e74456a6330997fd2bb803f7b93a445c271c20cb820edc"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.contigs.fa.info",
+   "size": 9,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "255 7140"
+   ],
+   "lines": 1,
+   "sha256": "b59362fcd7e577ea21335baec4cc1fe6f4c90ea13bc15dbf750e473d6e5492d4"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.final.contigs.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.final.contigs.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.local.fa",
+   "size": 116137,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">lc_0_strand_1_id_0 flag=0 multi=1",
+    "ACTGATAACATTCTTTATTCATACATATAACATCTAATAACTAACATAACTTTAATATTACATATTAGTAATTAATATAACCGAAACCAATAAAACAACACCAGCAAATATATAAATTCTAAATAACATAGAACAATATAACGAAATAACAATATACCATATATAAACAACATATATGGAAAGATAAAGGCAGATAAAAA",
+    ">lc_0_strand_1_id_1 flag=0 multi=1"
+   ],
+   "lines": 486,
+   "records": 243,
+   "residues": 107062,
+   "sha256": "c7b8cad23735c446a35c2da72daa2110a44cd3d3c279d919bb1f39fd36f714e8"
+  },
+  {
+   "path": "out/intermediate_contigs/k39.local.fa.info",
+   "size": 11,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "243 107062"
+   ],
+   "lines": 1,
+   "sha256": "fade5ffbb69ae700926873f00d5c5cf2fad751af98c5b57f3365e7f1f80803bb"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.addi.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.addi.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.bubble_seq.fa",
+   "size": 3670,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k59_0 flag=0 multi=1.0000 len=104",
+    "ACCATTTTATTTATTACACCATCTAACATCTAACATCTAACAAACAACAAACAACAAACAACAAACTAACCTCTTTAACATCTTTAAAGCAACCTCTTACCATC",
+    ">k59_0 flag=0 multi=1.0000 len=119"
+   ],
+   "lines": 30,
+   "records": 15,
+   "residues": 3130,
+   "sha256": "c54f67df10b23b707eadcf3c5f8ffb3680ee91152da13829c4489ac2f7467e87"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.bubble_seq.fa.info",
+   "size": 7,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "15 420"
+   ],
+   "lines": 1,
+   "sha256": "bb1a05a4f9861afb201c56b01b7395805651d5349843002aeb7ff030d45db17b"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.contigs.fa",
+   "size": 236941,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k59_100 flag=1 multi=3.0000 len=334",
+    "GTTTTAATATGAAAAAAAATATTTTAAACAAAATTTTTAAATACTTTTGTATAGGTAAATAAAGGTATGAATATTTACGAACTAATAGTCGTAGGAGGGGGCCATGCAGGCATTGAAGCTTGTTTTGCTGCATCAAAAATAGGAGTAAAAACATTACTTATAACTGATAATGTAGAAACACTAGGTAATTTTTCTTGTAA",
+    ">k59_75 flag=1 multi=2.0000 len=362"
+   ],
+   "lines": 396,
+   "records": 198,
+   "residues": 229396,
+   "sha256": "56b1dc5b8d5c6b7d5129fea7cf3fb7ac51278c867c598ed9b49dc9c1f2e370cb"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.contigs.fa.info",
+   "size": 9,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "198 5544"
+   ],
+   "lines": 1,
+   "sha256": "78b1d9c7dabbe09bc3b6cf9caeca4c332f6da4a0d3d10417e1ebe347a6f069bf"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.final.contigs.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.final.contigs.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.local.fa",
+   "size": 103022,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">lc_0_strand_1_id_0 flag=0 multi=1",
+    "GTTTGAAAACCTATATATTTTATCTTCAATAGAAGGACAATATCTAGGTCCTATACCTTTGATTTGGCCATTAAATATAGGTGATTTATATATATTGTTTACTATAATTTCATGCGTATATTTATTTGTATATGTAACAAAACAATTAACTTGTTGTTTTTTTGTTGTTTTAATGGAGAAAAAAGACATATTAGGAATCG",
+    ">lc_0_strand_1_id_1 flag=0 multi=1"
+   ],
+   "lines": 426,
+   "records": 213,
+   "residues": 95061,
+   "sha256": "f8197048441cb6d188f2973fa77983a4a54940e3be2d9672b4d4c64a49a1cf6c"
+  },
+  {
+   "path": "out/intermediate_contigs/k59.local.fa.info",
+   "size": 10,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "213 95061"
+   ],
+   "lines": 1,
+   "sha256": "ba17cf8d3ee36dc53ed8926c11978b37e1b974e1341822bac9b770fd910816c4"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.addi.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.addi.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.bubble_seq.fa",
+   "size": 2460,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k79_0 flag=0 multi=1.0000 len=159",
+    "CAGGCACTGTAAAATGGTTCAATGACACTAAAGGCTACGGTTTTATATCACCAGACGATTGTGGTGGAGATTTATTTGCCCATTTCTCAGAAATACAAGATGATGGTTTTAAGTCACTTCAAGATGGTCAAAAAGTAACGTTTGAAGTAACGCAAGGAA",
+    ">k79_0 flag=0 multi=1.0000 len=159"
+   ],
+   "lines": 18,
+   "records": 9,
+   "residues": 2136,
+   "sha256": "eb9839aa3150d04a3ed44298d5fc6bb1d90de9837829ae6c1fa99fb5f1d0ae7a"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.bubble_seq.fa.info",
+   "size": 6,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "9 252"
+   ],
+   "lines": 1,
+   "sha256": "349360aaa7d6756f5b67483e55385bbcbfe9bda774dfea2ed7aff95dcfe3edd1"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.contigs.fa",
+   "size": 230952,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k79_88 flag=1 multi=3.0000 len=334",
+    "TTACAGCCTGGCCTTTTGTATTATTTAACAACCTATACTGAATACCAGAATAATCTGTTGCTAATGCCATTATACCCCCTAATGCATCTATTTCTTTAACTAATTGACTTTTACCTATACCTCCAATAGCTGGATTACAAGAAAAATTACCTAGTGTTTCTACATTATCAGTTATAAGTAATGTTTTTACTCCTATTTTT",
+    ">k79_0 flag=1 multi=4.0000 len=398"
+   ],
+   "lines": 346,
+   "records": 173,
+   "residues": 224358,
+   "sha256": "37c33ed7822c9e9c503aca3edca02fe2509a08b7ac95f67786101d8fce18fca5"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.contigs.fa.info",
+   "size": 9,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "173 4844"
+   ],
+   "lines": 1,
+   "sha256": "42fd8b82e2f1085c59d2437aecd8ac349888a1cdd1520f7b80823f765d90d1bc"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.final.contigs.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.final.contigs.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.local.fa",
+   "size": 92404,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">lc_4_strand_1_id_0 flag=0 multi=1",
+    "TATCATACATTCCACCTGAATTTGCACAAGAACCCATTGAAATTACCCATTTTGGATCTAACATTTGATCATATAAATGCTGTATTACTGGAATCATTTTGATAAAACAAGTTCCCGCAATTACCATTAAATCTGCTTGCCTAGGTGATGATCTAATAACTTCAGCTCCAAATCTAGATATGTCATGTGGTGATGTAAAG",
+    ">lc_8_strand_1_id_0 flag=0 multi=1"
+   ],
+   "lines": 362,
+   "records": 181,
+   "residues": 85654,
+   "sha256": "6e0f4d9d8ffc8e20b547005ff7eb1b2c01a3e9be1f45dd6bf9e1a83a23fa2b5d"
+  },
+  {
+   "path": "out/intermediate_contigs/k79.local.fa.info",
+   "size": 10,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "181 85654"
+   ],
+   "lines": 1,
+   "sha256": "c644fb21e4fe7eac440b1f8390a3be4745aec8bdd585a18c210653adcf2e03a0"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.addi.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.addi.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.bubble_seq.fa",
+   "size": 1803,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k99_0 flag=0 multi=1.0000 len=199",
+    "AATGTATTTAGCGCCTTTAGCAGCTATTGCTATAATTGCTTCTTTCTGTGCTTTAAATACGCGATCTCTTTGTATAGGAGACGTAGAATTGTAAAAGTGCATTATTGATTTTTTTATTCCAACAAGAGACTCAAAAGTACGTTTAATTAACGGTTTTCTTGCTTGCACCAAAACAGCAATAGTAACGTCTTCAGGAATT",
+    ">k99_0 flag=0 multi=1.0000 len=199"
+   ],
+   "lines": 12,
+   "records": 6,
+   "residues": 1587,
+   "sha256": "a5485759ee542c95f65adb8c4cd57f367eef68616f86e13af9acc2dd28fd9fb7"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.bubble_seq.fa.info",
+   "size": 6,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "6 168"
+   ],
+   "lines": 1,
+   "sha256": "674dcb7f4179b865f9af788446c939c7a6d98ab468e8abeebf72d602f98069b9"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.contigs.fa",
+   "size": 224784,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">k99_0 flag=1 multi=4.0000 len=398",
+    "AACAAACAACAAACAACAAACTAACCTCTAATAACTAACAGATAACCATTTTATTTATTACACCATCTAACATCTAACATCTAACAAACAACAAACAACAAACTAACCTCTTTAACATCTTTAAAGCAACCTCTTACCATCATCACATAACCTCTTAAAATACAAACTACAACCTTTATCTTCTACCAACATTCCTCTTT",
+    ">k99_114 flag=1 multi=4.0000 len=493"
+   ],
+   "lines": 302,
+   "records": 151,
+   "residues": 219025,
+   "sha256": "b8a66b9be3e7989cefd6e43697e8b5af7ef1cb1bd7a347cec1dd1c4fb28ae380"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.contigs.fa.info",
+   "size": 9,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "151 4228"
+   ],
+   "lines": 1,
+   "sha256": "048099e1fa29cd946b77aaad8e2a4f68ca655d1573c7a9186440b1f62c3aa988"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.final.contigs.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.final.contigs.fa.info",
+   "size": 4,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0 0"
+   ],
+   "lines": 1,
+   "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.local.fa",
+   "size": 87146,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">lc_5_strand_1_id_0 flag=0 multi=1",
+    "TATCATACATTCCACCTGAATTTGCACAAGAACCCATTGAAATTACCCATTTTGGATCTAACATTTGATCATATAAATGCTGTATTACTGGAATCATTTTGATAAAACAAGTTCCCGCAATTACCATTAAATCTGCTTGCCTAGGTGATGATCTAATAACTTCAGCTCCAAATCTAGATATGTCATGTGGTGATGTAAAG",
+    ">lc_3_strand_1_id_0 flag=0 multi=1"
+   ],
+   "lines": 330,
+   "records": 165,
+   "residues": 81001,
+   "sha256": "115431570ef281c1d2f1c4226054d0d4f6104769a5996a9454e1fe6028f7ab7f"
+  },
+  {
+   "path": "out/intermediate_contigs/k99.local.fa.info",
+   "size": 10,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "165 81001"
+   ],
+   "lines": 1,
+   "sha256": "71db869b0651a141d4b6debd1d73db896df5e18fff21e8dd91dcd4d59a3c964b"
+  },
+  {
+   "path": "out/log",
+   "size": 115329,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "2026-11-02 15:37:39 - MEGAHIT v1.2.9",
+    "2026-11-02 15:37:39 - Using megahit_core with POPCNT and BMI2 support",
+    "2026-11-02 15:37:39 - Convert reads to binary library"
+   ],
+   "lines": 855,
+   "sha256": "99dc79e9bc7f9370fd8b40ffc5e2436cb9c2e2d4eae59d3f852022f9c33a1e93"
+  },
+  {
+   "path": "out/options.json",
+   "size": 1066,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{\"out_dir\": \"/disks/tmp/cucinell/modpipe-discovery/assembly/megahit_pe-21373339_5/out\", \"temp_dir\": \"/disks/tmp/cucinell/modpipe-discovery/assembly/megahit_pe-21373339_5/out/tmp\", \"test_mode\": false, "
+   ],
+   "sha256": "b8af2d26755e24640c78c5de0287d06a1eabf0f202741b0a43743af979d96b2f"
+  }
+ ],
+ "n_outputs": 73,
+ "output_bytes": 2873182,
+ "time": {
+  "elapsed": "0:06.49",
+  "max_rss_kb": "274020",
+  "cpu_pct": "534",
+  "exit_status": "0",
+  "user_s": "33.83",
+  "sys_s": "0.87",
+  "elapsed_s": 6.49,
+  "max_rss_mb": 267.6
+ },
+ "stdout_tail": "",
+ "stderr_tail": "2026-11-02 15:37:39 - MEGAHIT v1.2.9\n2026-11-02 15:37:39 - Using megahit_core with POPCNT and BMI2 support\n2026-11-02 15:37:39 - Convert reads to binary library\n2026-11-02 15:37:39 - b'INFO  ./src/sequence/io/sequence_lib.cpp:   75 - Lib 0 (/disks/tmp/cucinell/modpipe-discovery/assembly/megahit_pe-21373339_5/inputs/test_1.fastq.gz,/disks/tmp/cucinell/modpipe-discovery/assembly/megahit_pe-21373339_5/inputs/test_2.fastq.gz): pe, 195458 reads, 101 max length'\n2026-11-02 15:37:39 - b'INFO  ./src/utils/utils.h           :  152 - Real: 0.1963\\tuser: 0.0963\\tsys: 0.0306\\tmaxrss: 14616'\n2026-11-02 15:37:39 - k-max reset to: 119 \n2026-11-02 15:37:39 - Start assembly. Number of CPU threads 8 \n2026-11-02 15:37:39 - k list: 21,29,39,59,79,99,119 \n2026-11-02 15:37:39 - Memory used: 243019406131\n2026-11-02 15:37:39 - Extract solid (k+1)-mers for k = 21 \n2026-11-02 15:37:40 - Build graph for k = 21 \n2026-11-02 15:37:40 - Assemble contigs from SdBG for k = 21\n2026-11-02 15:37:41 - Local assembly for k = 21\n2026-11-02 15:37:41 - Extract iterative edges from k = 21 to 29 \n2026-11-02 15:37:41 - Build graph for k = 29 \n2026-11-02 15:37:41 - Assemble contigs from SdBG for k = 29\n2026-11-02 15:37:41 - Local assembly for k = 29\n2026-11-02 15:37:42 - Extract iterative edges from k = 29 to 39 \n2026-11-02 15:37:42 - Build graph for k = 39 \n2026-11-02 15:37:42 - Assemble contigs from SdBG for k = 39\n2026-11-02 15:37:42 - Local assembly for k = 39\n2026-11-02 15:37:42 - Extract iterative edges from k = 39 to 59 \n2026-11-02 15:37:43 - Build graph for k = 59 \n2026-11-02 15:37:43 - Assemble contigs from SdBG for k = 59\n2026-11-02 15:37:43 - Local assembly for k = 59\n2026-11-02 15:37:43 - Extract iterative edges from k = 59 to 79 \n2026-11-02 15:37:43 - Build graph for k = 79 \n2026-11-02 15:37:43 - Assemble contigs from SdBG for k = 79\n2026-11-02 15:37:44 - Local assembly for k = 79\n2026-11-02 15:37:44 - Extract iterative edges from k = 79 to 99 \n2026-11-02 15:37:44 - Build graph for k = 99 \n2026-11-02 15:37:44 - Assemble contigs from SdBG for k = 99\n2026-11-02 15:37:44 - Local assembly for k = 99\n2026-11-02 15:37:45 - Extract iterative edges from k = 99 to 119 \n2026-11-02 15:37:45 - Build graph for k = 119 \n2026-11-02 15:37:45 - Assemble contigs from SdBG for k = 119\n2026-11-02 15:37:45 - Merging to output final contigs \n2026-11-02 15:37:45 - 152 contigs, total 219785 bp, min 307 bp, max 10962 bp, avg 1445 bp, N50 2246 bp\n2026-11-02 15:37:45 - ALL DONE. Time elapsed: 6.152653 seconds \n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:45"
+}

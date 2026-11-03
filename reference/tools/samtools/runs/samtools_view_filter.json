@@ -1,0 +1,52 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "samtools_view_filter",
+ "set": "mapping_variants",
+ "tool": "samtools",
+ "mode": "view_filter",
+ "description": null,
+ "tool_version": "1.13",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373340_10",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:36",
+ "inputs": {
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  }
+ },
+ "prep": null,
+ "cmd": "samtools view -b -q 20 -F 4 -o filtered.bam $BAM",
+ "wall_s": 2.22,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "filtered.bam",
+   "size": 19419,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "bam",
+   "sha256": "a90ff804f64e672b2a4a271018fd41306f08944c60f20b380bbf813d65de8556"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 19419,
+ "time": {
+  "elapsed": "0:02.18",
+  "max_rss_kb": "3960",
+  "cpu_pct": "18",
+  "exit_status": "0",
+  "user_s": "0.01",
+  "sys_s": "0.38",
+  "elapsed_s": 2.18,
+  "max_rss_mb": 3.9
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:38"
+}

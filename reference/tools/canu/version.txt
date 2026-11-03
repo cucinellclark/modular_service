@@ -1,0 +1,2 @@
+# /usr/bin/canu --version
+Canu 2.0

@@ -1,0 +1,115 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "raxmlhpc",
+ "set": "phylogeny",
+ "tool": "raxmlhpc",
+ "mode": "gtrgamma_search",
+ "description": null,
+ "tool_version": "8.2.12",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373357_8",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:38:12",
+ "inputs": {
+  "A": {
+   "fixture": "sarscov2_aln_all_sites",
+   "path": "inputs/all_sites.fas",
+   "size": 119652
+  }
+ },
+ "prep": null,
+ "cmd": "raxmlHPC-PTHREADS-SSE3 -T $CPU -m GTRGAMMA -p 12345 -s $A -n run -w $PWD",
+ "wall_s": 0.12,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "RAxML_bestTree.run",
+   "size": 156,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(sample3:0.00008561710350363599,(sample2:0.00082203503697208342,sample4:0.00017975872178436044):0.00038606150797250210,sample1:0.00039833905233094952):0.0;"
+   ],
+   "lines": 1,
+   "sha256": "e50799a2486e3e83d800a35ec0a27dcd0d57871b19ebd0ca5c3f26776e00e10b"
+  },
+  {
+   "path": "RAxML_info.run",
+   "size": 60522,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "IMPORTANT WARNING: Alignment column 1 contains only undetermined values which will be treated as missing data",
+    "IMPORTANT WARNING: Alignment column 2 contains only undetermined values which will be treated as missing data",
+    "IMPORTANT WARNING: Alignment column 3 contains only undetermined values which will be treated as missing data"
+   ],
+   "lines": 601,
+   "sha256": "76c674ba1cb7ea2e7bdd4c0f4d328953e56b2e34e52bba22ff0772359120c5a5"
+  },
+  {
+   "path": "RAxML_log.run",
+   "size": 184,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "0.034039 -40381.877333",
+    "0.034133 -40381.877333",
+    "0.034520 -40381.812181"
+   ],
+   "lines": 8,
+   "sha256": "4054103d4791a996ca6b9d26e514e4d847147ff45cffcf4a1bc67f2f8d4792e9"
+  },
+  {
+   "path": "RAxML_parsimonyTree.run",
+   "size": 37,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(sample3,(sample2,sample4),sample1);"
+   ],
+   "lines": 1,
+   "sha256": "6bcc63be3d777654e12ad9de2978586f61a89b0f0f5a7d237dc3f7c51b24740f"
+  },
+  {
+   "path": "RAxML_result.run",
+   "size": 156,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "(sample3:0.00008561710350363599,(sample2:0.00082203503697208342,sample4:0.00017975872178436044):0.00038606150797250210,sample1:0.00039833905233094952):0.0;"
+   ],
+   "lines": 1,
+   "sha256": "e50799a2486e3e83d800a35ec0a27dcd0d57871b19ebd0ca5c3f26776e00e10b"
+  },
+  {
+   "path": "inputs/all_sites.fas.reduced",
+   "size": 117680,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "4 29409",
+    "sample1 ATGGAGAGCCTTGTCCCTGGTTTCAACGAGAAAACACACGTCCAACTCAGTTTGCCTGTTTTACAGGTTCGCGACGTGCTCGTACGTGGCTTTGGAGACTCCGTGGAGGAGGTCTTATCAGAGGCACGTCAACATCTTAAAGATGGCACTTGTGGCTTAGTAGAAGTTGAAAAAGGCGTCTTGCCTCAACTT"
+   ],
+   "lines": 5,
+   "sha256": "2c6313a32dd0d5e52503a56fc983cd6f93e049883d8812254f74beaf9e3b5f62"
+  }
+ ],
+ "n_outputs": 6,
+ "output_bytes": 178735,
+ "time": {
+  "elapsed": "0:00.09",
+  "max_rss_kb": "4772",
+  "cpu_pct": "42",
+  "exit_status": "0",
+  "user_s": "0.02",
+  "sys_s": "0.01",
+  "elapsed_s": 0.09,
+  "max_rss_mb": 4.7
+ },
+ "stdout_tail": "  (HITS)\nAlexey Kozlov     (HITS)\nKassian Kobert    (HITS)\nDavid Dao         (KIT and HITS)\nSarah Lutteropp   (KIT and HITS)\nNick Pattengale   (Sandia)\nWayne Pfeiffer    (SDSC)\nAkifumi S. Tanabe (NRIFS)\nCharlie Taylor    (UF)\n\n\nAlignment has 51 distinct alignment patterns\n\nProportion of gaps and completely undetermined characters in this alignment: 3.59%\n\nRAxML rapid hill-climbing mode\n\nUsing 1 distinct models/data partitions with joint branch length optimization\n\n\nExecuting 1 inferences on the original alignment using 1 distinct randomized MP trees\n\nAll free model parameters will be estimated by RAxML\nGAMMA model of rate heterogeneity, ML estimate of alpha-parameter\n\nGAMMA Model parameters will be estimated up to an accuracy of 0.1000000000 Log Likelihood units\n\nPartition: 0\nAlignment Patterns: 51\nName: No Name Provided\nDataType: DNA\nSubstitution Matrix: GTR\n\n\n\n\nRAxML was called as follows:\n\nraxmlHPC-PTHREADS-SSE3 -T 4 -m GTRGAMMA -p 12345 -s /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxmlhpc-21373357_8/inputs/all_sites.fas -n run -w /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxmlhpc-21373357_8 \n\n\nPartition: 0 with name: No Name Provided\nBase frequencies: 0.299 0.183 0.196 0.321 \n\n\nWARNING the alpha parameter with a value of 13.123319 estimated by RAxML for partition number 0 with the name \"No Name Provided\"\nis larger than 10.000000. You should do a model test and confirm that you actually need to incorporate a model of rate heterogeneity!\nYou can run inferences with a plain substitution model (without rate heterogeneity) by specifyng the CAT model and the \"-V\" option!\n\n\nWARNING the alpha parameter with a value of 30.382846 estimated by RAxML for partition number 0 with the name \"No Name Provided\"\nis larger than 10.000000. You should do a model test and confirm that you actually need to incorporate a model of rate heterogeneity!\nYou can run inferences with a plain substitution model (without rate heterogeneity) by specifyng the CAT model and the \"-V\" option!\n\nInference[0]: Time 0.002775 GAMMA-based likelihood -40381.767680, best rearrangement setting 1\n\n\nConducting final model optimizations on all 1 trees under GAMMA-based models ....\n\n\nWARNING the alpha parameter with a value of 70.236939 estimated by RAxML for partition number 0 with the name \"No Name Provided\"\nis larger than 10.000000. You should do a model test and confirm that you actually need to incorporate a model of rate heterogeneity!\nYou can run inferences with a plain substitution model (without rate heterogeneity) by specifyng the CAT model and the \"-V\" option!\n\n\nWARNING the alpha parameter with a value of 153.021147 estimated by RAxML for partition number 0 with the name \"No Name Provided\"\nis larger than 10.000000. You should do a model test and confirm that you actually need to incorporate a model of rate heterogeneity!\nYou can run inferences with a plain substitution model (without rate heterogeneity) by specifyng the CAT model and the \"-V\" option!\n\n\nWARNING the alpha parameter with a value of 344.168074 estimated by RAxML for partition number 0 with the name \"No Name Provided\"\nis larger than 10.000000. You should do a model test and confirm that you actually need to incorporate a model of rate heterogeneity!\nYou can run inferences with a plain substitution model (without rate heterogeneity) by specifyng the CAT model and the \"-V\" option!\n\nInference[0] final GAMMA-based Likelihood: -40381.374098 tree written to file /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxmlhpc-21373357_8/RAxML_result.run\n\n\nStarting final GAMMA-based thorough Optimization on tree 0 likelihood -40381.374098 .... \n\nFinal GAMMA-based Score of best tree -40381.374098\n\nProgram execution info written to /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxmlhpc-21373357_8/RAxML_info.run\nBest-scoring ML tree written to: /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxmlhpc-21373357_8/RAxML_bestTree.run\n\nOverall execution time: 0.037042 secs or 0.000010 hours or 0.000000 days\n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:12"
+}

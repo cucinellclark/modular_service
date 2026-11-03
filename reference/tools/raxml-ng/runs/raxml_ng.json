@@ -1,0 +1,108 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "raxml_ng",
+ "set": "phylogeny",
+ "tool": "raxml-ng",
+ "mode": "search1",
+ "description": null,
+ "tool_version": "1.2.2",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373357_9",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:38:13",
+ "inputs": {
+  "A": {
+   "fixture": "sarscov2_aln_all_sites",
+   "path": "inputs/all_sites.fas",
+   "size": 119652
+  }
+ },
+ "prep": null,
+ "cmd": "raxml-ng --search1 --msa $A --model GTR+G --threads $CPU --prefix rng --seed 2",
+ "wall_s": 0.21,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "rng.raxml.bestModel",
+   "size": 132,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "GTR{0.430930/0.671929/0.327217/1.316680/3.743977/1.000000}+FU{0.299072/0.182989/0.195730/0.322208}+G4m{99.862688}, noname = 1-29903"
+   ],
+   "lines": 1,
+   "sha256": "9f10c7071c890ed446661d617f37b5fc8478b47fe84e639d39722bdc66698349"
+  },
+  {
+   "path": "rng.raxml.bestTree",
+   "size": 82,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((sample1:0.000398,sample3:0.000086):0.000386,sample2:0.000822,sample4:0.000180);"
+   ],
+   "lines": 1,
+   "sha256": "22afe8f55fce4e7b245e10096dac30a9e2c00c92f70400336c6bb9b314cdcd33"
+  },
+  {
+   "path": "rng.raxml.log",
+   "size": 3809,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "RAxML-NG v. 1.2.2-master released on 30.04.2024 by The Exelixis Lab.",
+    "Developed by: Alexey M. Kozlov and Alexandros Stamatakis."
+   ],
+   "lines": 93,
+   "sha256": "6f25ee7344138f63c0676d9d9d05e73ec8f544fb3492d139332a5ff6ea7178da"
+  },
+  {
+   "path": "rng.raxml.rba",
+   "size": 847,
+   "new": true,
+   "kind": "binary",
+   "sha256": "229bccd50729ce36b21d58882f8cef6399786afd9c74272921caa3a3262cf3cb"
+  },
+  {
+   "path": "rng.raxml.reduced.phy",
+   "size": 117680,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "4 29409",
+    "sample1 ATGGAGAGCCTTGTCCCTGGTTTCAACGAGAAAACACACGTCCAACTCAGTTTGCCTGTTTTACAGGTTCGCGACGTGCTCGTACGTGGCTTTGGAGACTCCGTGGAGGAGGTCTTATCAGAGGCACGTCAACATCTTAAAGATGGCACTTGTGGCTTAGTAGAAGTTGAAAAAGGCGTCTTGCCTCAACTT"
+   ],
+   "sha256": "a24749924a21fbc8c351e6c99d4f962cec9bb77bf486472890328eca26fee1e7"
+  },
+  {
+   "path": "rng.raxml.startTree",
+   "size": 82,
+   "new": true,
+   "kind": "newick",
+   "preview": [
+    "((sample1:0.100000,sample3:0.100000):0.100000,sample2:0.100000,sample4:0.100000);"
+   ],
+   "lines": 1,
+   "sha256": "62dcbe1f5776c22aed93a25a18473f20e7d836b3d185ec9408eda650533bc91c"
+  }
+ ],
+ "n_outputs": 6,
+ "output_bytes": 122632,
+ "time": {
+  "elapsed": "0:00.17",
+  "max_rss_kb": "7492",
+  "cpu_pct": "68",
+  "exit_status": "0",
+  "user_s": "0.07",
+  "sys_s": "0.04",
+  "elapsed_s": 0.17,
+  "max_rss_mb": 7.3
+ },
+ "stdout_tail": "\nRAxML-NG v. 1.2.2-master released on 30.04.2024 by The Exelixis Lab.\nDeveloped by: Alexey M. Kozlov and Alexandros Stamatakis.\nContributors: Diego Darriba, Tomas Flouri, Benoit Morel, Sarah Lutteropp, Ben Bettisworth, Julia Haag, Anastasis Togkousidis.\nLatest version: https://github.com/amkozlov/raxml-ng\nQuestions/problems/suggestions? Please visit: https://groups.google.com/forum/#!forum/raxml\n\nSystem: Intel(R) Xeon(R) Platinum 8352Y CPU @ 2.20GHz, 64 cores, 251 GB RAM (allocated: 2 physical cores)\n\nRAxML-NG was called at 02-Nov-2026 15:38:13 as follows:\n\nraxml-ng --search1 --msa /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxml_ng-21373357_9/inputs/all_sites.fas --model GTR+G --threads 4 --prefix rng --seed 2\n\nAnalysis options:\n  run mode: ML tree search\n  start tree(s): parsimony (1)\n  random seed: 2\n  tip-inner: OFF\n  pattern compression: ON\n  per-rate scalers: OFF\n  site repeats: ON\n  logLH epsilon: general: 10.000000, brlen-triplet: 1000.000000\n  fast spr radius: AUTO\n  spr subtree cutoff: 1.000000\n  fast CLV updates: ON\n  branch lengths: proportional (ML estimate, algorithm: NR-FAST)\n  SIMD kernels: AVX2\n  parallelization: coarse-grained (auto), PTHREADS (4 threads), thread pinning: OFF\n\n[00:00:00] Reading alignment from file: /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxml_ng-21373357_9/inputs/all_sites.fas\n[00:00:00] Loaded alignment with 4 taxa and 29903 sites\n\nWARNING: Fully undetermined columns found: 494\n\nNOTE: Reduced alignment (with duplicates and gap-only sites/taxa removed) \nNOTE: was saved to: /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxml_ng-21373357_9/rng.raxml.reduced.phy\n\nAlignment comprises 1 partitions and 51 patterns\n\nPartition 0: noname\nModel: GTR+FO+G4m\nAlignment sites / patterns: 29409 / 51\nGaps: 1.97 %\nInvariant sites: 99.82 %\n\n\nNOTE: Binary MSA file created: rng.raxml.rba\n\nParallelization scheme autoconfig: 1 worker(s) x 4 thread(s)\n\n[00:00:00] Generating 1 parsimony starting tree(s) with 4 taxa\nParallel parsimony with 4 threads\nParallel reduction/worker buffer size: 1 KB  / 0 KB\n\n[00:00:00] Data distribution: max. partitions/sites/weight per thread: 1 / 13 / 208\n[00:00:00] Data distribution: max. searches per worker: 1\n\nStarting ML tree search with 1 distinct starting trees\n\n[00:00:00 -52811.577242] Initial branch length optimization\n[00:00:00 -41294.738504] Model parameter optimization (eps = 10.000000)\n[00:00:00 -40381.113243] SPR radius for FAST iterations: 5 (autodetect)\n[00:00:00 -40381.113243] Model parameter optimization (eps = 3.000000)\n[00:00:00 -40381.113241] FAST spr round 1 (radius: 5)\n[00:00:00 -40381.113241] Model parameter optimization (eps = 1.000000)\n[00:00:00 -40381.113241] SLOW spr round 1 (radius: 5)\n[00:00:00 -40381.113241] Model parameter optimization (eps = 0.100000)\n\n[00:00:00] ML tree search #1, logLikelihood: -40381.113241\n\n\nOptimized model parameters:\n\n   Partition 0: noname\n   Rate heterogeneity: GAMMA (4 cats, mean),  alpha: 99.862688 (ML),  weights&rates: (0.250000,0.875823) (0.250000,0.964713) (0.250000,1.029567) (0.250000,1.129897) \n   Base frequencies (ML): 0.299072 0.182989 0.195730 0.322208 \n   Substitution rates (ML): 0.430930 0.671929 0.327217 1.316680 3.743977 1.000000 \n\n\nFinal LogLikelihood: -40381.113241\n\nAIC score: 80790.226483 / AICc score: 80790.240771 / BIC score: 80906.273267\nFree parameters (model + branch lengths): 14\n\nBest ML tree saved to: /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxml_ng-21373357_9/rng.raxml.bestTree\nOptimized model saved to: /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxml_ng-21373357_9/rng.raxml.bestModel\n\nExecution log saved to: /disks/tmp/cucinell/modpipe-discovery/phylogeny/raxml_ng-21373357_9/rng.raxml.log\n\nAnalysis started: 02-Nov-2026 15:38:13 / finished: 02-Nov-2026 15:38:13\n\nElapsed time: 0.067 seconds\n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:13"
+}

@@ -1,0 +1,1 @@
+# /usr/bin/diamond cmd: diamond help

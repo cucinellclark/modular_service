@@ -1,0 +1,57 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "samtools_depth",
+ "set": "mapping_variants",
+ "tool": "samtools",
+ "mode": "depth",
+ "description": null,
+ "tool_version": "1.13",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373340_13",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:39",
+ "inputs": {
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  }
+ },
+ "prep": null,
+ "cmd": "samtools depth -a $BAM > depth.tsv",
+ "wall_s": 0.01,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "depth.tsv",
+   "size": 555661,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1\t1\t0",
+    "MT192765.1\t2\t0",
+    "MT192765.1\t3\t0"
+   ],
+   "lines": 29829,
+   "sha256": "c362573b4142d1efc06b93b2eccb1788b813188f842941d2a04acb4d380242f3"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 555661,
+ "time": {
+  "elapsed": "0:00.00",
+  "max_rss_kb": "3696",
+  "cpu_pct": "100",
+  "exit_status": "0",
+  "user_s": "0.00",
+  "sys_s": "0.00",
+  "elapsed_s": 0.0,
+  "max_rss_mb": 3.6
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:39"
+}

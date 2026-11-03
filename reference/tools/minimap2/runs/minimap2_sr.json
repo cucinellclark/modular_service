@@ -1,0 +1,66 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "minimap2_sr",
+ "set": "mapping_variants",
+ "tool": "minimap2",
+ "mode": "short_paired",
+ "description": null,
+ "tool_version": "2.24",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373340_6",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:31",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  },
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "minimap2 -t $CPU -ax sr $REF $R1 $R2 > aln.sam",
+ "wall_s": 0.97,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aln.sam",
+   "size": 66540813,
+   "new": true,
+   "kind": "sam",
+   "preview": [
+    "@SQ\tSN:NC_018507.1\tLN:358242",
+    "@PG\tID:minimap2\tPN:minimap2\tVN:2.24-r1122\tCL:minimap2 -t 4 -ax sr /disks/tmp/cucinell/modpipe-discovery/mapping_variants/minimap2_sr-21373340_6/inputs/genome.fasta /disks/tmp/cucinell/modpipe-discover",
+    "SRR2838702.1\t83\tNC_018507.1\t129375\t60\t101M\t=\t128712\t-764\tTAAGTGGTTATTGTTTGTGTAGAATAGCTGGGAGACAATGAAGTACAAACGCAAGTTTGTATGGAGTCAATATTGAAATACCAGCCTAATTTTAATTTCTT\tCDDBC@DDDCAEDADFFFFFFFEFHHHEJIHEJIGIJJJJI"
+   ],
+   "sha256": "c37a96442f6ad774348b09000314df07de3e277a2fd5096ea6bbb723f0ea9c18"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 66540813,
+ "time": {
+  "elapsed": "0:00.91",
+  "max_rss_kb": "98184",
+  "cpu_pct": "221",
+  "exit_status": "0",
+  "user_s": "1.84",
+  "sys_s": "0.18",
+  "elapsed_s": 0.91,
+  "max_rss_mb": 95.9
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[M::mm_idx_gen::0.009*1.17] collected minimizers\n[M::mm_idx_gen::0.013*2.00] sorted minimizers\n[M::main::0.013*2.00] loaded/built the index for 1 target sequence(s)\n[M::mm_mapopt_update::0.013*2.00] mid_occ = 1000\n[M::mm_idx_stat] kmer size: 21; skip: 11; is_hpc: 0; #seq: 1\n[M::mm_idx_stat::0.013*1.95] distinct minimizers: 59497 (99.56% are singletons); average occurrences: 1.006; average spacing: 5.984; total length: 358242\n[M::worker_pipeline::0.875*2.30] mapped 195458 sequences\n[M::main] Version: 2.24-r1122\n[M::main] CMD: minimap2 -t 4 -ax sr /disks/tmp/cucinell/modpipe-discovery/mapping_variants/minimap2_sr-21373340_6/inputs/genome.fasta /disks/tmp/cucinell/modpipe-discovery/mapping_variants/minimap2_sr-21373340_6/inputs/test_1.fastq.gz /disks/tmp/cucinell/modpipe-discovery/mapping_variants/minimap2_sr-21373340_6/inputs/test_2.fastq.gz\n[M::main] Real time: 0.882 sec; CPU: 2.021 sec; Peak RSS: 0.094 GB\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:32"
+}

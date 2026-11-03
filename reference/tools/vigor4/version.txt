@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/vigor4 --version
+vigor-4.1.20220621-163707-2385247 ( built  on host bio-compute-10at 2022-06-21 16:37:07 )

@@ -1,0 +1,57 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "primer3_generic",
+ "set": "typing_expression",
+ "tool": "primer3",
+ "mode": "generic",
+ "description": null,
+ "tool_version": "2.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373447_15",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:44:42",
+ "inputs": {
+  "G": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  }
+ },
+ "prep": "SEQ=$(awk '!/^>/{printf \"%s\",$0}' $G | cut -c1-1500)\nprintf 'SEQUENCE_ID=sarscov2_5p\\nSEQUENCE_TEMPLATE=%s\\nPRIMER_TASK=generic\\nPRIMER_PICK_LEFT_PRIMER=1\\nPRIMER_PICK_RIGHT_PRIMER=1\\nPRIMER_PRODUCT_SIZE_RANGE=150-400\\nPRIMER_NUM_RETURN=5\\n=\\n' \"$SEQ\" > input.boulder\n",
+ "cmd": "primer3_core --output=primers.txt < input.boulder",
+ "wall_s": 0.12,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "primers.txt",
+   "size": 5268,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "SEQUENCE_ID=sarscov2_5p",
+    "SEQUENCE_TEMPLATE=GTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCTGTTCTCTAAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACTCACGCAGTATAATTAATAACTAATTACTGTCGTTGACAGGACACGAGTAACTCGTCTATCTTCTGCAGG",
+    "PRIMER_TASK=generic"
+   ],
+   "lines": 122,
+   "sha256": "1816e43547e8b48cd86f9cd8c5a8eb9891de0d8d4470c1c328289d9c1b2e61c4"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 5268,
+ "time": {
+  "elapsed": "0:00.07",
+  "max_rss_kb": "7124",
+  "cpu_pct": "35",
+  "exit_status": "0",
+  "user_s": "0.01",
+  "sys_s": "0.00",
+  "elapsed_s": 0.07,
+  "max_rss_mb": 7.0
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:44:42"
+}

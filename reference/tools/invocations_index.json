@@ -1,0 +1,669 @@
+{
+ "files_scanned": 1253,
+ "root": "/opt/p3/deployment",
+ "tools": {
+  "amrfinder": {
+   "files": [
+    "plbin/p3x-compute-specialty-amrfinder.pl"
+   ],
+   "hunks": 3
+  },
+  "antismash": {
+   "files": [],
+   "hunks": 0
+  },
+  "bbduk": {
+   "files": [],
+   "hunks": 0
+  },
+  "bbnorm": {
+   "files": [
+    "lib/ReadLibrary.py"
+   ],
+   "hunks": 2
+  },
+  "bcftools": {
+   "files": [
+    "lib/Bio/P3/CmdRunner.pm",
+    "plbin/App-Variation.pl",
+    "plbin/sars2-cdc-illumina.pl",
+    "plbin/var-map.pl",
+    "pybin/reference_guided_assembly.py",
+    "pybin/run_viral_assembly.py"
+   ],
+   "hunks": 12
+  },
+  "bedtools": {
+   "files": [
+    "lib/fastq_utils.py",
+    "plbin/var-map.pl",
+    "pybin/fastq_utils.py"
+   ],
+   "hunks": 3
+  },
+  "blastn": {
+   "files": [
+    "lib/Bin/Blast.pm",
+    "lib/Bio/KBase/HomologyService/Util.pm",
+    "lib/Bio/P3/HomologySearch/HomologySearch.pm",
+    "lib/BlastInterface.pm",
+    "lib/BlastUtils.pm",
+    "lib/VASTR/MLST/LocalMLST.pm",
+    "lib/alignment.pm",
+    "lib/find_homologs.pm",
+    "lib/find_special_proteins.pm",
+    "lib/gjoalignandtree.pm",
+    "lib/gjoalignment.pm",
+    "lib/representative_sequences.pm",
+    "lib/rota-a-genotyper/VIGOR3/prod3/VIGOR3.pl",
+    "lib/rota-a-genotyper/VIGOR3/prod3/VIGOR3.pm",
+    "lib/rota-a-genotyper/VIGOR3/prod3/rna_finder.pl",
+    "lib/rota-a-genotyper/VIGOR3/prod3/tblUTR.pl",
+    "plbin/annotate_by_viral_pssm.pl",
+    "plbin/assign_st_to_genome.pl",
+    "plbin/blast_against_genomes.pl",
+    "plbin/build_blast_dbs.pl",
+    "plbin/get_splice_variant_features.pl",
+    "plbin/get_transcript_edited_features.pl",
+    "plbin/hs-p3-update-blast-databases.pl",
+    "plbin/p3-blast.pl",
+    "plbin/p3-make-genome-list-blast-database.pl",
+    "plbin/p3-submit-BLAST.pl",
+    "plbin/p3x-create-blast-db.pl",
+    "plbin/p3x-update-blast-dbs.pl",
+    "plbin/sars2-compute-variation.pl",
+    "plbin/sars2-get-blast-variants.pl",
+    "plbin/svr_big_repeats.pl",
+    "plbin/update_local_mlstdb.pl",
+    "services/bvbrc_lowvan/Viral_Annotation/annotate_by_viral_pssm.pl",
+    "services/bvbrc_lowvan/Viral_Annotation/get_splice_variant_features.pl",
+    "services/bvbrc_lowvan/Viral_Annotation/get_transcript_edited_features.pl"
+   ],
+   "hunks": 117
+  },
+  "blastp": {
+   "files": [
+    "lib/Bio/KBase/HomologyService/HomologyServiceImpl.pm",
+    "lib/Bio/KBase/HomologyService/Util.pm",
+    "lib/Bio/P3/HomologySearch/HomologySearch.pm",
+    "lib/BlastInterface.pm",
+    "lib/BlastUtils.pm",
+    "lib/P3DataAPI.pm",
+    "lib/ProtSims.pm",
+    "lib/alignment.pm",
+    "lib/bidir_best_hits.pm",
+    "lib/gjoalignandtree.pm",
+    "lib/gjoalignment.pm",
+    "lib/representative_sequences.pm",
+    "lib/rota-a-genotyper/VIGOR3/prod3/VIGOR3.pm",
+    "lib/rota-a-genotyper/VIGOR3/prod3/dbutils/transferAnnotation.pl",
+    "plbin/App-GenomeComparison.pl",
+    "plbin/blast_against_genomes.pl",
+    "plbin/p3-blast.pl",
+    "plbin/p3-submit-BLAST.pl",
+    "plbin/p3x-compute-specialty-blast.pl",
+    "plbin/rast_compute_specialty_genes.pl",
+    "plbin/sars2-get-blast-variants.pl",
+    "pybin/run_ha_subtype_numbering_conversion.py"
+   ],
+   "hunks": 54
+  },
+  "bowtie2": {
+   "files": [
+    "lib/Bio/P3/CmdRunner.pm",
+    "lib/fastq_utils.py",
+    "lib/process.py",
+    "plbin/App-FastqUtils.pl",
+    "plbin/App-RNASeq.pl",
+    "plbin/sars2-cdc-illumina.pl",
+    "plbin/var-map.pl",
+    "pybin/fastq_utils.py",
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 21
+  },
+  "bracken": {
+   "files": [
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/16s_analysis",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/microbiome_analysis"
+   ],
+   "hunks": 4
+  },
+  "bwa": {
+   "files": [
+    "plbin/compute_contig_coverage.pl",
+    "plbin/var-map.pl",
+    "pybin/p3_tnseq.py",
+    "pybin/reference_guided_assembly.py",
+    "pybin/run_viral_assembly.py"
+   ],
+   "hunks": 7
+  },
+  "canu": {
+   "files": [
+    "lib/GenomeAssembly2.json",
+    "plbin/App-GenomeAssembly2.pl",
+    "plbin/p3-submit-genome-assembly.pl",
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 8
+  },
+  "cd-hit": {
+   "files": [
+    "lib/rota-a-genotyper/VIGOR3/prod3/dbutils/findClusters.pl"
+   ],
+   "hunks": 1
+  },
+  "checkv": {
+   "files": [
+    "lib/Bio/P3/MetagenomeBinning/MetagenomeBinning.pm",
+    "plbin/vbins_generate.pl"
+   ],
+   "hunks": 3
+  },
+  "chewbbaca": {
+   "files": [
+    "plbin/p3x-compute-cgmlst.pl",
+    "pybin/core-genome-mlst-utils.py",
+    "workflows/bvbrc_CoreGenomeMLST/snakefile/run_cgMLST_snakefile"
+   ],
+   "hunks": 10
+  },
+  "clustalw": {
+   "files": [
+    "lib/alignment.pm",
+    "lib/clustaltree.pm",
+    "lib/gjoalignment.pm",
+    "lib/rota-a-genotyper/VIGOR3/prod3/VIGOR3.pm",
+    "lib/rota-a-genotyper/VIGOR3/prod3/dbutils/findClusters.pl",
+    "plbin/p3x-annotate-mat-peptide.pl",
+    "plbin/snp_analysis.pl"
+   ],
+   "hunks": 16
+  },
+  "cutadapt": {
+   "files": [
+    "lib/Bio/P3/CmdRunner.pm",
+    "lib/process.py",
+    "plbin/sars2-cdc-illumina.pl",
+    "plbin/sars2-cdc-nanopore.pl"
+   ],
+   "hunks": 5
+  },
+  "diamond": {
+   "files": [
+    "lib/Bio/KBase/GenomeAnnotation/GenomeAnnotationImpl.pm",
+    "lib/Bio/KBase/KIDL/sapling_spec.tt",
+    "plbin/build_blast_dbs.pl",
+    "plbin/compile_dbd_to_typespec.pl",
+    "plbin/dbd_to_iplant.pl",
+    "plbin/p3x-compute-specialty-blast.pl"
+   ],
+   "hunks": 7
+  },
+  "fastp": {
+   "files": [
+    "pybin/reference_guided_assembly.py",
+    "pybin/run_viral_assembly.py"
+   ],
+   "hunks": 2
+  },
+  "fastplong": {
+   "files": [],
+   "hunks": 0
+  },
+  "fastqc": {
+   "files": [
+    "lib/fastq_utils.py",
+    "lib/process.py",
+    "lib/report.py",
+    "plbin/App-FastqUtils.pl",
+    "plbin/p3-submit-fastqutils.pl",
+    "pybin/fastq_utils.py",
+    "workflows/bvbrc_SARS2Wastewater/snakefile/pe_freyja_snakefile",
+    "workflows/bvbrc_SARS2Wastewater/snakefile/se_freyja_snakefile",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/pe_fastq_processing",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/pe_fastq_processing_16s",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/se_fastq_processing",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/se_fastq_processing_16s"
+   ],
+   "hunks": 28
+  },
+  "fasttree": {
+   "files": [
+    "lib/Tree_Builder.pm",
+    "lib/ffxtree.pm",
+    "plbin/App-GeneTree.pl",
+    "plbin/App-MSA.pl",
+    "plbin/App-PhylogeneticTree.pl",
+    "plbin/p3-submit-gene-tree.pl",
+    "plbin/p3-submit-influenza-treesort.pl",
+    "plbin/p3x-build-gene-tree.pl",
+    "pybin/run_treesort.py",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/gto-dir-to-alis-and-trees.pl",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/gtos-dir-to-wgs-tree-single-seg.pl",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/prots_to_alis_and_trees.pl"
+   ],
+   "hunks": 24
+  },
+  "filtlong": {
+   "files": [
+    "lib/MobileElementDetection.pm",
+    "lib/ReadLibrary.py",
+    "plbin/App-GenomeAssembly2.pl",
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 6
+  },
+  "flye": {
+   "files": [
+    "plbin/App-GenomeAssembly2.pl",
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 5
+  },
+  "freebayes": {
+   "files": [
+    "plbin/App-Variation.pl",
+    "plbin/var-map.pl"
+   ],
+   "hunks": 5
+  },
+  "freyja": {
+   "files": [
+    "workflows/bvbrc_SARS2Wastewater/scripts/edit_time_metadata_csv.py",
+    "workflows/bvbrc_SARS2Wastewater/scripts/time_series_plots.py",
+    "workflows/bvbrc_SARS2Wastewater/scripts/write_html_report.py",
+    "workflows/bvbrc_SARS2Wastewater/snakefile/freyja_snakefile",
+    "workflows/bvbrc_SARS2Wastewater/snakefile/stats_snakefile",
+    "workflows/bvbrc_SARS2Wastewater/snakefile/wrapper.py"
+   ],
+   "hunks": 13
+  },
+  "gblocks": {
+   "files": [],
+   "hunks": 0
+  },
+  "genomad": {
+   "files": [
+    "lib/MobileElementDetection.pm",
+    "plbin/App-Genomad.pl",
+    "plbin/App-MobileElementDetection.pl"
+   ],
+   "hunks": 9
+  },
+  "glimmer3": {
+   "files": [
+    "lib/Bio/KBase/GenomeAnnotation/CmdHelper.pm",
+    "lib/Bio/KBase/GenomeAnnotation/GenomeAnnotationImpl.pm",
+    "lib/Bio/KBase/GenomeAnnotation/Glimmer.pm",
+    "plbin/rast-call-features-CDS-glimmer3.pl"
+   ],
+   "hunks": 6
+  },
+  "hisat2": {
+   "files": [
+    "lib/experiment.py",
+    "lib/fastq_utils.py",
+    "lib/process.py",
+    "plbin/App-FastqUtils.pl",
+    "plbin/App-RNASeq.pl",
+    "pybin/fastq_utils.py",
+    "pybin/run_rnaseq.py",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/pe_fastq_processing",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/se_fastq_processing"
+   ],
+   "hunks": 16
+  },
+  "hmmscan": {
+   "files": [
+    "lib/rota-a-genotyper/VIGOR3/prod3/hmm3Evidence.pl",
+    "plbin/p3x-retrieve-family-sequences-for-genomes.pl"
+   ],
+   "hunks": 3
+  },
+  "hostile": {
+   "files": [
+    "lib/fastq_utils.py",
+    "pybin/fastq_utils.py"
+   ],
+   "hunks": 2
+  },
+  "htseq-count": {
+   "files": [
+    "lib/process.py"
+   ],
+   "hunks": 1
+  },
+  "iqtree2": {
+   "files": [],
+   "hunks": 0
+  },
+  "irma": {
+   "files": [
+    "plbin/p3-submit-viral-assembly.pl",
+    "pybin/run_viral_assembly.py"
+   ],
+   "hunks": 5
+  },
+  "kma": {
+   "files": [
+    "lib/Bio/P3/MetagenomicReadMapping/MetagenomicReadMappingReport.tt",
+    "lib/Bio/P3/MetagenomicReadMapping/Report.pm",
+    "plbin/App-MetagenomicReadMapping.pl"
+   ],
+   "hunks": 3
+  },
+  "kraken2": {
+   "files": [
+    "lib/Bio/P3/TaxonomicClassification/Report.tt",
+    "workflows/bvbrc_taxonomic_classification_2/scripts/pavian_multisample_comparsion.R",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/16s_analysis",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/microbiome_analysis",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/pathogen_analysis",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/pe_fastq_processing",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/pe_fastq_processing_16s",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/se_fastq_processing",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/se_fastq_processing_16s"
+   ],
+   "hunks": 13
+  },
+  "krona": {
+   "files": [
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/16s_analysis",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/microbiome_analysis",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/pathogen_analysis"
+   ],
+   "hunks": 3
+  },
+  "ksnp4": {
+   "files": [
+    "pybin/whole_genome_snp_utils.py",
+    "workflows/bvbrc_WholeGenomeSNPAnalysis/snakefile/prep_ksnp_snakefile",
+    "workflows/bvbrc_WholeGenomeSNPAnalysis/snakefile/run_ksnp_snakefile"
+   ],
+   "hunks": 10
+  },
+  "mafft": {
+   "files": [
+    "lib/Bio/P3/CmdRunner.pm",
+    "lib/alignment.pm",
+    "lib/ffxtree.pm",
+    "lib/gjoalignment.pm",
+    "lib/phylocode.py",
+    "plbin/App-GeneTree.pl",
+    "plbin/App-MSA.pl",
+    "plbin/App-MetaCATS.pl",
+    "plbin/p3x-retrieve-family-sequences-for-genomes.pl",
+    "plbin/sars2-compute-variation.pl",
+    "plbin/sars2-onecodex.pl",
+    "pybin/p3x-build-codon-tree.py",
+    "pybin/run_subspecies_classification.py",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/FCP_Ali_Utils.pm",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/FCP_Main_Utils.pm",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/FCP_Nterm_Utils.pm",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/fasta-cluster-pssm.pl",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/gto-dir-to-alis-and-trees.pl",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/gtos-dir-to-wgs-tree-single-seg.pl",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/prots_to_alis_and_trees.pl"
+   ],
+   "hunks": 25
+  },
+  "megahit": {
+   "files": [
+    "lib/Bio/P3/MetagenomeBinning/MetagenomeBinning.pm",
+    "plbin/assemble_metagenomes.pl",
+    "plbin/filter_contigs.pl",
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 9
+  },
+  "minced": {
+   "files": [],
+   "hunks": 0
+  },
+  "minimap2": {
+   "files": [
+    "lib/Bio/P3/CmdRunner.pm",
+    "lib/fastq_utils.py",
+    "plbin/p3-submit-variation-analysis.pl",
+    "plbin/sars2-cdc-nanopore.pl",
+    "plbin/sars2-onecodex.pl",
+    "plbin/var-map.pl",
+    "pybin/fastq_utils.py",
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 13
+  },
+  "mlst": {
+   "files": [
+    "plbin/p3x-compute-cgmlst.pl",
+    "plbin/p3x-compute-mlst.pl",
+    "plbin/p3x-newick-to-phyloxml.pl",
+    "plbin/rast_export_genome.pl",
+    "plbin/update_local_mlstdb.pl"
+   ],
+   "hunks": 7
+  },
+  "mmseqs": {
+   "files": [
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/FCP_Main_Utils.pm",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/FCP_Nterm_Utils.pm",
+    "services/bvbrc_lowvan/Viral_Annotation/Other_Scripts/fasta-cluster-pssm.pl"
+   ],
+   "hunks": 5
+  },
+  "multiqc": {
+   "files": [
+    "lib/report.py",
+    "pybin/run_rnaseq.py",
+    "workflows/bvbrc_SARS2Wastewater/snakefile/stats_snakefile",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/16s_analysis",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/microbiome_analysis",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/pathogen_analysis"
+   ],
+   "hunks": 12
+  },
+  "muscle": {
+   "files": [
+    "lib/alignment.pm",
+    "lib/ffxtree.pm",
+    "lib/gjoalignment.pm",
+    "lib/phylocode.py",
+    "lib/rota-a-genotyper/VIGOR3/prod3/VIGOR3.pm",
+    "lib/rota-a-genotyper/VIGOR3/prod3/dbutils/muscleGenes.pl",
+    "lib/rota-a-genotyper/VIGOR3/prod3/dbutils/muscleProducts.pl",
+    "plbin/App-GeneTree.pl",
+    "plbin/App-MSA.pl",
+    "plbin/snp_analysis.pl",
+    "pybin/p3x-build-codon-tree.py",
+    "pybin/run_ha_subtype_numbering_conversion.py"
+   ],
+   "hunks": 19
+  },
+  "pangolin": {
+   "files": [
+    "lib/Bio/P3/SARS2Assembly/report.tt",
+    "plbin/sars2-compute-variation.pl"
+   ],
+   "hunks": 4
+  },
+  "parsnp": {
+   "files": [],
+   "hunks": 0
+  },
+  "phispy": {
+   "files": [
+    "plbin/rast_call_prophage_using_phispy.pl",
+    "services/SolrProxy/start_service",
+    "services/app_service/start_service",
+    "services/genome_annotation/start_service",
+    "services/homology_service/start_service"
+   ],
+   "hunks": 6
+  },
+  "pilon": {
+   "files": [
+    "plbin/p3-submit-CGA.pl",
+    "plbin/p3-submit-genome-assembly.pl",
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 6
+  },
+  "primer3": {
+   "files": [
+    "plbin/App-PrimerDesign.pl"
+   ],
+   "hunks": 2
+  },
+  "prodigal": {
+   "files": [
+    "lib/Prodigal.pm",
+    "plbin/rast_call_CDSs_using_prodigal.pl"
+   ],
+   "hunks": 5
+  },
+  "progressivemauve": {
+   "files": [
+    "plbin/App-MSA.pl"
+   ],
+   "hunks": 1
+  },
+  "quast": {
+   "files": [
+    "pybin/core-genome-mlst-utils.py",
+    "pybin/p3x-assembly.py",
+    "pybin/reference_guided_assembly.py",
+    "pybin/run_viral_assembly.py"
+   ],
+   "hunks": 6
+  },
+  "racon": {
+   "files": [
+    "plbin/p3-submit-CGA.pl",
+    "plbin/p3-submit-genome-assembly.pl",
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 6
+  },
+  "raxml-ng": {
+   "files": [],
+   "hunks": 0
+  },
+  "raxmlhpc": {
+   "files": [
+    "lib/Bio/P3/GenomeAnnotationApp/ComprehensiveGenomeAnalysis.pm",
+    "lib/Bio/P3/SARS2Assembly/ComprehensiveAnalysis.pm",
+    "lib/Tree_Builder.pm",
+    "lib/ffxtree.pm",
+    "plbin/App-CodonTree.pl",
+    "plbin/App-GeneTree.pl"
+   ],
+   "hunks": 11
+  },
+  "samtools": {
+   "files": [
+    "lib/Bio/P3/CmdRunner.pm",
+    "lib/Bio/P3/SARS2Assembly/primer_schemes/import-varskip",
+    "lib/fastq_utils.py",
+    "lib/process.py",
+    "lib/report.py",
+    "plbin/App-RNASeq.pl",
+    "plbin/App-Variation.pl",
+    "plbin/sars2-cdc-illumina.pl",
+    "plbin/sars2-cdc-nanopore.pl",
+    "plbin/sars2-onecodex.pl",
+    "plbin/var-map.pl",
+    "pybin/fastq_utils.py",
+    "pybin/p3_tnseq.py",
+    "pybin/p3x-assembly.py",
+    "pybin/reference_guided_assembly.py",
+    "pybin/run_rnaseq.py",
+    "pybin/run_viral_assembly.py",
+    "workflows/bvbrc_SARS2Wastewater/scripts/prep_results.py",
+    "workflows/bvbrc_SARS2Wastewater/snakefile/pe_freyja_snakefile",
+    "workflows/bvbrc_SARS2Wastewater/snakefile/se_freyja_snakefile",
+    "workflows/bvbrc_SARS2Wastewater/snakefile/stats_snakefile"
+   ],
+   "hunks": 38
+  },
+  "seqtk": {
+   "files": [
+    "lib/Bio/P3/CmdRunner.pm",
+    "lib/ReadLibrary.py",
+    "lib/process.py",
+    "lib/report.py",
+    "plbin/sars2-cdc-illumina.pl",
+    "plbin/sars2-onecodex.pl"
+   ],
+   "hunks": 9
+  },
+  "snippy": {
+   "files": [
+    "plbin/App-Variation.pl",
+    "plbin/var-map.pl"
+   ],
+   "hunks": 3
+  },
+  "snpeff": {
+   "files": [
+    "plbin/App-Variation.pl"
+   ],
+   "hunks": 2
+  },
+  "spades": {
+   "files": [
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 2
+  },
+  "stringtie": {
+   "files": [
+    "lib/process.py",
+    "lib/report.py",
+    "plbin/App-RNASeq.pl",
+    "pybin/rnaseqPrepDE.py"
+   ],
+   "hunks": 6
+  },
+  "trim_galore": {
+   "files": [
+    "lib/ReadLibrary.py",
+    "lib/fastq_utils.py",
+    "lib/process.py",
+    "plbin/App-FastqUtils.pl",
+    "pybin/demo_read_library.py",
+    "pybin/fastq_utils.py",
+    "pybin/p3x-assembly.py",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/pe_fastq_processing_16s",
+    "workflows/bvbrc_taxonomic_classification_2/snakefile/se_fastq_processing_16s"
+   ],
+   "hunks": 13
+  },
+  "trnascan": {
+   "files": [
+    "plbin/rast_call_tRNAs_trnascan.pl",
+    "plbin/run-one-pipeline-step.pl"
+   ],
+   "hunks": 4
+  },
+  "unicycler": {
+   "files": [
+    "lib/GenomeAssembly2.json",
+    "plbin/p3-submit-genome-assembly.pl",
+    "pybin/p3x-assembly.py"
+   ],
+   "hunks": 6
+  },
+  "vigor4": {
+   "files": [
+    "lib/Bio/P3/MetagenomeBinning/MetagenomeBinning.pm",
+    "plbin/p3-submit-genome-annotation.pl",
+    "plbin/p3x-annotate-mat-peptide.pl",
+    "plbin/p3x-annotate-vigor4.pl",
+    "pybin/run_sequence_submission.py"
+   ],
+   "hunks": 10
+  }
+ }
+}

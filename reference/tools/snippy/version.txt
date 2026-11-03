@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/snippy --version
+snippy 4.6.0

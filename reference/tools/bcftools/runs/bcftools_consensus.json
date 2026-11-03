@@ -1,0 +1,69 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bcftools_consensus",
+ "set": "mapping_variants",
+ "tool": "bcftools",
+ "mode": "consensus",
+ "description": null,
+ "tool_version": "1.13",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-01",
+ "slurm_job": "21373340_17",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:43",
+ "inputs": {
+  "REF": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  },
+  "VCF": {
+   "fixture": "sarscov2_vcf",
+   "path": "inputs/test.vcf.gz",
+   "size": 1313
+  },
+  "TBI": {
+   "fixture": "sarscov2_vcf_tbi",
+   "path": "inputs/test.vcf.gz.tbi",
+   "size": 126
+  }
+ },
+ "prep": null,
+ "cmd": "bcftools consensus -f $REF $VCF > consensus.fa",
+ "wall_s": 0.11,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "consensus.fa",
+   "size": 30414,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1 Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/PC00101P/2020, complete genome",
+    "GTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCTGTTCTCT",
+    "AAACGAACTTTAAAATCTGTGTGGCTGTCACTCGGCTGCATGCTTAGTGCACTCACGCAG"
+   ],
+   "lines": 498,
+   "records": 1,
+   "residues": 29797,
+   "sha256": "09116d2f2c66148242a62ddd33ba7c34fae2de40e210ad1e6bed81a5804d72e3"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 30414,
+ "time": {
+  "elapsed": "0:00.09",
+  "max_rss_kb": "4056",
+  "cpu_pct": "35",
+  "exit_status": "0",
+  "user_s": "0.00",
+  "sys_s": "0.03",
+  "elapsed_s": 0.09,
+  "max_rss_mb": 4.0
+ },
+ "stdout_tail": "",
+ "stderr_tail": "Note: the --sample option not given, applying all records regardless of the genotype\nApplied 9 variants\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:43"
+}

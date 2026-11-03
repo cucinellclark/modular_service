@@ -1,0 +1,116 @@
+# /opt/patric-common/runtime/bin/parsnp --help
+14:55:57 - [1;37mINFO[0m - |--Parsnp 2.1.2--|
+
+usage: parsnp [-h] [-r REFERENCE] -d SEQUENCES [SEQUENCES ...]
+              [-g GENBANK [GENBANK ...]] [-o OUTPUT_DIR] [-q QUERY] [-c]
+              [--skip-ani-filter]
+              [-U MAX_MUMI_DISTR_DIST | -mmd MAX_MUMI_DISTANCE] [-F] [-M]
+              [--use-ani] [--min-ani MIN_ANI] [--min-ref-cov MIN_REF_COV]
+              [--use-mash] [--max-mash-dist MAX_MASH_DIST]
+              [-a MIN_ANCHOR_LENGTH] [-m MUM_LENGTH] [-C MAX_CLUSTER_D]
+              [-z MIN_CLUSTER_SIZE] [-D MAX_DIAG_DIFF]
+              [-n {mafft,muscle,fsa,prank}] [-u] [--no-partition]
+              [--min-partition-size MIN_PARTITION_SIZE] [--extend-lcbs]
+              [--extend-ani-cutoff EXTEND_ANI_CUTOFF]
+              [--extend-indel-cutoff EXTEND_INDEL_CUTOFF]
+              [--match-score MATCH_SCORE]
+              [--mismatch-penalty MISMATCH_PENALTY]
+              [--gap-penalty GAP_PENALTY] [--skip-phylogeny]
+              [--validate-input] [--use-fasttree] [--vcf] [--no-maf]
+              [-p THREADS] [--force-overwrite] [-P MAX_PARTITION_SIZE] [-v]
+              [-x] [-i INIFILE] [-e] [-V]
+
+    Parsnp quick start for three example scenarios:
+    1) With reference & genbank file:
+    python Parsnp.py -g <reference_genbank_file1 reference_genbank_file2 ...> -d <seq_file1 seq_file2 ...>  -p <threads>
+
+    2) With reference but without genbank file:
+    python Parsnp.py -r <reference_genome> -d <seq_file1 seq_file2 ...> -p <threads>
+    
+
+options:
+  -h, --help            show this help message and exit
+
+Input/Output:
+  -r REFERENCE, --reference REFERENCE
+                        (r)eference genome (set to ! to pick random one from sequence dir)
+  -d SEQUENCES [SEQUENCES ...], --sequences SEQUENCES [SEQUENCES ...]
+                        A list of files containing genomes/contigs/scaffolds. If the file ends in .txt, each line in the file corresponds to the path to an input file.
+  -g GENBANK [GENBANK ...], --genbank GENBANK [GENBANK ...]
+                        A list of Genbank file(s) (gbk)
+  -o OUTPUT_DIR, --output-dir OUTPUT_DIR
+  -q QUERY, --query QUERY
+                        Specify (assembled) query genome to use, in addition to genomes found in genome dir
+
+Filtering:
+  -c, --curated         (c)urated genome directory, use all genomes in dir and ignore MUMi.
+  --skip-ani-filter     Skip the filtering step which discards inputs based on the ANI/MUMi distance to the reference.
+                        Unlike --curated, this will still filter inputs based on their length compared to the reference
+  -U MAX_MUMI_DISTR_DIST, --max-mumi-distr-dist MAX_MUMI_DISTR_DIST, --MUMi MAX_MUMI_DISTR_DIST
+                        Max MUMi distance value for MUMi distribution
+  -mmd MAX_MUMI_DISTANCE, --max-mumi-distance MAX_MUMI_DISTANCE
+                        Max MUMi distance (default: autocutoff based on distribution of MUMi values)
+  -F, --fastmum         Fast MUMi calculation
+  -M, --mumi_only, --onlymumi
+                        Calculate MUMi and exit? overrides all other choices!
+  --use-ani             Use ANI for genome filtering
+  --min-ani MIN_ANI     Min ANI value required to include genome
+  --min-ref-cov MIN_REF_COV
+                        Minimum percent of reference segments to be covered in FastANI
+  --use-mash            Use mash for genome filtering
+  --max-mash-dist MAX_MASH_DIST
+                        Max mash distance.
+
+MUM search:
+  -a MIN_ANCHOR_LENGTH, --min-anchor-length MIN_ANCHOR_LENGTH, --anchorlength MIN_ANCHOR_LENGTH
+                        Min (a)NCHOR length (default = 1.1*(Log(S)))
+  -m MUM_LENGTH, --mum-length MUM_LENGTH, --mumlength MUM_LENGTH
+                        Mum length
+  -C MAX_CLUSTER_D, --max-cluster-d MAX_CLUSTER_D, --clusterD MAX_CLUSTER_D
+                        Maximal cluster D value
+  -z MIN_CLUSTER_SIZE, --min-cluster-size MIN_CLUSTER_SIZE, --minclustersize MIN_CLUSTER_SIZE
+                        Minimum cluster size
+
+LCB alignment:
+  -D MAX_DIAG_DIFF, --max-diagonal-difference MAX_DIAG_DIFF, --DiagonalDiff MAX_DIAG_DIFF
+                        Maximal diagonal difference. Either percentage (e.g. 0.2) or bp (e.g. 100bp)
+  -n {mafft,muscle,fsa,prank}, --alignment-program {mafft,muscle,fsa,prank}, --alignmentprog {mafft,muscle,fsa,prank}
+                        Alignment program to use
+  -u, --unaligned       Output unaligned regions
+
+Sequence Partitioning:
+  --no-partition        Run all query genomes in single parsnp alignment, no partitioning.
+  --min-partition-size MIN_PARTITION_SIZE
+                        Minimum size of a partition. Input genomes will be split evenly across partitions at least this large.
+
+LCB Extension:
+  --extend-lcbs         Extend the boundaries of LCBs with an ungapped alignment
+  --extend-ani-cutoff EXTEND_ANI_CUTOFF
+                        Cutoff ANI for lcb extension
+  --extend-indel-cutoff EXTEND_INDEL_CUTOFF
+                        Cutoff for indels in LCB extension region. LCB extension will be at most min(seqs) + cutoff bases
+  --match-score MATCH_SCORE
+                        Value of match score for extension
+  --mismatch-penalty MISMATCH_PENALTY
+                        Value of mismatch score for extension (should be negative)
+  --gap-penalty GAP_PENALTY
+                        Value of gap penalty for extension (should be negative)
+
+Misc:
+  --skip-phylogeny      Do not generate phylogeny from core SNPs
+  --validate-input      Use Biopython to validate input files
+  --use-fasttree        Use fasttree instead of RaxML
+  --vcf                 Generate VCF file.
+  --no-maf              Do not generage MAF file (XMFA only)
+  -p THREADS, --threads THREADS
+                        Number of threads to use
+  --force-overwrite, --fo
+                        Overwrites any results in the output directory if it already exists
+  -P MAX_PARTITION_SIZE, --max-partition-size MAX_PARTITION_SIZE
+                        Max partition size (limits memory usage)
+  -v, --verbose         Verbose output
+  -x, --recomb-filter, --xtrafast
+                        Run recombination filter (phipack)
+  -i INIFILE, --inifile INIFILE, --ini-file INIFILE
+  -e, --extend
+  -V, --version         show program's version number and exit

@@ -1,0 +1,16 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "TEST WGS assembly with QC (Portiera)",
+  "description": "fastp -> SPAdes isolate -> QUAST vs BV-BRC genome 1206109.14 (fetched with p3-genome-fasta). ~1-2 min.",
+  "inputs": {
+    "reads": {"type": "reads.short.paired", "source": {"fixture": "portiera_pe"}, "attributes": {"platform": "illumina"}},
+    "reference": {"type": "sequences.dna.contigs", "source": {"genome_ids": ["1206109.14"]}}
+  },
+  "steps": {
+    "trim":     {"module": "fastp",  "in": {"reads": "$inputs.reads"}},
+    "assemble": {"module": "spades", "in": {"reads": "trim.trimmed_reads"}, "params": {"mode": "isolate"}},
+    "qc":       {"module": "quast",  "in": {"contigs": ["assemble.contigs", "assemble.scaffolds"], "reference": "$inputs.reference"}}
+  },
+  "outputs": {"contigs": "assemble.contigs", "graph": "assemble.graph", "trim_report": "trim.report_html",
+              "qc_report": "qc.report", "qc_metrics": "qc.metrics"}
+}

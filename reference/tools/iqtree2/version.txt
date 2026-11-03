@@ -1,0 +1,5 @@
+# /opt/patric-common/runtime/bin/iqtree2 --version
+IQ-TREE multicore version 2.4.0 for Linux x86 64-bit built May  8 2026
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,
+Dominik Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong
+

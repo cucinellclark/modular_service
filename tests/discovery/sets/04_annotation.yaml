@@ -1,0 +1,90 @@
+# P4 discovery set: feature calling and annotation (some need production data paths).
+set: annotation
+resources: {cpus: 4, mem: 24G, time: "02:00:00"}
+runs:
+  - id: prodigal_single
+    tool: prodigal
+    mode: single
+    inputs: {G: portiera_genome}
+    cmd: prodigal -i $G -a proteins.faa -d genes.fna -o genes.gff -f gff -s starts.txt
+  - id: prodigal_meta
+    tool: prodigal
+    mode: meta
+    inputs: {G: sarscov2_genome}
+    cmd: prodigal -p meta -i $G -a proteins.faa -d genes.fna -o genes.gff -f gff
+  - id: glimmer3_from_scratch
+    tool: glimmer3
+    mode: long-orfs+build-icm+glimmer3
+    inputs: {G: portiera_genome}
+    cmd: |
+      long-orfs -n -t 1.15 $G longorfs
+      extract -t $G longorfs > train.fasta
+      build-icm -r icm < train.fasta
+      glimmer3 -o50 -g110 -t30 $G icm g3
+  - id: trnascan_bacterial
+    tool: trnascan
+    mode: bacterial
+    inputs: {G: portiera_genome}
+    cmd: tRNAscan-SE -B --thread $CPU -o trna.txt -f trna.ss -m trna_stats.txt --gff trna.gff $G
+  - id: minced
+    tool: minced
+    mode: default
+    inputs: {G: bfragilis_genome}
+    prep: gunzip -c $G > genome.fna
+    cmd: minced -gffFull genome.fna crisprs.txt crisprs.gff
+  - id: phispy
+    tool: phispy
+    mode: genbank
+    inputs: {GB: bfragilis_gbff}
+    prep: gunzip -c $GB > genome.gbff
+    cmd: phispy genome.gbff -o phispy --threads $CPU
+  - id: vigor4_sarscov2
+    tool: vigor4
+    mode: sarscov2_db
+    inputs: {G: sarscov2_genome}
+    cmd: mkdir vigor && vigor4 -i $G -o vigor/sarscov2 -d sarscov2_db
+  - id: vigor4_flua
+    tool: vigor4
+    mode: flua_db
+    inputs: {G: flu_h5n1_italy}
+    cmd: mkdir vigor && vigor4 -i $G -o vigor/flua -d flua_db
+  - id: amrfinder_protein
+    tool: amrfinder
+    mode: protein
+    inputs: {G: hinfluenzae_genome}
+    prep: gunzip -c $G > genome.fna && prodigal -q -i genome.fna -a proteins.faa -o /dev/null
+    cmd: amrfinder -p proteins.faa --threads $CPU -o amr_protein.tsv
+  - id: amrfinder_nucleotide
+    tool: amrfinder
+    mode: nucleotide
+    inputs: {G: hinfluenzae_genome}
+    prep: gunzip -c $G > genome.fna
+    cmd: amrfinder -n genome.fna --threads $CPU -o amr_nuc.tsv --nucleotide_output amr_nuc.fna
+  - id: genomad_e2e
+    tool: genomad
+    mode: end-to-end
+    inputs: {G: sarscov2_genome}
+    cmd: genomad end-to-end --cleanup --threads $CPU $G out /vol/bvbrc/production/application-backend/genomad/genomad_db
+  - id: checkv_e2e
+    tool: checkv
+    mode: end_to_end
+    inputs: {G: sarscov2_genome}
+    cmd: checkv end_to_end $G out -t $CPU -d /opt/patric-common/runtime/checkv-db/checkv-db-v1.0
+  - id: hmmscan_proteome
+    tool: hmmscan
+    mode: hmmscan
+    inputs: {HMM: sarscov2_proteome_hmm, P: sarscov2_proteome}
+    prep: gunzip -c $HMM > db.hmm && hmmpress db.hmm
+    cmd: hmmscan --cpu $CPU --tblout tbl.txt --domtblout domtbl.txt -o hmmscan.txt db.hmm $P
+  - id: hmmsearch_proteome
+    tool: hmmscan
+    mode: hmmsearch
+    inputs: {HMM: sarscov2_proteome_hmm, P: sarscov2_proteome}
+    prep: gunzip -c $HMM > db.hmm
+    cmd: hmmsearch --cpu $CPU --tblout tbl.txt --domtblout domtbl.txt -o hmmsearch.txt db.hmm $P
+  - id: antismash_minimal
+    tool: antismash
+    mode: minimal_prodigal
+    description: crashed on the dev host (illegal instruction); checking compute nodes
+    inputs: {G: portiera_genome}
+    cmd: /opt/patric-common/runtime/antismash-7-1-0-1/bin/antismash --cpus $CPU --minimal --genefinding-tool prodigal --output-dir out $G

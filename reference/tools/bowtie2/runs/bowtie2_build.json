@@ -1,0 +1,86 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bowtie2_build",
+ "set": "mapping_variants",
+ "tool": "bowtie2",
+ "mode": "build",
+ "description": null,
+ "tool_version": "2.4.4",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373340_2",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:19",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  }
+ },
+ "prep": null,
+ "cmd": "bowtie2-build --threads $CPU $REF refidx",
+ "wall_s": 1.57,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "refidx.1.bt2",
+   "size": 4313963,
+   "new": true,
+   "kind": "index",
+   "sha256": "eb34d1dd4370bb0766467b6c4161cff20e1ce1689354552a8d5a0715320d0818"
+  },
+  {
+   "path": "refidx.2.bt2",
+   "size": 89568,
+   "new": true,
+   "kind": "index",
+   "sha256": "dee27c8b1f226ad798d8c470eb90b18351a4a59c4bcef2c0ebc06f3b41754ab8"
+  },
+  {
+   "path": "refidx.3.bt2",
+   "size": 17,
+   "new": true,
+   "kind": "index",
+   "sha256": "18906e0fc9189590b28c4005b094e14fdb0b6a23435f3b928a55c002206370a6"
+  },
+  {
+   "path": "refidx.4.bt2",
+   "size": 89561,
+   "new": true,
+   "kind": "index",
+   "sha256": "0e27c99a4c9c254275817397115df893b5890ac6e3726a75ea6d73991ccf0395"
+  },
+  {
+   "path": "refidx.rev.1.bt2",
+   "size": 4313963,
+   "new": true,
+   "kind": "index",
+   "sha256": "cbd52f3869b934da19d8bf25f97ad859371796333e8ac2a2f2ee6f76c1353188"
+  },
+  {
+   "path": "refidx.rev.2.bt2",
+   "size": 89568,
+   "new": true,
+   "kind": "index",
+   "sha256": "cafb6169105387e40c6324ab1e8d553763ce32ba49636792e8db36bb1d8fae1c"
+  }
+ ],
+ "n_outputs": 6,
+ "output_bytes": 8896640,
+ "time": {
+  "elapsed": "0:01.55",
+  "max_rss_kb": "99196",
+  "cpu_pct": "90",
+  "exit_status": "0",
+  "user_s": "1.01",
+  "sys_s": "0.39",
+  "elapsed_s": 1.55,
+  "max_rss_mb": 96.9
+ },
+ "stdout_tail": ": 10%\n  bucket 25: 70%\n  bucket 26: 40%\n  Sorting block time: 00:00:00\nReturning block of 14860 for bucket 24\n  bucket 27: 20%\nGetting block 28 of 32\n  Reserving size (16793) for bucket 28\n  Calculating Z arrays for bucket 28\n  Entering block accumulator loop for bucket 28:\n  bucket 25: 80%\n  bucket 27: 30%\n  bucket 26: 50%\n  bucket 28: 10%\n  bucket 25: 90%\n  bucket 26: 60%\n  bucket 28: 20%\n  bucket 27: 40%\n  bucket 25: 100%\n  Sorting block of length 13414 for bucket 25\n  (Using difference cover)\n  bucket 28: 30%\n  bucket 26: 70%\n  bucket 27: 50%\n  bucket 28: 40%\n  bucket 27: 60%\n  bucket 26: 80%\n  bucket 28: 50%\n  bucket 27: 70%\n  Sorting block time: 00:00:00\nReturning block of 13415 for bucket 25\n  bucket 26: 90%\n  bucket 28: 60%\n  bucket 27: 80%\nGetting block 29 of 32\n  Reserving size (16793) for bucket 29\n  Calculating Z arrays for bucket 29\n  Entering block accumulator loop for bucket 29:\n  bucket 28: 70%\n  bucket 26: 100%\n  Sorting block of length 8510 for bucket 26\n  (Using difference cover)\n  bucket 27: 90%\n  bucket 28: 80%\n  bucket 29: 10%\n  bucket 28: 90%\n  Sorting block time: 00:00:00\nReturning block of 8511 for bucket 26\n  bucket 27: 100%\n  Sorting block of length 9070 for bucket 27\n  (Using difference cover)\n  bucket 29: 20%\nGetting block 30 of 32\n  Reserving size (16793) for bucket 30\n  Calculating Z arrays for bucket 30\n  Entering block accumulator loop for bucket 30:\n  bucket 28: 100%\n  Sorting block of length 13764 for bucket 28\n  (Using difference cover)\n  bucket 29: 30%\n  bucket 30: 10%\n  Sorting block time: 00:00:00\nReturning block of 9071 for bucket 27\nGetting block 31 of 32\n  Reserving size (16793) for bucket 31\n  Calculating Z arrays for bucket 31\n  Entering block accumulator loop for bucket 31:\n  Sorting block time: 00:00:00\nReturning block of 13765 for bucket 28\n  bucket 29: 40%\nGetting block 32 of 32\n  Reserving size (16793) for bucket 32\n  bucket 30: 20%\n  Calculating Z arrays for bucket 32\n  Entering block accumulator loop for bucket 32:\n  bucket 29: 50%\n  bucket 32: 10%\n  bucket 32: 20%\n  bucket 30: 30%\n  bucket 31: 10%\n  bucket 29: 60%\n  bucket 32: 30%\n  bucket 32: 40%\n  bucket 30: 40%\n  bucket 31: 20%\n  bucket 29: 70%\n  bucket 32: 50%\n  bucket 32: 60%\n  bucket 31: 30%\n  bucket 30: 50%\n  bucket 29: 80%\n  bucket 32: 70%\n  bucket 31: 40%\n  bucket 32: 80%\n  bucket 30: 60%\n  bucket 32: 90%\n  bucket 29: 90%\n  bucket 31: 50%\n  bucket 32: 100%\n  Sorting block of length 11356 for bucket 32\n  (Using difference cover)\n  bucket 30: 70%\n  bucket 31: 60%\n  bucket 29: 100%\n  Sorting block of length 4081 for bucket 29\n  (Using difference cover)\n  bucket 31: 70%\n  Sorting block time: 00:00:00\nReturning block of 4082 for bucket 29\n  Sorting block time: 00:00:00\nReturning block of 11357 for bucket 32\n  bucket 30: 80%\n  bucket 31: 80%\n  bucket 30: 90%\n  bucket 31: 90%\n  bucket 30: 100%\n  Sorting block of length 13529 for bucket 30\n  (Using difference cover)\n  bucket 31: 100%\n  Sorting block of length 11745 for bucket 31\n  (Using difference cover)\n  Sorting block time: 00:00:00\nReturning block of 11746 for bucket 31\n  Sorting block time: 00:00:00\nReturning block of 13530 for bucket 30\nExited Ebwt loop\nfchr[A]: 0\nfchr[C]: 136341\nfchr[G]: 179213\nfchr[T]: 230106\nfchr[$]: 358242\nExiting Ebwt::buildToDisk()\nReturning from initFromVector\nWrote 4313963 bytes to primary EBWT file: refidx.rev.1.bt2\nWrote 89568 bytes to secondary EBWT file: refidx.rev.2.bt2\nRe-opening _in1 and _in2 as input streams\nReturning from Ebwt constructor\nHeaders:\n    len: 358242\n    bwtLen: 358243\n    sz: 89561\n    bwtSz: 89561\n    lineRate: 6\n    offRate: 4\n    offMask: 0xfffffff0\n    ftabChars: 10\n    eftabLen: 20\n    eftabSz: 80\n    ftabLen: 1048577\n    ftabSz: 4194308\n    offsLen: 22391\n    offsSz: 89564\n    lineSz: 64\n    sideSz: 64\n    sideBwtSz: 48\n    sideBwtLen: 192\n    numSides: 1866\n    numLines: 1866\n    ebwtTotLen: 119424\n    ebwtTotSz: 119424\n    color: 0\n    reverse: 1\nTotal time for backward call to driver() for mirror index: 00:00:00\n",
+ "stderr_tail": "Building a SMALL index\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:21"
+}

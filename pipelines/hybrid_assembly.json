@@ -1,0 +1,18 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Hybrid genome assembly",
+  "description": "Paired Illumina + Nanopore reads: fastp trimming -> Unicycler hybrid assembly -> QUAST.",
+  "inputs": {
+    "short_reads": {"type": "reads.short.paired", "source": {"paired_end_libs": [{"read1": "/user@bvbrc/home/reads/S_R1.fastq.gz", "read2": "/user@bvbrc/home/reads/S_R2.fastq.gz"}]}},
+    "long_reads": {"type": "reads.long.nanopore", "source": {"single_end_libs": [{"read": "/user@bvbrc/home/reads/S.ont.fastq.gz"}]}}
+  },
+  "steps": {
+    "trim":     {"module": "fastp", "in": {"reads": "$inputs.short_reads"}},
+    "assemble": {"module": "unicycler", "in": {"short_reads": "trim.trimmed_reads", "long_reads": "$inputs.long_reads"}},
+    "qc":       {"module": "quast", "in": {"contigs": "assemble.contigs"}}
+  },
+  "outputs": {"contigs": "assemble.contigs", "assembly_graph": "assemble.graph", "trim_report": "trim.report_html",
+              "qc_report": "qc.report", "qc_metrics": "qc.metrics"},
+  "template": {"label": "Hybrid assembly (Illumina + Nanopore)", "category": "assembly",
+               "expose": ["assemble.params.mode", "trim.params.qualified_quality_phred", "qc.params.min_contig"]}
+}

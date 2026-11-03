@@ -1,0 +1,448 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "flye_nano",
+ "set": "assembly",
+ "tool": "flye",
+ "mode": "nano_raw",
+ "description": null,
+ "tool_version": "2.9.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373339_9",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:38:11",
+ "inputs": {
+  "L": {
+   "fixture": "portiera_nanopore",
+   "path": "inputs/test.fastq.gz",
+   "size": 13713449
+  }
+ },
+ "prep": null,
+ "cmd": "flye --nano-raw $L --out-dir out --threads $CPU",
+ "wall_s": 79.26,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/00-assembly/draft_assembly.fasta",
+   "size": 788381,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">disjointig_1",
+    "TTGGCTGCATTAAGAAAATGCATTAATTAGTGAACAATGAAGGGGACCAGATATATTGACAAAAATTTGTTTTGAAAATC",
+    "TGTAAACAACAAATGAAGTAAAAATAAACGTGCAAGTTAACATAATATAAGTCAAAGAAGCAAAATGGAACTAAAACTTT"
+   ],
+   "lines": 9781,
+   "records": 37,
+   "residues": 778091,
+   "sha256": "77a527ef610b0e57da39e8319d589bfeb7c4547bafd2de326afa171a3bacf304"
+  },
+  {
+   "path": "out/00-assembly/draft_assembly.fasta.fai",
+   "size": 1195,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "disjointig_1\t14527\t14\t80\t81",
+    "disjointig_2\t28614\t14737\t80\t81",
+    "disjointig_3\t39135\t43723\t80\t81"
+   ],
+   "lines": 37,
+   "sha256": "748297807e1dadc51950aa68d654dc97eec7dbea9ee1859e1c54be811a27cae2"
+  },
+  {
+   "path": "out/10-consensus/consensus.fasta",
+   "size": 790658,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">disjointig_1",
+    "GAAAGGAAATTATAAATAGTTTTTATAGGTAATGAAGCAAATTTTAAAGTGGTTAGATAA",
+    "ATTTATATTAAATACAGAGAAAAACAATTAGTAGAAAAACTATAGAAGTAATATTCTAAA"
+   ],
+   "lines": 13007,
+   "records": 37,
+   "residues": 777142,
+   "sha256": "10850f3ea269de4ef5e5fb5fcda47af2700b75b276da8a0ee7dbba8e400e02ac"
+  },
+  {
+   "path": "out/10-consensus/minimap.bam.bai",
+   "size": 6512,
+   "new": true,
+   "kind": "index",
+   "sha256": "580dd500f72a06891f1138dd87232f78de9c3dc224bf5fa574afa129b65c516e"
+  },
+  {
+   "path": "out/10-consensus/minimap.stderr",
+   "size": 993,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "[samfaipath] build FASTA index...",
+    "[M::mm_idx_gen::0.019*1.09] collected minimizers",
+    "[M::mm_idx_gen::0.024*2.25] sorted minimizers"
+   ],
+   "sha256": "aa3d3bf4bde5cc3ebd83897c9d6d2eb27e1df60e5d561db9dcd38014d004d598"
+  },
+  {
+   "path": "out/20-repeat/graph_after_rr.gv",
+   "size": 22226,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "digraph {",
+    "nodesep = 0.5;",
+    "node [shape = circle, label = \"\", height = 0.3];"
+   ],
+   "lines": 362,
+   "sha256": "0d74a4e4bdfb1596bc82234cf62aee43ad352cc0d053860846a846e25e8e80d3"
+  },
+  {
+   "path": "out/20-repeat/graph_before_rr.fasta",
+   "size": 434600,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">edge_2",
+    "GTTTGTTTTAGTAGCTCATTTTCATAATGTAATAATCGGAGGTGTATTATTTGGATATTTAGCAGGTTTAAATTATTGGT",
+    "TCCCTAAAATATTTGGGTTTAAATTAAATGAAAAAATAGGGAAATATACAGTTGTTTGTTGGTTAATAGGTTTGTTTGTA"
+   ],
+   "lines": 5542,
+   "records": 130,
+   "residues": 427962,
+   "sha256": "8dcfe9bb1a5541a63c51322b060ea68bc238b4571346d53206261d7577cc6d2e"
+  },
+  {
+   "path": "out/20-repeat/graph_before_rr.gv",
+   "size": 20600,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "digraph {",
+    "nodesep = 0.5;",
+    "node [shape = circle, label = \"\", height = 0.3];"
+   ],
+   "lines": 308,
+   "sha256": "54674b08bc157fa09a6daaf86e2ca598dbe94a9c9aa24f215f66d3ae2e35969c"
+  },
+  {
+   "path": "out/20-repeat/read_alignment_dump",
+   "size": 1200958,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Chain",
+    "\tAln\t350\t+ERR3772599.637 34 1362 1661 +edge_176_0_+disjointig_3_1113_24472 14545 15921 23359 -1 -1 673 0.085393",
+    "Chain"
+   ],
+   "lines": 18612,
+   "sha256": "922d69ab22e4bc29e338b4e10a902fcefdd505fc1ed9eeea629719c4503e0efb"
+  },
+  {
+   "path": "out/20-repeat/repeat_graph_dump",
+   "size": 44525,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Edge\t2\t170\t41\t0\t0\t0\t21\t-1",
+    "\tSequence\t+edge_2_0_+disjointig_1_3004_4593 1589 1 14417 3004 4593",
+    "\tSequence\t+edge_2_1_-disjointig_1_2930_4827 1897 -1 14417 2930 4827"
+   ],
+   "lines": 782,
+   "sha256": "56e7927fed74ef9ebb12fcf4d7df52824b25948480842a0ad63954f258c71537"
+  },
+  {
+   "path": "out/20-repeat/repeat_graph_edges.fasta",
+   "size": 744634,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">edge_2_0_+disjointig_1_3004_4593",
+    "GTTTGTTTTAGTAGCTCATTTTCATAATGTAATAATCGGAGGTGTATTATTTGGATATTTAGCAGGTTTAAATTATTGGT",
+    "TCCCTAAAATATTTGGGTTTAAATTAAATGAAAAAATAGGGAAATATACAGTTGTTTGTTGGTTAATAGGTTTGTTTGTA"
+   ],
+   "lines": 9516,
+   "records": 312,
+   "residues": 723850,
+   "sha256": "dc050c9f871f1156e341c8e8666dbad2dbc327282851108da4ef88047bccac9e"
+  },
+  {
+   "path": "out/30-contigger/contigs.fasta",
+   "size": 481845,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">contig_1",
+    "TAAACAAATCCATAAACATTAAACAACTATTTAAAAAACCACAACACAAACCTTTTACTCATTCCAATTAAAACTAAAGT",
+    "ACATAACACATATGAACTTAAATAAACATAAAACTAAAAACAATAAATAAAGCATAATAACTAAACAAAATAAATAATAA"
+   ],
+   "lines": 6016,
+   "records": 52,
+   "residues": 475317,
+   "sha256": "d4d98decced5a68322b45a1298636c9822e0b21ca484e597cc3c60c81ffa270a"
+  },
+  {
+   "path": "out/30-contigger/contigs.fasta.fai",
+   "size": 1445,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "contig_1\t43503\t10\t80\t81",
+    "contig_2\t4977\t44067\t80\t81",
+    "contig_5\t24833\t49117\t80\t81"
+   ],
+   "lines": 52,
+   "sha256": "a5d0a24a4cde39e86a8f9d760b9b0d1c83ff41896a910ae8087078dfbbf2ba76"
+  },
+  {
+   "path": "out/30-contigger/contigs_stats.txt",
+   "size": 1949,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#seq_name\tlength\tcoverage\tcircular\trepeat\tmult\ttelomere\talt_group\tgraph_path",
+    "contig_1\t43503\t19\tN\tN\t1\tright\t*\t44,-19,1",
+    "contig_2\t4977\t6\tN\tN\t1\tboth\t*\t2"
+   ],
+   "lines": 53,
+   "sha256": "6c1b5360d2548e8a5a11dfc52832761d24cadfa7f9472e60b9efbb892ea60f06"
+  },
+  {
+   "path": "out/30-contigger/graph_final.fasta",
+   "size": 440460,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">edge_1",
+    "TATGTGGTGAAGTCAGTTATGCCATATTATGTTTAAATTTTGTAATGTATTTAAATCGGTTACAAGTTTTGTAATTTATA",
+    "TTTTGTACTGTAACTAATGTAAGGTTATATGAAATTTATTAGAGTTGTATCTTTAATGGTGTAGGATCTTTAAAAGGTTA"
+   ],
+   "lines": 5534,
+   "records": 69,
+   "residues": 434383,
+   "sha256": "20390b41f6c429a4638ddf8473eddfcb8b14296825449737456c8aa3e2a97476"
+  },
+  {
+   "path": "out/30-contigger/graph_final.gfa",
+   "size": 439412,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "H\tVN:Z:1.0",
+    "S\tedge_1\tTATGTGGTGAAGTCAGTTATGCCATATTATGTTTAAATTTTGTAATGTATTTAAATCGGTTACAAGTTTTGTAATTTATATTTTGTACTGTAACTAATGTAAGGTTATATGAAATTTATTAGAGTTGTATCTTTAATGGTGTAGGATCTTTAAAAGGTTATATTTAAATTTAGACTGACTAAAAATAAGCT"
+   ],
+   "lines": 191,
+   "sha256": "4294634d711929b8a1d44a6404715482978a25b34ebf4651bcf23d005b9e0f5a"
+  },
+  {
+   "path": "out/30-contigger/graph_final.gv",
+   "size": 14313,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "digraph {",
+    "nodesep = 0.5;",
+    "node [shape = circle, label = \"\", height = 0.3];"
+   ],
+   "lines": 244,
+   "sha256": "266c667e9f3a90a52b4195068a504349f007cbf70cab6c36db7fb16a336802e6"
+  },
+  {
+   "path": "out/30-contigger/scaffolds_links.txt",
+   "size": 24,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "contig_35\t-\tcontig_37\t+"
+   ],
+   "lines": 1,
+   "sha256": "93e4dbafe7208a633d7fe96477847705ed3a64a32f86e48b7907eaaba99db985"
+  },
+  {
+   "path": "out/40-polishing/contigs_stats.txt",
+   "size": 937,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#seq_name\tlength\tcoverage",
+    "contig_9\t2509\t10",
+    "contig_7\t1845\t17"
+   ],
+   "lines": 52,
+   "sha256": "5237f8045ab9b7904f0424a3192a1f37b89fbae39abc300a057c73631c3732fc"
+  },
+  {
+   "path": "out/40-polishing/edges_aln.bam.bai",
+   "size": 3872,
+   "new": true,
+   "kind": "index",
+   "sha256": "b785ff2d3a641dc0b853df646d562544b7ad6ce948aed0e75da1f3ba0ac7448a"
+  },
+  {
+   "path": "out/40-polishing/filtered_contigs.fasta",
+   "size": 480432,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">contig_1",
+    "TAAACAAATCCATAAACATTAAACAACTATTTAAAAAAACCACAACACAAACCTTTTACC",
+    "ATTCCAATTAAAACTGAAGTATATAACACATATGAACTTAAATAAACATAAAAACTAAAA"
+   ],
+   "lines": 7938,
+   "records": 47,
+   "residues": 472032,
+   "sha256": "81e38659fbadda129fd06d85c0b511c999af6bdb308af9b45400822ca23a1ec5"
+  },
+  {
+   "path": "out/40-polishing/filtered_contigs.fasta.fai",
+   "size": 1312,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "contig_1\t43969\t10\t60\t61",
+    "contig_10\t14714\t44723\t60\t61",
+    "contig_12\t6457\t59694\t60\t61"
+   ],
+   "lines": 47,
+   "sha256": "ae88d1db2ba80c3415bf3c69e2e9c03289984292ad89899e8d4686b1204e3fa9"
+  },
+  {
+   "path": "out/40-polishing/filtered_stats.txt",
+   "size": 872,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#seq_name\tlength\tcoverage",
+    "contig_1\t43969\t26",
+    "contig_10\t14714\t20"
+   ],
+   "lines": 48,
+   "sha256": "03fa6f3afff4becd8338058229b96e1b4aa952d53874a8bc2a9760ebebdf7dbc"
+  },
+  {
+   "path": "out/40-polishing/minimap.stderr",
+   "size": 943,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "[samfaipath] build FASTA index...",
+    "[M::mm_idx_gen::0.011*1.12] collected minimizers",
+    "[M::mm_idx_gen::0.015*2.81] sorted minimizers"
+   ],
+   "sha256": "021db7e3d26a567a974d49b41c2d71bf02db961f8896559937b6ad7d6143b0e3"
+  },
+  {
+   "path": "out/40-polishing/minimap_1.bam.bai",
+   "size": 5928,
+   "new": true,
+   "kind": "index",
+   "sha256": "264a44f88928a9d82460922c0a7920ffed91f4c2a0a4df1ac5a1fe0b0049d64f"
+  },
+  {
+   "path": "out/40-polishing/polished_edges.gfa",
+   "size": 448230,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "H\tVN:Z:1.0",
+    "S\tedge_1\tTATGTGGTGAAGTCAGTTATGCCATATTATGTTTAAATTTTGTAATGTATTTAAATCGGTTACAAGTTTTGTAATTTATATTTTGTACTGTAACTAATGTAAGGTTATATGAAATTTATTAGAGTTGTATCTTTAATGGTGTAGGATCTTTAAAAGGTTATATTTAAATTTAGACTGACTAAAAGTGAAGC"
+   ],
+   "lines": 191,
+   "sha256": "ef9f824d0e182fbb5ab723d19cf87c4bff4341046f2d02c49e642b9c2268f068"
+  },
+  {
+   "path": "out/assembly.fasta",
+   "size": 480432,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">contig_1",
+    "TAAACAAATCCATAAACATTAAACAACTATTTAAAAAAACCACAACACAAACCTTTTACC",
+    "ATTCCAATTAAAACTGAAGTATATAACACATATGAACTTAAATAAACATAAAAACTAAAA"
+   ],
+   "lines": 7938,
+   "records": 47,
+   "residues": 472032,
+   "sha256": "81e38659fbadda129fd06d85c0b511c999af6bdb308af9b45400822ca23a1ec5"
+  },
+  {
+   "path": "out/assembly_graph.gfa",
+   "size": 448230,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "H\tVN:Z:1.0",
+    "S\tedge_1\tTATGTGGTGAAGTCAGTTATGCCATATTATGTTTAAATTTTGTAATGTATTTAAATCGGTTACAAGTTTTGTAATTTATATTTTGTACTGTAACTAATGTAAGGTTATATGAAATTTATTAGAGTTGTATCTTTAATGGTGTAGGATCTTTAAAAGGTTATATTTAAATTTAGACTGACTAAAAGTGAAGC"
+   ],
+   "lines": 191,
+   "sha256": "ef9f824d0e182fbb5ab723d19cf87c4bff4341046f2d02c49e642b9c2268f068"
+  },
+  {
+   "path": "out/assembly_graph.gv",
+   "size": 14313,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "digraph {",
+    "nodesep = 0.5;",
+    "node [shape = circle, label = \"\", height = 0.3];"
+   ],
+   "lines": 244,
+   "sha256": "266c667e9f3a90a52b4195068a504349f007cbf70cab6c36db7fb16a336802e6"
+  },
+  {
+   "path": "out/assembly_info.txt",
+   "size": 1654,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#seq_name\tlength\tcov.\tcirc.\trepeat\tmult.\talt_group\tgraph_path",
+    "contig_31\t47782\t27\tN\tN\t1\t*\t*,31",
+    "contig_1\t43969\t26\tN\tN\t1\t*\t44,-19,1,*"
+   ],
+   "lines": 48,
+   "sha256": "95e9f95d65d450cf76f2bf244bbb334532d316c9b29ff73ced14eadbc33093e1"
+  },
+  {
+   "path": "out/flye.log",
+   "size": 121728,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "[2026-11-02 15:38:12] root: INFO: Starting Flye 2.9.1-b1780",
+    "[2026-11-02 15:38:12] root: DEBUG: Cmd: /opt/patric-common/runtime/flye-2.9.1/bin/flye --nano-raw /disks/tmp/cucinell/modpipe-discovery/assembly/flye_nano-21373339_9/inputs/test.fastq.gz --out-dir out",
+    "[2026-11-02 15:38:12] root: DEBUG: Python version: 3.10.14 (main, Sep 26 2024, 20:33:52) [GCC 11.4.0]"
+   ],
+   "lines": 2302,
+   "sha256": "e556eab096d250abce610961ff2591e91fcdc911cec84750c490bbf04c2c0277"
+  },
+  {
+   "path": "out/params.json",
+   "size": 92,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{\"pipeline_version\": 3, \"min_overlap\": 1000, \"min_read_length\": 0, \"stage_name\": \"finalize\"}"
+   ],
+   "sha256": "e3712fbe8448cecf5f248b6f14c62dfdb9551e58d59b78f48a9b1d871c1a6ef5"
+  }
+ ],
+ "n_outputs": 32,
+ "output_bytes": 7443705,
+ "time": {
+  "elapsed": "1:19.24",
+  "max_rss_kb": "8501140",
+  "cpu_pct": "322",
+  "exit_status": "0",
+  "user_s": "248.21",
+  "sys_s": "7.12",
+  "elapsed_s": 79.24,
+  "max_rss_mb": 8301.9
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[2026-11-02 15:38:12] INFO: Starting Flye 2.9.1-b1780\n[2026-11-02 15:38:12] INFO: >>>STAGE: configure\n[2026-11-02 15:38:12] INFO: Configuring run\n[2026-11-02 15:38:12] INFO: Total read length: 14162700\n[2026-11-02 15:38:12] INFO: Reads N50/N90: 3086 / 862\n[2026-11-02 15:38:12] INFO: Minimum overlap set to 1000\n[2026-11-02 15:38:12] INFO: >>>STAGE: assembly\n[2026-11-02 15:38:12] INFO: Assembling disjointigs\n[2026-11-02 15:38:12] INFO: Reading sequences\n[2026-11-02 15:38:16] INFO: Counting k-mers:\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:38:52] INFO: Filling index table (1/2)\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:38:53] INFO: Filling index table (2/2)\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:38:55] INFO: Extending reads\n[2026-11-02 15:38:57] INFO: Overlap-based coverage: 12\n[2026-11-02 15:38:57] INFO: Median overlap divergence: 0.112173\n0% 10% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:38:58] INFO: Assembled 39 disjointigs\n[2026-11-02 15:38:58] INFO: Generating sequence\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:38:58] INFO: Filtering contained disjointigs\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:38:58] INFO: Contained seqs: 2\n[2026-11-02 15:38:59] INFO: >>>STAGE: consensus\n[2026-11-02 15:38:59] INFO: Running Minimap2\n[2026-11-02 15:39:04] INFO: Computing consensus\n[2026-11-02 15:39:06] INFO: Alignment error rate: 0.157887\n[2026-11-02 15:39:06] INFO: >>>STAGE: repeat\n[2026-11-02 15:39:06] INFO: Building and resolving repeat graph\n[2026-11-02 15:39:06] INFO: Parsing disjointigs\n[2026-11-02 15:39:06] INFO: Building repeat graph\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:39:07] INFO: Median overlap divergence: 0.0477528\n[2026-11-02 15:39:07] INFO: Parsing reads\n[2026-11-02 15:39:07] INFO: Aligning reads to the graph\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:39:07] INFO: Aligned read sequence: 8916176 / 12266459 (0.726874)\n[2026-11-02 15:39:07] INFO: Median overlap divergence: 0.0594811\n[2026-11-02 15:39:07] INFO: Mean edge coverage: 18\n[2026-11-02 15:39:07] INFO: Simplifying the graph\n[2026-11-02 15:39:07] INFO: >>>STAGE: contigger\n[2026-11-02 15:39:07] INFO: Generating contigs\n[2026-11-02 15:39:07] INFO: Reading sequences\n[2026-11-02 15:39:08] INFO: Generated 52 contigs\n[2026-11-02 15:39:08] INFO: Added 1 scaffold connections\n[2026-11-02 15:39:08] INFO: >>>STAGE: polishing\n[2026-11-02 15:39:08] INFO: Polishing genome (1/1)\n[2026-11-02 15:39:08] INFO: Running minimap2\n[2026-11-02 15:39:11] INFO: Separating alignment into bubbles\n[2026-11-02 15:39:14] INFO: Alignment error rate: 0.121808\n[2026-11-02 15:39:14] INFO: Correcting bubbles\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \n[2026-11-02 15:39:31] INFO: >>>STAGE: finalize\n[2026-11-02 15:39:31] INFO: Assembly statistics:\n\n\tTotal length:\t472032\n\tFragments:\t47\n\tFragments N50:\t24751\n\tLargest frg:\t47782\n\tScaffolds:\t0\n\tMean coverage:\t24\n\n[2026-11-02 15:39:31] INFO: Final assembly: /disks/tmp/cucinell/modpipe-discovery/assembly/flye_nano-21373339_9/out/assembly.fasta\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:39:31"
+}

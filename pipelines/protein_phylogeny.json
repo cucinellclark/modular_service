@@ -1,0 +1,13 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Protein phylogeny with bootstrap support",
+  "description": "MAFFT alignment -> IQ-TREE 2 (ModelFinder + 1000 ultrafast bootstraps).",
+  "inputs": {"proteins": {"type": "sequences.protein", "source": {"feature_group": "/user@bvbrc/home/Feature Groups/my_group"}}},
+  "steps": {
+    "align": {"module": "mafft", "in": {"sequences": "$inputs.proteins"}, "params": {"strategy": "auto"}},
+    "tree":  {"module": "iqtree2", "in": {"alignment": "align.alignment"}, "params": {"bootstrap": 1000}}
+  },
+  "outputs": {"alignment": "align.alignment", "tree": "tree.tree", "support_tree": "tree.consensus_tree", "report": "tree.report"},
+  "template": {"label": "Protein tree with bootstrap (MAFFT + IQ-TREE)", "category": "phylogeny",
+               "expose": ["align.params.strategy", "tree.params.model", "tree.params.bootstrap"]}
+}

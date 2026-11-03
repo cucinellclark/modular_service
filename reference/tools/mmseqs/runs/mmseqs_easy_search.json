@@ -1,0 +1,57 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "mmseqs_easy_search",
+ "set": "homology",
+ "tool": "mmseqs",
+ "mode": "easy-search",
+ "description": null,
+ "tool_version": null,
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-05",
+ "slurm_job": "21373352_6",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:42",
+ "inputs": {
+  "P": {
+   "fixture": "portiera_proteome",
+   "path": "inputs/proteome.fasta",
+   "size": 104161
+  }
+ },
+ "prep": null,
+ "cmd": "mmseqs easy-search $P $P hits.m8 tmp --threads $CPU",
+ "wall_s": 10.44,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "hits.m8",
+   "size": 21503,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "WP_014894920.1\tWP_014894920.1\t1.000\t641\t0\t0\t1\t641\t1\t641\t0.000E+00\t1234",
+    "WP_014894925.1\tWP_014894925.1\t1.000\t102\t0\t0\t1\t102\t1\t102\t2.147E-58\t188",
+    "WP_014894928.1\tWP_014894928.1\t1.000\t316\t0\t0\t1\t316\t1\t316\t1.163E-205\t625"
+   ],
+   "lines": 304,
+   "sha256": "6e487cbf9dee29d462238255fd2baafb2cc8561e575dc8bf027c68684287464c"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 21503,
+ "time": {
+  "elapsed": "0:10.41",
+  "max_rss_kb": "887828",
+  "cpu_pct": "57",
+  "exit_status": "0",
+  "user_s": "4.84",
+  "sys_s": "1.19",
+  "elapsed_s": 10.41,
+  "max_rss_mb": 867.0
+ },
+ "stdout_tail": "matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 4 --compressed 0 -v 3 -s 5.7 \n\nQuery database size: 258 type: Aminoacid\nEstimated memory consumption: 978M\nTarget database size: 258 type: Aminoacid\nIndex table k-mer threshold: 112 at k-mer size 6 \nIndex table: counting k-mers\n[=================================================================] 258 0s 202ms\nIndex table: Masked residues: 344\nIndex table: fill\n[=================================================================] 258 0s 7ms\nIndex statistics\nEntries:          78523\nDB size:          488 MB\nAvg k-mer size:   0.001227\nTop 10 k-mers\n    LKFKIE\t3\n    IKKKKI\t3\n    IKKILI\t3\n    KKIIKK\t3\n    KKKLKK\t3\n    KLLANK\t3\n    NIKIKL\t3\n    LTKKLL\t3\n    DLNLNL\t3\n    ILIGIY\t3\nTime for index table init: 0h 0m 0s 724ms\nProcess prefiltering step 1 of 1\n\nk-mer similarity threshold: 112\nStarting prefiltering scores calculation (step 1 of 1)\nQuery db start 1 to 258\nTarget db start 1 to 258\n[=================================================================] 258 0s 198ms\n\n256.119309 k-mers per position\n479 DB matches per sequence\n0 overflows\n2 sequences passed prefiltering per query sequence\n2 median result list length\n1 sequences with 0 size result lists\nTime for merging to pref_0: 0h 0m 0s 0ms\nTime for processing: 0h 0m 1s 829ms\nalign tmp/740262321947037109/query tmp/740262321947037109/target tmp/740262321947037109/search_tmp/12060078758512939560/pref_0 tmp/740262321947037109/result --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 0 --alignment-mode 3 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.001 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 0 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 4 --compressed 0 -v 3 \n\nCompute score, coverage and sequence identity\nQuery database size: 258 type: Aminoacid\nTarget database size: 258 type: Aminoacid\nCalculation of alignments\n[=================================================================] 258 0s 73ms\nTime for merging to result: 0h 0m 0s 0ms\n711 alignments calculated\n304 sequence pairs passed the thresholds (0.427567 of overall calculated)\n1.178295 hits per query sequence\nTime for processing: 0h 0m 0s 107ms\nrmdb tmp/740262321947037109/search_tmp/12060078758512939560/pref_0 -v 3 \n\nTime for processing: 0h 0m 0s 24ms\nrmdb tmp/740262321947037109/search_tmp/12060078758512939560/aln_0 -v 3 \n\nTime for processing: 0h 0m 0s 0ms\nrmdb tmp/740262321947037109/search_tmp/12060078758512939560/input_0 -v 3 \n\nTime for processing: 0h 0m 0s 0ms\nrmdb tmp/740262321947037109/search_tmp/12060078758512939560/aln_merge -v 3 \n\nTime for processing: 0h 0m 0s 0ms\nconvertalis tmp/740262321947037109/query tmp/740262321947037109/target tmp/740262321947037109/result hits.m8 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --format-mode 0 --format-output query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits --translation-table 1 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --db-output 0 --db-load-mode 0 --search-type 0 --threads 4 --compressed 0 -v 3 \n\n[=================================================================] 258 0s 0ms\nTime for merging to hits.m8: 0h 0m 0s 0ms\nTime for processing: 0h 0m 0s 2ms\nrmdb tmp/740262321947037109/result -v 3 \n\nTime for processing: 0h 0m 0s 0ms\nrmdb tmp/740262321947037109/target -v 3 \n\nTime for processing: 0h 0m 0s 0ms\nrmdb tmp/740262321947037109/target_h -v 3 \n\nTime for processing: 0h 0m 0s 0ms\nrmdb tmp/740262321947037109/query -v 3 \n\nTime for processing: 0h 0m 0s 0ms\nrmdb tmp/740262321947037109/query_h -v 3 \n\nTime for processing: 0h 0m 0s 0ms\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:52"
+}

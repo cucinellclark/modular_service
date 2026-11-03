@@ -1,0 +1,132 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "unicycler_short",
+ "set": "assembly",
+ "tool": "unicycler",
+ "mode": "short_paired",
+ "description": null,
+ "tool_version": "0.4.8",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373339_6",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:37:41",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "unicycler -t $CPU -1 $R1 -2 $R2 -o out",
+ "wall_s": 97.56,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/001_best_spades_graph.gfa",
+   "size": 139842,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S\t1\tCAAAATGTAGAGTTTAAGATATAACAGCAGTAAAAAAAAGAAAATGGTTAACAAGTATATATAAAAAAACAAAAAGTCAAAAAAAAACAGCAGTAAAAATTAAGAAGAGTAGAAAAGGATATAGTATAGTGAAAAGAAAACTGGAAGATATACAGAAGTGAAGTACAAAAAGAACAATAAACTTGGTAAAAACATG"
+   ],
+   "lines": 43,
+   "sha256": "03a072e2af6e6a268ef3af81152023b6d8ac4b1bafb3723cc010607e287da28e"
+  },
+  {
+   "path": "out/002_overlaps_removed.gfa",
+   "size": 135894,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S\t1\tTTAACAAGTATATATAAAAAAACAAAAAGTCAAAAAAAAACAGCAGTAAAAATTAAGAAGAGTAGAAAAGGATATAGTATAGTGAAAAGAAAACTGGAAGATATACAGAAGTGAAGTACAAAAAGAACAATAAACTTGGTAAAAACATGTATTAGCAATGAACGTTGAAAAATGAAAAAATTAAAGGCATTAAGCA"
+   ],
+   "lines": 43,
+   "sha256": "4cbfffbc667b3a67f1ec47b7976fecf6ac1ff457e231a91e1a369ab846ed8096"
+  },
+  {
+   "path": "out/003_bridges_applied.gfa",
+   "size": 135877,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S\t1\tTTAACAAGTATATATAAAAAAACAAAAAGTCAAAAAAAAACAGCAGTAAAAATTAAGAAGAGTAGAAAAGGATATAGTATAGTGAAAAGAAAACTGGAAGATATACAGAAGTGAAGTACAAAAAGAACAATAAACTTGGTAAAAACATGTATTAGCAATGAACGTTGAAAAATGAAAAAATTAAAGGCATTAAGCA"
+   ],
+   "lines": 42,
+   "sha256": "5b7f4f0fe20b89ea134e2ebdafe28b9890f2c34a38c73a1a5e9332cc1ed89601"
+  },
+  {
+   "path": "out/004_final_clean.gfa",
+   "size": 134324,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S\t1\tTTAACAAGTATATATAAAAAAACAAAAAGTCAAAAAAAAACAGCAGTAAAAATTAAGAAGAGTAGAAAAGGATATAGTATAGTGAAAAGAAAACTGGAAGATATACAGAAGTGAAGTACAAAAAGAACAATAAACTTGGTAAAAACATGTATTAGCAATGAACGTTGAAAAATGAAAAAATTAAAGGCATTAAGCA"
+   ],
+   "lines": 41,
+   "sha256": "3065cefa584978c4b48ef0a3a2193763307021fc2680189debcee897dec7930d"
+  },
+  {
+   "path": "out/assembly.fasta",
+   "size": 135763,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">1 length=9367 depth=1.05x",
+    "TTAACAAGTATATATAAAAAAACAAAAAGTCAAAAAAAAACAGCAGTAAAAATTAAGAAGAGTAGAAAAG",
+    "GATATAGTATAGTGAAAAGAAAACTGGAAGATATACAGAAGTGAAGTACAAAAAGAACAATAAACTTGGT"
+   ],
+   "lines": 1958,
+   "records": 41,
+   "residues": 132706,
+   "sha256": "6c188df9375f7606769b703932158b22ba1da9339bcc9dabc2c05b23f8ca3ea2"
+  },
+  {
+   "path": "out/assembly.gfa",
+   "size": 134324,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S\t1\tTTAACAAGTATATATAAAAAAACAAAAAGTCAAAAAAAAACAGCAGTAAAAATTAAGAAGAGTAGAAAAGGATATAGTATAGTGAAAAGAAAACTGGAAGATATACAGAAGTGAAGTACAAAAAGAACAATAAACTTGGTAAAAACATGTATTAGCAATGAACGTTGAAAAATGAAAAAATTAAAGGCATTAAGCA"
+   ],
+   "lines": 41,
+   "sha256": "3065cefa584978c4b48ef0a3a2193763307021fc2680189debcee897dec7930d"
+  },
+  {
+   "path": "out/unicycler.log",
+   "size": 10440,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "Starting Unicycler (2026-11-02 15:37:47)",
+    "----------------------------------------"
+   ],
+   "lines": 176,
+   "sha256": "0304c0330c15b3fdabe980e80082d757687eef7013b51e4fc33fb92ddc7ca839"
+  }
+ ],
+ "n_outputs": 7,
+ "output_bytes": 826464,
+ "time": {
+  "elapsed": "1:37.54",
+  "max_rss_kb": "294788",
+  "cpu_pct": "195",
+  "exit_status": "0",
+  "user_s": "176.98",
+  "sys_s": "14.11",
+  "elapsed_s": 97.54,
+  "max_rss_mb": 287.9
+ },
+ "stdout_tail": "       3          1       0     7,498   7,498             7,498  \u001b[31m incomplete\u001b[0m\n        4          1       0     6,909   6,909             6,909  \u001b[31m incomplete\u001b[0m\n        5          1       0     6,808   6,808             6,808  \u001b[31m incomplete\u001b[0m\n        6          1       0     6,279   6,279             6,279  \u001b[31m incomplete\u001b[0m\n        7          1       0     5,861   5,861             5,861  \u001b[31m incomplete\u001b[0m\n        8          1       0     5,733   5,733             5,733  \u001b[31m incomplete\u001b[0m\n        9          1       0     5,366   5,366             5,366  \u001b[31m incomplete\u001b[0m\n       10          1       0     4,985   4,985             4,985  \u001b[31m incomplete\u001b[0m\n       11          1       0     4,650   4,650             4,650  \u001b[31m incomplete\u001b[0m\n       12          1       0     3,850   3,850             3,850  \u001b[31m incomplete\u001b[0m\n       13          1       0     3,395   3,395             3,395  \u001b[31m incomplete\u001b[0m\n       14          1       0     3,361   3,361             3,361  \u001b[31m incomplete\u001b[0m\n       15          1       0     2,732   2,732             2,732  \u001b[31m incomplete\u001b[0m\n       16          1       0     2,634   2,634             2,634  \u001b[31m incomplete\u001b[0m\n       17          1       0     2,612   2,612             2,612  \u001b[31m incomplete\u001b[0m\n       18          1       0     2,510   2,510             2,510  \u001b[31m incomplete\u001b[0m\n       19          1       0     2,457   2,457             2,457  \u001b[31m incomplete\u001b[0m\n       20          1       0     2,456   2,456             2,456  \u001b[31m incomplete\u001b[0m\n       21          1       0     2,409   2,409             2,409  \u001b[31m incomplete\u001b[0m\n       22          1       0     2,189   2,189             2,189  \u001b[31m incomplete\u001b[0m\n       23          1       0     1,978   1,978             1,978  \u001b[31m incomplete\u001b[0m\n       24          1       0     1,968   1,968             1,968  \u001b[31m incomplete\u001b[0m\n       25          1       0     1,942   1,942             1,942  \u001b[31m incomplete\u001b[0m\n       26          1       0     1,866   1,866             1,866  \u001b[31m incomplete\u001b[0m\n       27          1       0     1,834   1,834             1,834  \u001b[31m incomplete\u001b[0m\n       28          1       0     1,785   1,785             1,785  \u001b[31m incomplete\u001b[0m\n       29          1       0     1,765   1,765             1,765  \u001b[31m incomplete\u001b[0m\n       30          1       0     1,752   1,752             1,752  \u001b[31m incomplete\u001b[0m\n       31          1       0     1,603   1,603             1,603  \u001b[31m incomplete\u001b[0m\n       32          1       0     1,590   1,590             1,590  \u001b[31m incomplete\u001b[0m\n       33          1       0     1,531   1,531             1,531  \u001b[31m incomplete\u001b[0m\n       34          1       0     1,521   1,521             1,521  \u001b[31m incomplete\u001b[0m\n       35          1       0     1,516   1,516             1,516  \u001b[31m incomplete\u001b[0m\n       36          1       0     1,509   1,509             1,509  \u001b[31m incomplete\u001b[0m\n       37          1       0     1,493   1,493             1,493  \u001b[31m incomplete\u001b[0m\n       38          1       0     1,438   1,438             1,438  \u001b[31m incomplete\u001b[0m\n       39          1       0     1,324   1,324             1,324  \u001b[31m incomplete\u001b[0m\n       40          1       0     1,312   1,312             1,312  \u001b[31m incomplete\u001b[0m\n       41          1       0     1,266   1,266             1,266  \u001b[31m incomplete\u001b[0m\n\n\n\u001b[93m\u001b[1m\u001b[4mPolishing assembly with Pilon\u001b[0m \u001b[2m(2026-11-02 15:39:19)\u001b[0m\n\u001b[2m    Unicycler now conducts multiple rounds of Pilon in an attempt to repair any\u001b[0m\n\u001b[2mremaining small-scale errors with the assembly.\u001b[0m\n\nAligning reads to find appropriate insert size range...\nUnable to polish assembly using Pilon: segments are too short\n\n\n\u001b[93m\u001b[1m\u001b[4mAssembly complete\u001b[0m \u001b[2m(2026-11-02 15:39:19)\u001b[0m\nSaving /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_short-21373339_6/out/assembly.gfa\nSaving /disks/tmp/cucinell/modpipe-discovery/assembly/unicycler_short-21373339_6/out/assembly.fasta\n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:39:19"
+}

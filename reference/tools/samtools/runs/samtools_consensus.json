@@ -1,0 +1,43 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "samtools_consensus",
+ "set": "mapping_variants",
+ "tool": "samtools",
+ "mode": "consensus_path_1.13",
+ "description": "expected to fail on PATH samtools 1.13 (consensus added in 1.16)",
+ "tool_version": "1.13",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-05",
+ "slurm_job": "21373340_14",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:40",
+ "inputs": {
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  }
+ },
+ "prep": null,
+ "cmd": "samtools consensus -o consensus.fa $BAM",
+ "wall_s": 0.16,
+ "exit_code": 1,
+ "outputs": [],
+ "n_outputs": 0,
+ "output_bytes": 0,
+ "time": {
+  "elapsed": "0:00.12",
+  "max_rss_kb": "3400",
+  "cpu_pct": "37",
+  "exit_status": "1",
+  "user_s": "0.00",
+  "sys_s": "0.04",
+  "elapsed_s": 0.12,
+  "max_rss_mb": 3.3
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[main] unrecognized command 'consensus'\n",
+ "status": "failed",
+ "finished": "2026-11-02T15:37:40"
+}

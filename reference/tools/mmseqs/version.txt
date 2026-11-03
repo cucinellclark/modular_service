@@ -1,0 +1,3 @@
+# /opt/patric-common/runtime/bin/mmseqs cmd: echo mmseqs $(mmseqs version); ls -d /opt/patric-common/runtime/mmseqs2-*
+mmseqs 17
+/opt/patric-common/runtime/mmseqs2-13-45111

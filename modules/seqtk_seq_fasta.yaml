@@ -1,0 +1,17 @@
+schema: modpipe/module/v1
+id: seqtk_seq_fasta
+version: 1
+label: "seqtk: reads to FASTA (converter)"
+description: Converts FASTQ reads to FASTA (drops qualities). Paired reads are written one after the other into a single file.
+category: converter
+tool: {id: seqtk, binary: seqtk, version: "1.4"}
+inputs:
+  - {id: reads, type: reads}
+outputs:
+  - {id: sequences, type: sequences.dna.reads, path: reads.fasta}
+resources: {cpu: 1, memory: 2G, runtime: 1h}
+command: |
+  {% if inputs.reads.paired %}seqtk seq -a {{ inputs.reads.r1 | q }} > {{ outputs.sequences }} && seqtk seq -a {{ inputs.reads.r2 | q }} >> {{ outputs.sequences }}
+  {% else %}seqtk seq -a {{ inputs.reads | q }} > {{ outputs.sequences }}{% endif %}
+tests:
+  discovery_runs: [seqtk_fq2fa]

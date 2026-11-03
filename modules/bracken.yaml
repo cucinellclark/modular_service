@@ -1,0 +1,26 @@
+schema: modpipe/module/v1
+id: bracken
+version: 1
+label: "Bracken: abundance re-estimation from a Kraken2 report"
+description: >-
+  Redistributes Kraken2 read counts to a taxonomic level. Calls est_abundance.py directly, as BV-BRC does
+  (the container's `bracken` wrapper is broken). Use the same database as the Kraken2 step.
+category: taxonomy
+tool: {id: bracken, binary: est_abundance.py, version: "2.9"}
+inputs:
+  - {id: report, type: taxonomy.kraken.report}
+outputs:
+  - {id: abundance, type: table.tsv.taxon_abundance, path: bracken.tsv}
+  - {id: report, type: taxonomy.kraken.report, path: bracken_report.txt}
+parameters:
+  - {id: db, type: database, db_type: database.kraken2, default: kraken2_std, label: "Kraken2 database (same as the Kraken2 step)"}
+  - {id: read_length, type: int, default: 100, min: 1, label: "Read length of the database kmer_distrib file"}
+  - {id: level, type: enum, enum: [S, G, F, O, C, P, D], default: S, label: "Taxonomic level"}
+  - {id: threshold, type: int, default: 0, min: 0, label: "Minimum reads for re-estimation"}
+resources: {cpu: 1, memory: 4G, runtime: 1h}
+command: |
+  est_abundance.py -i {{ inputs.report | q }} -k {{ (dbs.db ~ '/database' ~ params.read_length ~ 'mers.kmer_distrib') | q }}
+  -o {{ outputs.abundance }} -l {{ params.level }} -t {{ params.threshold }} --out-report {{ outputs.report }}
+tests:
+  discovery_runs: [bracken_est_abundance]
+provenance: {bvbrc_invocations: [16s_analysis, microbiome_analysis], nfcore: [bracken/bracken]}

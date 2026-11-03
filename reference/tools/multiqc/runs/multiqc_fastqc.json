@@ -1,0 +1,260 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "multiqc_fastqc",
+ "set": "readqc",
+ "tool": "multiqc",
+ "mode": "from_fastqc",
+ "description": null,
+ "tool_version": "1.25",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "pear",
+ "slurm_job": "21373335_14",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:38:01",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": "mkdir qc && fastqc -t $CPU -o qc $R1 $R2",
+ "cmd": "multiqc -o multiqc qc",
+ "wall_s": 10.77,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "multiqc/multiqc_data/fastqc-status-check-heatmap.txt",
+   "size": 343,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    ".\tBasic Statistics\tPer Base Sequence Quality\tPer Tile Sequence Quality\tPer Sequence Quality Scores\tPer Base Sequence Content\tPer Sequence GC Content\tPer Base N Content\tSequence Length Distribution\tSeq",
+    "test_1\t1\t1\t1\t1\t1\t0.25\t1\t1\t0.25\t1\t1",
+    "test_2\t1\t0.25\t0.25\t1\t1\t0.25\t1\t1\t0.25\t1\t1"
+   ],
+   "lines": 3,
+   "sha256": "fc20de7bb4cc8363e69d83156cd5bfd3f446fead0d2567f2dc030dcbd3a37f68"
+  },
+  {
+   "path": "multiqc/multiqc_data/fastqc_per_base_n_content_plot.txt",
+   "size": 1421,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\t16\t17\t18\t19\t20\t21\t22\t23\t24\t25\t26\t27\t28\t29\t30\t31\t32\t33\t34\t35\t36\t37\t38\t39\t40\t41\t42\t43\t44\t45\t46\t47\t48\t49\t50\t51\t52\t53\t54",
+    "test_1\t(1, 0.03683655823757534)\t(2, 0.14734623295030136)\t(3, 0.0)\t(4, 0.0)\t(5, 0.0)\t(6, 0.0)\t(7, 0.0)\t(8, 0.0)\t(9, 0.0)\t(10, 0.0)\t(12, 0.0)\t(14, 0.0)\t(16, 0.0)\t(18, 0.0)\t(20, 0.0)\t(22, 0.0)\t(24, 0.0)\t",
+    "test_2\t(1, 0.0)\t(2, 0.0)\t(3, 0.001023237728821537)\t(4, 0.002046475457643074)\t(5, 0.0)\t(6, 0.0)\t(7, 0.0)\t(8, 0.0)\t(9, 0.0)\t(10, 0.0)\t(12, 0.0)\t(14, 0.0)\t(16, 0.0)\t(18, 0.0)\t(20, 0.0)\t(22, 0.0)\t(24, 0.0"
+   ],
+   "lines": 3,
+   "sha256": "0302c3d32216755d75d4448097e0e892f0a45a7005d6516b99205333b9b2f2fd"
+  },
+  {
+   "path": "multiqc/multiqc_data/fastqc_per_base_sequence_quality_plot.txt",
+   "size": 2802,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\t16\t17\t18\t19\t20\t21\t22\t23\t24\t25\t26\t27\t28\t29\t30\t31\t32\t33\t34\t35\t36\t37\t38\t39\t40\t41\t42\t43\t44\t45\t46\t47\t48\t49\t50\t51\t52\t53\t54",
+    "test_1\t(1, 32.74788445599566)\t(2, 32.94723163032467)\t(3, 33.03496403319383)\t(4, 36.43774110038985)\t(5, 36.36816093482999)\t(6, 36.358194599351265)\t(7, 36.34857616470035)\t(8, 36.3368089308189)\t(9, 38.14",
+    "test_2\t(1, 32.49217734756316)\t(2, 32.521042883893216)\t(3, 35.93198538816523)\t(4, 35.931923993901506)\t(5, 35.913700129951195)\t(6, 35.911919696303045)\t(7, 35.89802412794565)\t(8, 37.59870662751077)\t(9, 3"
+   ],
+   "lines": 3,
+   "sha256": "fe9b7af7d97e6b0419999ec78530a001c7768b31178d8c7f35c1199895475171"
+  },
+  {
+   "path": "multiqc/multiqc_data/fastqc_per_sequence_gc_content_plot_Counts.txt",
+   "size": 2968,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\t16\t17\t18\t19\t20\t21\t22\t23\t24\t25\t26\t27\t28\t29\t30\t31\t32\t33\t34\t35\t36\t37\t38\t39\t40\t41\t42\t43\t44\t45\t46\t47\t48\t49\t50\t51\t52\t53\t54\t55\t56\t57\t58\t59\t60\t61\t62\t63\t64\t65\t66\t67",
+    "test_1\t(0.0, 0.0)\t(1.0, 0.0)\t(2.0, 0.0)\t(3.0, 0.0)\t(4.0, 0.0)\t(5.0, 0.0)\t(6.0, 0.0)\t(7.0, 0.0)\t(8.0, 0.0)\t(9.0, 0.0)\t(10.0, 0.0)\t(11.0, 0.0)\t(12.0, 0.0)\t(13.0, 0.0)\t(14.0, 0.0)\t(15.0, 1.0)\t(16.0, 8.0)",
+    "test_2\t(0.0, 0.0)\t(1.0, 0.0)\t(2.0, 0.0)\t(3.0, 0.0)\t(4.0, 0.0)\t(5.0, 0.5)\t(6.0, 0.5)\t(7.0, 0.5)\t(8.0, 0.5)\t(9.0, 0.0)\t(10.0, 0.5)\t(11.0, 2.5)\t(12.0, 6.5)\t(13.0, 10.5)\t(14.0, 19.5)\t(15.0, 39.0)\t(16.0, 8"
+   ],
+   "lines": 3,
+   "sha256": "d3f426fff6cff4b64183c95e0b7e1bc5b013aa8e4c00cb51a49964a44b0ba0c8"
+  },
+  {
+   "path": "multiqc/multiqc_data/fastqc_per_sequence_gc_content_plot_Percentages.txt",
+   "size": 4563,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\t16\t17\t18\t19\t20\t21\t22\t23\t24\t25\t26\t27\t28\t29\t30\t31\t32\t33\t34\t35\t36\t37\t38\t39\t40\t41\t42\t43\t44\t45\t46\t47\t48\t49\t50\t51\t52\t53\t54\t55\t56\t57\t58\t59\t60\t61\t62\t63\t64\t65\t66\t67",
+    "test_1\t(0.0, 0.0)\t(1.0, 0.0)\t(2.0, 0.0)\t(3.0, 0.0)\t(4.0, 0.0)\t(5.0, 0.0)\t(6.0, 0.0)\t(7.0, 0.0)\t(8.0, 0.0)\t(9.0, 0.0)\t(10.0, 0.0)\t(11.0, 0.0)\t(12.0, 0.0)\t(13.0, 0.0)\t(14.0, 0.0)\t(15.0, 0.00102323772882",
+    "test_2\t(0.0, 0.0)\t(1.0, 0.0)\t(2.0, 0.0)\t(3.0, 0.0)\t(4.0, 0.0)\t(5.0, 0.0005116188644107685)\t(6.0, 0.0005116188644107685)\t(7.0, 0.0005116188644107685)\t(8.0, 0.0005116188644107685)\t(9.0, 0.0)\t(10.0, 0.00"
+   ],
+   "lines": 3,
+   "sha256": "f9aa379e97811e4dfb43e9db2e4a14f7eda8917144ec06c9555e0d65c712c979"
+  },
+  {
+   "path": "multiqc/multiqc_data/fastqc_per_sequence_quality_scores_plot.txt",
+   "size": 874,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\t16\t17\t18\t19\t20\t21\t22\t23\t24\t25\t26\t27\t28",
+    "test_1\t(15.0, 1.0)\t(16.0, 5.0)\t(17.0, 15.0)\t(18.0, 39.0)\t(19.0, 76.0)\t(20.0, 109.0)\t(21.0, 137.0)\t(22.0, 179.0)\t(23.0, 203.0)\t(24.0, 265.0)\t(25.0, 382.0)\t(26.0, 492.0)\t(27.0, 660.0)\t(28.0, 918.0)\t(29.",
+    "test_2\t(12.0, 4.0)\t(13.0, 5.0)\t(14.0, 29.0)\t(15.0, 63.0)\t(16.0, 106.0)\t(17.0, 214.0)\t(18.0, 247.0)\t(19.0, 375.0)\t(20.0, 446.0)\t(21.0, 484.0)\t(22.0, 579.0)\t(23.0, 692.0)\t(24.0, 830.0)\t(25.0, 922.0)\t(26"
+   ],
+   "lines": 3,
+   "sha256": "278d8e85bfdf72dcd2f38c5d65908e4257d9fef9850296e915596ed2008c122e"
+  },
+  {
+   "path": "multiqc/multiqc_data/fastqc_sequence_counts_plot.txt",
+   "size": 82,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\tUnique Reads\tDuplicate Reads",
+    "test_1\t46440.0\t51289.0",
+    "test_2\t48323.0\t49406.0"
+   ],
+   "lines": 3,
+   "sha256": "533bddc051453cd055e8e89e310dce96cd4bfecf94401b12554941ca5eafb8d6"
+  },
+  {
+   "path": "multiqc/multiqc_data/fastqc_sequence_duplication_levels_plot.txt",
+   "size": 747,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15",
+    "test_1\t(1.0, 32.03961976485997)\t(2.0, 13.598829416038228)\t(3.0, 7.772513788128396)\t(4.0, 5.644179312179599)\t(5.0, 5.157118153260547)\t(6.0, 4.586151500578129)\t(7.0, 4.082718537997933)\t(8.0, 3.806444351",
+    "test_2\t(1.0, 34.17818661809699)\t(2.0, 13.596782940580585)\t(3.0, 7.74181665626375)\t(4.0, 5.754688986892325)\t(5.0, 4.870611589190517)\t(6.0, 4.131833948981367)\t(7.0, 4.068393209794432)\t(8.0, 3.7818866457"
+   ],
+   "lines": 3,
+   "sha256": "8d10c2e486411703d8157262261bc99eb92575d20e12275dd150eae44b6c2e33"
+  },
+  {
+   "path": "multiqc/multiqc_data/fastqc_top_overrepresented_sequences_table.txt",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "multiqc/multiqc_data/multiqc.log",
+   "size": 405,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "[2026-11-02 15:38:21,068] multiqc.core.version_check                         [WARNING]  MultiQC Version v1.35 now available!",
+    "[2026-11-02 15:38:21,069] multiqc.core.file_search                           [INFO   ]  Search path: /disks/tmp/cucinell/modpipe-discovery/readqc/multiqc_fastqc-21373335_14/qc",
+    "[2026-11-02 15:38:21,291] multiqc.modules.fastqc.fastqc                      [INFO   ]  Found 2 reports"
+   ],
+   "lines": 3,
+   "sha256": "368ce7103435b5b2d02a070194d77c09ad051c93ee656f5819a77b048b19837c"
+  },
+  {
+   "path": "multiqc/multiqc_data/multiqc_citations.txt",
+   "size": 62,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "10.1093/bioinformatics/btw354                      # MultiQC",
+    ""
+   ],
+   "lines": 2,
+   "sha256": "01b7abc926d9e75aa87ee19b7c0674c7a3998af6438a8b5361cf8835770a0ccb"
+  },
+  {
+   "path": "multiqc/multiqc_data/multiqc_data.json",
+   "size": 244164,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "{",
+    "    \"report_data_sources\": {",
+    "        \"FastQC\": {"
+   ],
+   "sha256": "4ba2fe1d5aa6f3b3e5f380e8f76941fb3bf7916c688e3690353899dd37e36f9a"
+  },
+  {
+   "path": "multiqc/multiqc_data/multiqc_fastqc.txt",
+   "size": 818,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\tFilename\tFile type\tEncoding\tTotal Sequences\tTotal Bases\tSequences flagged as poor quality\tSequence length\t%GC\ttotal_deduplicated_percentage\tavg_sequence_length\tmedian_sequence_length\tbasic_stat",
+    "test_1\ttest_1.fastq.gz\tConventional base calls\tSanger / Illumina 1.9\t97729.0\t9.8 Mbp\t0.0\t101.0\t38.0\t47.51813688874336\t101.0\t101\tpass\tpass\tpass\tpass\tpass\tfail\tpass\tpass\tfail\tpass\tpass",
+    "test_2\ttest_2.fastq.gz\tConventional base calls\tSanger / Illumina 1.9\t97729.0\t9.6 Mbp\t0.0\t99.0\t38.0\t49.44591676984314\t99.0\t99\tpass\tfail\tfail\tpass\tpass\tfail\tpass\tpass\tfail\tpass\tpass"
+   ],
+   "lines": 3,
+   "sha256": "e7d2b5aab6f1c02f6644c57a7bc603d743de9907598345b26538aac5de25fdaf"
+  },
+  {
+   "path": "multiqc/multiqc_data/multiqc_general_stats.txt",
+   "size": 285,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\tfastqc-percent_duplicates\tfastqc-percent_gc\tfastqc-avg_sequence_length\tfastqc-median_sequence_length\tfastqc-percent_fails\tfastqc-total_sequences",
+    "test_1\t52.48186311125664\t38.0\t101.0\t101\t18.181818181818183\t0.097729",
+    "test_2\t50.55408323015686\t38.0\t99.0\t99\t36.36363636363637\t0.097729"
+   ],
+   "lines": 3,
+   "sha256": "d2558977ac62ce478c2ee7a4e724d0505d4f7f5d12c195d03803b60d17208edc"
+  },
+  {
+   "path": "multiqc/multiqc_data/multiqc_software_versions.txt",
+   "size": 28,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Sample\tFastQC",
+    "FastQC\t0.12.1"
+   ],
+   "lines": 2,
+   "sha256": "175c76d31784ed4f46e680e787c7447bed57c9e3be11a3ac5be8d793ad75eb0f"
+  },
+  {
+   "path": "multiqc/multiqc_data/multiqc_sources.txt",
+   "size": 274,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Module\tSection\tSample Name\tSource",
+    "FastQC\tall_sections\ttest_1\t/disks/tmp/cucinell/modpipe-discovery/readqc/multiqc_fastqc-21373335_14/qc/test_1_fastqc.zip",
+    "FastQC\tall_sections\ttest_2\t/disks/tmp/cucinell/modpipe-discovery/readqc/multiqc_fastqc-21373335_14/qc/test_2_fastqc.zip"
+   ],
+   "lines": 3,
+   "sha256": "2f6a089cffcdd7bf8630131944f4297c1bcd5d0fd55d1f0719df3bc2af0c1d9c"
+  },
+  {
+   "path": "multiqc/multiqc_report.html",
+   "size": 4689636,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!DOCTYPE html>",
+    "<html lang=\"en\">",
+    "<head>"
+   ],
+   "sha256": "a4fac88d3e8fba092a3c5b0bc0bab72b45f9cea2aed0c99f014d0235e27b20ad"
+  }
+ ],
+ "n_outputs": 17,
+ "output_bytes": 4949472,
+ "time": {
+  "elapsed": "0:10.75",
+  "max_rss_kb": "114452",
+  "cpu_pct": "46",
+  "exit_status": "0",
+  "user_s": "3.24",
+  "sys_s": "1.78",
+  "elapsed_s": 10.75,
+  "max_rss_mb": 111.8
+ },
+ "stdout_tail": "",
+ "stderr_tail": "\n/// MultiQC \ud83d\udd0d v1.25\n\n     version_check | MultiQC Version v1.35 now available!\n       file_search | Search path: /disks/tmp/cucinell/modpipe-discovery/readqc/multiqc_fastqc-21373335_14/qc\n\n            fastqc | Found 2 reports\n\n     write_results | Data        : multiqc/multiqc_data\n     write_results | Report      : multiqc/multiqc_report.html\n           multiqc | MultiQC complete\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:22"
+}

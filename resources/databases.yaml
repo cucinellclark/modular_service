@@ -1,0 +1,342 @@
+# ModularService reference-database registry (P6). Schema: modpipe/databases/v1
+#
+# Installed databases are selected by `id` through module PARAMETERS (e.g. `kraken_db: kraken2_brc`).
+# Databases a pipeline builds itself flow as typed ports instead (database.*, index.* in types/types.yaml).
+#
+# Paths are as seen INSIDE the job container. `bind` gives the host source that the batch script mounts (same
+# binds as production slurm_batch.tt / p3x-run-qa.pl; tests/discovery/discovery.sbatch does the same).
+# `location: container` means the data ships inside the .sif image.
+#
+# status: verified   = used successfully in a P4 discovery run (reference/tools/<tool>/runs/)
+#         unverified = path and contents checked, but not exercised by a run yet
+#         missing    = expected by a tool but not installed
+#
+# Sources: AppConfig.pm constants in the container, App-* service code, slurm_batch.tt, directory surveys
+# (2026-11-03). Sizes are approximate (from the main files; no full du on NFS).
+
+schema: modpipe/databases/v1
+
+binds:
+  data_image: {source: /vol/patric3/production/data-images/patric-data-2022-0119, target: /opt/patric-common/data,
+               version: "2022-0119",
+               note: "Decision 2026-11-03: use the most recent complete image. 2022-0119 is newest; patric-data-2022-0907.build is an unfinished build dir. Production's own default (scheduler DB) was not checked."}
+  application_backend: {source: /vol/bvbrc/production/application-backend, target: /vol/bvbrc/production/application-backend}
+  metagenome_dbs: {source: /vol/patric3/metagenome_dbs, target: [/vol/patric3/metagenome_dbs, /disks/patric-data/metagenome_dbs],
+                   note: "kraken_db nodes have a local copy at /disks/patric-data/metagenome_dbs; AppConfig.metagenome_dbs points there"}
+  blastdb: {source: /vol/blastdb/bvbrc-service, target: /vol/blastdb/bvbrc-service}
+
+databases:
+  # ------------------------------------------------------------------ taxonomy (Kraken2 / Bracken)
+  - id: kraken2_brc
+    type: database.kraken2
+    path: /disks/patric-data/metagenome_dbs/kraken2_brc
+    bind: metagenome_dbs
+    description: BV-BRC Kraken2 DB (archaea, bacteria, fungi, human, plant, protozoa, viral, UniVec); TaxonomicClassification "bvbrc"
+    size_gb: 255
+    bracken_read_lengths: [100]
+    requirements: {mem: 150G, partition: kraken_db, constraint: kraken_db}
+    used_by: [App-TaxonomicClassification]
+    tools: [kraken2, bracken]
+    status: unverified
+  - id: kraken2_std
+    type: database.kraken2
+    path: /disks/patric-data/metagenome_dbs/kraken2_std
+    bind: metagenome_dbs
+    description: Kraken2 standard DB; TaxonomicClassification "standard"
+    size_gb: 127
+    bracken_read_lengths: [100]
+    requirements: {mem: 80G, partition: kraken_db, constraint: kraken_db}
+    used_by: [App-TaxonomicClassification]
+    tools: [kraken2, bracken]
+    status: unverified
+  - id: kraken2_legacy
+    type: database.kraken2
+    path: /vol/patric3/metagenome_dbs/kraken2
+    bind: metagenome_dbs
+    description: Older Kraken2 DB (bracken kmer_distrib for 31 and 100)
+    size_gb: 195
+    bracken_read_lengths: [31, 100]
+    requirements: {mem: 160G, partition: kraken_db}
+    used_by: []
+    status: unverified
+    notes: "Not referenced by the current TaxonomicClassification db_map; probably legacy."
+  - id: kraken2_silva
+    type: database.kraken2
+    path: /disks/patric-data/metagenome_dbs/SILVA
+    bind: metagenome_dbs
+    description: SILVA 138.1 SSU NR99 (16S); TaxonomicClassification "SILVA" (default for 16S)
+    size_gb: 0.5
+    bracken_read_lengths: [100]
+    requirements: {mem: 8G}
+    used_by: [App-TaxonomicClassification]
+    tools: [kraken2, bracken]
+    status: unverified
+  - id: kraken2_greengenes
+    type: database.kraken2
+    path: /disks/patric-data/metagenome_dbs/Greengenes
+    bind: metagenome_dbs
+    description: Greengenes 13_5 (16S); TaxonomicClassification "Greengenes"
+    size_gb: 0.8
+    bracken_read_lengths: [100]
+    requirements: {mem: 8G}
+    used_by: [App-TaxonomicClassification]
+    tools: [kraken2, bracken]
+    status: unverified
+  - id: kraken2_test_sarscov2
+    type: database.kraken2
+    path: tests/fixtures/data/nfcore/sarscov2/genome/db/kraken2
+    location: repo_fixture
+    description: nf-core mini DB for smoke tests (with bracken variant at .../kraken2_bracken)
+    status: verified
+  - id: kraken2_bracken_test_sarscov2
+    type: database.kraken2
+    path: tests/fixtures/data/nfcore/sarscov2/genome/db/kraken2_bracken
+    location: repo_fixture
+    description: nf-core mini Kraken2 DB with Bracken kmer_distrib files (read lengths 100, 150); smoke tests only
+    bracken_read_lengths: [100, 150]
+    status: verified
+
+  # ------------------------------------------------------------------ host removal / host references
+  - id: hostile_human_t2t_hla
+    type: index.bowtie2
+    path: /vol/bvbrc/production/application-backend/fastqutils/reference_indices/hostile_cache/human-t2t-hla
+    bind: application_backend
+    description: hostile default human T2T+HLA bowtie2 index; set HOSTILE_CACHE_DIR to the directory
+    size_gb: 4.5
+    used_by: [App-FastqUtils]
+    tools: [hostile]
+    status: verified
+  - id: host_bowtie2_indices
+    type: index.bowtie2
+    path: /vol/bvbrc/production/application-backend/fastqutils/reference_indices/bowtie2/{accession}_genomic_index/{accession}_genomic_index
+    bind: application_backend
+    description: 37 host genome bowtie2 indices keyed by GCF accession; names in reference_index_dict_31Aug2026.csv
+    catalog: /vol/bvbrc/production/application-backend/fastqutils/reference_indices/reference_index_dict_31Aug2026.csv
+    used_by: [App-FastqUtils]
+    tools: [bowtie2, hostile]
+    status: unverified
+  - id: host_minimap2_indices
+    type: index.minimap2
+    path: /vol/bvbrc/production/application-backend/fastqutils/reference_indices/minimap2/{accession}_genomic_index
+    bind: application_backend
+    description: Same 37 hosts as minimap2 indices (long-read host removal)
+    used_by: [App-FastqUtils]
+    tools: [minimap2, hostile]
+    status: unverified
+  - id: host_hisat2_indices
+    type: index.hisat2
+    path: /vol/bvbrc/production/application-backend/bvbrc_taxonomic_classification_2/data/hisat2_indicies/{host}
+    bind: application_backend
+    description: HISAT2 host indices for TaxonomicClassification host_genome enum (homo_sapiens, mus_musculus, ... 10 hosts)
+    hosts: [homo_sapiens, mus_musculus, rattus_norvegicus, caenorhabditis_elegans, drosophila_melanogaster_strain,
+            danio_rerio_strain_tuebingen, gallus_gallus, macaca_mulatta, mustela_putorius_furo, sus_scrofa]
+    used_by: [App-TaxonomicClassification]
+    tools: [hisat2]
+    status: unverified
+
+  # ------------------------------------------------------------------ mobile elements / viruses
+  - id: genomad_db_1.9
+    type: database.genomad
+    path: /vol/bvbrc/production/application-backend/genomad/genomad_db
+    bind: application_backend
+    version: "1.9"
+    size_gb: 3
+    requirements: {mem: 20G, note: "end-to-end peaked at 18.7 GB RSS on a 30 kb genome (DB load)"}
+    used_by: [App-Genomad, App-MobileElementDetection]
+    tools: [genomad]
+    status: verified
+  - id: checkv_db_1.0
+    type: database.checkv
+    path: /opt/patric-common/runtime/checkv-db/checkv-db-v1.0
+    location: container
+    version: "1.0 (README: v0.6, May 2020)"
+    used_by: [MetagenomeBinning]
+    tools: [checkv]
+    status: verified
+  - id: vigor4_refdbs
+    type: database.vigor
+    path: /opt/patric-common/runtime/vigor-4.1.20220621-163707-2385247/VIGOR_DB/Reference_DBs
+    location: container
+    description: VIGOR4 reference DBs, selected by name with `vigor4 -d <name>`; e.g. sarscov2_db, flua_db, flub_db, fluc_db, dengue_txid12637_db
+    selectable: name
+    tools: [vigor4]
+    status: verified
+    notes: "verified for sarscov2_db and flua_db"
+
+  # ------------------------------------------------------------------ SARS-CoV-2 surveillance
+  - id: pangolin_data_1.30
+    type: database.pangolin
+    path: bundled
+    location: container
+    version: "pangolin 4.3.1 / pangolin-data 1.30"
+    tools: [pangolin]
+    status: verified
+    notes: "Works only with --skip-scorpio; the scorpio step fails in the container (P4)."
+  - id: freyja_barcodes_current
+    type: database.freyja_barcodes
+    path: /vol/bvbrc/production/application-backend/bvbrc_SARS2Wastewater/current
+    bind: application_backend
+    files: {barcodes: usher_barcodes.feather, meta: curated_lineages.json, lineageyml: lineages.yml}
+    version: "last_barcode_update 05_06_2025-02-07 (dated snapshots alongside, newest 2025-07-01)"
+    used_by: [App-SARS2Wastewater]
+    tools: [freyja]
+    status: unverified
+    notes: ".feather needs pyarrow, which the container python lacks; use freyja_barcodes_csv until that is fixed."
+  - id: freyja_barcodes_csv
+    type: database.freyja_barcodes
+    path: /vol/bvbrc/production/application-backend/bvbrc_taxonomic_classification_2/data
+    bind: application_backend
+    files: {barcodes: usher_barcodes.csv, meta: curated_lineages.json, lineageyml: lineages.yml}
+    version: "last_barcode_update 02_07_2024-00-49"
+    used_by: [App-TaxonomicClassification]
+    tools: [freyja]
+    status: verified
+
+  # ------------------------------------------------------------------ AMR / virulence / typing
+  - id: amrfinder_db_2025-07-16.1
+    type: database.amrfinder
+    path: bundled
+    location: container
+    version: "2025-07-16.1"
+    tools: [amrfinder]
+    status: verified
+  - id: mlst_pubmlst_bundled
+    type: database.mlst
+    path: bundled
+    location: container
+    version: "mlst 2.23.0, 144 schemes"
+    tools: [mlst]
+    status: verified
+  - id: mlst_bvbrc_2015
+    type: database.mlst
+    path: /opt/patric-common/data/mlst
+    bind: data_image
+    version: "mlstdb-2015-1123"
+    description: BV-BRC's own MLST BLAST DBs (114 schemes; blastdb/pro/seq)
+    used_by: [genome annotation MLST]
+    status: unverified
+  - id: chewbbaca_schemas
+    type: database.chewbbaca_schema
+    path: /vol/bvbrc/production/application-backend/CoreGenomeMLST/chewbbaca_schemas/{species}
+    bind: application_backend
+    description: Production cgMLST schemas per species (e.g. Acinetobacter_baumannii, Staphylococcus_aureus); precomputed clusters in ../precomputed_clusters
+    selectable: species
+    used_by: [App-CoreGenomeMLST]
+    tools: [chewbbaca]
+    status: unverified
+  - id: kma_card
+    type: database.kma
+    path: /opt/patric-common/data/kma_db/CARD
+    bind: data_image
+    version: "2019-0320"
+    used_by: [App-MetagenomicReadMapping]
+    tools: [kma]
+    status: unverified
+  - id: kma_vfdb
+    type: database.kma
+    path: /opt/patric-common/data/kma_db/VFDB
+    bind: data_image
+    version: "2019-0320"
+    used_by: [App-MetagenomicReadMapping]
+    tools: [kma]
+    status: unverified
+  - id: specialty_proteins_blast
+    type: database.blast.prot
+    path: /vol/bvbrc/production/application-backend/specialty_proteins/blast-latest/{db}.faa
+    bind: application_backend
+    description: Specialty-gene BLAST/DIAMOND DBs (BacMet, CARD, VFDB, ...; .dmnd alongside); blast-latest -> newest dated dir
+    selectable: db
+    tools: [blastp, diamond, rasttk]
+    status: unverified
+  - id: card_3.3.0
+    type: database.card
+    path: /vol/bvbrc/production/application-backend/specialty_proteins/card-3.3.0
+    bind: application_backend
+    status: unverified
+
+  # ------------------------------------------------------------------ homology (BV-BRC precomputed BLAST)
+  - id: bvbrc_blast_precomputed
+    type: database.blast.nucl
+    path: /vol/blastdb/bvbrc-service/data.2022-0916
+    bind: blastdb
+    description: Precomputed BV-BRC BLAST DBs (by-genus bacterial/viral, reference); index in db.sqlite
+    catalog: /vol/blastdb/bvbrc-service/data.2022-0916/db.sqlite
+    used_by: [App-Homology]
+    tools: [blastn, blastp]
+    status: unverified
+    notes: "HomologySearch::Config.blast_db_search_path. Contains protein DBs as well; resolve the actual DB via the sqlite catalog."
+
+  # ------------------------------------------------------------------ RASTtk / genome annotation support data
+  - id: rast_kmer_metadata_v2
+    type: database.rast_kmers
+    path: /opt/patric-common/data/kmer_metadata_v2
+    bind: data_image
+    version: "core.2018-0531"
+    tools: [rasttk]
+    status: unverified
+  - id: rast_specialty_proteins
+    type: database.specialty_proteins
+    path: /opt/patric-common/data/specialty_proteins
+    bind: data_image
+    version: "2017-0925"
+    tools: [rasttk]
+    status: unverified
+  - id: rast_subsystems
+    type: database.subsystems
+    path: /opt/patric-common/data/subsystems
+    bind: data_image
+    version: "2018-0531"
+    tools: [rasttk]
+    status: unverified
+  - id: rast_annotation_workflows
+    type: database.rast_workflows
+    path: /opt/patric-common/data/workflows
+    bind: data_image
+    version: "2020-04-06"
+    description: RASTtk workflow definitions (fast, gap, phage, vigor ...)
+    tools: [rasttk]
+    status: unverified
+  - id: bvbrc_nr_by_genus
+    type: database.blast.prot
+    path: /opt/patric-common/data/NR
+    bind: data_image
+    version: "2014-0824"
+    description: Per-genus NR protein BLAST DBs (annotate-proteins-similarity)
+    tools: [rasttk, blastp]
+    status: unverified
+  - id: phage_annotation_v01
+    type: database.blast.prot
+    path: /opt/patric-common/data/phage_annotation/phage.nr
+    bind: data_image
+    version: v01
+    tools: [rasttk]
+    status: unverified
+  - id: mash_reference_sketch
+    type: database.mash
+    path: /opt/patric-common/data/minhash/combined/repref.msh
+    bind: data_image
+    version: "2021-1029"
+    description: AppConfig.mash_reference_sketch (reference/representative genomes); used for similar-genome finding
+    status: unverified
+  - id: seedtk_data
+    type: database.seedtk
+    path: /opt/patric-common/data/seedtk_data
+    bind: data_image
+    version: "2022-01-18"
+    status: unverified
+
+  # ------------------------------------------------------------------ not installed
+  - id: antismash_databases
+    type: database.antismash
+    path: /opt/patric-common/runtime/antismash-7-1-0-1/lib/python3.10/site-packages/antismash/databases
+    location: container
+    tools: [antismash]
+    status: missing
+    notes: "antiSMASH fails prerequisites (nrps_pks_domains etc.). Needs download-antismash-databases at container build."
+  - id: snpeff_databases
+    type: database.snpeff
+    path: /opt/patric-common/runtime/snpEff/data
+    location: container
+    tools: [snpeff]
+    status: missing
+    notes: "No prebuilt genomes. Modules build a per-reference DB (database.snpeff port), as the P4 run did."

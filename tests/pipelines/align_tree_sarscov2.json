@@ -1,0 +1,11 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "TEST align and tree (SARS-CoV-2 proteins)",
+  "description": "MAFFT L-INS-i -> FastTree LG on the 12 nf-core SARS-CoV-2 proteins (seconds).",
+  "inputs": {"proteins": {"type": "sequences.protein", "source": {"fixture": "sarscov2_proteome"}}},
+  "steps": {
+    "align": {"module": "mafft", "in": {"sequences": "$inputs.proteins"}, "params": {"strategy": "linsi"}},
+    "tree":  {"module": "fasttree", "in": {"alignment": "align.alignment"}, "params": {"model": "lg"}}
+  },
+  "outputs": {"alignment": "align.alignment", "tree": "tree.tree"}
+}

@@ -1,0 +1,46 @@
+# /opt/patric-common/runtime/bin/multiqc --help
+                                                                                
+ /// MultiQC 🔍 v1.25                                                           
+                                                                                
+ Usage: multiqc [OPTIONS] [ANALYSIS DIRECTORY]                                  
+                                                                                
+ MultiQC aggregates results from bioinformatics analyses across many samples    
+ into a single report.                                                          
+ It searches a given directory for analysis logs and compiles an HTML report.   
+ It's a general use tool, perfect for summarising the output from numerous      
+ bioinformatics tools.                                                          
+ To run, supply with one or more directory to scan for analysis results. For    
+ example, to run in the current working directory, use 'multiqc .'              
+                                                                                
+Traceback (most recent call last):
+  File "/opt/patric-common/runtime/bin/multiqc", line 8, in <module>
+    sys.exit(run_multiqc())
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/multiqc/__main__.py", line 21, in run_multiqc
+    multiqc.run_cli(prog_name="multiqc")
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 151, in main
+    with self.make_context(prog_name, args, **extra) as ctx:
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 260, in make_context
+    return super().make_context(info_name, args, parent, **extra)  # type: ignore[return-value]
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1186, in make_context
+    self.parse_args(ctx, args)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1197, in parse_args
+    value, args = param.handle_parse_result(ctx, opts, args)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 2416, in handle_parse_result
+    value = self.process_value(ctx, value)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 2355, in process_value
+    value = self.callback(ctx, self, value)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/decorators.py", line 539, in show_help
+    echo(ctx.get_help(), color=ctx.color)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 730, in get_help
+    return self.command.get_help(self)
+  File "/home/ac.cucinell/.local/lib/python3.10/site-packages/click/core.py", line 1064, in get_help
+    self.format_help(ctx, formatter)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 215, in format_help
+    self.format_options(ctx, formatter)
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_command.py", line 232, in format_options
+    get_rich_options(self, ctx, formatter)  # type: ignore[arg-type]
+  File "/opt/patric-common/runtime/lib/python3.10/site-packages/rich_click/rich_help_rendering.py", line 497, in get_rich_options
+    metavar_str = param.make_metavar()
+TypeError: Parameter.make_metavar() missing 1 required positional argument: 'ctx'

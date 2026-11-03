@@ -1,0 +1,58 @@
+schema: modpipe/module/v1
+id: spades
+version: 1
+label: "SPAdes: short-read (and hybrid) genome assembly"
+description: >-
+  De novo assembly with SPAdes 4. Modes: isolate (default), careful, meta (metaSPAdes), plasmid, rnaviral,
+  sc (single-cell). Optional long reads give a hybrid assembly.
+category: assembly
+tool: {id: spades, binary: spades.py, version: 4.0.0}
+
+inputs:
+  - id: reads
+    type: reads.short
+  - id: long_reads
+    type: reads.long
+    required: false
+    description: Optional nanopore/PacBio reads for a hybrid assembly
+
+outputs:
+  - {id: contigs, type: sequences.dna.contigs, path: out/contigs.fasta}
+  - {id: scaffolds, type: sequences.dna.contigs, path: out/scaffolds.fasta}
+  - {id: graph, type: assembly.graph.gfa, path: out/assembly_graph_with_scaffolds.gfa}
+  - {id: graph_fastg, type: assembly.graph.fastg, path: out/assembly_graph.fastg}
+  - {id: log, type: report.text, path: out/spades.log}
+
+parameters:
+  - id: mode
+    type: enum
+    enum: [isolate, careful, meta, plasmid, rnaviral, sc, default]
+    default: isolate
+    label: "Assembly mode"
+    description: "isolate is recommended for bacterial isolates with high coverage; meta needs exactly one paired library"
+  - {id: kmers, type: string, default: "auto", advanced: true, label: "k-mer sizes (-k), e.g. 21,33,55 or auto"}
+
+resources: {cpu: 16, memory: 64G, runtime: 12h}
+
+command: |
+  {% if params.mode == 'meta' and inputs.reads.type == 'reads.short.single' %}{{ fail('SPAdes --meta needs paired-end reads') }}{% endif %}
+  spades.py {% if params.mode != 'default' %}--{{ params.mode }}{% endif %}
+  -t {{ cpu }} -m {{ memory_gb | int }}
+  {% if inputs.reads.type == 'reads.short.paired' %}-1 {{ inputs.reads.r1 | q }} -2 {{ inputs.reads.r2 | q }}
+  {% elif inputs.reads.type == 'reads.short.interleaved' %}--12 {{ inputs.reads | q }}
+  {% else %}-s {{ inputs.reads | q }}{% endif %}
+  {% if inputs.long_reads %}
+    {% if inputs.long_reads.type == 'reads.long.nanopore' %}--nanopore{% else %}--pacbio{% endif %} {{ inputs.long_reads | q }}
+  {% endif %}
+  {% if params.kmers != 'auto' %}-k {{ params.kmers }}{% endif %}
+  -o out
+
+tests:
+  discovery_runs: [spades_isolate_pe, spades_meta_pe, spades_isolate_se, spades_hybrid, spades_rnaviral_ont]
+  observed: {max_rss_mb: 1037, max_wall_s: 25, note: "358 kb Portiera fixtures, 8 CPUs; real bacterial isolates need far more"}
+provenance:
+  bvbrc_invocations: [p3x-assembly.py, MetagenomeBinning.pm]
+  nfcore: [spades]
+notes: >-
+  BV-BRC GenomeAssembly2 also post-filters contigs by length/coverage; that will be a separate filter module.
+  SPAdes writes ~100 internal files (K*/ dirs, misc/); only the ports above are exposed.

@@ -1,0 +1,83 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bcftools_call",
+ "set": "mapping_variants",
+ "tool": "bcftools",
+ "mode": "mpileup+call",
+ "description": null,
+ "tool_version": "1.13",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373340_16",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:42",
+ "inputs": {
+  "REF": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  },
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  }
+ },
+ "prep": null,
+ "cmd": "bcftools mpileup -f $REF $BAM | bcftools call -mv -Oz -o calls.vcf.gz && bcftools index calls.vcf.gz",
+ "wall_s": 0.17,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "calls.vcf.gz",
+   "size": 1425,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "vcf",
+   "preview": [
+    "##fileformat=VCFv4.2",
+    "##FILTER=<ID=PASS,Description=\"All filters passed\">",
+    "##bcftoolsVersion=1.13+htslib-1.13+ds"
+   ],
+   "lines": 41,
+   "records": 12,
+   "sha256": "dfdb8b0f3dc61842d930998e17d1ab264f7e9cbff5f410687bed151966c97659"
+  },
+  {
+   "path": "calls.vcf.gz.csi",
+   "size": 144,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "index",
+   "sha256": "8708021f5c9860466867b2c59d7a7953b838860ec535ea96c575679e16387b36"
+  },
+  {
+   "path": "inputs/genome.fasta.fai",
+   "size": 27,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1\t29829\t120\t80\t81"
+   ],
+   "lines": 1,
+   "sha256": "7460341f2de1295e0b54f86ff8a39d33a4f3e11da8a2f3763194eeaad99694d4"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 1596,
+ "time": {
+  "elapsed": "0:00.15",
+  "max_rss_kb": "37660",
+  "cpu_pct": "90",
+  "exit_status": "0",
+  "user_s": "0.08",
+  "sys_s": "0.05",
+  "elapsed_s": 0.15,
+  "max_rss_mb": 36.8
+ },
+ "stdout_tail": "",
+ "stderr_tail": "Note: none of --samples-file, --ploidy or --ploidy-file given, assuming all sites are diploid\n[mpileup] 1 samples in 1 input files\n[mpileup] maximum number of reads per input file set to -d 250\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:43"
+}

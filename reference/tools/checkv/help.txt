@@ -1,0 +1,33 @@
+# /opt/patric-common/runtime/bin/checkv cmd: checkv -h; checkv end_to_end -h
+CheckV v0.7.0: assessing the quality of metagenome-assembled viral genomes
+https://bitbucket.org/berkeleylab/checkv
+
+usage: checkv <program> [options]
+
+programs:
+    end_to_end          run full pipeline to estimate completeness, contamination, and identify closed genomes
+    contamination       identify and remove host contamination on integrated proviruses
+    completeness        estimate completeness for genome fragments
+    complete_genomes    identify complete genomes based on terminal repeats and flanking host regions
+    quality_summary     summarize results across modules
+    download_database   download the latest version of CheckV's database
+    update_database     update CheckV's database with your own complete genomes
+
+options:
+  -h, --help  show this help message and exit
+Run full pipeline to estimate completeness, contamination, and identify closed genomes
+
+usage: checkv end_to_end <input> <output> [options]
+
+positional arguments:
+  input       Input nucleotide sequences in FASTA format
+  output      Output directory
+
+options:
+  -h, --help  show this help message and exit
+  -d PATH     Reference database path. By default the CHECKVDB environment
+              variable is used
+  -t INT      Number of threads to use for Prodigal and DIAMOND
+  --restart   Overwrite existing intermediate files. By default CheckV
+              continues where program left off
+  --quiet     Suppress logging messages

@@ -1,0 +1,79 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "hisat2_align_rnaseq",
+ "set": "mapping_variants",
+ "tool": "hisat2",
+ "mode": "align_paired_rnaseq",
+ "description": null,
+ "tool_version": "2.2.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373340_5",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:26",
+ "inputs": {
+  "REF": {
+   "fixture": "hs_genome",
+   "path": "inputs/genome.fasta",
+   "size": 40675
+  },
+  "R1": {
+   "fixture": "hs_rnaseq_1",
+   "path": "inputs/test_rnaseq_1.fastq.gz",
+   "size": 156910
+  },
+  "R2": {
+   "fixture": "hs_rnaseq_2",
+   "path": "inputs/test_rnaseq_2.fastq.gz",
+   "size": 185801
+  }
+ },
+ "prep": "hisat2-build -p $CPU $REF refidx",
+ "cmd": "hisat2 -p $CPU -x refidx -1 $R1 -2 $R2 -S aln.sam --summary-file summary.txt --new-summary",
+ "wall_s": 2.32,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aln.sam",
+   "size": 3029410,
+   "new": true,
+   "kind": "sam",
+   "preview": [
+    "@HD\tVN:1.0\tSO:unsorted",
+    "@SQ\tSN:chr22\tLN:40001",
+    "@PG\tID:hisat2\tPN:hisat2\tVN:2.2.1\tCL:\"/usr/bin/hisat2-align-s --wrapper basic-0 -p 4 -x refidx -S aln.sam --summary-file summary.txt --new-summary -1 /tmp/651126.inpipe1 -2 /tmp/651126.inpipe2\""
+   ],
+   "sha256": "7a9d1a304aa8cb044c2603fe8e927422249522c73e08c491a1af0d569996a521"
+  },
+  {
+   "path": "summary.txt",
+   "size": 384,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "HISAT2 summary stats:",
+    "\tTotal pairs: 4159",
+    "\t\tAligned concordantly or discordantly 0 time: 3640 (87.52%)"
+   ],
+   "lines": 11,
+   "sha256": "8ebc6e70684154def3b2ba923243a7ce0ef26ddd0c36054fa7d47314afe6a534"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 3029794,
+ "time": {
+  "elapsed": "0:02.31",
+  "max_rss_kb": "16444",
+  "cpu_pct": "26",
+  "exit_status": "0",
+  "user_s": "0.29",
+  "sys_s": "0.32",
+  "elapsed_s": 2.31,
+  "max_rss_mb": 16.1
+ },
+ "stdout_tail": "",
+ "stderr_tail": "HISAT2 summary stats:\n\tTotal pairs: 4159\n\t\tAligned concordantly or discordantly 0 time: 3640 (87.52%)\n\t\tAligned concordantly 1 time: 517 (12.43%)\n\t\tAligned concordantly >1 times: 0 (0.00%)\n\t\tAligned discordantly 1 time: 2 (0.05%)\n\tTotal unpaired reads: 7280\n\t\tAligned 0 time: 5822 (79.97%)\n\t\tAligned 1 time: 1458 (20.03%)\n\t\tAligned >1 times: 0 (0.00%)\n\tOverall alignment rate: 30.01%\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:32"
+}

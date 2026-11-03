@@ -1,0 +1,141 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "stringtie_ballgown",
+ "set": "typing_expression",
+ "tool": "stringtie",
+ "mode": "estimate_only_ballgown",
+ "description": null,
+ "tool_version": "2.2.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373358_10",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:38:15",
+ "inputs": {
+  "BAM": {
+   "fixture": "hs_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 179552
+  },
+  "GTF": {
+   "fixture": "hs_gtf",
+   "path": "inputs/genome.gtf",
+   "size": 15025
+  }
+ },
+ "prep": null,
+ "cmd": "mkdir bg && stringtie $BAM -G $GTF -e -B -o bg/transcripts.gtf -A gene_abund.tab -p $CPU",
+ "wall_s": 0.07,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "bg/e2t.ctab",
+   "size": 104,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "e_id\tt_id",
+    "1\t1",
+    "2\t1"
+   ],
+   "lines": 21,
+   "sha256": "984692beef295456062e0cd0f392d72941a9e22e1a12e3e8905911ef3431a102"
+  },
+  {
+   "path": "bg/e_data.ctab",
+   "size": 1198,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "e_id\tchr\tstrand\tstart\tend\trcount\tucount\tmrcount\tcov\tcov_sd\tmcov\tmcov_sd",
+    "1\tchr22\t+\t1\t124\t0\t0\t0.00\t0.0000\t0.0000\t0.0000\t0.0000",
+    "2\tchr22\t+\t682\t727\t0\t0\t0.00\t0.0000\t0.0000\t0.0000\t0.0000"
+   ],
+   "lines": 20,
+   "sha256": "8e3ab77dbb7962bc18039c599ca40b68098615edad27d2f6af001df48f9ec39a"
+  },
+  {
+   "path": "bg/i2t.ctab",
+   "size": 42,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "i_id\tt_id",
+    "1\t1",
+    "2\t1"
+   ],
+   "lines": 9,
+   "sha256": "c094fa54d03de0d7790d83f9256bc0ef8acdd5027244b427ffd0b1620ea24b7a"
+  },
+  {
+   "path": "bg/i_data.ctab",
+   "size": 251,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "i_id\tchr\tstrand\tstart\tend\trcount\tucount\tmrcount",
+    "1\tchr22\t+\t125\t681\t0\t0\t0.00",
+    "2\tchr22\t+\t728\t1017\t0\t0\t0.00"
+   ],
+   "lines": 8,
+   "sha256": "005d35d93fe7229b5e6532754329646ed8b9593936c8767db764817f5ef3400f"
+  },
+  {
+   "path": "bg/t_data.ctab",
+   "size": 1127,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "t_id\tchr\tstrand\tstart\tend\tt_name\tnum_exons\tlength\tgene_id\tgene_name\tcov\tFPKM",
+    "1\tchr22\t+\t1\t2611\tENST00000454360\t5\t617\tENSG00000233995\tAP000547.1\t0.000000\t0.000000",
+    "2\tchr22\t-\t3337\t10681\tENST00000493696\t3\t3389\tENSG00000239435\tKCNMB3P1\t80.141342\t247618.843750"
+   ],
+   "lines": 13,
+   "sha256": "0f4379e4b81828d6e95bf0a0f138f95abea348d3383acb059369982cd30d67a2"
+  },
+  {
+   "path": "bg/transcripts.gtf",
+   "size": 5296,
+   "new": true,
+   "kind": "gff",
+   "preview": [
+    "# stringtie /disks/tmp/cucinell/modpipe-discovery/typing_expression/stringtie_ballgown-21373358_10/inputs/test.paired_end.sorted.bam -G /disks/tmp/cucinell/modpipe-discovery/typing_expression/stringti",
+    "# StringTie version 2.2.1",
+    "chr22\thavana\ttranscript\t1\t2611\t.\t+\t.\tgene_id \"ENSG00000233995\"; transcript_id \"ENST00000454360\"; ref_gene_name \"AP000547.1\"; cov \"0.0\"; FPKM \"0.000000\"; TPM \"0.000000\";"
+   ],
+   "lines": 34,
+   "records": 32,
+   "sha256": "8ac3699224eb044de7831ee68cfb2e8cdf480970d7570cfafeb501cbf1b3b2af"
+  },
+  {
+   "path": "gene_abund.tab",
+   "size": 500,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Gene ID\tGene Name\tReference\tStrand\tStart\tEnd\tCoverage\tFPKM\tTPM",
+    "ENSG00000233995\tAP000547.1\tchr22\t+\t1\t2611\t0.000000\t0.000000\t0.000000",
+    "ENSG00000239435\tKCNMB3P1\tchr22\t-\t3337\t10681\t80.141342\t247618.843750\t1000000.000000"
+   ],
+   "lines": 8,
+   "sha256": "ad6aa9a58e8931b56e65936da51ebc387bdd2bf2cbce4583ab17c424465e7826"
+  }
+ ],
+ "n_outputs": 7,
+ "output_bytes": 8518,
+ "time": {
+  "elapsed": "0:00.03",
+  "max_rss_kb": "6144",
+  "cpu_pct": "42",
+  "exit_status": "0",
+  "user_s": "0.00",
+  "sys_s": "0.00",
+  "elapsed_s": 0.03,
+  "max_rss_mb": 6.0
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:15"
+}

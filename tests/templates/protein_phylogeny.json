@@ -1,0 +1,1 @@
+{"inputs": {"proteins": {"fixture": "sarscov2_proteome"}}, "params": {"tree.params.bootstrap": 1000}}

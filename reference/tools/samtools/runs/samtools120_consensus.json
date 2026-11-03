@@ -1,0 +1,59 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "samtools120_consensus",
+ "set": "mapping_variants",
+ "tool": "samtools",
+ "mode": "consensus_runtime_1.20",
+ "description": null,
+ "tool_version": "1.13",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373340_15",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:41",
+ "inputs": {
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  }
+ },
+ "prep": null,
+ "cmd": "S=$(ls /opt/patric-common/runtime/samtools-1.20/bin/samtools 2>/dev/null || find /opt/patric-common/runtime/samtools-1.20 -name samtools -type f | head -1); $S --version | head -1; $S consensus -o consensus.fa $BAM",
+ "wall_s": 5.93,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "consensus.fa",
+   "size": 29913,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1",
+    "TATAATTAATAACTAATTACTGTCGTTGACAGGACACGAGTAACTCGTCTATCTTCTGCAGGCTGCTTAC",
+    "GGTTTCTTCCGTGTTGCAGCCGATCATCAGCACATCTAGGTTTTGTCCGGGTGTGACCGAAAGGTAAGAT"
+   ],
+   "lines": 423,
+   "records": 1,
+   "residues": 29479,
+   "sha256": "b344a1a81373a8b2c06e2dce12da17696a434aded812d6ca170b00c99b413ae4"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 29913,
+ "time": {
+  "elapsed": "0:05.88",
+  "max_rss_kb": "11492",
+  "cpu_pct": "29",
+  "exit_status": "0",
+  "user_s": "0.01",
+  "sys_s": "1.75",
+  "elapsed_s": 5.88,
+  "max_rss_mb": 11.2
+ },
+ "stdout_tail": "samtools 1.20\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:47"
+}

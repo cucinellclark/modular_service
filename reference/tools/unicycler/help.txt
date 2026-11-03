@@ -1,0 +1,68 @@
+# /usr/bin/unicycler --help
+usage: unicycler [-h] [--help_all] [--version] [-1 SHORT1] [-2 SHORT2]
+                 [-s UNPAIRED] [-l LONG] -o OUT [--verbosity VERBOSITY]
+                 [--min_fasta_length MIN_FASTA_LENGTH] [--keep KEEP]
+                 [-t THREADS] [--mode {conservative,normal,bold}]
+                 [--linear_seqs LINEAR_SEQS] [--vcf]
+
+[31m[1m       __
+[0m[31m[1m       \ \___
+[0m[31m[1m        \ ___\
+[0m[31m[1m        //
+[0m[31m[1m   ____//      [0m[93m[1m_    _         _                     _
+[0m[31m[1m //_  //\\    [0m[93m[1m| |  | |       |_|                   | |
+[0m[31m[1m//  \//  \\   [0m[93m[1m| |  | | _ __   _   ___  _   _   ___ | |  ___  _ __
+[0m[31m[1m||  (O)  ||   [0m[93m[1m| |  | || '_ \ | | / __|| | | | / __|| | / _ \| '__|
+[0m[31m[1m\\    \_ //   [0m[93m[1m| |__| || | | || || (__ | |_| || (__ | ||  __/| |
+[0m[31m[1m \\_____//     [0m[93m[1m\____/ |_| |_||_| \___| \__, | \___||_| \___||_|
+[0m[93m[1m                                        __/ |
+[0m[93m[1m                                       |___/[0m
+
+[1mUnicycler: an assembly pipeline for bacterial genomes[0m
+
+[1mHelp[0m:
+  -h, --help              [2mShow this help message and exit[0m
+  --help_all              [2mShow a help message with all program options[0m
+  --version               [2mShow Unicycler's version number[0m
+
+[1mInput[0m:
+  -1 SHORT1, --short1 SHORT1
+                          [2mFASTQ file of first short reads in each pair[0m
+                          [2m(required)[0m
+  -2 SHORT2, --short2 SHORT2
+                          [2mFASTQ file of second short reads in each pair[0m
+                          [2m(required)[0m
+  -s UNPAIRED, --unpaired UNPAIRED
+                          [2mFASTQ file of unpaired short reads (optional)[0m
+  -l LONG, --long LONG    [2mFASTQ or FASTA file of long reads (optional)[0m
+
+[1mOutput[0m:
+  -o OUT, --out OUT       [2mOutput directory (required)[0m
+  --verbosity VERBOSITY   [2mLevel of stdout and log file information (default: 1)[0m
+                          [2m  0 = no stdout, 1 = basic progress indicators,[0m
+                          [2m  2 = extra info, 3 = debugging info[0m
+  --min_fasta_length MIN_FASTA_LENGTH
+                          [2mExclude contigs from the FASTA file which are[0m
+                          [2mshorter than this length (default: 100)[0m
+  --keep KEEP             [2mLevel of file retention (default: 1)[0m
+                          [2m  0 = only keep final files: assembly (FASTA,[0m
+                          [2m  GFA and log),[0m
+                          [2m  1 = also save graphs at main checkpoints,[0m
+                          [2m  2 = also keep SAM (enables fast rerun in different mode),[0m
+                          [2m  3 = keep all temp files and save all graphs (for debugging)[0m
+  --vcf                   [2mProduce a VCF by mapping the short reads to the[0m
+                          [2mfinal assembly (experimental, default: do not[0m
+                          [2mproduce a vcf file)[0m
+
+[1mOther[0m:
+  -t THREADS, --threads THREADS
+                          [2mNumber of threads used (default: 8)[0m
+  --mode {conservative,normal,bold}
+                          [2mBridging mode (default: normal)[0m
+                          [2m  conservative = smaller contigs, lowest misassembly[0m
+                          [2m                 rate[0m
+                          [2m  normal = moderate contig size and misassembly rate[0m
+                          [2m  bold = longest contigs, higher misassembly rate[0m
+  --linear_seqs LINEAR_SEQS
+                          [2mThe expected number of linear (i.e. non-circular)[0m
+                          [2msequences in the underlying sequence (default: 0)[0m

@@ -1,0 +1,32 @@
+schema: modpipe/module/v1
+id: bwa_mem
+version: 1
+label: "BWA-MEM: map short reads to a reference (sorted, indexed BAM)"
+description: Indexes the reference, maps short reads with BWA-MEM, then coordinate-sorts and indexes the BAM. Includes flagstat.
+category: mapping
+tool: {id: bwa, binary: bwa, version: 0.7.17}
+inputs:
+  - {id: reads, type: reads.short}
+  - {id: reference, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - id: alignment
+    type: alignment.reads.bam
+    parts: {bam: aligned.bam, index: aligned.bam.bai}
+    attributes: {sorted: coordinate, indexed: true}
+  - {id: flagstat, type: report.text, path: flagstat.txt}
+parameters:
+  - {id: read_group, type: string, default: "", advanced: true, label: "Read group sample name (@RG SM); empty = none"}
+resources: {cpu: 8, memory: 16G, runtime: 6h}
+command: |
+  cp {{ inputs.reference | q }} ref.fa && bwa index ref.fa 2> bwa_index.log &&
+  bwa mem -t {{ cpu }}
+  {% if params.read_group %}-R {{ ('@RG\\tID:' ~ params.read_group ~ '\\tSM:' ~ params.read_group) | q }}{% endif %}
+  ref.fa
+  {% if inputs.reads.type == 'reads.short.paired' %}{{ inputs.reads.r1 | q }} {{ inputs.reads.r2 | q }}
+  {% elif inputs.reads.type == 'reads.short.interleaved' %}-p {{ inputs.reads | q }}
+  {% else %}{{ inputs.reads | q }}{% endif %}
+  | samtools sort -@ {{ [cpu - 1, 1] | max }} -o {{ outputs.alignment.bam }} -
+  && samtools index {{ outputs.alignment.bam }} && samtools flagstat {{ outputs.alignment.bam }} > {{ outputs.flagstat }}
+tests:
+  discovery_runs: [bwa_mem_sorted]
+provenance: {bvbrc_invocations: [p3_tnseq.py, reference_guided_assembly.py], nfcore: [bwa/index, bwa/mem]}

@@ -1,0 +1,57 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "blastp_tab",
+ "set": "homology",
+ "tool": "blastp",
+ "mode": "outfmt6",
+ "description": null,
+ "tool_version": "2.15.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373352_2",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:20",
+ "inputs": {
+  "P": {
+   "fixture": "portiera_proteome",
+   "path": "inputs/proteome.fasta",
+   "size": 104161
+  }
+ },
+ "prep": "makeblastdb -in $P -dbtype prot -out protdb\nawk '/^>/{n++} n<=20' $P > query.faa\n",
+ "cmd": "blastp -query query.faa -db protdb -evalue 1e-5 -num_threads $CPU -outfmt \"6 std qlen slen\" -out hits.tsv",
+ "wall_s": 14.91,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "hits.tsv",
+   "size": 2032,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "WP_014894920.1\tWP_014894920.1\t100.000\t641\t0\t0\t1\t641\t1\t641\t0.0\t1290\t641\t641",
+    "WP_014894921.1\tWP_014894921.1\t100.000\t347\t0\t0\t1\t347\t1\t347\t0.0\t712\t347\t347",
+    "WP_014894922.1\tWP_014894922.1\t100.000\t463\t0\t0\t1\t463\t1\t463\t0.0\t885\t463\t463"
+   ],
+   "lines": 26,
+   "sha256": "9ec3379b136a094c37c16a50e9bf1599cb4a4e5a618abfceea00ce1e30ea6add"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 2032,
+ "time": {
+  "elapsed": "0:14.88",
+  "max_rss_kb": "26308",
+  "cpu_pct": "12",
+  "exit_status": "0",
+  "user_s": "0.18",
+  "sys_s": "1.62",
+  "elapsed_s": 14.88,
+  "max_rss_mb": 25.7
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:41"
+}

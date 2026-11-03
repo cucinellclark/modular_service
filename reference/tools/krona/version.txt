@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/ktImportText cmd: ktImportText 2>&1 | grep KronaTools
+__________________________________________/ KronaTools 2.8.1 - ktImportText \___

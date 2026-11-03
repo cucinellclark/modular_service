@@ -1,0 +1,146 @@
+# /usr/bin/bcftools cmd: bcftools --help; for s in mpileup call consensus view; do echo "### bcftools $s"; bcftools $s 2>&1 | head -60; done
+
+Program: bcftools (Tools for variant calling and manipulating VCFs and BCFs)
+Version: 1.13 (using htslib 1.13+ds)
+
+Usage:   bcftools [--version|--version-only] [--help] <command> <argument>
+
+Commands:
+
+ -- Indexing
+    index        index VCF/BCF files
+
+ -- VCF/BCF manipulation
+    annotate     annotate and edit VCF/BCF files
+    concat       concatenate VCF/BCF files from the same set of samples
+    convert      convert VCF/BCF files to different formats and back
+    isec         intersections of VCF/BCF files
+    merge        merge VCF/BCF files files from non-overlapping sample sets
+    norm         left-align and normalize indels
+    plugin       user-defined plugins
+    query        transform VCF/BCF into user-defined formats
+    reheader     modify VCF/BCF header, change sample names
+    sort         sort VCF/BCF file
+    view         VCF/BCF conversion, view, subset and filter VCF/BCF files
+
+ -- VCF/BCF analysis
+    call         SNP/indel calling
+    consensus    create consensus sequence by applying VCF variants
+    cnv          HMM CNV calling
+    csq          call variation consequences
+    filter       filter VCF/BCF files using fixed thresholds
+    gtcheck      check sample concordance, detect sample swaps and contamination
+    mpileup      multi-way pileup producing genotype likelihoods
+    roh          identify runs of autozygosity (HMM)
+    stats        produce VCF/BCF stats
+
+ Most commands accept VCF, bgzipped VCF, and BCF with the file type detected
+ automatically even when streaming from a pipe. Indexed VCF and BCF will work
+ in all situations. Un-indexed VCF and BCF and streams will work in most but
+ not all situations.
+
+### bcftools mpileup
+
+Usage: bcftools mpileup [options] in1.bam [in2.bam [...]]
+
+Input options:
+  -6, --illumina1.3+      quality is in the Illumina-1.3+ encoding
+  -A, --count-orphans     do not discard anomalous read pairs
+  -b, --bam-list FILE     list of input BAM filenames, one per line
+  -B, --no-BAQ            disable BAQ (per-Base Alignment Quality)
+  -C, --adjust-MQ INT     adjust mapping quality [0]
+  -D, --full-BAQ          Apply BAQ everywhere, not just in problematic regions
+  -d, --max-depth INT     max raw per-file depth; avoids excessive memory usage [250]
+  -E, --redo-BAQ          recalculate BAQ on the fly, ignore existing BQs
+  -f, --fasta-ref FILE    faidx indexed reference sequence file
+      --no-reference      do not require fasta reference file
+  -G, --read-groups FILE  select or exclude read groups listed in the file
+  -q, --min-MQ INT        skip alignments with mapQ smaller than INT [0]
+  -Q, --min-BQ INT        skip bases with baseQ/BAQ smaller than INT [1]
+      --max-BQ INT        limit baseQ/BAQ to no more than INT [60]
+      --delta-BQ INT      Use neighbour_qual + INT if less than qual [30]
+  -r, --regions REG[,...] comma separated list of regions in which pileup is generated
+  -R, --regions-file FILE restrict to regions listed in a file
+      --ignore-RG         ignore RG tags (one BAM = one sample)
+  --rf, --incl-flags STR|INT  required flags: skip reads with mask bits unset []
+  --ff, --excl-flags STR|INT  filter flags: skip reads with mask bits set
+                                            [UNMAP,SECONDARY,QCFAIL,DUP]
+  -s, --samples LIST      comma separated list of samples to include
+  -S, --samples-file FILE file of samples to include
+  -t, --targets REG[,...] similar to -r but streams rather than index-jumps
+  -T, --targets-file FILE similar to -R but streams rather than index-jumps
+  -x, --ignore-overlaps   disable read-pair overlap detection
+      --seed INT          random number seed used for sampling deep regions [0]
+
+Output options:
+  -a, --annotate LIST     optional tags to output; '?' to list available tags []
+  -g, --gvcf INT[,...]    group non-variant sites into gVCF blocks according
+                          to minimum per-sample DP
+      --no-version        do not append version and command line to the header
+  -o, --output FILE       write output to FILE [standard output]
+  -O, --output-type TYPE  'b' compressed BCF; 'u' uncompressed BCF;
+                          'z' compressed VCF; 'v' uncompressed VCF [v]
+  -U, --mwu-u             use older probability scale for Mann-Whitney U test
+      --threads INT       use multithreading with INT worker threads [0]
+
+SNP/INDEL genotype likelihoods options:
+  -X, --config STR        Specify platform specific profiles (see below)
+  -e, --ext-prob INT      Phred-scaled gap extension seq error probability [20]
+  -F, --gap-frac FLOAT    minimum fraction of gapped reads [0.05]
+  -h, --tandem-qual INT   coefficient for homopolymer errors [500]
+  -I, --skip-indels       do not perform indel calling
+  -L, --max-idepth INT    maximum per-file depth for INDEL calling [250]
+  -m, --min-ireads INT    minimum number gapped reads for indel candidates [2]
+  -M, --max-read-len INT  maximum length of read to pass to BAQ algorithm [500]
+  -o, --open-prob INT     Phred-scaled gap open seq error probability [40]
+  -p, --per-sample-mF     apply -m and -F per-sample for increased sensitivity
+  -P, --platforms STR     comma separated list of platforms for indels [all]
+  --ar, --ambig-reads STR   What to do with ambiguous indel reads: drop,incAD,incAD0 [drop]
+      --indel-bias FLOAT  Raise to favour recall over precision [1.00]
+
+Configuration profiles activated with -X, --config:
+    1.12:        -Q13 -h100 -m1 -F0.002
+### bcftools call
+Note: none of --samples-file, --ploidy or --ploidy-file given, assuming all sites are diploid
+Expected -c or -m option
+### bcftools consensus
+
+About: Create consensus sequence by applying VCF variants to a reference fasta
+       file. By default, the program will apply all ALT variants. Using the
+       --sample (and, optionally, --haplotype) option will apply genotype
+       (or haplotype) calls from FORMAT/GT. The program ignores allelic depth
+       information, such as INFO/AD or FORMAT/AD.
+Usage: bcftools consensus [OPTIONS] <file.vcf.gz>
+Options:
+    -c, --chain FILE               write a chain file for liftover
+    -a, --absent CHAR              replace positions absent from VCF with CHAR
+    -e, --exclude EXPR             exclude sites for which the expression is true (see man page for details)
+    -f, --fasta-ref FILE           reference sequence in fasta format
+    -H, --haplotype WHICH          choose which allele to use from the FORMAT/GT field, note
+                                   the codes are case-insensitive:
+                                       1: first allele from GT, regardless of phasing
+                                       2: second allele from GT, regardless of phasing
+                                       R: REF allele in het genotypes
+                                       A: ALT allele
+                                       I: IUPAC code for all genotypes
+                                       LR,LA: longer allele and REF/ALT if equal length
+                                       SR,SA: shorter allele and REF/ALT if equal length
+                                       1pIu,2pIu: first/second allele for phased and IUPAC code for unphased GTs
+    -i, --include EXPR             select sites for which the expression is true (see man page for details)
+    -I, --iupac-codes              output variants in the form of IUPAC ambiguity codes
+        --mark-del CHAR            instead of removing sequence, insert CHAR for deletions
+        --mark-ins uc|lc           highlight insertions in uppercase (uc) or lowercase (lc), leaving the rest as is
+        --mark-snv uc|lc           highlight substitutions in uppercase (uc) or lowercase (lc), leaving the rest as is
+    -m, --mask FILE                replace regions according to the next --mask-with option. The default is --mask-with N
+        --mask-with CHAR|uc|lc     replace with CHAR (skips overlapping variants); change to uppercase (uc) or lowercase (lc)
+    -M, --missing CHAR             output CHAR instead of skipping a missing genotype "./."
+    -o, --output FILE              write output to a file [standard output]
+    -p, --prefix STRING            prefix to add to output sequence names
+    -s, --sample NAME              apply variants of the given sample
+Examples:
+   # Get the consensus for one region. The fasta header lines are then expected
+   # in the form ">chr:from-to".
+   samtools faidx ref.fa 8:11870-11890 | bcftools consensus in.vcf.gz > out.fa
+
+### bcftools view
+Failed to read from standard input: unknown file type

@@ -1,0 +1,56 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "pangolin_skip_scorpio",
+ "set": "typing_expression",
+ "tool": "pangolin",
+ "mode": "skip_scorpio",
+ "description": null,
+ "tool_version": "4.3.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373447_10",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:44:39",
+ "inputs": {
+  "G": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  }
+ },
+ "prep": null,
+ "cmd": "pangolin $G --outfile lineage_report.csv -t $CPU --tempdir $TMPDIR --skip-scorpio",
+ "wall_s": 11.04,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "lineage_report.csv",
+   "size": 432,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "taxon,lineage,conflict,ambiguity_score,scorpio_call,scorpio_support,scorpio_conflict,scorpio_notes,version,pangolin_version,scorpio_version,constellation_version,is_designated,qc_status,qc_notes,note",
+    "\"MT192765.1 Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/PC00101P/2020, complete genome\",B.1,0.0,,,,,,PANGO-v1.30,4.3.1,0.3.19,v0.1.12,True,pass,Ambiguous_content:0.02,"
+   ],
+   "lines": 2,
+   "sha256": "a41487ace64a0468a4e04e5534a7cfacae71bf3967898e7a23f7480f6d978e9c"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 432,
+ "time": {
+  "elapsed": "0:11.00",
+  "max_rss_kb": "505188",
+  "cpu_pct": "128",
+  "exit_status": "0",
+  "user_s": "11.75",
+  "sys_s": "2.33",
+  "elapsed_s": 11.0,
+  "max_rss_mb": 493.3
+ },
+ "stdout_tail": "\u001b[32m****\nQuery sequences collapsed from \u001b[0m1\u001b[32m to \u001b[0m1\u001b[32m unique sequences.\u001b[0m\n\u001b[32m****\nRunning sequence QC\u001b[0m\n\u001b[32mTotal passing QC: \u001b[0m1\n\u001b[32m****\n\u001b[0m1\u001b[32m sequences assigned via designations.\u001b[0m\nUsing UShER as inference engine.\n\u001b[32m****\nPangolin skipping scorpio steps.\n****\u001b[0m\n\u001b[32m****\nPangolin running in usher mode.\n****\u001b[0m\n\u001b[32mMaximum ambiguity allowed is 0.3.\n****\u001b[0m\n\u001b[32mQuery file:\t\u001b[0m/disks/tmp/cucinell/modpipe-discovery/typing_expression/pangolin_skip_scorpio-21373447_10/inputs/genome.fasta\n\u001b[32m****\nData files found:\u001b[0m\nusher_pb:\t/opt/patric-common/runtime/pangolin/lib/python3.8/site-packages/pangolin_data/data/lineageTree.pb\n\u001b[32m****\u001b[0m\n\u001b[32m****\nOutput file written to: \u001b[0m/disks/tmp/cucinell/modpipe-discovery/typing_expression/pangolin_skip_scorpio-21373447_10/lineage_report.csv\n",
+ "stderr_tail": "Building DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nJob stats:\njob                      count    min threads    max threads\n---------------------  -------  -------------  -------------\nalign_to_reference           1              1              1\nall                          1              1              1\ncache_sequence_assign        1              1              1\ncreate_seq_hash              1              1              1\nget_constellations           1              1              1\nmerged_info                  1              1              1\nscorpio                      1              4              4\nsequence_qc                  1              1              1\ntotal                        8              1              4\n\nSelect jobs to execute...\nBuilding DAG of jobs...\nBuilding DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nSelect jobs to execute...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nSelect jobs to execute...\nSelect jobs to execute...\nBuilding DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nSelect jobs to execute...\nSelect jobs to execute...\nBuilding DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nSelect jobs to execute...\nSelect jobs to execute...\nBuilding DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nSelect jobs to execute...\nBuilding DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nSelect jobs to execute...\nSelect jobs to execute...\nBuilding DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nSelect jobs to execute...\nSelect jobs to execute...\nComplete log: .snakemake/log/2026-11-02T154440.099884.snakemake.log\nBuilding DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nJob stats:\njob                count    min threads    max threads\n---------------  -------  -------------  -------------\nall                    1              1              1\nusher_cache            1              1              1\nusher_inference        1              4              4\nusher_to_report        1              1              1\ntotal                  4              1              4\n\nSelect jobs to execute...\nBuilding DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nSelect jobs to execute...\nSelect jobs to execute...\nSelect jobs to execute...\nBuilding DAG of jobs...\nUsing shell: /usr/bin/bash\nProvided cores: 4\nRules claiming more threads will be scaled down.\nSelect jobs to execute...\nSelect jobs to execute...\nComplete log: .snakemake/log/2026-11-02T154447.040463.snakemake.log\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:44:50"
+}

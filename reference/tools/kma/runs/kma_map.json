@@ -1,0 +1,110 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "kma_map",
+ "set": "mapping_variants",
+ "tool": "kma",
+ "mode": "index+paired",
+ "description": null,
+ "tool_version": "1.4.15",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373340_22",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:50",
+ "inputs": {
+  "REF": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  },
+  "R1": {
+   "fixture": "sarscov2_illumina_test_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 9413
+  },
+  "R2": {
+   "fixture": "sarscov2_illumina_test_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 9395
+  }
+ },
+ "prep": "kma index -i $REF -o refdb",
+ "cmd": "kma -ipe $R1 $R2 -o kma_out -t_db refdb -t $CPU",
+ "wall_s": 0.11,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "kma_out.aln",
+   "size": 108040,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    "# MT192765.1 Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/PC00101P/2020, complete genome",
+    "template: \tGTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCTGTTCTCT",
+    "          \t____________________________________________________________"
+   ],
+   "lines": 1993,
+   "records": 0,
+   "residues": 100569,
+   "sha256": "124dd1894795c8e09ac1c3c15192ca5be5a9dc63b524d239516e0e2af75d4df5"
+  },
+  {
+   "path": "kma_out.frag.gz",
+   "size": 13334,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "text",
+   "preview": [
+    "ATGAAGAGCAACCAATGGAGATTGATTAAACGAACATGAAAATTATTCTTTTCTTGGCACTGATAACACTCGCTACTTGTGAGCTTTATCACTACCAAGAGTGTGTTAGAGGTACAACAGTACTTTTAAAAGAACCTTGCTCTTCTGGAA\t1\t150\t27351\t27501\tMT192765.1 Severe acute respira",
+    "TTTATCTAAGTCACTAACTGAGAATAAATATTCTCAATTAGATGAAGAGCAACCAATGGAGATTGATTAAACGAACATGAAAATTATTCTTTTCTTGGCACTGATAACACTCGCTACTTGTGAGCTTTATCACTACCAAGAGTGTGTTAG\t1\t150\t27310\t27460\tMT192765.1 Severe acute respira",
+    "TGATGAACCGACGACGACTACTAGCGTGCCTTTGTAAGCACAAGCTGATGAGTACGAACTTATGTACTCATTCGTTTCGGAAGAGACAGGTACGTTAATAGTTAAT\t1\t106\t26176\t26282\tMT192765.1 Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV"
+   ],
+   "lines": 198,
+   "sha256": "635639652feedee2eebea5e164f98af5810763bf42dabbcb46b7254bc255b9a3"
+  },
+  {
+   "path": "kma_out.fsa",
+   "size": 13195,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1 Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/PC00101P/2020, complete genome",
+    "tataattaataactaattactgtcgttgacaggacacgagtaactcgtctatcttctgca",
+    "ggctgcttacggtttcttccgtgttgcagccgatcatcagcacatctaggttttgtccgg"
+   ],
+   "lines": 216,
+   "records": 1,
+   "residues": 12860,
+   "sha256": "7754e0ce19e47f7f3033546e4ae55afa75e9f4507481323b31ab27a068db7aa1"
+  },
+  {
+   "path": "kma_out.res",
+   "size": 337,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#Template\tScore\tExpected\tTemplate_length\tTemplate_Identity\tTemplate_Coverage\tQuery_Identity\tQuery_Coverage\tDepth\tq_value\tp_value",
+    "MT192765.1 Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/PC00101P/2020, complete genome\t   27093\t       0\t   29829\t   42.97\t   43.11\t   99.67\t  231.95\t    0.92\t27093.00\t"
+   ],
+   "lines": 2,
+   "sha256": "f330b11a1cf20de18c04ab58d63dfedf247199fad527c3167fc55f8059e98107"
+  }
+ ],
+ "n_outputs": 4,
+ "output_bytes": 134906,
+ "time": {
+  "elapsed": "0:00.07",
+  "max_rss_kb": "7600",
+  "cpu_pct": "16",
+  "exit_status": "0",
+  "user_s": "0.00",
+  "sys_s": "0.01",
+  "elapsed_s": 0.07,
+  "max_rss_mb": 7.4
+ },
+ "stdout_tail": "",
+ "stderr_tail": "# Running KMA.\n# Reading inputfile:\t/disks/tmp/cucinell/modpipe-discovery/mapping_variants/kma_map-21373340_22/inputs/test_1.fastq.gz /disks/tmp/cucinell/modpipe-discovery/mapping_variants/kma_map-21373340_22/inputs/test_2.fastq.gz\n# Phred scale:\t33\n#\n# Total number of query fragment after trimming:\t100\n#\n# Query converted\n#\n#\n# Total time used for DB loading: 0.00 s.\n#\n# Finding k-mer ankers\n# Query ankered\n#\n# KMA mapping done\n#\n# Sort, output and select KMA alignments.\n# Total time for sorting and outputting KMA alignment\t0.00 s.\n#\n# Doing local assemblies of found templates, and output results\n# Total time used for local assembly: 0.00 s.\n#\n# Closing files\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:51"
+}

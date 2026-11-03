@@ -1,0 +1,75 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "WGS assembly with QC",
+  "description": "fastp trimming -> SPAdes assembly -> QUAST against a reference",
+  "inputs": {
+    "reads": {
+      "type": "reads.short.paired",
+      "source": {
+        "paired_end_libs": [
+          {
+            "read1": "/user@bvbrc/home/reads/S1_R1.fastq.gz",
+            "read2": "/user@bvbrc/home/reads/S1_R2.fastq.gz"
+          }
+        ]
+      },
+      "attributes": {
+        "platform": "illumina"
+      }
+    },
+    "reference": {
+      "type": "sequences.dna.contigs",
+      "source": {
+        "genome_ids": [
+          "1206109.14"
+        ]
+      }
+    }
+  },
+  "steps": {
+    "trim": {
+      "module": "fastp",
+      "in": {
+        "reads": "$inputs.reads"
+      },
+      "module_version": 1
+    },
+    "assemble": {
+      "module": "spades",
+      "in": {
+        "reads": "trim.trimmed_reads"
+      },
+      "params": {
+        "mode": "isolate"
+      },
+      "module_version": 1
+    },
+    "qc": {
+      "module": "quast",
+      "in": {
+        "contigs": [
+          "assemble.contigs",
+          "assemble.scaffolds"
+        ],
+        "reference": "$inputs.reference"
+      },
+      "module_version": 1
+    }
+  },
+  "outputs": {
+    "contigs": "assemble.contigs",
+    "assembly_graph": "assemble.graph",
+    "trim_report": "trim.report_html",
+    "qc_report": "qc.report",
+    "qc_metrics": "qc.metrics"
+  },
+  "template": {
+    "expose": [
+      "assemble.params.mode",
+      "trim.params.qualified_quality_phred",
+      "qc.params.min_contig"
+    ],
+    "label": "Genome assembly with QC (SPAdes)",
+    "category": "assembly"
+  }
+}

@@ -1,0 +1,66 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bwa_mem_pe",
+ "set": "mapping_variants",
+ "tool": "bwa",
+ "mode": "mem_paired",
+ "description": null,
+ "tool_version": "0.7.17",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373340_1",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:20",
+ "inputs": {
+  "REF": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  },
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": "bwa index $REF",
+ "cmd": "bwa mem -t $CPU $REF $R1 $R2 > aln.sam",
+ "wall_s": 2.82,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aln.sam",
+   "size": 59451344,
+   "new": true,
+   "kind": "sam",
+   "preview": [
+    "@SQ\tSN:NC_018507.1\tLN:358242",
+    "@PG\tID:bwa\tPN:bwa\tVN:0.7.17-r1188\tCL:bwa mem -t 4 /disks/tmp/cucinell/modpipe-discovery/mapping_variants/bwa_mem_pe-21373340_1/inputs/genome.fasta /disks/tmp/cucinell/modpipe-discovery/mapping_variant",
+    "SRR2838702.1\t83\tNC_018507.1\t129375\t60\t101M\t=\t128712\t-764\tTAAGTGGTTATTGTTTGTGTAGAATAGCTGGGAGACAATGAAGTACAAACGCAAGTTTGTATGGAGTCAATATTGAAATACCAGCCTAATTTTAATTTCTT\tCDDBC@DDDCAEDADFFFFFFFEFHHHEJIHEJIGIJJJJI"
+   ],
+   "sha256": "66416c0054be2838752a34ce48483037739aebf9731e31e7f6b172ee86db7748"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 59451344,
+ "time": {
+  "elapsed": "0:02.77",
+  "max_rss_kb": "160756",
+  "cpu_pct": "314",
+  "exit_status": "0",
+  "user_s": "8.52",
+  "sys_s": "0.21",
+  "elapsed_s": 2.77,
+  "max_rss_mb": 157.0
+ },
+ "stdout_tail": "",
+ "stderr_tail": "[M::bwa_idx_load_from_disk] read 0 ALT contigs\n[M::process] read 195458 sequences (19545800 bp)...\n[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (9, 96079, 14, 3)\n[M::mem_pestat] skip orientation FF as there are not enough pairs\n[M::mem_pestat] analyzing insert size distribution for orientation FR...\n[M::mem_pestat] (25, 50, 75) percentile: (760, 773, 787)\n[M::mem_pestat] low and high boundaries for computing mean and std.dev: (706, 841)\n[M::mem_pestat] mean and std.dev: (774.59, 18.65)\n[M::mem_pestat] low and high boundaries for proper pairs: (679, 868)\n[M::mem_pestat] analyzing insert size distribution for orientation RF...\n[M::mem_pestat] (25, 50, 75) percentile: (5681, 5706, 5711)\n[M::mem_pestat] low and high boundaries for computing mean and std.dev: (5621, 5771)\n[M::mem_pestat] mean and std.dev: (5697.54, 16.87)\n[M::mem_pestat] low and high boundaries for proper pairs: (5591, 5801)\n[M::mem_pestat] skip orientation RR as there are not enough pairs\n[M::mem_pestat] skip orientation RF\n[M::mem_process_seqs] Processed 195458 reads in 8.136 CPU sec, 2.061 real sec\n[main] Version: 0.7.17-r1188\n[main] CMD: bwa mem -t 4 /disks/tmp/cucinell/modpipe-discovery/mapping_variants/bwa_mem_pe-21373340_1/inputs/genome.fasta /disks/tmp/cucinell/modpipe-discovery/mapping_variants/bwa_mem_pe-21373340_1/inputs/test_1.fastq.gz /disks/tmp/cucinell/modpipe-discovery/mapping_variants/bwa_mem_pe-21373340_1/inputs/test_2.fastq.gz\n[main] Real time: 2.757 sec; CPU: 8.723 sec\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:24"
+}

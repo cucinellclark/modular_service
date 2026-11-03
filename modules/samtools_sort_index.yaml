@@ -1,0 +1,20 @@
+schema: modpipe/module/v1
+id: samtools_sort_index
+version: 1
+label: "samtools: sort and index alignments (converter)"
+description: Coordinate-sorts a SAM/BAM file and writes a BAM index.
+category: converter
+tool: {id: samtools, binary: samtools, version: "1.13"}
+inputs:
+  - {id: alignment, type: alignment.reads}
+outputs:
+  - id: sorted
+    type: alignment.reads.bam
+    parts: {bam: sorted.bam, index: sorted.bam.bai}
+    attributes: {sorted: coordinate, indexed: true}
+resources: {cpu: 4, memory: 8G, runtime: 2h}
+command: |
+  {% set src = inputs.alignment.bam if inputs.alignment.type == 'alignment.reads.bam' else (inputs.alignment.cram if inputs.alignment.type == 'alignment.reads.cram' else inputs.alignment) %}
+  samtools sort -@ {{ cpu }} -o {{ outputs.sorted.bam }} {{ src | q }} && samtools index {{ outputs.sorted.bam }}
+tests:
+  discovery_runs: [samtools_sort_index]

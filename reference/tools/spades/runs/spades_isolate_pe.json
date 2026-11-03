@@ -1,0 +1,1309 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "spades_isolate_pe",
+ "set": "assembly",
+ "tool": "spades",
+ "mode": "isolate_paired",
+ "description": null,
+ "tool_version": "4.0.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373339_0",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:37:18",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "spades.py --isolate -t $CPU -m $MEM_GB -1 $R1 -2 $R2 -o out",
+ "wall_s": 11.34,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/K21/configs/careful_mda_mode.info",
+   "size": 564,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "simp",
+    "{",
+    "    ; bulge remover:"
+   ],
+   "lines": 40,
+   "sha256": "483f2c4aa4ae3802f2ded934aade83f9d04b3c5f6aa960ae3bc12010074c2c20"
+  },
+  {
+   "path": "out/K21/configs/careful_mode.info",
+   "size": 633,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "simp",
+    "{",
+    "    ; bulge remover:"
+   ],
+   "lines": 42,
+   "sha256": "3cd0b587997f9fcdce311f6790f6fd4a77c51cf9e55cb530226275487c8df1c0"
+  },
+  {
+   "path": "out/K21/configs/config.info",
+   "size": 5216,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; input options:",
+    "",
+    "#include \"simplification.info\""
+   ],
+   "lines": 216,
+   "sha256": "ca884bc2f49c0bc85079d52aec984f4b7355d8dee51b8c3d0cfb058f8c58bea0"
+  },
+  {
+   "path": "out/K21/configs/construction.info",
+   "size": 645,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; construction",
+    "",
+    "construction"
+   ],
+   "lines": 26,
+   "sha256": "69aa648ed2022af38e2164bdc84683b6d64ebcc2ff8ce5b4231adfa3b9e5a56b"
+  },
+  {
+   "path": "out/K21/configs/detail_info_printer.info",
+   "size": 1019,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "info_printers",
+    "{",
+    "    default"
+   ],
+   "lines": 46,
+   "sha256": "57d7c4b6af003e8b7f344479e9cf2c45e46cd918ca2b4471a4f29f5fea7b13bd"
+  },
+  {
+   "path": "out/K21/configs/distance_estimation.info",
+   "size": 1392,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; distance estimator:",
+    "",
+    "de"
+   ],
+   "lines": 42,
+   "sha256": "33061954a588cb3f6305a636c10fd38ee230ac3701452281be959b0b193cfcbf"
+  },
+  {
+   "path": "out/K21/configs/hmm_mode.info",
+   "size": 110,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmm_match {",
+    "  set_of_hmms none",
+    "  component_size_part 10"
+   ],
+   "lines": 6,
+   "sha256": "9701b8baa14340c9a2b13d6637862ca78254eda94600c13a0e243e97157d9aed"
+  },
+  {
+   "path": "out/K21/configs/isolate_mode.info",
+   "size": 44,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode isolate",
+    "",
+    "#include \"careful_mode.info\""
+   ],
+   "lines": 4,
+   "sha256": "38f1c362de9b29f7129cb35b751c078b4015a2d90669699815646a7a96ed3b6f"
+  },
+  {
+   "path": "out/K21/configs/large_genome_mode.info",
+   "size": 126,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    ";FIXME do we still need this mode?",
+    "mode large_genome",
+    ""
+   ],
+   "lines": 11,
+   "sha256": "5178e680f7d6ad171f37264b5145dd4181d84d7e504261fbdf7f9c594fd8a780"
+  },
+  {
+   "path": "out/K21/configs/mda_mode.info",
+   "size": 1978,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode    mda",
+    "",
+    "simp"
+   ],
+   "lines": 105,
+   "sha256": "b7f8e5f0b7b8bcdb52acfe550ec985dbf8d9a8aeaded91f4fc9ac1a733dec19b"
+  },
+  {
+   "path": "out/K21/configs/meta_mode.info",
+   "size": 4852,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode    meta",
+    "",
+    "; two-step pipeline"
+   ],
+   "lines": 227,
+   "sha256": "acabe1e1ef72f04b42314b103e3ef17fc1903eb55f69d7c22a39490afa02ec10"
+  },
+  {
+   "path": "out/K21/configs/metaplasmid_mode.info",
+   "size": 45,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode metaextrachromosomal",
+    "two_step_rr false",
+    ""
+   ],
+   "lines": 3,
+   "sha256": "e6de56fdb9c7914b5bf0101c4b1b8b4ce86c2cc02ecb7407fef3b4c83fd90504"
+  },
+  {
+   "path": "out/K21/configs/metaviral_mode.info",
+   "size": 1028,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode metaextrachromosomal",
+    "two_step_rr false",
+    ""
+   ],
+   "lines": 40,
+   "sha256": "44a1d60a7a13bdc857c32b458fc92ec73faa554c6acddb2f1d3581e9264bc88c"
+  },
+  {
+   "path": "out/K21/configs/pe_params.info",
+   "size": 4336,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "pe {",
+    "",
+    "; output options"
+   ],
+   "lines": 179,
+   "sha256": "6e454d8cfa53f4c5e095cbb3f8c56383465dd4c650ed2d3b7c59af6a3f2f89e7"
+  },
+  {
+   "path": "out/K21/configs/plasmid_mode.info",
+   "size": 551,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode    plasmid",
+    "",
+    "plasmid "
+   ],
+   "lines": 22,
+   "sha256": "34e73308a4099e7fa093c2f49460f680cdb4eecfd1b13284581d3261701803b1"
+  },
+  {
+   "path": "out/K21/configs/rna_mode.info",
+   "size": 5063,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode rna",
+    "",
+    "preserve_raw_paired_index true"
+   ],
+   "lines": 213,
+   "sha256": "21d5c5e8f14487d0b034137e9ddda0806899a43f6c4a28156e7c00c88db3fa44"
+  },
+  {
+   "path": "out/K21/configs/rnaviral_mode.info",
+   "size": 636,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode rnaviral",
+    "two_step_rr false",
+    ""
+   ],
+   "lines": 32,
+   "sha256": "f2d5067ce64d02e6e7a2e2a9ce3845a4538c6c2976f4652e0b2bb4d5e85c4587"
+  },
+  {
+   "path": "out/K21/configs/sewage_mode.info",
+   "size": 1343,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "simp {",
+    "        ; bulge remover:",
+    "        br"
+   ],
+   "lines": 61,
+   "sha256": "8eb926a28cabdeebc08c25ff9718803d35f32bb50e3cc59b7a80f925e3ad0eb2"
+  },
+  {
+   "path": "out/K21/configs/simplification.info",
+   "size": 7030,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; simplification",
+    "",
+    "simp"
+   ],
+   "lines": 244,
+   "sha256": "59891b05e1768584a59ffb6c7e30a4680fdfe953977662576355d6cdd7c89cc5"
+  },
+  {
+   "path": "out/K21/configs/toy.info",
+   "size": 43,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "reads\ttoy.yaml",
+    "single_cell\tfalse",
+    "; RL\t100"
+   ],
+   "lines": 4,
+   "sha256": "e30674b51b1f31f5873bed0973cde82b010c81ceab0287789be92d11cd847b67"
+  },
+  {
+   "path": "out/K21/final.lib_data",
+   "size": 1493,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\ufffd",
+    "---",
+    "max read length: 101"
+   ],
+   "lines": 36,
+   "sha256": "3673e66097d4394ff447cfe666c0dff84b1bca0e5c7c1e95508cfd2bc9de1a18"
+  },
+  {
+   "path": "out/K21/simplified_contigs/contigs.off",
+   "size": 104,
+   "new": true,
+   "kind": "binary",
+   "sha256": "b0eec01b2fc79acef5f231564c8c261048c64071faf1729685abfb2c4363b016"
+  },
+  {
+   "path": "out/K21/simplified_contigs/contigs.seq",
+   "size": 95988,
+   "new": true,
+   "kind": "binary",
+   "sha256": "480d4d87facc88480ac5c3146822f41e45b456e0c24346e31087406257fa94fe"
+  },
+  {
+   "path": "out/K21/simplified_contigs/contigs_info",
+   "size": 43,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "14 18446744073709551615 7598 0 1207 271176"
+   ],
+   "lines": 1,
+   "sha256": "d203ece0cffdf228e37afebe4b28c8fb194a2de7000061fffb09631cb06887e7"
+  },
+  {
+   "path": "out/K33/configs/careful_mda_mode.info",
+   "size": 564,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "simp",
+    "{",
+    "    ; bulge remover:"
+   ],
+   "lines": 40,
+   "sha256": "483f2c4aa4ae3802f2ded934aade83f9d04b3c5f6aa960ae3bc12010074c2c20"
+  },
+  {
+   "path": "out/K33/configs/careful_mode.info",
+   "size": 633,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "simp",
+    "{",
+    "    ; bulge remover:"
+   ],
+   "lines": 42,
+   "sha256": "3cd0b587997f9fcdce311f6790f6fd4a77c51cf9e55cb530226275487c8df1c0"
+  },
+  {
+   "path": "out/K33/configs/config.info",
+   "size": 5300,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; input options:",
+    "",
+    "#include \"simplification.info\""
+   ],
+   "lines": 216,
+   "sha256": "4eeb1f6001c2a25534fa1f94ac5f0824bf8419d9db181b5913452d111a2ff9dd"
+  },
+  {
+   "path": "out/K33/configs/construction.info",
+   "size": 645,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; construction",
+    "",
+    "construction"
+   ],
+   "lines": 26,
+   "sha256": "69aa648ed2022af38e2164bdc84683b6d64ebcc2ff8ce5b4231adfa3b9e5a56b"
+  },
+  {
+   "path": "out/K33/configs/detail_info_printer.info",
+   "size": 1019,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "info_printers",
+    "{",
+    "    default"
+   ],
+   "lines": 46,
+   "sha256": "57d7c4b6af003e8b7f344479e9cf2c45e46cd918ca2b4471a4f29f5fea7b13bd"
+  },
+  {
+   "path": "out/K33/configs/distance_estimation.info",
+   "size": 1392,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; distance estimator:",
+    "",
+    "de"
+   ],
+   "lines": 42,
+   "sha256": "33061954a588cb3f6305a636c10fd38ee230ac3701452281be959b0b193cfcbf"
+  },
+  {
+   "path": "out/K33/configs/hmm_mode.info",
+   "size": 110,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmm_match {",
+    "  set_of_hmms none",
+    "  component_size_part 10"
+   ],
+   "lines": 6,
+   "sha256": "9701b8baa14340c9a2b13d6637862ca78254eda94600c13a0e243e97157d9aed"
+  },
+  {
+   "path": "out/K33/configs/isolate_mode.info",
+   "size": 44,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode isolate",
+    "",
+    "#include \"careful_mode.info\""
+   ],
+   "lines": 4,
+   "sha256": "38f1c362de9b29f7129cb35b751c078b4015a2d90669699815646a7a96ed3b6f"
+  },
+  {
+   "path": "out/K33/configs/large_genome_mode.info",
+   "size": 126,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    ";FIXME do we still need this mode?",
+    "mode large_genome",
+    ""
+   ],
+   "lines": 11,
+   "sha256": "5178e680f7d6ad171f37264b5145dd4181d84d7e504261fbdf7f9c594fd8a780"
+  },
+  {
+   "path": "out/K33/configs/mda_mode.info",
+   "size": 1978,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode    mda",
+    "",
+    "simp"
+   ],
+   "lines": 105,
+   "sha256": "b7f8e5f0b7b8bcdb52acfe550ec985dbf8d9a8aeaded91f4fc9ac1a733dec19b"
+  },
+  {
+   "path": "out/K33/configs/meta_mode.info",
+   "size": 4852,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode    meta",
+    "",
+    "; two-step pipeline"
+   ],
+   "lines": 227,
+   "sha256": "acabe1e1ef72f04b42314b103e3ef17fc1903eb55f69d7c22a39490afa02ec10"
+  },
+  {
+   "path": "out/K33/configs/metaplasmid_mode.info",
+   "size": 45,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode metaextrachromosomal",
+    "two_step_rr false",
+    ""
+   ],
+   "lines": 3,
+   "sha256": "e6de56fdb9c7914b5bf0101c4b1b8b4ce86c2cc02ecb7407fef3b4c83fd90504"
+  },
+  {
+   "path": "out/K33/configs/metaviral_mode.info",
+   "size": 1028,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode metaextrachromosomal",
+    "two_step_rr false",
+    ""
+   ],
+   "lines": 40,
+   "sha256": "44a1d60a7a13bdc857c32b458fc92ec73faa554c6acddb2f1d3581e9264bc88c"
+  },
+  {
+   "path": "out/K33/configs/pe_params.info",
+   "size": 4336,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "pe {",
+    "",
+    "; output options"
+   ],
+   "lines": 179,
+   "sha256": "6e454d8cfa53f4c5e095cbb3f8c56383465dd4c650ed2d3b7c59af6a3f2f89e7"
+  },
+  {
+   "path": "out/K33/configs/plasmid_mode.info",
+   "size": 551,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode    plasmid",
+    "",
+    "plasmid "
+   ],
+   "lines": 22,
+   "sha256": "34e73308a4099e7fa093c2f49460f680cdb4eecfd1b13284581d3261701803b1"
+  },
+  {
+   "path": "out/K33/configs/rna_mode.info",
+   "size": 5063,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode rna",
+    "",
+    "preserve_raw_paired_index true"
+   ],
+   "lines": 213,
+   "sha256": "21d5c5e8f14487d0b034137e9ddda0806899a43f6c4a28156e7c00c88db3fa44"
+  },
+  {
+   "path": "out/K33/configs/rnaviral_mode.info",
+   "size": 636,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode rnaviral",
+    "two_step_rr false",
+    ""
+   ],
+   "lines": 32,
+   "sha256": "f2d5067ce64d02e6e7a2e2a9ce3845a4538c6c2976f4652e0b2bb4d5e85c4587"
+  },
+  {
+   "path": "out/K33/configs/sewage_mode.info",
+   "size": 1343,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "simp {",
+    "        ; bulge remover:",
+    "        br"
+   ],
+   "lines": 61,
+   "sha256": "8eb926a28cabdeebc08c25ff9718803d35f32bb50e3cc59b7a80f925e3ad0eb2"
+  },
+  {
+   "path": "out/K33/configs/simplification.info",
+   "size": 7030,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; simplification",
+    "",
+    "simp"
+   ],
+   "lines": 244,
+   "sha256": "59891b05e1768584a59ffb6c7e30a4680fdfe953977662576355d6cdd7c89cc5"
+  },
+  {
+   "path": "out/K33/configs/toy.info",
+   "size": 43,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "reads\ttoy.yaml",
+    "single_cell\tfalse",
+    "; RL\t100"
+   ],
+   "lines": 4,
+   "sha256": "e30674b51b1f31f5873bed0973cde82b010c81ceab0287789be92d11cd847b67"
+  },
+  {
+   "path": "out/K33/final.lib_data",
+   "size": 1493,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\ufffd",
+    "---",
+    "max read length: 101"
+   ],
+   "lines": 36,
+   "sha256": "fc4de42724c707710532b6bf109df9850a6a3326406c5736b3446393981bbbf0"
+  },
+  {
+   "path": "out/K33/simplified_contigs/contigs.off",
+   "size": 24,
+   "new": true,
+   "kind": "binary",
+   "sha256": "df6bb909f70a01f1c42c08d0e16ee0e97721c63201d0f292e06de8e76795fbd1"
+  },
+  {
+   "path": "out/K33/simplified_contigs/contigs.seq",
+   "size": 67124,
+   "new": true,
+   "kind": "binary",
+   "sha256": "8ced00a77a83b771d23f0998d91fb639287dd1f455bd28646f4f7a8a54aaa8a5"
+  },
+  {
+   "path": "out/K33/simplified_contigs/contigs_info",
+   "size": 42,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "14 18446744073709551615 7746 0 271 242228"
+   ],
+   "lines": 1,
+   "sha256": "8991374253a4c1599ef01c013962386e0fab1874d3cae24fa29bcd96a8b4fe81"
+  },
+  {
+   "path": "out/K55/assembly_graph.fastg",
+   "size": 556960,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">EDGE_47_length_1299_cov_4.185691;",
+    "GTTGTTCAGCTCTTTTTACTATGATTATACTGTTAGTTTTATCCATATATTTATGTTATT",
+    "TAAATCTAAATACAACCAATATATGGGTGGTTAAATACCGAACAATATGGATTGATAGAT"
+   ],
+   "lines": 9578,
+   "records": 742,
+   "residues": 505568,
+   "sha256": "212ccfc84ea572ae9c8323b4be0d8c160bc02a93faf38443124553655bba1098"
+  },
+  {
+   "path": "out/K55/assembly_graph_after_simplification.gfa",
+   "size": 268901,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "H\tVN:Z:1.2\tsp:Z:SPAdes-4.0.0",
+    "S\t47\tGTTGTTCAGCTCTTTTTACTATGATTATACTGTTAGTTTTATCCATATATTTATGTTATTTAAATCTAAATACAACCAATATATGGGTGGTTAAATACCGAACAATATGGATTGATAGATTTGGTATATATCTTAATTTAGCAGTGGATGGTATATCTTTAAGTATGGTTTTATTAAGTGTAGTATTGGGTTTAT",
+    "S\t49\tTTAAATGAATATATCGTTCATAACATACATACAATATATGTATCTCGTTTTCTTTTTTTTTTATTAACCAATTTTACACTTTAGACAATCAATTTGGTTTTCAATAATCACCTTCAATCTTTTATCATCTACAACACCATCCGTACTCCTTTATCAACCAATACTTACCTACTTCTACCTTATATTAATTACTAT"
+   ],
+   "lines": 578,
+   "sha256": "9d53bb681dbd366a59285b5f667ef753a6c5b92f054533e238003c8b32c2cb97"
+  },
+  {
+   "path": "out/K55/assembly_graph_with_scaffolds.gfa",
+   "size": 283376,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "H\tVN:Z:1.2\tsp:Z:SPAdes-4.0.0",
+    "S\t47\tGTTGTTCAGCTCTTTTTACTATGATTATACTGTTAGTTTTATCCATATATTTATGTTATTTAAATCTAAATACAACCAATATATGGGTGGTTAAATACCGAACAATATGGATTGATAGATTTGGTATATATCTTAATTTAGCAGTGGATGGTATATCTTTAAGTATGGTTTTATTAAGTGTAGTATTGGGTTTAT",
+    "S\t49\tTTAAATGAATATATCGTTCATAACATACATACAATATATGTATCTCGTTTTCTTTTTTTTTTATTAACCAATTTTACACTTTAGACAATCAATTTGGTTTTCAATAATCACCTTCAATCTTTTATCATCTACAACACCATCCGTACTCCTTTATCAACCAATACTTACCTACTTCTACCTTATATTAATTACTAT"
+   ],
+   "lines": 920,
+   "sha256": "679ae7275ad19ecd49eece1504228262869613ea35133a824f4f163aa1b0e3d2"
+  },
+  {
+   "path": "out/K55/before_rr.fasta",
+   "size": 269767,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NODE_1_length_1299_cov_4.185691",
+    "GTTGTTCAGCTCTTTTTACTATGATTATACTGTTAGTTTTATCCATATATTTATGTTATT",
+    "TAAATCTAAATACAACCAATATATGGGTGGTTAAATACCGAACAATATGGATTGATAGAT"
+   ],
+   "lines": 4789,
+   "records": 371,
+   "residues": 252784,
+   "sha256": "ecfa7d1f5fc1aab92ed09048afe95895a5bda166e0fbdc6c67ae2452ee89bd1a"
+  },
+  {
+   "path": "out/K55/configs/careful_mda_mode.info",
+   "size": 564,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "simp",
+    "{",
+    "    ; bulge remover:"
+   ],
+   "lines": 40,
+   "sha256": "483f2c4aa4ae3802f2ded934aade83f9d04b3c5f6aa960ae3bc12010074c2c20"
+  },
+  {
+   "path": "out/K55/configs/careful_mode.info",
+   "size": 633,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "simp",
+    "{",
+    "    ; bulge remover:"
+   ],
+   "lines": 42,
+   "sha256": "3cd0b587997f9fcdce311f6790f6fd4a77c51cf9e55cb530226275487c8df1c0"
+  },
+  {
+   "path": "out/K55/configs/config.info",
+   "size": 5305,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; input options:",
+    "",
+    "#include \"simplification.info\""
+   ],
+   "lines": 216,
+   "sha256": "02c1c29e2b4522e864f75bd855ca23d3619a9dbeb234eb8154124ea7276364bc"
+  },
+  {
+   "path": "out/K55/configs/construction.info",
+   "size": 645,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; construction",
+    "",
+    "construction"
+   ],
+   "lines": 26,
+   "sha256": "69aa648ed2022af38e2164bdc84683b6d64ebcc2ff8ce5b4231adfa3b9e5a56b"
+  },
+  {
+   "path": "out/K55/configs/detail_info_printer.info",
+   "size": 1019,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "info_printers",
+    "{",
+    "    default"
+   ],
+   "lines": 46,
+   "sha256": "57d7c4b6af003e8b7f344479e9cf2c45e46cd918ca2b4471a4f29f5fea7b13bd"
+  },
+  {
+   "path": "out/K55/configs/distance_estimation.info",
+   "size": 1392,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; distance estimator:",
+    "",
+    "de"
+   ],
+   "lines": 42,
+   "sha256": "33061954a588cb3f6305a636c10fd38ee230ac3701452281be959b0b193cfcbf"
+  },
+  {
+   "path": "out/K55/configs/hmm_mode.info",
+   "size": 110,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "hmm_match {",
+    "  set_of_hmms none",
+    "  component_size_part 10"
+   ],
+   "lines": 6,
+   "sha256": "9701b8baa14340c9a2b13d6637862ca78254eda94600c13a0e243e97157d9aed"
+  },
+  {
+   "path": "out/K55/configs/isolate_mode.info",
+   "size": 44,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode isolate",
+    "",
+    "#include \"careful_mode.info\""
+   ],
+   "lines": 4,
+   "sha256": "38f1c362de9b29f7129cb35b751c078b4015a2d90669699815646a7a96ed3b6f"
+  },
+  {
+   "path": "out/K55/configs/large_genome_mode.info",
+   "size": 126,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    ";FIXME do we still need this mode?",
+    "mode large_genome",
+    ""
+   ],
+   "lines": 11,
+   "sha256": "5178e680f7d6ad171f37264b5145dd4181d84d7e504261fbdf7f9c594fd8a780"
+  },
+  {
+   "path": "out/K55/configs/mda_mode.info",
+   "size": 1978,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode    mda",
+    "",
+    "simp"
+   ],
+   "lines": 105,
+   "sha256": "b7f8e5f0b7b8bcdb52acfe550ec985dbf8d9a8aeaded91f4fc9ac1a733dec19b"
+  },
+  {
+   "path": "out/K55/configs/meta_mode.info",
+   "size": 4852,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode    meta",
+    "",
+    "; two-step pipeline"
+   ],
+   "lines": 227,
+   "sha256": "acabe1e1ef72f04b42314b103e3ef17fc1903eb55f69d7c22a39490afa02ec10"
+  },
+  {
+   "path": "out/K55/configs/metaplasmid_mode.info",
+   "size": 45,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode metaextrachromosomal",
+    "two_step_rr false",
+    ""
+   ],
+   "lines": 3,
+   "sha256": "e6de56fdb9c7914b5bf0101c4b1b8b4ce86c2cc02ecb7407fef3b4c83fd90504"
+  },
+  {
+   "path": "out/K55/configs/metaviral_mode.info",
+   "size": 1028,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode metaextrachromosomal",
+    "two_step_rr false",
+    ""
+   ],
+   "lines": 40,
+   "sha256": "44a1d60a7a13bdc857c32b458fc92ec73faa554c6acddb2f1d3581e9264bc88c"
+  },
+  {
+   "path": "out/K55/configs/pe_params.info",
+   "size": 4336,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "pe {",
+    "",
+    "; output options"
+   ],
+   "lines": 179,
+   "sha256": "6e454d8cfa53f4c5e095cbb3f8c56383465dd4c650ed2d3b7c59af6a3f2f89e7"
+  },
+  {
+   "path": "out/K55/configs/plasmid_mode.info",
+   "size": 551,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode    plasmid",
+    "",
+    "plasmid "
+   ],
+   "lines": 22,
+   "sha256": "34e73308a4099e7fa093c2f49460f680cdb4eecfd1b13284581d3261701803b1"
+  },
+  {
+   "path": "out/K55/configs/rna_mode.info",
+   "size": 5063,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode rna",
+    "",
+    "preserve_raw_paired_index true"
+   ],
+   "lines": 213,
+   "sha256": "21d5c5e8f14487d0b034137e9ddda0806899a43f6c4a28156e7c00c88db3fa44"
+  },
+  {
+   "path": "out/K55/configs/rnaviral_mode.info",
+   "size": 636,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "mode rnaviral",
+    "two_step_rr false",
+    ""
+   ],
+   "lines": 32,
+   "sha256": "f2d5067ce64d02e6e7a2e2a9ce3845a4538c6c2976f4652e0b2bb4d5e85c4587"
+  },
+  {
+   "path": "out/K55/configs/sewage_mode.info",
+   "size": 1343,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "simp {",
+    "        ; bulge remover:",
+    "        br"
+   ],
+   "lines": 61,
+   "sha256": "8eb926a28cabdeebc08c25ff9718803d35f32bb50e3cc59b7a80f925e3ad0eb2"
+  },
+  {
+   "path": "out/K55/configs/simplification.info",
+   "size": 7030,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; simplification",
+    "",
+    "simp"
+   ],
+   "lines": 244,
+   "sha256": "59891b05e1768584a59ffb6c7e30a4680fdfe953977662576355d6cdd7c89cc5"
+  },
+  {
+   "path": "out/K55/configs/toy.info",
+   "size": 43,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "reads\ttoy.yaml",
+    "single_cell\tfalse",
+    "; RL\t100"
+   ],
+   "lines": 4,
+   "sha256": "e30674b51b1f31f5873bed0973cde82b010c81ceab0287789be92d11cd847b67"
+  },
+  {
+   "path": "out/K55/final.lib_data",
+   "size": 4274,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\ufffd!---",
+    "max read length: 101",
+    "nomerge max read length: 101"
+   ],
+   "lines": 72,
+   "sha256": "8a90a703b13cc68a49cc16f030e80061e4b91ce17e77a8180fc2200743acbd97"
+  },
+  {
+   "path": "out/K55/final_contigs.fasta",
+   "size": 266190,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NODE_1_length_12426_cov_52.270875",
+    "AGATACTGTTTTTTTTTCATTCCCCATTCTACCTGCCATTTTTTTACCTTTAAAAACACG",
+    "TCCCGGAGTTTGACATTGCCCTGTTGAACCTGATGTACGATGAGAAAGTGAATTTCCATG"
+   ],
+   "lines": 4678,
+   "records": 322,
+   "residues": 250943,
+   "sha256": "ad2c7e91808c64a513906f63861a3ffe4b05b278bc67cc9308a49f30717646eb"
+  },
+  {
+   "path": "out/K55/final_contigs.paths",
+   "size": 26660,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NODE_1_length_12426_cov_52.270875",
+    "57+;",
+    "83441-"
+   ],
+   "lines": 1328,
+   "sha256": "ed5323715431f400675b5b81a023dc5ddadf7d1bdca2ccefdbe1e0e819d227df"
+  },
+  {
+   "path": "out/K55/scaffolds.fasta",
+   "size": 275671,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NODE_1_length_20306_cov_23.775517",
+    "TAAATGTTATCAATACAAATTTTATAAAAAGCAAAATGGAAGAGTTAAATATAAAGTTTT",
+    "CAAAAACTCTTATAATAACCGAAACATGTGAAAATAAAATTGAGTTATCTTCACGTAACA"
+   ],
+   "lines": 4788,
+   "records": 269,
+   "residues": 262059,
+   "sha256": "0a1d831a0a637898cdd97128e6d9f395f2f93548ce8f5c00fb639f2e8e22eec1"
+  },
+  {
+   "path": "out/K55/scaffolds.paths",
+   "size": 23223,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NODE_1_length_20306_cov_23.775517",
+    "94873-;",
+    "94739+;"
+   ],
+   "lines": 1222,
+   "sha256": "68651fa5ed16dabebf63c9ffd2bf5477a4f0d3a0ba3769007aada72250bd8ee1"
+  },
+  {
+   "path": "out/assembly_graph.fastg",
+   "size": 556960,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">EDGE_47_length_1299_cov_4.185691;",
+    "GTTGTTCAGCTCTTTTTACTATGATTATACTGTTAGTTTTATCCATATATTTATGTTATT",
+    "TAAATCTAAATACAACCAATATATGGGTGGTTAAATACCGAACAATATGGATTGATAGAT"
+   ],
+   "lines": 9578,
+   "records": 742,
+   "residues": 505568,
+   "sha256": "212ccfc84ea572ae9c8323b4be0d8c160bc02a93faf38443124553655bba1098"
+  },
+  {
+   "path": "out/assembly_graph_after_simplification.gfa",
+   "size": 268901,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "H\tVN:Z:1.2\tsp:Z:SPAdes-4.0.0",
+    "S\t47\tGTTGTTCAGCTCTTTTTACTATGATTATACTGTTAGTTTTATCCATATATTTATGTTATTTAAATCTAAATACAACCAATATATGGGTGGTTAAATACCGAACAATATGGATTGATAGATTTGGTATATATCTTAATTTAGCAGTGGATGGTATATCTTTAAGTATGGTTTTATTAAGTGTAGTATTGGGTTTAT",
+    "S\t49\tTTAAATGAATATATCGTTCATAACATACATACAATATATGTATCTCGTTTTCTTTTTTTTTTATTAACCAATTTTACACTTTAGACAATCAATTTGGTTTTCAATAATCACCTTCAATCTTTTATCATCTACAACACCATCCGTACTCCTTTATCAACCAATACTTACCTACTTCTACCTTATATTAATTACTAT"
+   ],
+   "lines": 578,
+   "sha256": "9d53bb681dbd366a59285b5f667ef753a6c5b92f054533e238003c8b32c2cb97"
+  },
+  {
+   "path": "out/assembly_graph_with_scaffolds.gfa",
+   "size": 283376,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "H\tVN:Z:1.2\tsp:Z:SPAdes-4.0.0",
+    "S\t47\tGTTGTTCAGCTCTTTTTACTATGATTATACTGTTAGTTTTATCCATATATTTATGTTATTTAAATCTAAATACAACCAATATATGGGTGGTTAAATACCGAACAATATGGATTGATAGATTTGGTATATATCTTAATTTAGCAGTGGATGGTATATCTTTAAGTATGGTTTTATTAAGTGTAGTATTGGGTTTAT",
+    "S\t49\tTTAAATGAATATATCGTTCATAACATACATACAATATATGTATCTCGTTTTCTTTTTTTTTTATTAACCAATTTTACACTTTAGACAATCAATTTGGTTTTCAATAATCACCTTCAATCTTTTATCATCTACAACACCATCCGTACTCCTTTATCAACCAATACTTACCTACTTCTACCTTATATTAATTACTAT"
+   ],
+   "lines": 920,
+   "sha256": "679ae7275ad19ecd49eece1504228262869613ea35133a824f4f163aa1b0e3d2"
+  },
+  {
+   "path": "out/before_rr.fasta",
+   "size": 269767,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NODE_1_length_1299_cov_4.185691",
+    "GTTGTTCAGCTCTTTTTACTATGATTATACTGTTAGTTTTATCCATATATTTATGTTATT",
+    "TAAATCTAAATACAACCAATATATGGGTGGTTAAATACCGAACAATATGGATTGATAGAT"
+   ],
+   "lines": 4789,
+   "records": 371,
+   "residues": 252784,
+   "sha256": "ecfa7d1f5fc1aab92ed09048afe95895a5bda166e0fbdc6c67ae2452ee89bd1a"
+  },
+  {
+   "path": "out/contigs.fasta",
+   "size": 266190,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NODE_1_length_12426_cov_52.270875",
+    "AGATACTGTTTTTTTTTCATTCCCCATTCTACCTGCCATTTTTTTACCTTTAAAAACACG",
+    "TCCCGGAGTTTGACATTGCCCTGTTGAACCTGATGTACGATGAGAAAGTGAATTTCCATG"
+   ],
+   "lines": 4678,
+   "records": 322,
+   "residues": 250943,
+   "sha256": "ad2c7e91808c64a513906f63861a3ffe4b05b278bc67cc9308a49f30717646eb"
+  },
+  {
+   "path": "out/contigs.paths",
+   "size": 26660,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NODE_1_length_12426_cov_52.270875",
+    "57+;",
+    "83441-"
+   ],
+   "lines": 1328,
+   "sha256": "ed5323715431f400675b5b81a023dc5ddadf7d1bdca2ccefdbe1e0e819d227df"
+  },
+  {
+   "path": "out/dataset.info",
+   "size": 105,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "reads\t/disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/input_dataset.yaml"
+   ],
+   "lines": 1,
+   "sha256": "f24c6c7d41815e43f7f3bfa44dbfad70040553120c148899742c630a579148d6"
+  },
+  {
+   "path": "out/input_dataset.yaml",
+   "size": 310,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "- \"left reads\":",
+    "  - \"/disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/inputs/test_1.fastq.gz\"",
+    "  \"number\": !!int \"1\""
+   ],
+   "lines": 7,
+   "sha256": "eeb72abd00cff818893b80d3cae6ffc092f9806e7b6ef56b9a71b61d7ea7c882"
+  },
+  {
+   "path": "out/misc/broken_scaffolds.fasta",
+   "size": 267156,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NODE_1_length_20306_cov_23.775517_1 ",
+    "TAAATGTTATCAATACAAATTTTATAAAAAGCAAAATGGAAGAGTTAAATATAAAGTTTT",
+    "CAAAAACTCTTATAATAACCGAAACATGTGAAAATAAAATTGAGTTATCTTCACGTAACA"
+   ],
+   "lines": 4678,
+   "records": 322,
+   "residues": 250943,
+   "sha256": "97c8511bde9daa359bfbc24d1fb483c6082d144f11ec964e7d7c59f799424b0f"
+  },
+  {
+   "path": "out/params.txt",
+   "size": 1542,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Command line: /opt/patric-common/runtime/bin/spades.py\t--isolate\t-t\t8\t-m\t32\t-1\t/disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/inputs/test_1.fastq.gz\t-2\t/disks/tmp/cucinell",
+    "",
+    "System information:"
+   ],
+   "lines": 33,
+   "sha256": "896bf3c318b5aa4a38400f6d3a9eea1dfcd77a489ba195cccf3f14092aa88d0d"
+  },
+  {
+   "path": "out/pipeline_state/stage_0_before_start",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/pipeline_state/stage_1_as_start",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/pipeline_state/stage_2_k21",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/pipeline_state/stage_3_k33",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/pipeline_state/stage_4_k55",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/pipeline_state/stage_5_copy_files",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/pipeline_state/stage_6_as_finish",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/pipeline_state/stage_7_bs",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/pipeline_state/stage_8_terminate",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "out/run_spades.sh",
+   "size": 3443,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "set -e",
+    "true",
+    "true"
+   ],
+   "lines": 10,
+   "sha256": "d4872a5c6ef636e1dcc5c96a90265df71c070150bd4d450f1799f0671f218429"
+  },
+  {
+   "path": "out/run_spades.yaml",
+   "size": 4616,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "- STAGE: Before start",
+    "  args: []",
+    "  config_dir: ''"
+   ],
+   "lines": 100,
+   "sha256": "7f0904faf3367ffd56ad0e02e107cee29c0278c73634be4844c41aa09d089053"
+  },
+  {
+   "path": "out/scaffolds.fasta",
+   "size": 275671,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NODE_1_length_20306_cov_23.775517",
+    "TAAATGTTATCAATACAAATTTTATAAAAAGCAAAATGGAAGAGTTAAATATAAAGTTTT",
+    "CAAAAACTCTTATAATAACCGAAACATGTGAAAATAAAATTGAGTTATCTTCACGTAACA"
+   ],
+   "lines": 4788,
+   "records": 269,
+   "residues": 262059,
+   "sha256": "0a1d831a0a637898cdd97128e6d9f395f2f93548ce8f5c00fb639f2e8e22eec1"
+  },
+  {
+   "path": "out/scaffolds.paths",
+   "size": 23223,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NODE_1_length_20306_cov_23.775517",
+    "94873-;",
+    "94739+;"
+   ],
+   "lines": 1222,
+   "sha256": "68651fa5ed16dabebf63c9ffd2bf5477a4f0d3a0ba3769007aada72250bd8ee1"
+  },
+  {
+   "path": "out/spades.log",
+   "size": 113960,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Command line: /opt/patric-common/runtime/bin/spades.py\t--isolate\t-t\t8\t-m\t32\t-1\t/disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/inputs/test_1.fastq.gz\t-2\t/disks/tmp/cucinell",
+    "",
+    "System information:"
+   ],
+   "lines": 910,
+   "sha256": "a441a2a46b993e93d7cb601f487a1e49d8c5cf63f9f8019fafc8cde5c4f92f4b"
+  },
+  {
+   "path": "out/warnings.log",
+   "size": 801,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "=== Error correction and assembling warnings:",
+    " * 0:00:01.066     4M / 184M  WARN    General                 (kmer_coverage_model.cpp   : 219)   Too many erroneous kmers, the estimates might be unreliable"
+   ],
+   "lines": 7,
+   "sha256": "deac829ae8e9e3563366c9e63b5e02daf757f2be699c107db2c669a15d60c754"
+  }
+ ],
+ "n_outputs": 102,
+ "output_bytes": 4614149,
+ "time": {
+  "elapsed": "0:11.32",
+  "max_rss_kb": "256492",
+  "cpu_pct": "266",
+  "exit_status": "0",
+  "user_s": "28.70",
+  "sys_s": "1.42",
+  "elapsed_s": 11.32,
+  "max_rss_mb": 250.5
+ },
+ "stdout_tail": "very/assembly/spades_isolate_pe-21373339_0/out/first_pe_contigs.fasta /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/K55/strain_graph.gfa /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/strain_graph.gfa /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/K55/scaffolds.fasta /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/scaffolds.fasta /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/K55/scaffolds.paths /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/scaffolds.paths /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/K55/assembly_graph_with_scaffolds.gfa /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/assembly_graph_with_scaffolds.gfa /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/K55/assembly_graph.fastg /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/assembly_graph.fastg /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/K55/final_contigs.paths /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/contigs.paths\n\n\n===== Copy files finished. \n\n\n===== Assembling finished. \n\n\n===== Breaking scaffolds started. \n\n\n== Running: /opt/patric-common/runtime/bin/python3 /opt/patric-common/runtime/spades-4.0.0/share/spades/spades_pipeline/scripts/breaking_scaffolds_script.py --result_scaffolds_filename /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/scaffolds.fasta --misc_dir /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/misc --threshold_for_breaking_scaffolds 3\n\n\n===== Breaking scaffolds finished. \n\n\n===== Terminate started. \n\n\n===== Terminate finished. \n\n * Assembled contigs are in /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/contigs.fasta\n * Assembled scaffolds are in /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/scaffolds.fasta\n * Paths in the assembly graph corresponding to the contigs are in /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/contigs.paths\n * Paths in the assembly graph corresponding to the scaffolds are in /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/scaffolds.paths\n * Assembly graph is in /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/assembly_graph.fastg\n * Assembly graph in GFA format is in /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/assembly_graph_with_scaffolds.gfa\n\n======= SPAdes pipeline finished WITH WARNINGS!\n\n=== Error correction and assembling warnings:\n * 0:00:01.066     4M / 184M  WARN    General                 (kmer_coverage_model.cpp   : 219)   Too many erroneous kmers, the estimates might be unreliable\n * 0:00:02.340     4M / 184M  WARN    General                 (kmer_coverage_model.cpp   : 328)   Valley value was estimated improperly, reset to 1\n * 0:00:02.340     4M / 184M  WARN    General                 (kmer_coverage_model.cpp   : 367)   Failed to determine erroneous kmer threshold. Threshold set to: 1\n * 0:00:03.577     3M / 251M  WARN    General                 (kmer_coverage_model.cpp   : 367)   Failed to determine erroneous kmer threshold. Threshold set to: 21\n======= Warnings saved to /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/warnings.log\n\nSPAdes log can be found here: /disks/tmp/cucinell/modpipe-discovery/assembly/spades_isolate_pe-21373339_0/out/spades.log\n\nThank you for using SPAdes! If you use it in your research, please cite:\n\n  Prjibelski, A., Antipov, D., Meleshko, D., Lapidus, A. and Korobeynikov, A., 2020. Using SPAdes de novo assembler. Current protocols in bioinformatics, 70(1), p.e102.\n  doi.org/10.1002/cpbi.102\n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:29"
+}

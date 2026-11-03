@@ -1,0 +1,441 @@
+{
+ "generated": "2026-11-03",
+ "note": "Union of evidence; the production types-file itself is not readable from here. A type is safe to save as if it is registered_2021 or observed in production.",
+ "sources": {
+  "registered_2021": "reference/workspace_typeslist.txt (dev_container Workspace module)",
+  "observed_qa": "reference/workspace_type_usage.json (2026 QA job outputs, ~87k objects)",
+  "observed_home": "Workspace.ls of /clark.cucinell@patricbrc.org/home (29,955 objects, 2020-2026)",
+  "mcp_enum": "bvbrc-mcp workspace_tools.py filter enum (hand-maintained)"
+ },
+ "types": {
+  "aligned_dna_fasta": {
+   "registered_2021": true,
+   "observed_qa": 90,
+   "observed_home": 61,
+   "mcp_enum": false
+  },
+  "aligned_protein_fasta": {
+   "registered_2021": true,
+   "observed_qa": 177,
+   "observed_home": 7,
+   "mcp_enum": false
+  },
+  "bai": {
+   "registered_2021": true,
+   "observed_qa": 621,
+   "observed_home": 107,
+   "mcp_enum": false
+  },
+  "bam": {
+   "registered_2021": true,
+   "observed_qa": 981,
+   "observed_home": 125,
+   "mcp_enum": false
+  },
+  "bigwig": {
+   "registered_2021": true,
+   "observed_qa": 150,
+   "observed_home": 1,
+   "mcp_enum": false
+  },
+  "biochemistry": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "contigs": {
+   "registered_2021": true,
+   "observed_qa": 1867,
+   "observed_home": 1116,
+   "mcp_enum": false
+  },
+  "contigset": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "csi": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "csv": {
+   "registered_2021": true,
+   "observed_qa": 274,
+   "observed_home": 71,
+   "mcp_enum": true
+  },
+  "de_novo_assembled_transcripts": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "diffexp_experiment": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 9,
+   "mcp_enum": false
+  },
+  "diffexp_expression": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 9,
+   "mcp_enum": false
+  },
+  "diffexp_input_data": {
+   "registered_2021": true,
+   "observed_qa": 28,
+   "observed_home": 22,
+   "mcp_enum": true
+  },
+  "diffexp_input_metadata": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "diffexp_mapping": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 9,
+   "mcp_enum": false
+  },
+  "diffexp_sample": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 9,
+   "mcp_enum": false
+  },
+  "doc": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "docx": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "embl": {
+   "registered_2021": true,
+   "observed_qa": 336,
+   "observed_home": 463,
+   "mcp_enum": true
+  },
+  "experiment_group": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "fba": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "feature_dna_fasta": {
+   "registered_2021": true,
+   "observed_qa": 371,
+   "observed_home": 477,
+   "mcp_enum": true
+  },
+  "feature_group": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 17,
+   "mcp_enum": true
+  },
+  "feature_protein_fasta": {
+   "registered_2021": true,
+   "observed_qa": 400,
+   "observed_home": 468,
+   "mcp_enum": true
+  },
+  "feature_table": {
+   "registered_2021": true,
+   "observed_qa": 336,
+   "observed_home": 463,
+   "mcp_enum": false
+  },
+  "folder": {
+   "registered_2021": true,
+   "observed_qa": 10847,
+   "observed_home": 4455,
+   "mcp_enum": false
+  },
+  "genbank_file": {
+   "registered_2021": true,
+   "observed_qa": 672,
+   "observed_home": 927,
+   "mcp_enum": true
+  },
+  "genome": {
+   "registered_2021": true,
+   "observed_qa": 388,
+   "observed_home": 471,
+   "mcp_enum": false
+  },
+  "genome_annotation_result": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "genome_comparison_table": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 1,
+   "mcp_enum": false
+  },
+  "genome_group": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 166,
+   "mcp_enum": true
+  },
+  "gff": {
+   "registered_2021": true,
+   "observed_qa": 613,
+   "observed_home": 499,
+   "mcp_enum": true
+  },
+  "gif": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "hdf": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "html": {
+   "registered_2021": true,
+   "observed_qa": 3691,
+   "observed_home": 1151,
+   "mcp_enum": false
+  },
+  "job_result": {
+   "registered_2021": true,
+   "observed_qa": 2622,
+   "observed_home": 2003,
+   "mcp_enum": false
+  },
+  "jpg": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "json": {
+   "registered_2021": true,
+   "observed_qa": 5622,
+   "observed_home": 5549,
+   "mcp_enum": true
+  },
+  "mapping": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "media": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "model": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "model_edit": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "modelfolder": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "modeltemplate": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "nwk": {
+   "registered_2021": true,
+   "observed_qa": 11124,
+   "observed_home": 440,
+   "mcp_enum": true
+  },
+  "pdb": {
+   "registered_2021": false,
+   "observed_qa": 0,
+   "observed_home": 151,
+   "mcp_enum": true
+  },
+  "pdf": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 143,
+   "mcp_enum": true
+  },
+  "phyloxml": {
+   "registered_2021": true,
+   "observed_qa": 43,
+   "observed_home": 222,
+   "mcp_enum": true
+  },
+  "png": {
+   "registered_2021": true,
+   "observed_qa": 805,
+   "observed_home": 211,
+   "mcp_enum": true
+  },
+  "ppt": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "pptx": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "proteomics_experiment": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "reads": {
+   "registered_2021": true,
+   "observed_qa": 2443,
+   "observed_home": 432,
+   "mcp_enum": true
+  },
+  "rxnprobs": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "string": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "svg": {
+   "registered_2021": true,
+   "observed_qa": 378,
+   "observed_home": 299,
+   "mcp_enum": true
+  },
+  "tar_gz": {
+   "registered_2021": true,
+   "observed_qa": 568,
+   "observed_home": 470,
+   "mcp_enum": true
+  },
+  "tbi": {
+   "registered_2021": true,
+   "observed_qa": 14,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "transcriptomics_experiment": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "transcripts": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  },
+  "tsv": {
+   "registered_2021": true,
+   "observed_qa": 2861,
+   "observed_home": 1218,
+   "mcp_enum": true
+  },
+  "txt": {
+   "registered_2021": true,
+   "observed_qa": 22185,
+   "observed_home": 4167,
+   "mcp_enum": true
+  },
+  "unspecified": {
+   "registered_2021": true,
+   "observed_qa": 8879,
+   "observed_home": 3064,
+   "mcp_enum": true
+  },
+  "vcf": {
+   "registered_2021": true,
+   "observed_qa": 300,
+   "observed_home": 13,
+   "mcp_enum": true
+  },
+  "vcf_gz": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "wig": {
+   "registered_2021": true,
+   "observed_qa": 7021,
+   "observed_home": 4,
+   "mcp_enum": true
+  },
+  "xls": {
+   "registered_2021": true,
+   "observed_qa": 331,
+   "observed_home": 464,
+   "mcp_enum": true
+  },
+  "xlsx": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": true
+  },
+  "xml": {
+   "registered_2021": true,
+   "observed_qa": 69,
+   "observed_home": 1,
+   "mcp_enum": true
+  },
+  "zip": {
+   "registered_2021": true,
+   "observed_qa": 0,
+   "observed_home": 0,
+   "mcp_enum": false
+  }
+ },
+ "excluded": {
+  "graph": "Listed in the bvbrc-mcp filter enum, but not a real workspace type (confirmed by the user 2026-11-03; never observed)."
+ }
+}

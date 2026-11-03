@@ -1,0 +1,59 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "muscle",
+ "set": "phylogeny",
+ "tool": "muscle",
+ "mode": "v3_default",
+ "description": null,
+ "tool_version": "3.8.31",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-04",
+ "slurm_job": "21373357_2",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:24",
+ "inputs": {
+  "A": {
+   "fixture": "sarscov2_aln_all_sites",
+   "path": "inputs/all_sites.fas",
+   "size": 119652
+  }
+ },
+ "prep": "sed '/^>/!s/-//g' $A > unaligned.fna",
+ "cmd": "muscle -in unaligned.fna -out aligned.fasta",
+ "wall_s": 193.82,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aligned.fasta",
+   "size": 121644,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">sample1",
+    "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN",
+    "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+   ],
+   "lines": 2000,
+   "records": 4,
+   "residues": 119612,
+   "sha256": "898568a45aa8aed944b1e6786dbfe5e21dc84fc5016ccc089049262b7f6d1773"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 121644,
+ "time": {
+  "elapsed": "3:13.80",
+  "max_rss_kb": "979156",
+  "cpu_pct": "99",
+  "exit_status": "0",
+  "user_s": "189.67",
+  "sys_s": "3.38",
+  "elapsed_s": 193.8,
+  "max_rss_mb": 956.2
+ },
+ "stdout_tail": "",
+ "stderr_tail": "\nMUSCLE v3.8.31 by Robert C. Edgar\n\nhttp://www.drive5.com/muscle\nThis software is donated to the public domain.\nPlease cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.\n\nunaligned 4 seqs, max length 29903, avg  length 29898\n00:00:00     11 MB(1%)  Iter   1   10.00%  K-mer dist pass 1\r00:00:00     11 MB(1%)  Iter   1  100.00%  K-mer dist pass 1\r\n00:00:00     11 MB(1%)  Iter   1   10.00%  K-mer dist pass 2\r00:00:00     11 MB(1%)  Iter   1  100.00%  K-mer dist pass 2\r\n00:00:00     45 MB(3%)  Iter   1   33.33%  Align node       \r00:00:17  1012 MB(60%)  Iter   1   66.67%  Align node\r00:00:32  1021 MB(60%)  Iter   1  100.00%  Align node\r00:00:48  1030 MB(61%)  Iter   1  100.00%  Align node\r\n00:00:48  1030 MB(61%)  Iter   1   25.00%  Root alignment\r00:00:48  1030 MB(61%)  Iter   1   50.00%  Root alignment\r00:00:48  1030 MB(61%)  Iter   1   75.00%  Root alignment\r00:00:48  1030 MB(61%)  Iter   1  100.00%  Root alignment\r00:00:48  1030 MB(61%)  Iter   1  100.00%  Root alignment\r\n00:00:48  1030 MB(61%)  Iter   2   50.00%  Refine tree   \r00:01:04  1030 MB(61%)  Iter   2  100.00%  Refine tree\r00:01:18  1030 MB(61%)  Iter   2  150.00%  Refine tree\r00:01:32  1030 MB(61%)  Iter   2  100.00%  Refine tree\r\n00:01:32  1030 MB(61%)  Iter   2   25.00%  Root alignment\r00:01:32  1030 MB(61%)  Iter   2   50.00%  Root alignment\r00:01:32  1030 MB(61%)  Iter   2   75.00%  Root alignment\r00:01:32  1030 MB(61%)  Iter   2  100.00%  Root alignment\r00:01:32  1030 MB(61%)  Iter   2  100.00%  Root alignment\r\n00:01:32  1030 MB(61%)  Iter   2  100.00%  Root alignment\r\n00:01:51  1030 MB(61%)  Iter   3   40.00%  Refine biparts\r00:02:20  1030 MB(61%)  Iter   3   60.00%  Refine biparts\r00:02:43  1030 MB(61%)  Iter   3   80.00%  Refine biparts\r00:02:58  1030 MB(61%)  Iter   3  100.00%  Refine biparts\r00:03:13  1030 MB(61%)  Iter   3  120.00%  Refine biparts\r00:03:13  1030 MB(61%)  Iter   3  100.00%  Refine biparts\r\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:40:39"
+}

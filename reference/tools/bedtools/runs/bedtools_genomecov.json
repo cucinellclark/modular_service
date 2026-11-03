@@ -1,0 +1,57 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bedtools_genomecov",
+ "set": "mapping_variants",
+ "tool": "bedtools",
+ "mode": "genomecov_bga",
+ "description": null,
+ "tool_version": "2.30.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373340_21",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:49",
+ "inputs": {
+  "BAM": {
+   "fixture": "sarscov2_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 19725
+  }
+ },
+ "prep": null,
+ "cmd": "bedtools genomecov -ibam $BAM -bga > coverage.bedgraph",
+ "wall_s": 0.57,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "coverage.bedgraph",
+   "size": 9044,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1\t0\t120\t0",
+    "MT192765.1\t120\t266\t1",
+    "MT192765.1\t266\t270\t2"
+   ],
+   "lines": 369,
+   "sha256": "80b995fe234057a09653bc3ad228a5472a15d53bf695969d0530994a7246ae7d"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 9044,
+ "time": {
+  "elapsed": "0:00.53",
+  "max_rss_kb": "5096",
+  "cpu_pct": "13",
+  "exit_status": "0",
+  "user_s": "0.01",
+  "sys_s": "0.06",
+  "elapsed_s": 0.53,
+  "max_rss_mb": 5.0
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:49"
+}

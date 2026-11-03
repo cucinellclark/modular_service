@@ -1,0 +1,750 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "quast_multi",
+ "set": "assembly",
+ "tool": "quast",
+ "mode": "multiple_assemblies",
+ "description": null,
+ "tool_version": "5.2.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373339_16",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:40:48",
+ "inputs": {
+  "A": {
+   "fixture": "sarscov2_contigs",
+   "path": "inputs/contigs.fasta",
+   "size": 36897
+  },
+  "B": {
+   "fixture": "sarscov2_scaffolds",
+   "path": "inputs/scaffolds.fasta",
+   "size": 36897
+  },
+  "REF": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  }
+ },
+ "prep": null,
+ "cmd": "quast.py -t $CPU -o quast -r $REF $A $B",
+ "wall_s": 4.27,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "quast/aligned_stats/NAx_plot.pdf",
+   "size": 12589,
+   "new": true,
+   "kind": "image",
+   "sha256": "14debec02dc2863cf5ce6a5776a3b022dd4e5e24e7e3fe7fb846d01a4d24d3f3"
+  },
+  {
+   "path": "quast/aligned_stats/NGAx_plot.pdf",
+   "size": 12943,
+   "new": true,
+   "kind": "image",
+   "sha256": "236f5ae46b8c17a6b3a2c052a780a06d91276dbfef1cbe8d379e828ce2e91a21"
+  },
+  {
+   "path": "quast/aligned_stats/cumulative_plot.pdf",
+   "size": 14093,
+   "new": true,
+   "kind": "image",
+   "sha256": "3052e8a6fc1a3c92e14ab8649ff90de8d6146f80eb6252c65b6fd6974b9d6e12"
+  },
+  {
+   "path": "quast/basic_stats/GC_content_plot.pdf",
+   "size": 14112,
+   "new": true,
+   "kind": "image",
+   "sha256": "433c8bf108b9b5c501a4ad057d46e97ef8c5b00eab4b2a9fb68082992cdd0b01"
+  },
+  {
+   "path": "quast/basic_stats/NGx_plot.pdf",
+   "size": 12755,
+   "new": true,
+   "kind": "image",
+   "sha256": "554bb55dd3f1b9955ae2d79f05d3fb6974a0ca31b744a657ee801d591f83e98f"
+  },
+  {
+   "path": "quast/basic_stats/Nx_plot.pdf",
+   "size": 12395,
+   "new": true,
+   "kind": "image",
+   "sha256": "39494c03d5487aff4608563e7da52dbb02462448a30344131161629289dc5c9c"
+  },
+  {
+   "path": "quast/basic_stats/contigs_GC_content_plot.pdf",
+   "size": 11899,
+   "new": true,
+   "kind": "image",
+   "sha256": "9e55b36aefaaafd940aa5a13a463bc68d12aa361d952b18eac7814dcb43d8808"
+  },
+  {
+   "path": "quast/basic_stats/contigs_coverage_histogram.pdf",
+   "size": 14982,
+   "new": true,
+   "kind": "image",
+   "sha256": "a064bc05becb3776c5d3e7b561e8480614be33b09752d54c64f81074f401c70a"
+  },
+  {
+   "path": "quast/basic_stats/coverage_histogram.pdf",
+   "size": 15692,
+   "new": true,
+   "kind": "image",
+   "sha256": "db1cfae871268a515633b30b841ab6638e322638e2210004538c7115c3b868d9"
+  },
+  {
+   "path": "quast/basic_stats/cumulative_plot.pdf",
+   "size": 14085,
+   "new": true,
+   "kind": "image",
+   "sha256": "88c7495bd39546c48eb55e15ed11b82b031f0f402b987b721191e9d9a9d008a6"
+  },
+  {
+   "path": "quast/basic_stats/gc.icarus.txt",
+   "size": 1504,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#MT192765.1 0",
+    "0 42",
+    "0 44"
+   ],
+   "lines": 299,
+   "sha256": "f4bbb18b30de41b46780b4037590fda0a540c5ede0a1b204c7a39029e1c0254b"
+  },
+  {
+   "path": "quast/basic_stats/scaffolds_GC_content_plot.pdf",
+   "size": 13056,
+   "new": true,
+   "kind": "image",
+   "sha256": "48c057aa9254fb72c335a2212d508f1d22359ded69762cd99634648fb1442db2"
+  },
+  {
+   "path": "quast/basic_stats/scaffolds_coverage_histogram.pdf",
+   "size": 15228,
+   "new": true,
+   "kind": "image",
+   "sha256": "2740a0519bd2ea4e792c288de7b1f67df822a8d873818c796c11282760dbd9ed"
+  },
+  {
+   "path": "quast/contigs_reports/all_alignments_contigs.tsv",
+   "size": 368,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S1\tE1\tS2\tE2\tReference\tContig\tIDY\tAmbiguous\tBest_group",
+    "8882\t29829\t20973\t26\tMT192765.1\tNODE_1_length_20973_cov_191.628754\t99.99\t\tTrue",
+    "CONTIG\tNODE_1_length_20973_cov_191.628754\t20973\tcorrect"
+   ],
+   "lines": 6,
+   "sha256": "d9dcba34dcc9c37605027a01727561c4588f02d35985238976dc3460ba906149"
+  },
+  {
+   "path": "quast/contigs_reports/all_alignments_scaffolds.tsv",
+   "size": 368,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "S1\tE1\tS2\tE2\tReference\tContig\tIDY\tAmbiguous\tBest_group",
+    "8882\t29829\t20973\t26\tMT192765.1\tNODE_1_length_20973_cov_191.628754\t99.99\t\tTrue",
+    "CONTIG\tNODE_1_length_20973_cov_191.628754\t20973\tcorrect"
+   ],
+   "lines": 6,
+   "sha256": "d9dcba34dcc9c37605027a01727561c4588f02d35985238976dc3460ba906149"
+  },
+  {
+   "path": "quast/contigs_reports/contigs.mis_contigs.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "quast/contigs_reports/contigs_report_contigs.mis_contigs.info",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "quast/contigs_reports/contigs_report_contigs.stderr",
+   "size": 959,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "[M::mm_idx_gen::0.001*2.13] collected minimizers",
+    "[M::mm_idx_gen::0.002*1.92] sorted minimizers",
+    "[M::main::0.002*1.92] loaded/built the index for 1 target sequence(s)"
+   ],
+   "sha256": "f97d6c9aca576cdc0e2067c15ae646e73b2dfba1762a1996a195c0392f1f58e4"
+  },
+  {
+   "path": "quast/contigs_reports/contigs_report_contigs.stdout",
+   "size": 2444,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Aligning contigs to reference...",
+    "\tAligning contigs to the reference",
+    "Filtering alignments..."
+   ],
+   "lines": 59,
+   "sha256": "8c2ae0ae3ff654b0a53fb9b5c12dddf2d817abd7744b7b06a8a87cb08e79a9ce"
+  },
+  {
+   "path": "quast/contigs_reports/contigs_report_contigs.unaligned.info",
+   "size": 122,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Contig\tTotal_length\tUnaligned_length\tUnaligned_type\tUnaligned_parts",
+    "NODE_3_length_5473_cov_3.280771\t5473\t5473\tfull\t1-5473"
+   ],
+   "lines": 2,
+   "sha256": "1535d2d3b362ef058f626029ff11df690ecebeb531645c4561d3eb56ada1ab48"
+  },
+  {
+   "path": "quast/contigs_reports/contigs_report_scaffolds.mis_contigs.info",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "quast/contigs_reports/contigs_report_scaffolds.stderr",
+   "size": 961,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "[M::mm_idx_gen::0.001*1.97] collected minimizers",
+    "[M::mm_idx_gen::0.002*2.36] sorted minimizers",
+    "[M::main::0.002*2.35] loaded/built the index for 1 target sequence(s)"
+   ],
+   "sha256": "f96964ff2a107c2a41eeb0b572b75a85565857faad5e4a3233e6f321a54c6ad2"
+  },
+  {
+   "path": "quast/contigs_reports/contigs_report_scaffolds.stdout",
+   "size": 2448,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Aligning contigs to reference...",
+    "\tAligning contigs to the reference",
+    "Filtering alignments..."
+   ],
+   "lines": 59,
+   "sha256": "e760860b18a7b68d59ade0e91cf083f6a3a44856732734971cc97835584dca52"
+  },
+  {
+   "path": "quast/contigs_reports/contigs_report_scaffolds.unaligned.info",
+   "size": 122,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Contig\tTotal_length\tUnaligned_length\tUnaligned_type\tUnaligned_parts",
+    "NODE_3_length_5473_cov_3.280771\t5473\t5473\tfull\t1-5473"
+   ],
+   "lines": 2,
+   "sha256": "1535d2d3b362ef058f626029ff11df690ecebeb531645c4561d3eb56ada1ab48"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/contigs.coords",
+   "size": 329,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "8882 29829 | 20973 26 | 20948 20948 | 99.99 | MT192765.1 NODE_1_length_20973_cov_191.628754 | cs:Z::2830*ga:7094*tc:1453*ag:9568",
+    "25 8673 | 6 8654 | 8649 8649 | 100.00 | MT192765.1 NODE_2_length_8774_cov_178.827802 | cs:Z::8649",
+    "12929 13055 | 8648 8774 | 127 127 | 100.00 | MT192765.1 NODE_2_length_8774_cov_178.827802 | cs:Z::127"
+   ],
+   "lines": 3,
+   "sha256": "2d0d758b26c2adce7a0302c859133e486f45ff25ade5ef9c543ec842ffbfe9c9"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/contigs.coords.filtered",
+   "size": 226,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "8882 29829 | 20973 26 | 20948 20948 | 99.99 | MT192765.1 NODE_1_length_20973_cov_191.628754 | cs:Z::2830*ga:7094*tc:1453*ag:9568",
+    "25 8673 | 6 8654 | 8649 8649 | 100.0 | MT192765.1 NODE_2_length_8774_cov_178.827802 | cs:Z::8649"
+   ],
+   "lines": 2,
+   "sha256": "74fc2e1ab108d555ff33608f5dbf7a49ab23a2987257789b898884abdba9d304"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/contigs.coords_tmp",
+   "size": 609,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NODE_1_length_20973_cov_191.628754\t20973\t25\t20973\t-\tMT192765.1\t29829\t8881\t29829\t20945\t20948\t60\tNM:i:3\tms:i:20930\tAS:i:20930\tnn:i:0\ttp:A:P\tcm:i:2092\ts1:i:20882\ts2:i:0\tde:f:0.0001\trl:i:0\tcg:Z:20948M\tcs:",
+    "NODE_2_length_8774_cov_178.827802\t8774\t5\t8654\t+\tMT192765.1\t29829\t24\t8673\t8649\t8649\t60\tNM:i:0\tms:i:8649\tAS:i:8649\tnn:i:0\ttp:A:P\tcm:i:867\ts1:i:8637\ts2:i:0\tde:f:0\trl:i:0\tcg:Z:8649M\tcs:Z::8649",
+    "NODE_2_length_8774_cov_178.827802\t8774\t8647\t8774\t+\tMT192765.1\t29829\t12928\t13055\t127\t127\t60\tNM:i:0\tms:i:127\tAS:i:127\tnn:i:0\ttp:A:P\tcm:i:11\ts1:i:104\ts2:i:0\tde:f:0\trl:i:0\tcg:Z:127M\tcs:Z::127"
+   ],
+   "lines": 3,
+   "sha256": "0fbf0978ee0c40e59861b5041be3ce399581dc30f5cb32f2e5e835e7e39d6679"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/contigs.sf",
+   "size": 158,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Assembly md5 checksum: c96caedf8c949a2b871b83152d99c652",
+    "Reference md5 checksum: 787307f29a263e5657cc276ebbf7e2b3",
+    "Successfully finished on 2026/11/02 15:40:50"
+   ],
+   "lines": 3,
+   "sha256": "00e00fc193056cfb73c8a9f18c2950d983653616de187711cda9629c4dd86021"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/contigs.unaligned",
+   "size": 32,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NODE_3_length_5473_cov_3.280771"
+   ],
+   "lines": 1,
+   "sha256": "1c96f7a32d7c1a62de61249ae3ced8396855d644e6fc53ef28f12c7752017cf8"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/contigs.used_snps",
+   "size": 185,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1\tNODE_1_length_20973_cov_191.628754\t11712\tG\tA\t18143",
+    "MT192765.1\tNODE_1_length_20973_cov_191.628754\t18807\tT\tC\t11048",
+    "MT192765.1\tNODE_1_length_20973_cov_191.628754\t20261\tA\tG\t9594"
+   ],
+   "lines": 3,
+   "sha256": "e3a9044b5cee3894477d6b7d370412aeb797fa32c3800c05df784bd7c3a49df1"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/scaffolds.coords",
+   "size": 329,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "8882 29829 | 20973 26 | 20948 20948 | 99.99 | MT192765.1 NODE_1_length_20973_cov_191.628754 | cs:Z::2830*ga:7094*tc:1453*ag:9568",
+    "25 8673 | 6 8654 | 8649 8649 | 100.00 | MT192765.1 NODE_2_length_8774_cov_178.827802 | cs:Z::8649",
+    "12929 13055 | 8648 8774 | 127 127 | 100.00 | MT192765.1 NODE_2_length_8774_cov_178.827802 | cs:Z::127"
+   ],
+   "lines": 3,
+   "sha256": "2d0d758b26c2adce7a0302c859133e486f45ff25ade5ef9c543ec842ffbfe9c9"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/scaffolds.coords.filtered",
+   "size": 226,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "8882 29829 | 20973 26 | 20948 20948 | 99.99 | MT192765.1 NODE_1_length_20973_cov_191.628754 | cs:Z::2830*ga:7094*tc:1453*ag:9568",
+    "25 8673 | 6 8654 | 8649 8649 | 100.0 | MT192765.1 NODE_2_length_8774_cov_178.827802 | cs:Z::8649"
+   ],
+   "lines": 2,
+   "sha256": "74fc2e1ab108d555ff33608f5dbf7a49ab23a2987257789b898884abdba9d304"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/scaffolds.coords_tmp",
+   "size": 609,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NODE_1_length_20973_cov_191.628754\t20973\t25\t20973\t-\tMT192765.1\t29829\t8881\t29829\t20945\t20948\t60\tNM:i:3\tms:i:20930\tAS:i:20930\tnn:i:0\ttp:A:P\tcm:i:2092\ts1:i:20882\ts2:i:0\tde:f:0.0001\trl:i:0\tcg:Z:20948M\tcs:",
+    "NODE_2_length_8774_cov_178.827802\t8774\t5\t8654\t+\tMT192765.1\t29829\t24\t8673\t8649\t8649\t60\tNM:i:0\tms:i:8649\tAS:i:8649\tnn:i:0\ttp:A:P\tcm:i:867\ts1:i:8637\ts2:i:0\tde:f:0\trl:i:0\tcg:Z:8649M\tcs:Z::8649",
+    "NODE_2_length_8774_cov_178.827802\t8774\t8647\t8774\t+\tMT192765.1\t29829\t12928\t13055\t127\t127\t60\tNM:i:0\tms:i:127\tAS:i:127\tnn:i:0\ttp:A:P\tcm:i:11\ts1:i:104\ts2:i:0\tde:f:0\trl:i:0\tcg:Z:127M\tcs:Z::127"
+   ],
+   "lines": 3,
+   "sha256": "0fbf0978ee0c40e59861b5041be3ce399581dc30f5cb32f2e5e835e7e39d6679"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/scaffolds.sf",
+   "size": 158,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Assembly md5 checksum: c96caedf8c949a2b871b83152d99c652",
+    "Reference md5 checksum: 787307f29a263e5657cc276ebbf7e2b3",
+    "Successfully finished on 2026/11/02 15:40:50"
+   ],
+   "lines": 3,
+   "sha256": "00e00fc193056cfb73c8a9f18c2950d983653616de187711cda9629c4dd86021"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/scaffolds.unaligned",
+   "size": 32,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NODE_3_length_5473_cov_3.280771"
+   ],
+   "lines": 1,
+   "sha256": "1c96f7a32d7c1a62de61249ae3ced8396855d644e6fc53ef28f12c7752017cf8"
+  },
+  {
+   "path": "quast/contigs_reports/minimap_output/scaffolds.used_snps",
+   "size": 185,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1\tNODE_1_length_20973_cov_191.628754\t11712\tG\tA\t18143",
+    "MT192765.1\tNODE_1_length_20973_cov_191.628754\t18807\tT\tC\t11048",
+    "MT192765.1\tNODE_1_length_20973_cov_191.628754\t20261\tA\tG\t9594"
+   ],
+   "lines": 3,
+   "sha256": "e3a9044b5cee3894477d6b7d370412aeb797fa32c3800c05df784bd7c3a49df1"
+  },
+  {
+   "path": "quast/contigs_reports/misassemblies_frcurve_plot.pdf",
+   "size": 13948,
+   "new": true,
+   "kind": "image",
+   "sha256": "e17c299a25d1954e97fb00c67c57233a184d3a30c6749bb2c11456c34f9da6db"
+  },
+  {
+   "path": "quast/contigs_reports/misassemblies_plot.pdf",
+   "size": 10021,
+   "new": true,
+   "kind": "image",
+   "sha256": "b956a8a8d0f3ebfe45ce207f24fee22960a29e59f7535ea9644c3c34724af339"
+  },
+  {
+   "path": "quast/contigs_reports/misassemblies_report.tex",
+   "size": 1295,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\\documentclass[12pt,a4paper]{article}",
+    "\\begin{document}",
+    "\\begin{table}[ht]"
+   ],
+   "lines": 32,
+   "sha256": "04d27b3baf6927422ee2e62b350cf07a40f2e966325745651037fdc0df98cb89"
+  },
+  {
+   "path": "quast/contigs_reports/misassemblies_report.tsv",
+   "size": 534,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Assembly\tcontigs\tscaffolds",
+    "# misassemblies\t0\t0",
+    "  # contig misassemblies\t0\t0"
+   ],
+   "lines": 21,
+   "sha256": "850b0a62bb06e2fb65aee4efd8a300dfe8538e1326824c2339e64831418335d6"
+  },
+  {
+   "path": "quast/contigs_reports/misassemblies_report.txt",
+   "size": 1167,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., \"# contigs (>= 0 bp)\" and \"Total length (>= 0 bp)\" include all contigs).",
+    "",
+    "Assembly                     contigs  scaffolds"
+   ],
+   "lines": 23,
+   "sha256": "f3ade64b9481fb49085b0dc510b773a4ddc9d358a0c2975f573ca14df7451813"
+  },
+  {
+   "path": "quast/contigs_reports/scaffolds.mis_contigs.fa",
+   "size": 0,
+   "new": true,
+   "kind": "fasta",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "quast/contigs_reports/transposed_report_misassemblies.tex",
+   "size": 1068,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\\documentclass[12pt,a4paper]{article}",
+    "\\begin{document}",
+    "\\begin{table}[ht]"
+   ],
+   "lines": 14,
+   "sha256": "f124f90ffcbc9c5955afa747eadb93330e7787efb7e62fa2392db8f7db2d9777"
+  },
+  {
+   "path": "quast/contigs_reports/transposed_report_misassemblies.tsv",
+   "size": 534,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Assembly\t# misassemblies\t  # contig misassemblies\t    # c. relocations\t    # c. translocations\t    # c. inversions\t  # scaffold misassemblies\t    # s. relocations\t    # s. translocations\t    # s. inve",
+    "contigs\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t3\t0\t0\t0\t0",
+    "scaffolds\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t3\t0\t0\t0\t0"
+   ],
+   "lines": 3,
+   "sha256": "8dc4007ed0ac5d2fb69cf92cd65b32e4a879ca451f46f760f9f5bd635f0dc8de"
+  },
+  {
+   "path": "quast/contigs_reports/transposed_report_misassemblies.txt",
+   "size": 1530,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., \"# contigs (>= 0 bp)\" and \"Total length (>= 0 bp)\" include all contigs).",
+    "",
+    "Assembly   # misassemblies    # contig misassemblies      # c. relocations      # c. translocations      # c. inversions    # scaffold misassemblies      # s. relocations      # s. translocations     "
+   ],
+   "lines": 5,
+   "sha256": "c678d1d7a5c647d63c67c4c5eb9c9071e61df712f173bd073b5eaa1a85d96da0"
+  },
+  {
+   "path": "quast/contigs_reports/unaligned_report.tex",
+   "size": 611,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\\documentclass[12pt,a4paper]{article}",
+    "\\begin{document}",
+    "\\begin{table}[ht]"
+   ],
+   "lines": 17,
+   "sha256": "dd10a66b4bc743677e3576eebb4b77eedd7fe309b9b6137b3a01536087943590"
+  },
+  {
+   "path": "quast/contigs_reports/unaligned_report.tsv",
+   "size": 165,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Assembly\tcontigs\tscaffolds",
+    "# fully unaligned contigs\t1\t1",
+    "Fully unaligned length\t5473\t5473"
+   ],
+   "lines": 6,
+   "sha256": "e091a330f1c2829c06f6a167a9d6e11c68fa658a6593723ba37ee3c8a034d520"
+  },
+  {
+   "path": "quast/contigs_reports/unaligned_report.txt",
+   "size": 459,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., \"# contigs (>= 0 bp)\" and \"Total length (>= 0 bp)\" include all contigs).",
+    "",
+    "Assembly                       contigs  scaffolds"
+   ],
+   "lines": 8,
+   "sha256": "efe16aa00d489e61c6b2741e84ef14ef9df46cd4c61aae99593400fd297721ce"
+  },
+  {
+   "path": "quast/genome_stats/contigs_gaps.txt",
+   "size": 21,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1",
+    "8674 8881"
+   ],
+   "lines": 2,
+   "sha256": "9cdfb907512ef0f0f18b475c205629b01331a4420e4e98e891ccfe022152e661"
+  },
+  {
+   "path": "quast/genome_stats/genome_fraction_histogram.pdf",
+   "size": 12103,
+   "new": true,
+   "kind": "image",
+   "sha256": "bd80117c084c0e9d301bb9d4575ca00d71d6fc28989f75722ad3df9d6d9cc518"
+  },
+  {
+   "path": "quast/genome_stats/genome_info.txt",
+   "size": 784,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "reference chromosomes:",
+    "\tMT192765.1 (total length: 29829 bp, total length without N's: 29829 bp, maximal covered length: 29597 bp)",
+    ""
+   ],
+   "lines": 15,
+   "sha256": "9b1fbf9b28a415aceb35d0ce50709b0833bb98bea96db4bddcf4226024b6f49c"
+  },
+  {
+   "path": "quast/genome_stats/scaffolds_gaps.txt",
+   "size": 21,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "MT192765.1",
+    "8674 8881"
+   ],
+   "lines": 2,
+   "sha256": "9cdfb907512ef0f0f18b475c205629b01331a4420e4e98e891ccfe022152e661"
+  },
+  {
+   "path": "quast/icarus.html",
+   "size": 53714,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<html>",
+    "<head>",
+    "    <style type=\"text/css\" rel=\"stylesheet\" name=\"icarus.css\">"
+   ],
+   "sha256": "b94e1d6c14593627019159d095038d7857209992013f05537bc9a3a11765a31f"
+  },
+  {
+   "path": "quast/icarus_viewers/alignment_viewer.html",
+   "size": 784028,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!--",
+    "The MIT License (MIT)",
+    ""
+   ],
+   "sha256": "3d73fbc930784e5290e900c954f38c0ffa504ffc5f335d8709da608b21aefba0"
+  },
+  {
+   "path": "quast/icarus_viewers/contig_size_viewer.html",
+   "size": 781792,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!--",
+    "The MIT License (MIT)",
+    ""
+   ],
+   "sha256": "216a9e949fe3231c278695bd9b6a6370863fb697e8be68edfa593dfa5059e4df"
+  },
+  {
+   "path": "quast/quast.log",
+   "size": 8067,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "/opt/patric-common/runtime/bin/quast.py -t 8 -o quast -r /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/inputs/genome.fasta /disks/tmp/cucinell/modpipe-discovery/assembly/quast",
+    "",
+    "Version: 5.2.0"
+   ],
+   "lines": 136,
+   "sha256": "4b3ffe169cf959ddef89cf02074774c78615beebfa4c62e7c13ea807b33ef771"
+  },
+  {
+   "path": "quast/report.html",
+   "size": 375612,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!DOCTYPE html>",
+    "<html lang=\"en\">",
+    "<head>"
+   ],
+   "sha256": "c6f4abee8b2c858c208b41851e60c0aa2233426442b61666c628e01753d05054"
+  },
+  {
+   "path": "quast/report.pdf",
+   "size": 50830,
+   "new": true,
+   "kind": "image",
+   "sha256": "77b3d99c2edb14e331c831907b0ec41d1c50e75283673fa5ae5f84479a23aec3"
+  },
+  {
+   "path": "quast/report.tex",
+   "size": 2503,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\\documentclass[12pt,a4paper]{article}",
+    "\\begin{document}",
+    "\\begin{table}[ht]"
+   ],
+   "lines": 66,
+   "sha256": "9e4d267eee0de80a29512845c15006b90c055fea483b8b1c6c7df0911b25a7cc"
+  },
+  {
+   "path": "quast/report.tsv",
+   "size": 1306,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Assembly\tcontigs\tscaffolds",
+    "# contigs (>= 0 bp)\t5\t5",
+    "# contigs (>= 1000 bp)\t3\t3"
+   ],
+   "lines": 55,
+   "sha256": "9c41a2d718caea3b31cc5d7c3d1f116b524bb50c6e994c3ee81a6b077eca80c0"
+  },
+  {
+   "path": "quast/report.txt",
+   "size": 3019,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., \"# contigs (>= 0 bp)\" and \"Total length (>= 0 bp)\" include all contigs).",
+    "",
+    "Assembly                     contigs     scaffolds "
+   ],
+   "lines": 57,
+   "sha256": "306a6dd51e7c013eb3e0e46cd1a2532c512dea5b21ad608422c9030f31c7d29b"
+  },
+  {
+   "path": "quast/transposed_report.tex",
+   "size": 2088,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "\\documentclass[12pt,a4paper]{article}",
+    "\\begin{document}",
+    "\\begin{table}[ht]"
+   ],
+   "lines": 14,
+   "sha256": "c148ce37501b570b70e728763a39875584e843391263506ea237851958573377"
+  },
+  {
+   "path": "quast/transposed_report.tsv",
+   "size": 1306,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Assembly\t# contigs (>= 0 bp)\t# contigs (>= 1000 bp)\t# contigs (>= 5000 bp)\t# contigs (>= 10000 bp)\t# contigs (>= 25000 bp)\t# contigs (>= 50000 bp)\tTotal length (>= 0 bp)\tTotal length (>= 1000 bp)\tTota",
+    "contigs\t5\t3\t3\t1\t0\t0\t36124\t35220\t35220\t20973\t0\t0\t3\t20973\t35220\t29829\t39.05\t38.01\t20973\t20973\t5473\t8774\t15525.4\t18331.3\t1\t1\t3\t2\t0\t0\t0\t0\t0\t0\t0\t1 + 0 part\t5473\t99.222\t1.000\t0.00\t10.14\t0.00\t20948\t29597\t209",
+    "scaffolds\t5\t3\t3\t1\t0\t0\t36124\t35220\t35220\t20973\t0\t0\t3\t20973\t35220\t29829\t39.05\t38.01\t20973\t20973\t5473\t8774\t15525.4\t18331.3\t1\t1\t3\t2\t0\t0\t0\t0\t0\t0\t0\t1 + 0 part\t5473\t99.222\t1.000\t0.00\t10.14\t0.00\t20948\t29597\t2"
+   ],
+   "lines": 3,
+   "sha256": "83d7a4d3da2590680764e898a60da0337e14659dee244a54b9a84fa6b0459604"
+  },
+  {
+   "path": "quast/transposed_report.txt",
+   "size": 2847,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., \"# contigs (>= 0 bp)\" and \"Total length (>= 0 bp)\" include all contigs).",
+    "",
+    "Assembly   # contigs (>= 0 bp)  # contigs (>= 1000 bp)  # contigs (>= 5000 bp)  # contigs (>= 10000 bp)  # contigs (>= 25000 bp)  # contigs (>= 50000 bp)  Total length (>= 0 bp)  Total length (>= 1000"
+   ],
+   "lines": 5,
+   "sha256": "8191932dfb069833a541472f0b81bed512dc0f3e57c946b67e893276fc7f5b21"
+  }
+ ],
+ "n_outputs": 64,
+ "output_bytes": 2287576,
+ "time": {
+  "elapsed": "0:04.22",
+  "max_rss_kb": "131916",
+  "cpu_pct": "225",
+  "exit_status": "0",
+  "user_s": "3.86",
+  "sys_s": "5.66",
+  "elapsed_s": 4.22,
+  "max_rss_mb": 128.8
+ },
+ "stdout_tail": "ry/assembly/quast_multi-21373339_16/quast/contigs_reports/contigs_report_scaffolds.stdout and contigs_report_scaffolds.stderr...\n  1  Logging to files /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/contigs_reports/contigs_report_contigs.stdout and contigs_report_contigs.stderr...\n  1  Aligning contigs to the reference\n  2  Aligning contigs to the reference\n  2  Analysis is finished.\n  1  Analysis is finished.\n  Creating total report...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/contigs_reports/misassemblies_report.txt, misassemblies_report.tsv, and misassemblies_report.tex\n  Transposed version of total report...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/contigs_reports/transposed_report_misassemblies.txt, transposed_report_misassemblies.tsv, and transposed_report_misassemblies.tex\n  Creating total report...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/contigs_reports/unaligned_report.txt, unaligned_report.tsv, and unaligned_report.tex\n  Drawing misassemblies by types plot...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/contigs_reports/misassemblies_plot.pdf\n  Drawing misassemblies FRCurve plot...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/contigs_reports/misassemblies_frcurve_plot.pdf\nDone.\n\n2026-11-02 15:40:50\nRunning NA-NGA calculation...\n  1  contigs, Largest alignment = 20948, NA50 = 20948, NGA50 = 20948, LA50 = 1, LGA50 = 1\n  2  scaffolds, Largest alignment = 20948, NA50 = 20948, NGA50 = 20948, LA50 = 1, LGA50 = 1\n  Drawing cumulative plot...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/aligned_stats/cumulative_plot.pdf\n  Drawing NAx plot...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/aligned_stats/NAx_plot.pdf\n  Drawing NGAx plot...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/aligned_stats/NGAx_plot.pdf\nDone.\n\n2026-11-02 15:40:51\nRunning Genome analyzer...\n  NOTICE: No file with genomic features were provided. Use the --features option if you want to specify it.\n\n  NOTICE: No file with operons were provided. Use the -O option if you want to specify it.\n  1  contigs\n  2  scaffolds\n  1  Analysis is finished.\n  2  Analysis is finished.\n  Drawing Genome fraction, % histogram...\n    saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/genome_stats/genome_fraction_histogram.pdf\nDone.\n\nNOTICE: Genes are not predicted by default. Use --gene-finding or --glimmer option to enable it.\n\n2026-11-02 15:40:51\nCreating large visual summaries...\nThis may take a while: press Ctrl-C to skip this step..\n  1 of 2: Creating PDF with all tables and plots...\n  2 of 2: Creating Icarus viewers...\nDone\n\n2026-11-02 15:40:52\nRESULTS:\n  Text versions of total report are saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/report.txt, report.tsv, and report.tex\n  Text versions of transposed total report are saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/transposed_report.txt, transposed_report.tsv, and transposed_report.tex\n  HTML version (interactive tables and plots) is saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/report.html\n  PDF version (tables and plots) is saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/report.pdf\n  Icarus (contig browser) is saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/icarus.html\n  Log is saved to /disks/tmp/cucinell/modpipe-discovery/assembly/quast_multi-21373339_16/quast/quast.log\n\nFinished: 2026-11-02 15:40:52\nElapsed time: 0:00:03.862293\nNOTICEs: 3; WARNINGs: 0; non-fatal ERRORs: 0\n\nThank you for using QUAST!\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:40:52"
+}

@@ -1,0 +1,131 @@
+# P4 discovery set: read mapping, BAM handling, variant calling.
+set: mapping_variants
+resources: {cpus: 4, mem: 16G, time: "01:00:00"}
+runs:
+  - id: bwa_index
+    tool: bwa
+    mode: index
+    inputs: {REF: portiera_genome}
+    cmd: bwa index $REF
+  - id: bwa_mem_pe
+    tool: bwa
+    mode: mem_paired
+    inputs: {REF: portiera_genome, R1: portiera_illumina_1, R2: portiera_illumina_2}
+    prep: bwa index $REF
+    cmd: bwa mem -t $CPU $REF $R1 $R2 > aln.sam
+  - id: bowtie2_build
+    tool: bowtie2
+    mode: build
+    inputs: {REF: portiera_genome}
+    cmd: bowtie2-build --threads $CPU $REF refidx
+  - id: bowtie2_align_pe
+    tool: bowtie2
+    mode: align_paired
+    inputs: {REF: portiera_genome, R1: portiera_illumina_1, R2: portiera_illumina_2}
+    prep: bowtie2-build --threads $CPU $REF refidx
+    cmd: bowtie2 -p $CPU -x refidx -1 $R1 -2 $R2 -S aln.sam --un-conc-gz unaligned_%.fastq.gz 2> bowtie2.log
+  - id: hisat2_build
+    tool: hisat2
+    mode: build
+    inputs: {REF: hs_genome}
+    cmd: hisat2-build -p $CPU $REF refidx
+  - id: hisat2_align_rnaseq
+    tool: hisat2
+    mode: align_paired_rnaseq
+    inputs: {REF: hs_genome, R1: hs_rnaseq_1, R2: hs_rnaseq_2}
+    prep: hisat2-build -p $CPU $REF refidx
+    cmd: hisat2 -p $CPU -x refidx -1 $R1 -2 $R2 -S aln.sam --summary-file summary.txt --new-summary
+  - id: minimap2_sr
+    tool: minimap2
+    mode: short_paired
+    inputs: {REF: portiera_genome, R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: minimap2 -t $CPU -ax sr $REF $R1 $R2 > aln.sam
+  - id: minimap2_ont
+    tool: minimap2
+    mode: map_ont
+    inputs: {REF: portiera_genome, L: portiera_nanopore}
+    cmd: minimap2 -t $CPU -ax map-ont $REF $L > aln.sam
+  - id: minimap2_index
+    tool: minimap2
+    mode: index
+    inputs: {REF: portiera_genome}
+    cmd: minimap2 -d ref.mmi $REF
+  - id: samtools_sort_index
+    tool: samtools
+    mode: sort+index
+    inputs: {BAM: sarscov2_bam_pe}
+    cmd: samtools sort -@ $CPU -o sorted.bam $BAM && samtools index sorted.bam
+  - id: samtools_view_filter
+    tool: samtools
+    mode: view_filter
+    inputs: {BAM: sarscov2_bam_pe}
+    cmd: samtools view -b -q 20 -F 4 -o filtered.bam $BAM
+  - id: samtools_faidx
+    tool: samtools
+    mode: faidx
+    inputs: {REF: portiera_genome}
+    cmd: samtools faidx $REF
+  - id: samtools_stats
+    tool: samtools
+    mode: stats+flagstat+idxstats
+    inputs: {BAM: sarscov2_bam_pe, BAI: sarscov2_bam_pe_bai}
+    cmd: samtools stats $BAM > stats.txt && samtools flagstat $BAM > flagstat.txt && samtools idxstats $BAM > idxstats.txt
+  - id: samtools_depth
+    tool: samtools
+    mode: depth
+    inputs: {BAM: sarscov2_bam_pe}
+    cmd: samtools depth -a $BAM > depth.tsv
+  - id: samtools_consensus
+    tool: samtools
+    mode: consensus_path_1.13
+    description: expected to fail on PATH samtools 1.13 (consensus added in 1.16)
+    inputs: {BAM: sarscov2_bam_pe}
+    cmd: samtools consensus -o consensus.fa $BAM
+  - id: samtools120_consensus
+    tool: samtools
+    mode: consensus_runtime_1.20
+    inputs: {BAM: sarscov2_bam_pe}
+    cmd: S=$(ls /opt/patric-common/runtime/samtools-1.20/bin/samtools 2>/dev/null || find /opt/patric-common/runtime/samtools-1.20 -name samtools -type f | head -1); $S --version | head -1; $S consensus -o consensus.fa $BAM
+  - id: bcftools_call
+    tool: bcftools
+    mode: mpileup+call
+    inputs: {REF: sarscov2_genome, BAM: sarscov2_bam_pe}
+    cmd: bcftools mpileup -f $REF $BAM | bcftools call -mv -Oz -o calls.vcf.gz && bcftools index calls.vcf.gz
+  - id: bcftools_consensus
+    tool: bcftools
+    mode: consensus
+    inputs: {REF: sarscov2_genome, VCF: sarscov2_vcf, TBI: sarscov2_vcf_tbi}
+    cmd: bcftools consensus -f $REF $VCF > consensus.fa
+  - id: freebayes
+    tool: freebayes
+    mode: haploid
+    inputs: {REF: sarscov2_genome, BAM: sarscov2_bam_pe, BAI: sarscov2_bam_pe_bai}
+    prep: samtools faidx $REF
+    cmd: freebayes -p 1 -f $REF $BAM > freebayes.vcf
+  - id: snippy_pe
+    tool: snippy
+    mode: paired
+    inputs: {REF: portiera_genome, R1: portiera_illumina_1, R2: portiera_illumina_2}
+    cmd: snippy --cpus $CPU --ram $MEM_GB --outdir out --ref $REF --R1 $R1 --R2 $R2
+  - id: snpeff_ann
+    tool: snpeff
+    mode: build_gff3+ann
+    inputs: {REF: sarscov2_genome, GFF: sarscov2_gff3, VCF: sarscov2_vcf}
+    prep: |
+      mkdir -p snpdb/sarscov2
+      cp $REF snpdb/sarscov2/sequences.fa
+      cp $GFF snpdb/sarscov2/genes.gff
+      printf 'sarscov2.genome : SARS-CoV-2\n' > snpEff.config
+      snpEff.sh build -gff3 -c snpEff.config -dataDir $PWD/snpdb sarscov2
+    cmd: snpEff.sh ann -c snpEff.config -dataDir $PWD/snpdb sarscov2 $VCF > annotated.vcf
+  - id: bedtools_genomecov
+    tool: bedtools
+    mode: genomecov_bga
+    inputs: {BAM: sarscov2_bam_pe}
+    cmd: bedtools genomecov -ibam $BAM -bga > coverage.bedgraph
+  - id: kma_map
+    tool: kma
+    mode: index+paired
+    inputs: {REF: sarscov2_genome, R1: sarscov2_illumina_test_1, R2: sarscov2_illumina_test_2}
+    prep: kma index -i $REF -o refdb
+    cmd: kma -ipe $R1 $R2 -o kma_out -t_db refdb -t $CPU

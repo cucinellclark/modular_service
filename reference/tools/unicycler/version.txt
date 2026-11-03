@@ -1,0 +1,2 @@
+# /usr/bin/unicycler --version
+Unicycler v0.4.8

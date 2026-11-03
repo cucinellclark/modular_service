@@ -1,0 +1,17 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Taxonomic profiling of read samples",
+  "description": "Per sample: fastp -> Kraken2 classification -> Bracken species abundance. Bracken uses the same database as Kraken2.",
+  "inputs": {"samples": {"type": "reads.short.paired", "collection": true,
+                         "source": {"paired_end_libs": [{"sample_id": "S1", "read1": "/user@bvbrc/home/reads/S1_R1.fastq.gz", "read2": "/user@bvbrc/home/reads/S1_R2.fastq.gz"}]}}},
+  "steps": {
+    "trim":     {"module": "fastp", "in": {"reads": "$inputs.samples"}},
+    "classify": {"module": "kraken2", "in": {"reads": "trim.trimmed_reads"}},
+    "abundance": {"module": "bracken", "in": {"report": "classify.report"}}
+  },
+  "outputs": {"kraken_report": "classify.report", "abundance": "abundance.abundance", "bracken_report": "abundance.report",
+              "trim_report": "trim.report_html"},
+  "template": {"label": "Taxonomic profile (Kraken2 + Bracken)", "category": "taxonomy",
+               "expose": ["classify.params.db", "classify.params.confidence", "abundance.params.level", "abundance.params.read_length"],
+               "links": {"abundance.params.db": "classify.params.db"}}
+}

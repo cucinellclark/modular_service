@@ -1,0 +1,15 @@
+{
+  "pipeline": {
+    "schema": "modpipe/pipeline/v1",
+    "name": "rpoB tree from a feature group",
+    "inputs": {"proteins": {"type": "sequences.protein",
+                            "source": {"feature_group": "/clark.cucinell@patricbrc.org/home/Feature Groups/rpoB_feature_group_20"}}},
+    "steps": {
+      "align": {"module": "mafft", "in": {"sequences": "$inputs.proteins"}, "params": {"strategy": "auto"}},
+      "tree":  {"module": "fasttree", "in": {"alignment": "align.alignment"}, "params": {"model": "lg"}}
+    },
+    "outputs": {"alignment": "align.alignment", "tree": "tree.tree"}
+  },
+  "output_path": "/clark.cucinell@patricbrc.org/home/ModularService_tests",
+  "output_file": "feature_group_tree"
+}

@@ -1,0 +1,148 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "vigor4_sarscov2",
+ "set": "annotation",
+ "tool": "vigor4",
+ "mode": "sarscov2_db",
+ "description": null,
+ "tool_version": "4.1.20220621",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-05",
+ "slurm_job": "21373347_6",
+ "cpus": 4,
+ "mem_gb": 24,
+ "started": "2026-11-02T15:37:39",
+ "inputs": {
+  "G": {
+   "fixture": "sarscov2_genome",
+   "path": "inputs/genome.fasta",
+   "size": 30322
+  }
+ },
+ "prep": null,
+ "cmd": "mkdir vigor && vigor4 -i $G -o vigor/sarscov2 -d sarscov2_db",
+ "wall_s": 94.0,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "vigor/sarscov2-20261102-213756.ini",
+   "size": 2600,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "; Effective configuration 20261102-213756",
+    "",
+    "; source: defaults"
+   ],
+   "lines": 101,
+   "sha256": "d02afd38a87460e345d23bb043125db2cfd856f432a07177ff39d0c9a0ba566e"
+  },
+  {
+   "path": "vigor/sarscov2.aln",
+   "size": 225952,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    "Command line: [/usr/bin/exonerate --model protein2genome -q /opt/patric-common/runtime/vigor-4.1.20220621-163707-2385247/VIGOR_DB/Reference_DBs/sarscov2_db -t /tmp/vigor417425949570933052299/sequence_",
+    "Hostname: [bio-compute-05]",
+    ""
+   ],
+   "lines": 3906,
+   "records": 0,
+   "residues": 205226,
+   "sha256": "b62adb85fc891076f41acfce6e6c7d29117cb99e7a4693ba7242c93e180295d5"
+  },
+  {
+   "path": "vigor/sarscov2.cds",
+   "size": 47006,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">MT192765.1.17 location=259..13476 codon_start=1 gene=\"ORF1a\" product=\"ORF1a polyprotein\" ref_db=\"sarscov2_db\" ref_id=\"YP_009725295.1\"",
+    "ATGGAGAGCCTTGTCCCTGGTTTCAACGAGAAAACACACGTCCAACTCAGTTTGCCTGTT",
+    "TTACAGGTTCGCGACGTGCTCGTACGTGGCTTTGGAGACTCCGTGGAGGAGGTCTTATCA"
+   ],
+   "lines": 754,
+   "records": 19,
+   "residues": 43590,
+   "sha256": "ac79c98c0d4aa5c63ef857e37666a7e57151f1166548dc84d4d85edfd8887679"
+  },
+  {
+   "path": "vigor/sarscov2.gff3",
+   "size": 6139,
+   "new": true,
+   "kind": "gff",
+   "preview": [
+    "##gff-version 3",
+    "MT192765.1\tvigor\tgene\t259\t13476\t.\t+\t0\tID=MT192765.1.17;Name=ORF1a;",
+    "MT192765.1\tvigor\tmRNA\t259\t13476\t.\t+\t0\tID=MT192765.1.17.1;Parent=MT192765.1.17;"
+   ],
+   "lines": 79,
+   "records": 78,
+   "sha256": "03b6390088f69e93749f8c7c2f80a29a1024e44d34f3721c017d47dae8b6a970"
+  },
+  {
+   "path": "vigor/sarscov2.pep",
+   "size": 26885,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    ">MT192765.1.17 location=259..13476 codon_start=1 gene=\"ORF1a\" product=\"ORF1a polyprotein\" ref_db=\"sarscov2_db\" ref_id=\"YP_009725295.1\"",
+    "MESLVPGFNEKTHVQLSLPVLQVRDVLVRGFGDSVEEVLSEARQHLKDGTCGLVEVEKGV",
+    "LPQLEQPYVFIKRSDARTAPHGHVMVELVAELEGIQYGRSGETLGVLVPHVGEIPVAYRK"
+   ],
+   "sha256": "2094c751d869262fb1ada00fd3ccd18dd3f7baffce24370df649e27eda381bcd"
+  },
+  {
+   "path": "vigor/sarscov2.rpt",
+   "size": 12405,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Command line arguments: -i /disks/tmp/cucinell/modpipe-discovery/annotation/vigor4_sarscov2-21373347_6/inputs/genome.fasta -o vigor/sarscov2 -d sarscov2_db",
+    "Current working directory: /disks/tmp/cucinell/modpipe-discovery/annotation/vigor4_sarscov2-21373347_6",
+    "Using SARSCoV2 database version 20210909"
+   ],
+   "lines": 108,
+   "sha256": "3706c89bde7969a0b353b106474fb271a9143c3286c7e6320f212b658bd84dbf"
+  },
+  {
+   "path": "vigor/sarscov2.tbl",
+   "size": 5027,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">Features MT192765.1",
+    "259\t13476\tgene",
+    "\t\t\tlocus_tag\tvigor_ORF1a"
+   ],
+   "lines": 240,
+   "records": 3,
+   "residues": 4175,
+   "sha256": "97e0d12342c5fd3759e45dbd5e608c5b03530a38b9bbbc6c4210d608939375dd"
+  },
+  {
+   "path": "vigor/sarscov2.warnings",
+   "size": 0,
+   "new": true,
+   "kind": "binary",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+ ],
+ "n_outputs": 8,
+ "output_bytes": 326014,
+ "time": {
+  "elapsed": "1:33.99",
+  "max_rss_kb": "1396712",
+  "cpu_pct": "96",
+  "exit_status": "0",
+  "user_s": "83.90",
+  "sys_s": "6.97",
+  "elapsed_s": 93.99,
+  "max_rss_mb": 1364.0
+ },
+ "stdout_tail": "13       113       YP_009725305.1      ORF1ab|nsp9         \nMT192765.1.12.10    100.00    100.00    100.00    0.0       0.0       0.0       13018..13434        139       139       YP_009725306.1      ORF1ab|nsp10        \nMT192765.1.12.11    99.89     99.89     100.00    0.0       0.0       0.0       13435..16230        932       932       YP_009725307.1      ORF1ab|RNA-dependent RNA polymerase\nMT192765.1.12.12    100.00    100.00    100.00    0.0       0.0       0.0       16231..18033        601       601       YP_009725308.1      ORF1ab|helicase     \nMT192765.1.12.13    100.00    100.00    100.00    0.0       0.0       0.0       18034..19614        527       527       YP_009725309.1      ORF1ab|3'-to-5' exonuclease\nMT192765.1.12.14    100.00    100.00    100.00    0.0       0.0       0.0       19615..20652        346       346       YP_009725310.1      ORF1ab|endoRNAse    \nMT192765.1.12.15    100.00    100.00    100.00    0.0       0.0       0.0       20653..21546        298       298       YP_009725311.1      ORF1ab|2'-O-ribose methyltransferase\nMT192765.1.1        99.92     99.92     100.00    0.0       0.0       0.0       21556..25377        1273      1273      YP_009724390.1      S | surface glycoprotein\nMT192765.1.11       100.00    100.00    100.00    0.0       0.0       0.0       21737..21856        39        39        NC_045512_ORF2b     ORF2b | ORF2b protein - expression ambiguous\nMT192765.1.16       100.00    100.00    100.00    0.0       0.0       0.0       25386..26213        275       275       YP_009724391.1      ORF3a | ORF3a protein\nMT192765.1.19       100.00    100.00    100.00    0.0       0.0       0.0       25450..25575        41        41        P0DTG1              ORF3c | ORF3c protein - expression ambiguous\nMT192765.1.6        100.00    100.00    100.00    0.0       0.0       0.0       25517..25690        57        57        P0DTG0              ORF3d | ORF3d protein - expression ambiguous\nMT192765.1.15       100.00    100.00    100.00    0.0       0.0       0.0       25589..25690        33        33        NC_045512_ORF3d/-2  ORF3d/-2 | ORF3d/-2 protein - expression ambiguous\nMT192765.1.18       100.00    100.00    100.00    0.0       0.0       0.0       25807..25875        22        22        P0DTF1              ORF3b | ORF3b protein - expression ambiguous\nMT192765.1.8        100.00    100.00    100.00    0.0       0.0       0.0       26238..26465        75        75        YP_009724392.1      E | envelope protein\nMT192765.1.10       100.00    100.00    100.00    0.0       0.0       0.0       26516..27184        222       222       YP_009724393.1      M | membrane glycoprotein\nMT192765.1.4        100.00    100.00    100.00    0.0       0.0       0.0       27195..27380        61        61        YP_009724394.1      ORF6 | ORF6 protein \nMT192765.1.13       100.00    100.00    100.00    0.0       0.0       0.0       27387..27752        121       121       YP_009724395.1      ORF7a | ORF7a protein\nMT192765.1.3        100.00    100.00    100.00    0.0       0.0       0.0       27749..27880        43        43        YP_009725318.1      ORF7b | ORF7b protein\nMT192765.1.2        100.00    100.00    100.00    0.0       0.0       0.0       27887..28252        121       121       YP_009724396.1      ORF8 | ORF8 protein \nMT192765.1.5        100.00    100.00    100.00    0.0       0.0       0.0       28267..29526        419       419       YP_009724397.2      N | nucleocapsid phosphoprotein\nMT192765.1.14       100.00    100.00    100.00    0.0       0.0       0.0       28277..28570        97        97        P0DTD2              ORF9b | ORF9b protein\nMT192765.1.9        100.00    100.00    100.00    0.0       0.0       0.0       28727..28948        73        73        P0DTD3              ORF9c | ORF9c protein - expression ambiguous\nMT192765.1.7        100.00    100.00    100.00    0.0       0.0       0.0       29551..29667        38        38        YP_009725255.1      ORF10 | ORF10 protein - expression ambiguous\n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:39:13"
+}

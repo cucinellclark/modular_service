@@ -1,0 +1,79 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "bracken_est_abundance",
+ "set": "typing_expression",
+ "tool": "bracken",
+ "mode": "est_abundance_direct",
+ "description": "how BV-BRC runs it; the `bracken` wrapper looks for src/est_abundance.py, which the container doesn't have",
+ "tool_version": "2.9",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373447_2",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:44:39",
+ "inputs": {
+  "DB": {
+   "fixture": "sarscov2_kraken2_bracken_db:dir",
+   "path": "inputs/kraken2_bracken",
+   "size": null
+  },
+  "R1": {
+   "fixture": "sarscov2_illumina_test_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 9413
+  },
+  "R2": {
+   "fixture": "sarscov2_illumina_test_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 9395
+  }
+ },
+ "prep": "kraken2 --db $DB --paired --report report.txt --output /dev/null $R1 $R2",
+ "cmd": "est_abundance.py -i report.txt -k $DB/database100mers.kmer_distrib -o bracken.tsv -l S -t 0 --out-report bracken_report.txt",
+ "wall_s": 0.06,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "bracken.tsv",
+   "size": 180,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "name\ttaxonomy_id\ttaxonomy_lvl\tkraken_assigned_reads\tadded_reads\tnew_est_reads\tfraction_total_reads",
+    "Severe acute respiratory syndrome-related coronavirus\t694009\tS\t100\t0\t100\t1.00000"
+   ],
+   "lines": 2,
+   "sha256": "43a51a4b4c4d594961f5f249f7b5ce0567921f48ba08414fae378a5ce5efe21d"
+  },
+  {
+   "path": "bracken_report.txt",
+   "size": 657,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "100.00\t100\t0\tR\t1\troot",
+    "100.00\t100\t0\tD\t10239\t  Viruses",
+    "100.00\t100\t0\tD1\t2559587\t    Riboviria"
+   ],
+   "lines": 13,
+   "sha256": "5711966b42d8d257e38e272e1e59b148230aca6251de47b07365fd9a8e4f4235"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 837,
+ "time": {
+  "elapsed": "0:00.06",
+  "max_rss_kb": "11776",
+  "cpu_pct": "60",
+  "exit_status": "0",
+  "user_s": "0.02",
+  "sys_s": "0.01",
+  "elapsed_s": 0.06,
+  "max_rss_mb": 11.5
+ },
+ "stdout_tail": "PROGRAM START TIME: 11-02-2026 21:44:39\nBRACKEN SUMMARY (Kraken report: report.txt)\n    >>> Threshold: 0 \n    >>> Number of species in sample: 1 \n\t  >> Number of species with reads > threshold: 1 \n\t  >> Number of species with reads < threshold: 0 \n    >>> Total reads in sample: 100\n\t  >> Total reads kept at species level (reads > threshold): 100\n\t  >> Total reads discarded (species reads < threshold): 0\n\t  >> Reads distributed: 0\n\t  >> Reads not distributed (eg. no species above threshold): 0\n\t  >> Unclassified reads: 0\nBRACKEN OUTPUT PRODUCED: bracken.tsv\nPROGRAM END TIME: 11-02-2026 21:44:39\n",
+ "stderr_tail": ">> Checking report file: report.txt\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:44:39"
+}

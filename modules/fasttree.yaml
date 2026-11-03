@@ -1,0 +1,44 @@
+schema: modpipe/module/v1
+id: fasttree
+version: 1
+label: "FastTree: approximately-maximum-likelihood tree"
+description: Builds a phylogenetic tree from a DNA or protein alignment.
+category: phylogeny
+tool: {id: fasttree, binary: FastTree, version: 2.1.11}
+
+inputs:
+  - id: alignment
+    type: alignment.msa
+
+outputs:
+  - {id: tree, type: tree.newick, path: tree.nwk}
+  - {id: log, type: report.text, path: fasttree.log}
+
+parameters:
+  - id: model
+    type: enum
+    enum: [default, gtr, wag, lg]
+    default: default
+    label: "Substitution model"
+    description: "default = JC (DNA) / JTT (protein); gtr is DNA-only; wag and lg are protein-only"
+  - {id: gamma, type: bool, default: false, label: "Gamma rate heterogeneity (-gamma)"}
+
+resources: {cpu: 1, memory: 8G, runtime: 4h}
+
+command: |
+  {% set dna = inputs.alignment.attrs.get('alphabet') == 'dna' %}
+  {% if params.model == 'gtr' and not dna %}{{ fail('FastTree -gtr is for DNA alignments') }}{% endif %}
+  {% if params.model in ['wag', 'lg'] and dna %}{{ fail('FastTree -' ~ params.model ~ ' is for protein alignments') }}{% endif %}
+  FastTree {% if dna %}-nt{% endif %} {% if params.model != 'default' %}-{{ params.model }}{% endif %}
+  {% if params.gamma %}-gamma{% endif %} -log {{ outputs.log }}
+  {{ inputs.alignment | q }} > {{ outputs.tree }}
+
+tests:
+  discovery_runs: [fasttree_nt, fasttree_aa]
+  observed: {max_rss_mb: 128, max_wall_s: 3}
+provenance:
+  bvbrc_invocations: [App-GeneTree.pl, App-PhylogeneticTree.pl, run_treesort.py]
+  nfcore: [fasttree]
+notes: >-
+  Pins FastTree 2.1.11 (single-threaded). FastTreeMP on PATH is the older 2.1.3, which lacks -lg.
+  The discovery run fasttree_nt used FastTreeMP.

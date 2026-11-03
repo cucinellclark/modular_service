@@ -1,0 +1,87 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "fastqc_pe",
+ "set": "readqc",
+ "tool": "fastqc",
+ "mode": "paired",
+ "description": null,
+ "tool_version": "0.12.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373335_6",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:33",
+ "inputs": {
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": null,
+ "cmd": "mkdir fastqc && fastqc -t $CPU -o fastqc $R1 $R2",
+ "wall_s": 4.43,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "fastqc/test_1_fastqc.html",
+   "size": 628090,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!DOCTYPE html><html><head><title>test_1.fastq.gz FastQC Report</title><style type=\"text/css\">",
+    " @media screen {",
+    "  div.summary {"
+   ],
+   "sha256": "7f4aca357bd150f3ac3ab9c01b1d4d899f8f4939946dffca854cb6040900e812"
+  },
+  {
+   "path": "fastqc/test_1_fastqc.zip",
+   "size": 480244,
+   "new": true,
+   "kind": "archive",
+   "sha256": "41b85744f72b47b0dd5c08f5e67eb45040664145307cb912b355f2c0bcc6521b"
+  },
+  {
+   "path": "fastqc/test_2_fastqc.html",
+   "size": 635593,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!DOCTYPE html><html><head><title>test_2.fastq.gz FastQC Report</title><style type=\"text/css\">",
+    " @media screen {",
+    "  div.summary {"
+   ],
+   "sha256": "a33713ff8a19eca3e3f653ae83955053752932b7fe477c07a7939a34702bc795"
+  },
+  {
+   "path": "fastqc/test_2_fastqc.zip",
+   "size": 498078,
+   "new": true,
+   "kind": "archive",
+   "sha256": "02019da74425dcee69f76ae073ecd3ee33ac864b41cc420a5127aef10a5df821"
+  }
+ ],
+ "n_outputs": 4,
+ "output_bytes": 2242005,
+ "time": {
+  "elapsed": "0:04.41",
+  "max_rss_kb": "387516",
+  "cpu_pct": "179",
+  "exit_status": "0",
+  "user_s": "7.33",
+  "sys_s": "0.57",
+  "elapsed_s": 4.41,
+  "max_rss_mb": 378.4
+ },
+ "stdout_tail": "application/gzip\napplication/gzip\nAnalysis complete for test_1.fastq.gz\nAnalysis complete for test_2.fastq.gz\n",
+ "stderr_tail": "Started analysis of test_1.fastq.gz\nApprox 5% complete for test_1.fastq.gz\nApprox 10% complete for test_1.fastq.gz\nApprox 15% complete for test_1.fastq.gz\nApprox 20% complete for test_1.fastq.gz\nApprox 25% complete for test_1.fastq.gz\nApprox 30% complete for test_1.fastq.gz\nApprox 35% complete for test_1.fastq.gz\nStarted analysis of test_2.fastq.gz\nApprox 40% complete for test_1.fastq.gz\nApprox 5% complete for test_2.fastq.gz\nApprox 45% complete for test_1.fastq.gz\nApprox 10% complete for test_2.fastq.gz\nApprox 50% complete for test_1.fastq.gz\nApprox 55% complete for test_1.fastq.gz\nApprox 15% complete for test_2.fastq.gz\nApprox 60% complete for test_1.fastq.gz\nApprox 20% complete for test_2.fastq.gz\nApprox 65% complete for test_1.fastq.gz\nApprox 25% complete for test_2.fastq.gz\nApprox 70% complete for test_1.fastq.gz\nApprox 30% complete for test_2.fastq.gz\nApprox 35% complete for test_2.fastq.gz\nApprox 75% complete for test_1.fastq.gz\nApprox 40% complete for test_2.fastq.gz\nApprox 80% complete for test_1.fastq.gz\nApprox 85% complete for test_1.fastq.gz\nApprox 45% complete for test_2.fastq.gz\nApprox 90% complete for test_1.fastq.gz\nApprox 50% complete for test_2.fastq.gz\nApprox 95% complete for test_1.fastq.gz\nApprox 55% complete for test_2.fastq.gz\nApprox 60% complete for test_2.fastq.gz\nApprox 65% complete for test_2.fastq.gz\nApprox 70% complete for test_2.fastq.gz\nApprox 75% complete for test_2.fastq.gz\nApprox 80% complete for test_2.fastq.gz\nApprox 85% complete for test_2.fastq.gz\nApprox 90% complete for test_2.fastq.gz\nApprox 95% complete for test_2.fastq.gz\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:38"
+}

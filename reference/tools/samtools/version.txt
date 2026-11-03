@@ -1,0 +1,26 @@
+# /usr/bin/samtools --version
+samtools 1.13
+Using htslib 1.13+ds
+Copyright (C) 2021 Genome Research Ltd.
+
+Samtools compilation details:
+    Features:       build=configure curses=yes 
+    CC:             gcc
+    CPPFLAGS:       -frelease  -Wdate-time -D_FORTIFY_SOURCE=2
+    CFLAGS:         -g -O2 -ffile-prefix-map=�BUILDPATH�=. -flto=auto -ffat-lto-objects -fstack-protector-strong -Wformat -Werror=format-security
+    LDFLAGS:        -Wl,-Bsymbolic-functions -flto=auto -Wl,-z,relro -Wl,-z,now
+    HTSDIR:         
+    LIBS:           
+    CURSES_LIB:     -lcurses
+
+HTSlib compilation details:
+    Features:       build=configure plugins=yes, plugin-path=/usr/local/lib/htslib:/usr/local/libexec/htslib:: libcurl=yes S3=yes GCS=yes libdeflate=yes lzma=yes bzip2=yes htscodecs=1.1.1
+    CC:             gcc
+    CPPFLAGS:       -I. -DSAMTOOLS=1 -Wdate-time -D_FORTIFY_SOURCE=2
+    CFLAGS:         -g -O2 -ffile-prefix-map=/build/htslib-TQtOKr/htslib-1.13+ds=. -flto=auto -ffat-lto-objects -fstack-protector-strong -Wformat -Werror=format-security -flto -fvisibility=hidden -flto -fvisibility=hidden
+    LDFLAGS:        -Wl,-Bsymbolic-functions -flto=auto -Wl,-z,relro -Wl,-z,now -Wl,-flto -fvisibility=hidden -Wl,-flto -fvisibility=hidden
+
+HTSlib URL scheme handlers present:
+    built-in:	 preload, data, file
+    crypt4gh-needed:	 crypt4gh
+    mem:	 mem

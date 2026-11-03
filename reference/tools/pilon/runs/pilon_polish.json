@@ -1,0 +1,96 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "pilon_polish",
+ "set": "assembly",
+ "tool": "pilon",
+ "mode": "paired_frags",
+ "description": null,
+ "tool_version": "1.24",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21373339_13",
+ "cpus": 8,
+ "mem_gb": 32,
+ "started": "2026-11-02T15:40:19",
+ "inputs": {
+  "DRAFT": {
+   "fixture": "portiera_genome",
+   "path": "inputs/genome.fasta",
+   "size": 362796
+  },
+  "R1": {
+   "fixture": "portiera_illumina_1",
+   "path": "inputs/test_1.fastq.gz",
+   "size": 7744597
+  },
+  "R2": {
+   "fixture": "portiera_illumina_2",
+   "path": "inputs/test_2.fastq.gz",
+   "size": 8202837
+  }
+ },
+ "prep": "bwa index $DRAFT\nbwa mem -t $CPU $DRAFT $R1 $R2 | samtools sort -@ 2 -o aln.bam -\nsamtools index aln.bam\n",
+ "cmd": "_JAVA_OPTIONS=-Xmx${MEM_GB}g pilon --genome $DRAFT --frags aln.bam --output pilon --outdir out --changes --vcf --threads $CPU",
+ "wall_s": 12.65,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "out/pilon.changes",
+   "size": 18971,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "NC_018507.1:2850 NC_018507.1_pilon:2850 A T",
+    "NC_018507.1:17532 NC_018507.1_pilon:17532 G T",
+    "NC_018507.1:21075-21080 NC_018507.1_pilon:21075 TTTATG ."
+   ],
+   "lines": 280,
+   "sha256": "79e2d0e1fe8cd5b8641b743f1bdfeb085c5ec5487e9f8e74b9dbcde3c6e790e7"
+  },
+  {
+   "path": "out/pilon.fasta",
+   "size": 362524,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">NC_018507.1_pilon",
+    "ATGATAAGAATTATAGGTATTGATTTAGGTACTACTAACTCGTGTGTTGCAGTTTTAGAAAATGGAAAAAGTCGTGTTAT",
+    "AGAAAATTCAGAAGGTGCCCGTACTACTCCTTCTATAATTGCATATACTGATGATAATGAAATATTAATTGGACAAACCG"
+   ],
+   "lines": 4477,
+   "records": 1,
+   "residues": 358029,
+   "sha256": "54da9e4fdc48dfc86d066e9d852d82d5c0af9377c2191c66c3d1008d4a59ea0c"
+  },
+  {
+   "path": "out/pilon.vcf",
+   "size": 45365593,
+   "new": true,
+   "kind": "vcf",
+   "preview": [
+    "##fileformat=VCFv4.1",
+    "##fileDate=20261102",
+    "##source=\"Pilon version [COMMIT] [DATE]\""
+   ],
+   "lines": 358336,
+   "records": 358305,
+   "sha256": "c3c9316d625cb9b04bc1a2fc4e206aec61a1c5d85f1fa51dfd2024b59fe0512a"
+  }
+ ],
+ "n_outputs": 3,
+ "output_bytes": 45747088,
+ "time": {
+  "elapsed": "0:12.62",
+  "max_rss_kb": "2924956",
+  "cpu_pct": "152",
+  "exit_status": "0",
+  "user_s": "17.33",
+  "sys_s": "1.89",
+  "elapsed_s": 12.62,
+  "max_rss_mb": 2856.4
+ },
+ "stdout_tail": "-176874 0 -0 +0 NoSolution\n# fix break: NC_018507.1:179063-181956 0 -0 +0 NoSolution\n# fix break: NC_018507.1:183777-184630 0 -0 +0 NoSolution\n# fix break: NC_018507.1:184908-185475 0 -0 +0 NoSolution\nfix break: NC_018507.1:185926-185949 186163 -311 +287 BreakFix\nfix break: NC_018507.1:186155-186173 186163 -311 +287 BreakFix\nfix break: NC_018507.1:186418-186430 186163 -311 +287 BreakFix\nfix break: NC_018507.1:186635-186641 186163 -311 +287 BreakFix\n# fix break: NC_018507.1:186875-196223 0 -0 +0 NoSolution\n# fix break: NC_018507.1:196679-196943 0 -0 +0 NoSolution\n# fix break: NC_018507.1:197485-198089 0 -0 +0 NoSolution\n# fix break: NC_018507.1:198417-198835 0 -0 +0 NoSolution\n# fix break: NC_018507.1:199241-201661 0 -0 +0 NoSolution\n# fix break: NC_018507.1:202022-202620 0 -0 +0 NoSolution\n# fix break: NC_018507.1:202883-220925 0 -0 +0 NoSolution\n# fix break: NC_018507.1:221131-222711 0 -0 +0 NoSolution\n# fix break: NC_018507.1:223134-223628 0 -0 +0 NoSolution\n# fix break: NC_018507.1:223874-226305 0 -0 +0 NoSolution\n# fix break: NC_018507.1:227273-227586 0 -0 +0 NoSolution\n# fix break: NC_018507.1:227873-234396 0 -0 +0 NoSolution\n# fix break: NC_018507.1:234611-235789 0 -0 +0 NoSolution\n# fix break: NC_018507.1:236069-236493 0 -0 +0 NoSolution\n# fix break: NC_018507.1:236728-237745 0 -0 +0 NoSolution\n# fix break: NC_018507.1:238179-238508 0 -0 +0 NoSolution\n# fix break: NC_018507.1:238792-241501 0 -0 +0 NoSolution\n# fix break: NC_018507.1:242050-242473 0 -0 +0 NoSolution\n# fix break: NC_018507.1:242910-243392 0 -0 +0 NoSolution\n# fix break: NC_018507.1:243763-251721 0 -0 +0 NoSolution\n# fix break: NC_018507.1:252147-252596 0 -0 +0 NoSolution\n# fix break: NC_018507.1:252941-258934 0 -0 +0 NoSolution TandemRepeat 34\n# fix break: NC_018507.1:259177-259180 0 -0 +0 NoSolution TandemRepeat 34\n# fix break: NC_018507.1:259572-259927 0 -0 +0 NoSolution TandemRepeat 34\n# fix break: NC_018507.1:260156-261760 0 -0 +0 NoSolution TandemRepeat 34\n# fix break: NC_018507.1:263301-268482 0 -0 +0 NoSolution\n# fix break: NC_018507.1:269971-284337 0 -0 +0 NoSolution\n# fix break: NC_018507.1:284921-284962 0 -0 +0 NoSolution\n# fix break: NC_018507.1:287312-290485 0 -0 +0 NoSolution\n# fix break: NC_018507.1:292001-294531 0 -0 +0 NoSolution\n# fix break: NC_018507.1:294759-295776 0 -0 +0 NoSolution\n# fix break: NC_018507.1:296067-296430 0 -0 +0 NoSolution\n# fix break: NC_018507.1:296751-296828 0 -0 +0 NoSolution\n# fix break: NC_018507.1:297103-297529 0 -0 +0 NoSolution\n# fix break: NC_018507.1:297798-298505 0 -0 +0 NoSolution\n# fix break: NC_018507.1:298789-299167 0 -0 +0 NoSolution\n# fix break: NC_018507.1:299508-300623 0 -0 +0 NoSolution\n# fix break: NC_018507.1:303818-307722 0 -0 +0 NoSolution\n# fix break: NC_018507.1:307931-308338 0 -0 +0 NoSolution\n# fix break: NC_018507.1:308657-313001 0 -0 +0 NoSolution\n# fix break: NC_018507.1:313244-313679 0 -0 +0 NoSolution\n# fix break: NC_018507.1:314009-331101 0 -0 +0 NoSolution\nfix break: NC_018507.1:331419-331746 330906 -1163 +1215 BreakFix\n# fix break: NC_018507.1:332423-332474 0 -0 +0 NoSolution\n# fix break: NC_018507.1:332699-335519 0 -0 +0 NoSolution\n# fix break: NC_018507.1:335736-336206 0 -0 +0 NoSolution\n# fix break: NC_018507.1:336420-342467 0 -0 +0 NoSolution\n# fix break: NC_018507.1:343794-345662 0 -0 +0 NoSolution\n# fix break: NC_018507.1:346930-347198 0 -0 +0 NoSolution\n# fix break: NC_018507.1:349195-350081 0 -0 +0 NoSolution\n# fix break: NC_018507.1:350666-350683 0 -0 +0 NoSolution\n# fix break: NC_018507.1:351662-351891 0 -0 +0 NoSolution\n# fix break: NC_018507.1:352302-355994 0 -0 +0 NoSolution\nfix break: NC_018507.1:356675-357029 356767 -878 +866 BreakFix\nfix break: NC_018507.1:357238-357644 356767 -878 +866 BreakFix\nNC_018507.1:1-358242 log:\nFinished processing NC_018507.1:1-358242\nWriting NC_018507.1:1-358242 VCF to out/pilon.vcf\nWriting NC_018507.1:1-358242 changes to out/pilon.changes\nWriting updated NC_018507.1_pilon to out/pilon.fasta\nMean frags coverage: 42\nMean total coverage: 42\n",
+ "stderr_tail": "Picked up _JAVA_OPTIONS: -Xmx32g\n",
+ "status": "ok",
+ "finished": "2026-11-02T15:40:34"
+}

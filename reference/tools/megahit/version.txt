@@ -1,0 +1,2 @@
+# /usr/bin/megahit --version
+MEGAHIT v1.2.9

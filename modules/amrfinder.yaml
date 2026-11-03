@@ -1,0 +1,24 @@
+schema: modpipe/module/v1
+id: amrfinder
+version: 1
+label: "AMRFinderPlus: antimicrobial resistance genes in a genome"
+description: Screens assembled contigs for AMR, stress and virulence genes (nucleotide mode), optionally point mutations for an organism.
+category: annotation
+tool: {id: amrfinder, binary: amrfinder, version: 4.0.3}
+inputs:
+  - {id: contigs, type: sequences.dna.contigs, requires: {compression: none}}
+outputs:
+  - {id: hits, type: table.tsv.amr, path: amrfinder.tsv, description: "First column (Name) is the sample label"}
+parameters:
+  - {id: organism, type: string, default: "", label: "Organism for point mutations (e.g. Escherichia, Salmonella); empty = none",
+     description: "See `amrfinder --list_organisms`"}
+  - {id: plus, type: bool, default: true, label: "Include stress/virulence genes (--plus)"}
+resources: {cpu: 4, memory: 8G, runtime: 1h}
+command: |
+  amrfinder -n {{ inputs.contigs | q }} --threads {{ cpu }} -o {{ outputs.hits }} --name {{ inputs.contigs.label | q }}
+  {% if params.plus %}--plus{% endif %}
+  {% if params.organism %}--organism {{ params.organism | q }}{% endif %}
+tests:
+  discovery_runs: [amrfinder_module]
+provenance: {nfcore: [amrfinderplus/run]}
+notes: "Uses the AMRFinderPlus database bundled in the container (registry: amrfinder_db_2025-07-16.1)."

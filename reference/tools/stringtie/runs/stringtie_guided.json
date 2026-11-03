@@ -1,0 +1,76 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "stringtie_guided",
+ "set": "typing_expression",
+ "tool": "stringtie",
+ "mode": "reference_guided",
+ "description": null,
+ "tool_version": "2.2.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-01",
+ "slurm_job": "21373358_9",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:38:12",
+ "inputs": {
+  "BAM": {
+   "fixture": "hs_bam_pe",
+   "path": "inputs/test.paired_end.sorted.bam",
+   "size": 179552
+  },
+  "GTF": {
+   "fixture": "hs_gtf",
+   "path": "inputs/genome.gtf",
+   "size": 15025
+  }
+ },
+ "prep": null,
+ "cmd": "stringtie $BAM -G $GTF -o assembled.gtf -A gene_abund.tab -p $CPU",
+ "wall_s": 0.11,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "assembled.gtf",
+   "size": 1111,
+   "new": true,
+   "kind": "gff",
+   "preview": [
+    "# stringtie /disks/tmp/cucinell/modpipe-discovery/typing_expression/stringtie_guided-21373358_9/inputs/test.paired_end.sorted.bam -G /disks/tmp/cucinell/modpipe-discovery/typing_expression/stringtie_g",
+    "# StringTie version 2.2.1",
+    "chr22\tStringTie\ttranscript\t2908\t3129\t1000\t.\t.\tgene_id \"STRG.1\"; transcript_id \"STRG.1.1\"; cov \"825.292786\"; FPKM \"1229816.250000\"; TPM \"417504.218750\";"
+   ],
+   "lines": 8,
+   "records": 6,
+   "sha256": "cd5680151d6d19b2ad7c7442102c76e7a6fee347cd92cb4e59822ddf33403f69"
+  },
+  {
+   "path": "gene_abund.tab",
+   "size": 696,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Gene ID\tGene Name\tReference\tStrand\tStart\tEnd\tCoverage\tFPKM\tTPM",
+    "ENSG00000233995\tAP000547.1\tchr22\t+\t1\t2611\t0.000000\t0.000000\t0.000000",
+    "ENSG00000239435\tKCNMB3P1\tchr22\t-\t3337\t10681\t80.141342\t119423.226562\t40542.398438"
+   ],
+   "lines": 11,
+   "sha256": "844e89815e6435bd82995cd9687f1e0daf4b44325b110b212f5d206610927dc1"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 1807,
+ "time": {
+  "elapsed": "0:00.07",
+  "max_rss_kb": "6112",
+  "cpu_pct": "30",
+  "exit_status": "0",
+  "user_s": "0.00",
+  "sys_s": "0.01",
+  "elapsed_s": 0.07,
+  "max_rss_mb": 6.0
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:38:12"
+}

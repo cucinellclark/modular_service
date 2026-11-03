@@ -1,0 +1,1 @@
+{"inputs": {"samples": {"fixture": "bfragilis_samples"}}, "params": {"qc.params.min_contig": 200}}

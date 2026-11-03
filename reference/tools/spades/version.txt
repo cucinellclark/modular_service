@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/spades.py --version
+SPAdes genome assembler v4.0.0

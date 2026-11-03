@@ -1,0 +1,57 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "blastp_xml",
+ "set": "homology",
+ "tool": "blastp",
+ "mode": "outfmt5",
+ "description": null,
+ "tool_version": "2.15.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373352_4",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:28",
+ "inputs": {
+  "P": {
+   "fixture": "sarscov2_proteome",
+   "path": "inputs/proteome.fasta",
+   "size": 18016
+  }
+ },
+ "prep": "makeblastdb -in $P -dbtype prot -out protdb",
+ "cmd": "blastp -query $P -db protdb -num_threads $CPU -outfmt 5 -out hits.xml",
+ "wall_s": 12.7,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "hits.xml",
+   "size": 145136,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "<?xml version=\"1.0\"?>",
+    "<!DOCTYPE BlastOutput PUBLIC \"-//NCBI//NCBI BlastOutput/EN\" \"http://www.ncbi.nlm.nih.gov/dtd/NCBI_BlastOutput.dtd\">",
+    "<BlastOutput>"
+   ],
+   "lines": 1761,
+   "sha256": "07b93872b238a5d6932f7db647607dbbf24af939698360f24ed90319ad50260a"
+  }
+ ],
+ "n_outputs": 1,
+ "output_bytes": 145136,
+ "time": {
+  "elapsed": "0:12.65",
+  "max_rss_kb": "27488",
+  "cpu_pct": "15",
+  "exit_status": "0",
+  "user_s": "0.41",
+  "sys_s": "1.54",
+  "elapsed_s": 12.65,
+  "max_rss_mb": 26.8
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:41"
+}

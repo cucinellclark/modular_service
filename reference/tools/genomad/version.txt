@@ -1,0 +1,2 @@
+# /opt/patric-common/runtime/bin/genomad --version
+geNomad, version 1.12.0

@@ -1,0 +1,119 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "makeblastdb_prot",
+ "set": "homology",
+ "tool": "blastp",
+ "mode": "makeblastdb_prot",
+ "description": null,
+ "tool_version": "2.15.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-02",
+ "slurm_job": "21373352_0",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-02T15:37:20",
+ "inputs": {
+  "P": {
+   "fixture": "portiera_proteome",
+   "path": "inputs/proteome.fasta",
+   "size": 104161
+  }
+ },
+ "prep": null,
+ "cmd": "makeblastdb -in $P -dbtype prot -out protdb -parse_seqids",
+ "wall_s": 5.4,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "protdb.pdb",
+   "size": 49152,
+   "new": true,
+   "kind": "index",
+   "sha256": "d38528140662ab3e99e9c782b53078735acc6cd7709c103544522d29de3cdc63"
+  },
+  {
+   "path": "protdb.phr",
+   "size": 33201,
+   "new": true,
+   "kind": "index",
+   "sha256": "dabc823ea045d790766de1338b71781876f5f2891c26fc862a9572b4c1ca8a58"
+  },
+  {
+   "path": "protdb.pin",
+   "size": 2240,
+   "new": true,
+   "kind": "index",
+   "sha256": "62638fbcf78afd67037d972fc9aa414cea7fdeb4ac993ba4a868162e15d923ab"
+  },
+  {
+   "path": "protdb.pjs",
+   "size": 562,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "{",
+    "  \"version\": \"1.2\",",
+    "  \"dbname\": \"protdb\","
+   ],
+   "sha256": "b72a7d276b0fa4ced54050a488f44695ceae1f99e10418acc3909fb7fe5f943a"
+  },
+  {
+   "path": "protdb.pog",
+   "size": 1064,
+   "new": true,
+   "kind": "index",
+   "sha256": "941f80903414188c94cb053e7ead59ba3c8954b849ac589e878824a28ecadf31"
+  },
+  {
+   "path": "protdb.pos",
+   "size": 5942,
+   "new": true,
+   "kind": "index",
+   "sha256": "ff4a4771959e2bb0cab32fe989e0621318dd697f0e0b0f52bb2c592123285202"
+  },
+  {
+   "path": "protdb.pot",
+   "size": 3104,
+   "new": true,
+   "kind": "index",
+   "sha256": "6c532a3ec0cde0847528c36df88bdfa2d64ac0e4417cddcd4196fce930e2b303"
+  },
+  {
+   "path": "protdb.psq",
+   "size": 81683,
+   "new": true,
+   "kind": "index",
+   "sha256": "a2e06ab9a523de524c34580067bdbbe6fb91b9b7c2294c99043a04c3e9f65e82"
+  },
+  {
+   "path": "protdb.ptf",
+   "size": 16384,
+   "new": true,
+   "kind": "index",
+   "sha256": "67982e4d7b1490b09cce06e7c29175c6bd011cd542cfacb1a1c310084a50821a"
+  },
+  {
+   "path": "protdb.pto",
+   "size": 1036,
+   "new": true,
+   "kind": "index",
+   "sha256": "cf16b014038f416f807441eac3cad3cbf703e9c5391c73dbc72eb5f5e5ebfae3"
+  }
+ ],
+ "n_outputs": 10,
+ "output_bytes": 194368,
+ "time": {
+  "elapsed": "0:05.35",
+  "max_rss_kb": "22512",
+  "cpu_pct": "21",
+  "exit_status": "0",
+  "user_s": "0.40",
+  "sys_s": "0.73",
+  "elapsed_s": 5.35,
+  "max_rss_mb": 22.0
+ },
+ "stdout_tail": "\n\nBuilding a new DB, current time: 11/02/2026 15:37:24\nNew DB name:   /disks/tmp/cucinell/modpipe-discovery/homology/makeblastdb_prot-21373352_0/protdb\nNew DB title:  /disks/tmp/cucinell/modpipe-discovery/homology/makeblastdb_prot-21373352_0/inputs/proteome.fasta\nSequence type: Protein\nKeep MBits: T\nMaximum file size: 3000000000B\nAdding sequences from FASTA; added 258 sequences in 1.50877 seconds.\n\n\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-02T15:37:26"
+}
