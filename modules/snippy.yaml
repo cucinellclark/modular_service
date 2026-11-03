@@ -1,0 +1,31 @@
+schema: modpipe/module/v1
+id: snippy
+version: 1
+label: "Snippy: haploid variant calling and consensus"
+description: Maps reads to a reference (BWA), calls haploid SNPs/indels (FreeBayes) and annotates them; writes a consensus.
+category: variants
+tool: {id: snippy, binary: snippy, version: 4.6.0}
+inputs:
+  - {id: reads, type: reads.short}
+  - {id: reference, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - {id: variants, type: variants.vcf, path: out/snps.vcf, attributes: {compression: none}}
+  - {id: variant_table, type: table.tsv, path: out/snps.tab}
+  - {id: consensus, type: sequences.dna.contigs, path: out/snps.consensus.fa}
+  - id: alignment
+    type: alignment.reads.bam
+    parts: {bam: out/snps.bam, index: out/snps.bam.bai}
+    attributes: {sorted: coordinate, indexed: true}
+  - {id: report, type: report.html, path: out/snps.html}
+parameters:
+  - {id: mincov, type: int, default: 10, min: 1, label: "Minimum coverage"}
+  - {id: minfrac, type: float, default: 0.0, min: 0, max: 1, label: "Minimum allele fraction (0 = auto)"}
+resources: {cpu: 8, memory: 16G, runtime: 4h}
+command: |
+  snippy --cpus {{ cpu }} --ram {{ memory_gb | int }} --outdir out --ref {{ inputs.reference | q }}
+  --mincov {{ params.mincov }} --minfrac {{ params.minfrac }}
+  {% if inputs.reads.type == 'reads.short.paired' %}--R1 {{ inputs.reads.r1 | q }} --R2 {{ inputs.reads.r2 | q }}
+  {% else %}--se {{ inputs.reads | q }}{% endif %}
+tests:
+  discovery_runs: [snippy_pe]
+provenance: {bvbrc_invocations: [App-Variation.pl], nfcore: [snippy/run]}

@@ -1,0 +1,1 @@
+{"inputs": {"samples": {"source": {"fixture": "sarscov2_samples"}, "collection": true}, "reference": {"fixture": "sarscov2_genome"}, "annotation": {"fixture": "sarscov2_gtf"}}, "params": {"map.params.no_spliced_alignment": true, "counts.params.feature_type": "CDS"}}

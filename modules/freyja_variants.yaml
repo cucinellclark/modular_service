@@ -1,0 +1,23 @@
+schema: modpipe/module/v1
+id: freyja_variants
+version: 1
+label: "Freyja: call variants and depth from an amplicon BAM"
+description: First step of Freyja lineage de-mixing (wastewater SARS-CoV-2); produces variant frequencies and per-site depth.
+category: typing
+tool: {id: freyja, binary: freyja, version: 1.5.1}
+inputs:
+  - {id: alignment, type: alignment.reads.bam, requires: {sorted: coordinate}}
+  - {id: reference, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - {id: variants, type: table.tsv.variant_frequencies, path: variants.tsv}
+  - {id: depths, type: coverage.depth, path: depths.tsv}
+parameters:
+  - {id: min_quality, type: int, default: 20, min: 0, label: "Minimum base quality (--minq)"}
+resources: {cpu: 1, memory: 4G, runtime: 1h}
+command: |
+  cp {{ inputs.reference | q }} ref.fa &&
+  freyja variants {{ inputs.alignment.bam | q }} --variants {{ outputs.variants }} --depths {{ outputs.depths }} --ref ref.fa
+  --minq {{ params.min_quality }}
+tests:
+  discovery_runs: [freyja_variants]
+provenance: {bvbrc_invocations: [freyja_snakefile], nfcore: [freyja/variants]}

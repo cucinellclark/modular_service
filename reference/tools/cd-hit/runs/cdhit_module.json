@@ -1,0 +1,68 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "cdhit_module",
+ "set": "modules_v2",
+ "tool": "cd-hit",
+ "mode": "module_cdhit",
+ "description": "rendered from modules/cdhit.yaml (tools/module_discovery.py)",
+ "tool_version": "4.8.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21374971_7",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T10:03:43",
+ "inputs": {},
+ "prep": null,
+ "cmd": "cd-hit -i /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/proteome.fasta -o clusters.fasta -c 0.9 -n 5 -T 4 -M 0 -d 0",
+ "wall_s": 0.17,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "clusters.fasta",
+   "size": 104161,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">WP_014894920.1 molecular chaperone DnaK [Candidatus Portiera aleyrodidarum]",
+    "MIRIIGIDLGTTNSCVAVLENGKSRVIENSEGARTTPSIIAYTDDNEILIGQTAKRQAVTNPSNTLYAIKRLIGRKFNDD",
+    "IVQKDIKMVPYKIVSAENGDAWVQVKNRKLAPPQISAEILKKMKKTAEDYLGEKITEAVITVPAYFNDSQRQATKDAGRI"
+   ],
+   "lines": 1405,
+   "records": 258,
+   "residues": 81424,
+   "sha256": "aa7e45821f80bb1243e6b92a09c4c2a1d32eeb9f52aece2f5d3ba84c9cd4b6a6"
+  },
+  {
+   "path": "clusters.fasta.clstr",
+   "size": 10949,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">Cluster 0",
+    "0\t1372aa, >WP_014894984.1... *",
+    ">Cluster 1"
+   ],
+   "lines": 516,
+   "records": 258,
+   "residues": 7447,
+   "sha256": "b9fb5da8e7019bcce23a497ede524e38c8a9785daa2ca49bd149f0611e3b84ba"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 115110,
+ "time": {
+  "elapsed": "0:00.13",
+  "max_rss_kb": "178004",
+  "cpu_pct": "103",
+  "exit_status": "0",
+  "user_s": "0.07",
+  "sys_s": "0.06",
+  "elapsed_s": 0.13,
+  "max_rss_mb": 173.8
+ },
+ "stdout_tail": "================================================================\nProgram: CD-HIT, V4.8.1 (+OpenMP), May 08 2026, 02:46:10\nCommand: cd-hit -i\n         /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/proteome.fasta\n         -o clusters.fasta -c 0.9 -n 5 -T 4 -M 0 -d 0\n\nStarted: Tue Nov  3 10:03:44 2026\n================================================================\n                            Output                              \n----------------------------------------------------------------\ntotal seq: 258\nlongest and shortest : 1372 and 34\nTotal letters: 81424\nSequences have been sorted\n\nApproximated minimal memory consumption:\nSequence        : 0M\nBuffer          : 4 X 10M = 43M\nTable           : 2 X 65M = 130M\nMiscellaneous   : 0M\nTotal           : 173M\n\nTable limit with the given memory limit:\nMax number of representatives: 1500000\nMax number of word counting entries: 100382250\n\n\r# comparing sequences from          0  to        258\n---------- new table with      258 representatives\n\n      258  finished        258  clusters\n\nApproximated maximum memory consumption: 174M\nwriting new database\nwriting clustering information\nprogram completed !\n\nTotal CPU time 0.13\n",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-03T10:03:44"
+}

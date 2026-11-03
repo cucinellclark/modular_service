@@ -1,0 +1,20 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Polished long-read assembly",
+  "description": "Nanopore reads: Filtlong -> Flye -> Racon (long-read polish) -> Pilon (short-read polish) -> QUAST.",
+  "inputs": {
+    "long_reads": {"type": "reads.long.nanopore", "source": {"single_end_libs": [{"read": "/user@bvbrc/home/reads/S.ont.fastq.gz"}]}},
+    "short_reads": {"type": "reads.short.paired", "source": {"paired_end_libs": [{"read1": "/user@bvbrc/home/reads/S_R1.fastq.gz", "read2": "/user@bvbrc/home/reads/S_R2.fastq.gz"}]}}
+  },
+  "steps": {
+    "filter":   {"module": "filtlong", "in": {"reads": "$inputs.long_reads"}},
+    "assemble": {"module": "flye", "in": {"reads": "filter.filtered_reads"}},
+    "racon":    {"module": "racon", "in": {"draft": "assemble.contigs", "reads": "filter.filtered_reads"}},
+    "pilon":    {"module": "pilon", "in": {"draft": "racon.contigs", "reads": "$inputs.short_reads"}},
+    "qc":       {"module": "quast", "in": {"contigs": ["assemble.contigs", "racon.contigs", "pilon.contigs"]}}
+  },
+  "outputs": {"contigs": "pilon.contigs", "draft_contigs": "assemble.contigs", "pilon_changes": "pilon.changes",
+              "qc_report": "qc.report", "qc_metrics": "qc.metrics"},
+  "template": {"label": "Long-read assembly polished with short reads (Flye + Racon + Pilon)", "category": "assembly",
+               "expose": ["filter.params.min_length", "assemble.params.read_mode", "assemble.params.genome_size", "pilon.params.fix"]}
+}

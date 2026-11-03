@@ -41,6 +41,10 @@
 
 5. **Set resources** (cpu/memory/runtime) conservatively. These feed preflight.
 
+5b. **Discovery run matching the module**: add a spec to `tools/module_discovery_specs.yaml`, then
+   `python3 tools/module_discovery.py tools/module_discovery_specs.yaml tests/discovery/sets/NN_name.yaml` and
+   `tests/discovery/submit.sh NN_name`. This renders the real template with fixtures, so lint can check the declared outputs.
+
 6. **Validate and test**
    ```bash
    bin/modpipe lint <id>                       # schema, types, params, template renders for every variant, discovery outputs

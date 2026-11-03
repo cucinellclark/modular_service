@@ -1,0 +1,24 @@
+schema: modpipe/module/v1
+id: htseq_count
+version: 1
+label: "HTSeq-count: reads per gene"
+description: Counts reads overlapping annotated features (genes) in a coordinate-sorted BAM.
+category: expression
+tool: {id: htseq-count, binary: htseq-count, version: 2.0.9}
+inputs:
+  - {id: alignment, type: alignment.reads.bam, requires: {sorted: coordinate, indexed: true}}
+  - {id: annotation, type: annotation.gtf}
+outputs:
+  - {id: counts, type: table.tsv.gene_counts, path: counts.tsv}
+parameters:
+  - {id: stranded, type: enum, enum: ["no", "yes", "reverse"], default: "no", label: "Strand-specific counting (-s)"}
+  - {id: feature_type, type: string, default: exon, pattern: "[A-Za-z0-9_]{1,32}", label: "Feature type (-t)"}
+  - {id: id_attribute, type: string, default: gene_id, pattern: "[A-Za-z0-9_]{1,32}", label: "ID attribute (-i)"}
+  - {id: mode, type: enum, enum: [union, intersection-strict, intersection-nonempty], default: union, label: "Overlap mode (-m)"}
+resources: {cpu: 1, memory: 4G, runtime: 4h}
+command: |
+  htseq-count -f bam -r pos -s {{ params.stranded }} -t {{ params.feature_type | q }} -i {{ params.id_attribute | q }}
+  -m {{ params.mode }} {{ inputs.alignment.bam | q }} {{ inputs.annotation | q }} > {{ outputs.counts }}
+tests:
+  discovery_runs: [htseq_count]
+provenance: {nfcore: [htseq/count]}

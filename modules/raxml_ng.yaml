@@ -1,0 +1,26 @@
+schema: modpipe/module/v1
+id: raxml_ng
+version: 1
+label: "RAxML-NG: maximum-likelihood tree"
+description: ML tree search with optional standard bootstrap (--all). Model auto = GTR+G (DNA) / LG+G (protein).
+category: phylogeny
+tool: {id: raxml-ng, binary: raxml-ng, version: 1.2.2}
+inputs:
+  - {id: alignment, type: alignment.msa}
+outputs:
+  - {id: tree, type: tree.newick, path: rng.raxml.bestTree}
+  - {id: support_tree, type: tree.newick, path: rng.raxml.support, when: "params.bootstrap > 0"}
+  - {id: model, type: report.text, path: rng.raxml.bestModel}
+  - {id: log, type: report.text, path: rng.raxml.log}
+parameters:
+  - {id: model, type: string, default: auto, pattern: "auto|[A-Za-z0-9+_.{}/,*:-]{1,100}", label: "Model (auto, GTR+G, LG+G4, ...)"}
+  - {id: bootstrap, type: int, default: 0, min: 0, max: 10000, label: "Bootstrap replicates (0 = none)"}
+  - {id: seed, type: int, default: 12345, advanced: true, label: "Random seed"}
+resources: {cpu: 8, memory: 16G, runtime: 24h}
+command: |
+  {% set model = params.model if params.model != 'auto' else ('GTR+G' if inputs.alignment.attrs.get('alphabet') == 'dna' else 'LG+G') %}
+  raxml-ng {% if params.bootstrap > 0 %}--all --bs-trees {{ params.bootstrap }}{% else %}--search{% endif %}
+  --msa {{ inputs.alignment | q }} --model {{ model | q }} --threads {{ cpu }} --prefix rng --seed {{ params.seed }}
+tests:
+  discovery_runs: [raxml_ng]
+provenance: {nfcore: [raxmlng]}

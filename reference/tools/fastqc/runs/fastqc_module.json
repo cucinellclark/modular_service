@@ -1,0 +1,84 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "fastqc_module",
+ "set": "modules_v2",
+ "tool": "fastqc",
+ "mode": "module_fastqc",
+ "description": "rendered from modules/fastqc.yaml (tools/module_discovery.py)",
+ "tool_version": "0.12.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21374971_2",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T10:03:40",
+ "inputs": {},
+ "prep": null,
+ "cmd": "mkdir fastqc && ln -s /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_1.fastq.gz reads_1.fastq.gz && ln -s /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_2.fastq.gz reads_2.fastq.gz && fastqc -t 4 -o fastqc reads_1.fastq.gz reads_2.fastq.gz",
+ "wall_s": 4.43,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "fastqc/reads_1_fastqc.html",
+   "size": 628093,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!DOCTYPE html><html><head><title>reads_1.fastq.gz FastQC Report</title><style type=\"text/css\">",
+    " @media screen {",
+    "  div.summary {"
+   ],
+   "sha256": "917631da5fed1afec370cf3741bbd822305e7e9829dae4f9a4f0ba4f517e1517"
+  },
+  {
+   "path": "fastqc/reads_1_fastqc.zip",
+   "size": 480309,
+   "new": true,
+   "kind": "archive",
+   "sha256": "f32fd0ad38eaa4f01208e5483c660b0ea2d374a577f9b2f02797a0de7b7d38cf"
+  },
+  {
+   "path": "fastqc/reads_2_fastqc.html",
+   "size": 635596,
+   "new": true,
+   "kind": "html",
+   "preview": [
+    "<!DOCTYPE html><html><head><title>reads_2.fastq.gz FastQC Report</title><style type=\"text/css\">",
+    " @media screen {",
+    "  div.summary {"
+   ],
+   "sha256": "c81a68cfd1462e6ea45c07a0f249a0d9fc54a801912aecd06eb4a06863744836"
+  },
+  {
+   "path": "fastqc/reads_2_fastqc.zip",
+   "size": 498140,
+   "new": true,
+   "kind": "archive",
+   "sha256": "7bd58148d6b45bdceb83ae433bcad891839d8daef3d27c909acd05a39417bcbf"
+  },
+  {
+   "path": "reads_1.fastq.gz",
+   "symlink_to": "/home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_1.fastq.gz"
+  },
+  {
+   "path": "reads_2.fastq.gz",
+   "symlink_to": "/home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_2.fastq.gz"
+  }
+ ],
+ "n_outputs": 6,
+ "output_bytes": 2242138,
+ "time": {
+  "elapsed": "0:04.42",
+  "max_rss_kb": "377964",
+  "cpu_pct": "186",
+  "exit_status": "0",
+  "user_s": "7.74",
+  "sys_s": "0.51",
+  "elapsed_s": 4.42,
+  "max_rss_mb": 369.1
+ },
+ "stdout_tail": "application/gzip\napplication/gzip\nAnalysis complete for reads_1.fastq.gz\nAnalysis complete for reads_2.fastq.gz\n",
+ "stderr_tail": "Started analysis of reads_1.fastq.gz\nApprox 5% complete for reads_1.fastq.gz\nApprox 10% complete for reads_1.fastq.gz\nApprox 15% complete for reads_1.fastq.gz\nApprox 20% complete for reads_1.fastq.gz\nApprox 25% complete for reads_1.fastq.gz\nApprox 30% complete for reads_1.fastq.gz\nApprox 35% complete for reads_1.fastq.gz\nStarted analysis of reads_2.fastq.gz\nApprox 40% complete for reads_1.fastq.gz\nApprox 5% complete for reads_2.fastq.gz\nApprox 45% complete for reads_1.fastq.gz\nApprox 10% complete for reads_2.fastq.gz\nApprox 50% complete for reads_1.fastq.gz\nApprox 15% complete for reads_2.fastq.gz\nApprox 55% complete for reads_1.fastq.gz\nApprox 20% complete for reads_2.fastq.gz\nApprox 60% complete for reads_1.fastq.gz\nApprox 25% complete for reads_2.fastq.gz\nApprox 65% complete for reads_1.fastq.gz\nApprox 30% complete for reads_2.fastq.gz\nApprox 70% complete for reads_1.fastq.gz\nApprox 35% complete for reads_2.fastq.gz\nApprox 75% complete for reads_1.fastq.gz\nApprox 40% complete for reads_2.fastq.gz\nApprox 80% complete for reads_1.fastq.gz\nApprox 45% complete for reads_2.fastq.gz\nApprox 85% complete for reads_1.fastq.gz\nApprox 50% complete for reads_2.fastq.gz\nApprox 90% complete for reads_1.fastq.gz\nApprox 55% complete for reads_2.fastq.gz\nApprox 95% complete for reads_1.fastq.gz\nApprox 60% complete for reads_2.fastq.gz\nApprox 65% complete for reads_2.fastq.gz\nApprox 70% complete for reads_2.fastq.gz\nApprox 75% complete for reads_2.fastq.gz\nApprox 80% complete for reads_2.fastq.gz\nApprox 85% complete for reads_2.fastq.gz\nApprox 90% complete for reads_2.fastq.gz\nApprox 95% complete for reads_2.fastq.gz\n",
+ "status": "ok",
+ "finished": "2026-11-03T10:03:45"
+}

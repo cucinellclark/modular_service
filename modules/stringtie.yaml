@@ -1,0 +1,26 @@
+schema: modpipe/module/v1
+id: stringtie
+version: 1
+label: "StringTie: transcript assembly and abundance"
+description: Assembles transcripts from an RNA-seq BAM (optionally guided by a GTF) and reports gene abundances.
+category: expression
+tool: {id: stringtie, binary: stringtie, version: 2.2.1}
+inputs:
+  - {id: alignment, type: alignment.reads.bam, requires: {sorted: coordinate}}
+  - {id: annotation, type: annotation.gtf, required: false, description: "Reference annotation (-G); required for estimate_only"}
+outputs:
+  - {id: transcripts, type: annotation.gtf, path: assembled.gtf}
+  - {id: gene_abundance, type: table.tsv.expression, path: gene_abund.tab}
+parameters:
+  - {id: estimate_only, type: bool, default: false, label: "Only quantify reference transcripts (-e)"}
+  - {id: strandedness, type: enum, enum: [unstranded, rf, fr], default: unstranded, label: "Library strandedness"}
+resources: {cpu: 4, memory: 8G, runtime: 4h}
+command: |
+  {% if params.estimate_only and not inputs.annotation %}{{ fail('StringTie estimate_only (-e) needs a reference annotation') }}{% endif %}
+  stringtie {{ inputs.alignment.bam | q }} -o {{ outputs.transcripts }} -A {{ outputs.gene_abundance }} -p {{ cpu }}
+  {% if inputs.annotation %}-G {{ inputs.annotation | q }}{% endif %}
+  {% if params.estimate_only %}-e{% endif %}
+  {% if params.strandedness != 'unstranded' %}--{{ params.strandedness }}{% endif %}
+tests:
+  discovery_runs: [stringtie_guided]
+provenance: {bvbrc_invocations: [App-RNASeq.pl], nfcore: [stringtie/stringtie]}

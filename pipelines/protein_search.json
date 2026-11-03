@@ -1,0 +1,13 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Protein similarity search",
+  "description": "DIAMOND search of query sequences (protein, or DNA via blastx) against a set of subject proteins.",
+  "inputs": {
+    "query": {"type": "sequences.protein", "source": {"wsid": "/user@bvbrc/home/query.faa"}},
+    "subject": {"type": "sequences.protein", "source": {"feature_group": "/user@bvbrc/home/Feature Groups/my_group"}}
+  },
+  "steps": {"search": {"module": "diamond", "in": {"query": "$inputs.query", "subject": "$inputs.subject"}}},
+  "outputs": {"hits": "search.hits"},
+  "template": {"label": "Protein similarity search (DIAMOND)", "category": "homology",
+               "expose": ["search.params.sensitivity", "search.params.evalue", "search.params.max_target_seqs"]}
+}

@@ -1,0 +1,22 @@
+schema: modpipe/module/v1
+id: fastqc
+version: 1
+label: "FastQC: read quality report"
+description: Per-file quality report (base quality, GC, duplication, adapters).
+category: read_qc
+tool: {id: fastqc, binary: fastqc, version: 0.12.1}
+inputs:
+  - {id: reads, type: reads}
+outputs:
+  - {id: report, type: report.html, path: fastqc/reads_1_fastqc.html}
+  - {id: report_r2, type: report.html, path: fastqc/reads_2_fastqc.html, when: "inputs.reads.paired"}
+  - {id: data, type: report.archive, path: fastqc/reads_1_fastqc.zip}
+resources: {cpu: 2, memory: 4G, runtime: 2h}
+command: |
+  mkdir fastqc &&
+  {% if inputs.reads.paired %}ln -s {{ inputs.reads.r1 | q }} reads_1.fastq.gz && ln -s {{ inputs.reads.r2 | q }} reads_2.fastq.gz &&
+  fastqc -t {{ cpu }} -o fastqc reads_1.fastq.gz reads_2.fastq.gz
+  {% else %}ln -s {{ inputs.reads | q }} reads_1.fastq.gz && fastqc -t {{ cpu }} -o fastqc reads_1.fastq.gz{% endif %}
+tests:
+  discovery_runs: [fastqc_module]
+provenance: {bvbrc_invocations: [App-FastqUtils.pl, fastq_utils.py], nfcore: [fastqc]}

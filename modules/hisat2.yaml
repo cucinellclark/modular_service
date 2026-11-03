@@ -1,0 +1,31 @@
+schema: modpipe/module/v1
+id: hisat2
+version: 1
+label: "HISAT2: splice-aware RNA-seq read mapping (sorted, indexed BAM)"
+description: Builds a HISAT2 index for the reference, maps RNA-seq reads, sorts and indexes the BAM.
+category: mapping
+tool: {id: hisat2, binary: hisat2, version: 2.2.1}
+inputs:
+  - {id: reads, type: reads.short}
+  - {id: reference, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - id: alignment
+    type: alignment.reads.bam
+    parts: {bam: aligned.bam, index: aligned.bam.bai}
+    attributes: {sorted: coordinate, indexed: true}
+  - {id: summary, type: report.text, path: summary.txt}
+parameters:
+  - {id: strandedness, type: enum, enum: [unstranded, FR, RF, F, R], default: unstranded, label: "Library strandedness (--rna-strandness)"}
+  - {id: no_spliced_alignment, type: bool, default: false, label: "Disable spliced alignment (prokaryotes)"}
+resources: {cpu: 8, memory: 16G, runtime: 6h}
+command: |
+  hisat2-build -p {{ cpu }} {{ inputs.reference | q }} refidx > hisat2_build.log 2>&1 &&
+  hisat2 -p {{ cpu }} -x refidx --summary-file {{ outputs.summary }} --new-summary
+  {% if params.strandedness != 'unstranded' %}--rna-strandness {{ params.strandedness }}{% endif %}
+  {% if params.no_spliced_alignment %}--no-spliced-alignment{% endif %}
+  {% if inputs.reads.paired %}-1 {{ inputs.reads.r1 | q }} -2 {{ inputs.reads.r2 | q }}{% else %}-U {{ inputs.reads | q }}{% endif %}
+  | samtools sort -@ {{ [cpu - 1, 1] | max }} -o {{ outputs.alignment.bam }} - && samtools index {{ outputs.alignment.bam }}
+tests:
+  discovery_runs: [hisat2_module]
+provenance: {bvbrc_invocations: [App-RNASeq.pl, run_rnaseq.py], nfcore: [hisat2/build, hisat2/align]}
+notes: "Interleaved reads are mapped as single-end."

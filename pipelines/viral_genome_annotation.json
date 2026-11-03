@@ -1,0 +1,14 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Viral genome annotation and quality",
+  "description": "VIGOR4 reference-based gene/peptide annotation plus CheckV completeness for viral genome sequences.",
+  "inputs": {"genome": {"type": "sequences.dna.contigs", "source": {"wsid": "/user@bvbrc/home/virus/genome.fasta"}}},
+  "steps": {
+    "annotate": {"module": "vigor4", "in": {"genome": "$inputs.genome"}},
+    "quality":  {"module": "checkv", "in": {"contigs": "$inputs.genome"}}
+  },
+  "outputs": {"gff": "annotate.gff", "proteins": "annotate.proteins", "cds": "annotate.cds", "annotation_report": "annotate.report",
+              "quality": "quality.quality"},
+  "template": {"label": "Viral genome annotation (VIGOR4 + CheckV)", "category": "annotation",
+               "expose": ["annotate.params.reference_db"]}
+}

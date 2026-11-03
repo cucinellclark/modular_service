@@ -1,0 +1,22 @@
+schema: modpipe/module/v1
+id: kma
+version: 1
+label: "KMA: map reads to a gene database (AMR, virulence)"
+description: k-mer alignment of reads against a reference gene set (e.g. CARD, VFDB), as in BV-BRC Metagenomic Read Mapping.
+category: mapping
+tool: {id: kma, binary: kma, version: 1.4.15}
+inputs:
+  - {id: reads, type: reads}
+outputs:
+  - {id: hits, type: table.tsv.template_hits, path: kma_out.res}
+  - {id: consensus, type: sequences.dna.genes, path: kma_out.fsa}
+  - {id: alignments, type: report.text, path: kma_out.aln}
+parameters:
+  - {id: db, type: database, db_type: database.kma, default: kma_card, label: "Gene database (kma_card, kma_vfdb)"}
+resources: {cpu: 4, memory: 16G, runtime: 4h}
+command: |
+  kma {% if inputs.reads.paired %}-ipe {{ inputs.reads.r1 | q }} {{ inputs.reads.r2 | q }}{% else %}-i {{ inputs.reads | q }}{% endif %}
+  -o kma_out -t_db {{ dbs.db | q }} -t {{ cpu }}
+tests:
+  discovery_runs: [kma_module]
+provenance: {bvbrc_invocations: [App-MetagenomicReadMapping.pl], nfcore: [kma/kma]}

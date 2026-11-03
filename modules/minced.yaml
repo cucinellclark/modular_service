@@ -1,0 +1,19 @@
+schema: modpipe/module/v1
+id: minced
+version: 1
+label: "MinCED: CRISPR array detection"
+description: Finds CRISPR repeat-spacer arrays in genome sequences.
+category: annotation
+tool: {id: minced, binary: minced, version: 0.4.2}
+inputs:
+  - {id: contigs, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - {id: crisprs, type: annotation.crispr, path: crisprs.txt}
+  - {id: gff, type: annotation.gff, path: crisprs.gff}
+parameters:
+  - {id: min_repeats, type: int, default: 3, min: 2, label: "Minimum repeats per array (-minNR)"}
+resources: {cpu: 1, memory: 4G, runtime: 2h}
+command: minced -minNR {{ params.min_repeats }} -gffFull {{ inputs.contigs | q }} {{ outputs.crisprs }} {{ outputs.gff }}
+tests:
+  discovery_runs: [minced]
+provenance: {nfcore: [minced]}

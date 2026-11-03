@@ -1,0 +1,25 @@
+schema: modpipe/module/v1
+id: freyja_demix
+version: 1
+label: "Freyja: estimate lineage abundances"
+description: De-mixes SARS-CoV-2 lineage abundances from Freyja variants + depths using UShER barcodes.
+category: typing
+tool: {id: freyja, binary: freyja, version: 1.5.1}
+inputs:
+  - {id: variants, type: table.tsv.variant_frequencies}
+  - {id: depths, type: coverage.depth}
+outputs:
+  - {id: abundance, type: table.tsv.taxon_abundance, path: demix.tsv}
+parameters:
+  - {id: barcodes, type: database, db_type: database.freyja_barcodes, default: freyja_barcodes_csv, label: "Barcode set",
+     description: "freyja_barcodes_csv works in the current container (feather barcodes need pyarrow)"}
+  - {id: eps, type: float, default: 0.001, min: 0, max: 1, label: "Minimum lineage abundance (--eps)"}
+  - {id: covcut, type: int, default: 10, min: 0, label: "Depth cutoff for coverage estimate (--covcut)"}
+resources: {cpu: 1, memory: 8G, runtime: 1h}
+command: |
+  freyja demix {{ inputs.variants | q }} {{ inputs.depths | q }} --output {{ outputs.abundance }}
+  --barcodes {{ db_files.barcodes.barcodes | q }} --meta {{ db_files.barcodes.meta | q }}
+  --lineageyml {{ db_files.barcodes.lineageyml | q }} --eps {{ params.eps }} --covcut {{ params.covcut }}
+tests:
+  discovery_runs: [freyja_demix_csv]
+provenance: {bvbrc_invocations: [freyja_snakefile], nfcore: [freyja/demix]}

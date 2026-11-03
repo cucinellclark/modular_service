@@ -1,0 +1,58 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "diamond_module",
+ "set": "modules_v2",
+ "tool": "diamond",
+ "mode": "module_diamond",
+ "description": "rendered from modules/diamond.yaml (tools/module_discovery.py)",
+ "tool_version": null,
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-01",
+ "slurm_job": "21374971_6",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T10:03:42",
+ "inputs": {},
+ "prep": null,
+ "cmd": "diamond makedb --in /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/proteome.fasta -d subjectdb --threads 4 --quiet && diamond blastp -q /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/proteome.fasta -d subjectdb -o hits.tsv --threads 4 --evalue 0.001 --max-target-seqs 25 --outfmt 6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen",
+ "wall_s": 2.77,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "hits.tsv",
+   "size": 21168,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "WP_014894920.1\tWP_014894920.1\t100\t641\t0\t0\t1\t641\t1\t641\t0.0\t1209\t641\t641",
+    "WP_014894921.1\tWP_014894921.1\t100\t347\t0\t0\t1\t347\t1\t347\t2.05e-235\t636\t347\t347",
+    "WP_014894922.1\tWP_014894922.1\t100\t463\t0\t0\t1\t463\t1\t463\t4.59e-309\t832\t463\t463"
+   ],
+   "lines": 284,
+   "sha256": "7e6ecbea098afd42ad2af2799c59c1f076d7dbe6ed3e926879b589d1ce6edaf4"
+  },
+  {
+   "path": "subjectdb.dmnd",
+   "size": 107512,
+   "new": true,
+   "kind": "index",
+   "sha256": "6063eb1468fb12691785001298801487447b3148d608faa4eb783a45ab45410a"
+  }
+ ],
+ "n_outputs": 2,
+ "output_bytes": 128680,
+ "time": {
+  "elapsed": "0:02.74",
+  "max_rss_kb": "19628",
+  "cpu_pct": "51",
+  "exit_status": "0",
+  "user_s": "0.68",
+  "sys_s": "0.73",
+  "elapsed_s": 2.74,
+  "max_rss_mb": 19.2
+ },
+ "stdout_tail": "",
+ "stderr_tail": "diamond v2.0.14.152 (C) Max Planck Society for the Advancement of Science\nDocumentation, support and updates available at http://www.diamondsearch.org\nPlease cite: http://dx.doi.org/10.1038/s41592-021-01101-x Nature Methods (2021)\n\n#CPU threads: 4\nScoring parameters: (Matrix=BLOSUM62 Lambda=0.267 K=0.041 Penalties=11/1)\nTemporary directory: \n#Target sequences to report alignments for: 25\nOpening the database...  [0s]\nDatabase: subjectdb.dmnd (type: Diamond database, sequences: 258, letters: 81424)\nBlock size = 2000000000\nOpening the input file...  [0s]\nOpening the output file...  [0s]\nLoading query sequences...  [0s]\nMasking queries...  [0.003s]\nAlgorithm: Double-indexed\nBuilding query histograms...  [0.001s]\nAllocating buffers...  [0s]\nLoading reference sequences...  [0s]\nMasking reference...  [0.003s]\nInitializing temporary storage...  [0s]\nBuilding reference histograms...  [0.001s]\nAllocating buffers...  [0s]\nProcessing query block 1, reference block 1/1, shape 1/2, index chunk 1/4.\nBuilding reference seed array...  [0.001s]\nBuilding query seed array...  [0.001s]\nComputing hash join...  [0s]\nMasking low complexity seeds...  [0s]\nSearching alignments...  [0.026s]\nProcessing query block 1, reference block 1/1, shape 1/2, index chunk 2/4.\nBuilding reference seed array...  [0.001s]\nBuilding query seed array...  [0.001s]\nComputing hash join...  [0s]\nMasking low complexity seeds...  [0s]\nSearching alignments...  [0.004s]\nProcessing query block 1, reference block 1/1, shape 1/2, index chunk 3/4.\nBuilding reference seed array...  [0.001s]\nBuilding query seed array...  [0.001s]\nComputing hash join...  [0s]\nMasking low complexity seeds...  [0s]\nSearching alignments...  [0.003s]\nProcessing query block 1, reference block 1/1, shape 1/2, index chunk 4/4.\nBuilding reference seed array...  [0.001s]\nBuilding query seed array...  [0.001s]\nComputing hash join...  [0s]\nMasking low complexity seeds...  [0s]\nSearching alignments...  [0.003s]\nProcessing query block 1, reference block 1/1, shape 2/2, index chunk 1/4.\nBuilding reference seed array...  [0.001s]\nBuilding query seed array...  [0.001s]\nComputing hash join...  [0s]\nMasking low complexity seeds...  [0s]\nSearching alignments...  [0.004s]\nProcessing query block 1, reference block 1/1, shape 2/2, index chunk 2/4.\nBuilding reference seed array...  [0.001s]\nBuilding query seed array...  [0.001s]\nComputing hash join...  [0s]\nMasking low complexity seeds...  [0s]\nSearching alignments...  [0.003s]\nProcessing query block 1, reference block 1/1, shape 2/2, index chunk 3/4.\nBuilding reference seed array...  [0.001s]\nBuilding query seed array...  [0.001s]\nComputing hash join...  [0s]\nMasking low complexity seeds...  [0s]\nSearching alignments...  [0.003s]\nProcessing query block 1, reference block 1/1, shape 2/2, index chunk 4/4.\nBuilding reference seed array...  [0.001s]\nBuilding query seed array...  [0.001s]\nComputing hash join...  [0s]\nMasking low complexity seeds...  [0s]\nSearching alignments...  [0.003s]\nDeallocating buffers...  [0s]\nClearing query masking...  [0s]\nComputing alignments...  [0.223s]\nDeallocating reference...  [0s]\nLoading reference sequences...  [0s]\nDeallocating buffers...  [0s]\nDeallocating queries...  [0s]\nLoading query sequences...  [0s]\nClosing the input file...  [0s]\nClosing the output file...  [0s]\nCleaning up...  [0s]\nTotal time = 0.399s\nReported 284 pairwise alignments, 284 HSPs.\n257 queries aligned.\n",
+ "status": "ok",
+ "finished": "2026-11-03T10:03:45"
+}

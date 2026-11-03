@@ -1,0 +1,23 @@
+schema: modpipe/module/v1
+id: mmseqs_search
+version: 1
+label: "MMseqs2: sensitive sequence search"
+description: easy-search of query sequences against target sequences (protein or nucleotide).
+category: homology
+tool: {id: mmseqs, binary: mmseqs, version: "13-45111"}
+inputs:
+  - {id: query, type: sequences}
+  - {id: target, type: sequences}
+outputs:
+  - {id: hits, type: homology.hits.tabular, path: hits.m8}
+parameters:
+  - {id: sensitivity, type: float, default: 5.7, min: 1, max: 7.5, label: "Sensitivity (-s)"}
+  - {id: evalue, type: float, default: 0.001, min: 0, label: "E-value cutoff"}
+  - {id: min_seq_id, type: float, default: 0, min: 0, max: 1, label: "Minimum sequence identity"}
+resources: {cpu: 8, memory: 16G, runtime: 6h}
+command: |
+  mmseqs easy-search {{ inputs.query | q }} {{ inputs.target | q }} {{ outputs.hits }} "$TMPDIR/mmseqs"
+  --threads {{ cpu }} -s {{ params.sensitivity }} -e {{ params.evalue }} --min-seq-id {{ params.min_seq_id }}
+tests:
+  discovery_runs: [mmseqs_easy_search]
+provenance: {nfcore: [mmseqs/easysearch]}

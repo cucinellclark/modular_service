@@ -1,11 +1,14 @@
 """Jinja2 command templating: context objects, rendering, `when:` evaluation, and lint rendering."""
 import itertools
+import os
 import shlex
 
 import jinja2
 
 ENV = jinja2.Environment(undefined=jinja2.StrictUndefined, trim_blocks=False, lstrip_blocks=True, autoescape=False)
 ENV.filters["q"] = lambda v: shlex.quote(str(v))
+ENV.filters["basename"] = lambda v: os.path.basename(str(v).rstrip("/"))
+ENV.filters["dirname"] = lambda v: os.path.dirname(str(v).rstrip("/"))
 
 # Hostile stand-in for any untrusted text (free-text params, input paths, labels) used by lint_shell_safety.
 # Rendered unquoted, inside double quotes, or with broken quoting, it no longer survives shell parsing intact.
@@ -68,8 +71,22 @@ def output_value(port, resolved_type, ts):
     return Value(resolved_type, parts=parts, ts=ts)
 
 
-def build_context(module, inputs, outputs, params, cpu, memory_gb, dbs):
-    return {"inputs": inputs, "outputs": outputs, "params": params, "dbs": dbs, "cpu": cpu, "memory_gb": memory_gb}
+def build_context(module, inputs, outputs, params, cpu, memory_gb, dbs, db_files=None):
+    return {"inputs": inputs, "outputs": outputs, "params": params, "dbs": dbs, "db_files": db_files or {},
+            "cpu": cpu, "memory_gb": memory_gb}
+
+
+def db_context(module, params, dbreg, resolve=None):
+    """dbs.<param> = registry path; db_files.<param>.<key> = path/<file> for registries with a `files` map."""
+    dbs, files = {}, {}
+    for pid, spec in module.params.items():
+        if spec["type"] != "database":
+            continue
+        e = dbreg.get(params.get(pid)) or {}
+        path = resolve(e) if resolve else e.get("path", f"/db/{params.get(pid)}")
+        dbs[pid] = path
+        files[pid] = {k: os.path.join(path, v) for k, v in (e.get("files") or {}).items()}
+    return dbs, files
 
 
 def render_command(module, ctx):
@@ -169,8 +186,8 @@ def lint_render(module, ts, dbreg=None, max_renders=400):
                 if rt is None:
                     rt = op["type"]
                 outputs[oid] = output_value(op, rt, ts)
-            dbs = {pid: f"/db/{params[pid]}" for pid, p in module.params.items() if p["type"] == "database"}
-            ctx = build_context(module, inputs, outputs, params, 4, 16, dbs)
+            dbs, dbf = db_context(module, params, dbreg)
+            ctx = build_context(module, inputs, outputs, params, 4, 16, dbs, dbf)
             label = ", ".join(f"{k}={'absent' if v is None else (v[0].type + '[]' if isinstance(v, list) else v.type)}"
                               for k, v in inputs.items())
             label += "; " + ", ".join(f"{k}={v}" for k, v in params.items() if module.params[k]["type"] in ("enum", "bool"))
@@ -203,9 +220,9 @@ def check_step_render(module, input_types, params, ts, dbreg):
             inputs[pid] = _fake_value(ts, t, pid)
     outputs = {oid: output_value(op, resolve_output_type(module, op, input_types, ts) or op["type"], ts)
                for oid, op in module.outputs.items()}
-    dbs = {pid: (dbreg.get(params.get(pid)) or {}).get("path", "") for pid, p in module.params.items() if p["type"] == "database"}
+    dbs, dbf = db_context(module, params, dbreg)
     try:
-        render_command(module, build_context(module, inputs, outputs, params, 4, 16, dbs))
+        render_command(module, build_context(module, inputs, outputs, params, 4, 16, dbs, dbf))
     except ConstraintViolation as e:
         return str(e)
     except (jinja2.TemplateError, TemplateMisuse, AttributeError, TypeError) as e:
@@ -268,8 +285,8 @@ def lint_shell_safety(module, ts, dbreg=None, max_renders=200):
                     params[pid] = HOSTILE
             outputs = {oid: output_value(op, resolve_output_type(module, op, input_types, ts) or op["type"], ts)
                        for oid, op in module.outputs.items()}
-            dbs = {pid: f"/db/{params[pid]}" for pid, p in module.params.items() if p["type"] == "database"}
-            ctx = build_context(module, inputs, outputs, params, 4, 16, dbs)
+            dbs, dbf = db_context(module, params, dbreg)
+            ctx = build_context(module, inputs, outputs, params, 4, 16, dbs, dbf)
             try:
                 cmd = render_command(module, ctx)
             except (ConstraintViolation, jinja2.TemplateError, TemplateMisuse, AttributeError, TypeError):

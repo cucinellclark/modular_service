@@ -1,0 +1,134 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "blast_module",
+ "set": "modules_v2",
+ "tool": "blastp",
+ "mode": "module_blast",
+ "description": "rendered from modules/blast.yaml (tools/module_discovery.py)",
+ "tool_version": "2.15.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-01",
+ "slurm_job": "21374971_5",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T10:03:40",
+ "inputs": {},
+ "prep": null,
+ "cmd": "cp /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/genome/proteome.fasta subject.fa && makeblastdb -in subject.fa -dbtype prot -out subjectdb > makeblastdb.log && blastp -query /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/sarscov2/genome/proteome.fasta -db subjectdb -evalue 1e-05 -max_target_seqs 500 -num_threads 4 -outfmt '6 std qlen slen stitle' -out hits.tsv",
+ "wall_s": 5.33,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "hits.tsv",
+   "size": 0,
+   "new": true,
+   "kind": "text",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "makeblastdb.log",
+   "size": 319,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "",
+    "",
+    "Building a new DB, current time: 11/03/2026 10:03:41"
+   ],
+   "lines": 11,
+   "sha256": "b1dc58007064c72cdb29d10cf91309fe496d8f3ecd3429dd32b09867f3497745"
+  },
+  {
+   "path": "subject.fa",
+   "size": 104161,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">WP_014894920.1 molecular chaperone DnaK [Candidatus Portiera aleyrodidarum]",
+    "MIRIIGIDLGTTNSCVAVLENGKSRVIENSEGARTTPSIIAYTDDNEILIGQTAKRQAVTNPSNTLYAIKRLIGRKFNDD",
+    "IVQKDIKMVPYKIVSAENGDAWVQVKNRKLAPPQISAEILKKMKKTAEDYLGEKITEAVITVPAYFNDSQRQATKDAGRI"
+   ],
+   "lines": 1405,
+   "records": 258,
+   "residues": 81424,
+   "sha256": "aa7e45821f80bb1243e6b92a09c4c2a1d32eeb9f52aece2f5d3ba84c9cd4b6a6"
+  },
+  {
+   "path": "subjectdb.pdb",
+   "size": 20480,
+   "new": true,
+   "kind": "index",
+   "sha256": "05f2630a0dbd6daf474d7cbb5f9eb24cc62a4efb1de2eb3211fdaabb0d2907c3"
+  },
+  {
+   "path": "subjectdb.phr",
+   "size": 37461,
+   "new": true,
+   "kind": "index",
+   "sha256": "794627bf29fefb5f9b31d59775a46062cd8b06a5a9521e04880573fc1237b281"
+  },
+  {
+   "path": "subjectdb.pin",
+   "size": 2160,
+   "new": true,
+   "kind": "index",
+   "sha256": "a9621a299d3ecf380ebb5f4090091775baf92d9d21a6d4b62583e4c133310b45"
+  },
+  {
+   "path": "subjectdb.pjs",
+   "size": 464,
+   "new": true,
+   "kind": "index",
+   "preview": [
+    "{",
+    "  \"version\": \"1.2\",",
+    "  \"dbname\": \"subjectdb\","
+   ],
+   "sha256": "5120f2e1cfdf02ae2c64feea0b2e2afb70722503a8cdfa73fbb774bc46f72445"
+  },
+  {
+   "path": "subjectdb.pot",
+   "size": 3104,
+   "new": true,
+   "kind": "index",
+   "sha256": "6c532a3ec0cde0847528c36df88bdfa2d64ac0e4417cddcd4196fce930e2b303"
+  },
+  {
+   "path": "subjectdb.psq",
+   "size": 81683,
+   "new": true,
+   "kind": "index",
+   "sha256": "a2e06ab9a523de524c34580067bdbbe6fb91b9b7c2294c99043a04c3e9f65e82"
+  },
+  {
+   "path": "subjectdb.ptf",
+   "size": 16384,
+   "new": true,
+   "kind": "index",
+   "sha256": "67982e4d7b1490b09cce06e7c29175c6bd011cd542cfacb1a1c310084a50821a"
+  },
+  {
+   "path": "subjectdb.pto",
+   "size": 1036,
+   "new": true,
+   "kind": "index",
+   "sha256": "cf16b014038f416f807441eac3cad3cbf703e9c5391c73dbc72eb5f5e5ebfae3"
+  }
+ ],
+ "n_outputs": 11,
+ "output_bytes": 267252,
+ "time": {
+  "elapsed": "0:05.28",
+  "max_rss_kb": "27516",
+  "cpu_pct": "40",
+  "exit_status": "0",
+  "user_s": "0.24",
+  "sys_s": "1.88",
+  "elapsed_s": 5.28,
+  "max_rss_mb": 26.9
+ },
+ "stdout_tail": "",
+ "stderr_tail": "",
+ "status": "ok",
+ "finished": "2026-11-03T10:03:45"
+}

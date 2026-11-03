@@ -1,0 +1,95 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "kma_module",
+ "set": "modules_v2",
+ "tool": "kma",
+ "mode": "module_kma",
+ "description": "rendered from modules/kma.yaml (tools/module_discovery.py)",
+ "tool_version": "1.4.15",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21374971_8",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T10:03:46",
+ "inputs": {},
+ "prep": null,
+ "cmd": "kma -ipe /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_1.fastq.gz /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_2.fastq.gz -o kma_out -t_db /opt/patric-common/data/kma_db/CARD -t 4",
+ "wall_s": 2.27,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "kma_out.aln",
+   "size": 166110,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    "# CARD|NC_008596.1_3823614_3825143 Mycobacterium smegmatis 16S rRNA mutation in the rrsA gene conferring resistance to kanamycin A [Mycobacterium smegmatis str. MC2 155]",
+    "template: \tAGAAAGGAGGTGATCCAGCCGCACCTTCCGGTACGGCTACCTTGTTACGACTTCGTCCCA",
+    "          \t____________________________________________________________"
+   ],
+   "lines": 3060,
+   "records": 0,
+   "residues": 154690,
+   "sha256": "95c4dfeb3705f5cbef77b91f2c2710fcfee874cc96b5663afebc5b372e6aec47"
+  },
+  {
+   "path": "kma_out.frag.gz",
+   "size": 1225384,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "text",
+   "preview": [
+    "GTCCACCGCTTGTGCGGGCCCCCGTCAATTCATTTGAGTTTTAGCCTTGCGACCGTACTCCCCAGGCGATCAACTTATCGCGTTAGCTACGCCACAAAATT\t12\t56\t599\t699\tCARD|NC_008596.1_3823614_3825143 Mycobacterium smegmatis 16S rRNA mutation in the rr",
+    "GCTTGTGCGGGCCCCCGTCAATTCATTTGAGTTTTAGCCTTGCGACCGTACTCCCCAGGCGATCAACTTATCGCGTTAGCTACGCCACAAAAT\t12\t56\t606\t698\tCARD|NC_008596.1_3823614_3825143 Mycobacterium smegmatis 16S rRNA mutation in the rrsA gene ",
+    "CCACACACGCGGCATGACTGGATCAGGGTTCCCCCCATTGTCCAATATTCCCCACTGCTGCCTCCCGTAGGAGTCTGGGCCTTTTCTCAGTCCCAGTGTGG\t22\t64\t1118\t1218\tCARD|NC_008596.1_3823614_3825143 Mycobacterium smegmatis 16S rRNA mutation in the "
+   ],
+   "lines": 33513,
+   "sha256": "63b81e035082e0e9bc6e120782e8ebad754ecd3ef3b38d0ae9d76c5bdfcd8bb1"
+  },
+  {
+   "path": "kma_out.fsa",
+   "size": 13664,
+   "new": true,
+   "kind": "fasta",
+   "preview": [
+    ">CARD|NC_008596.1_3823614_3825143 Mycobacterium smegmatis 16S rRNA mutation in the rrsA gene conferring resistance to kanamycin A [Mycobacterium smegmatis str. MC2 155]",
+    "tgtaaggtttttcgcgttgcatCGAAttAAaCCACATGcTCCACCGCTTGTGCGGGCCCC",
+    "CGTCAATTCATTTGAGTTTTAGCCTTGCGACCGTACTCCCCAGGCGATCAACTTATCGCG"
+   ],
+   "lines": 206,
+   "records": 20,
+   "residues": 10523,
+   "sha256": "e8292b253f95bdad7aa70d290f1c6d214eba2680ee96b208eb6cf831dcd3d134"
+  },
+  {
+   "path": "kma_out.res",
+   "size": 4849,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "#Template\tScore\tExpected\tTemplate_length\tTemplate_Identity\tTemplate_Coverage\tQuery_Identity\tQuery_Coverage\tDepth\tq_value\tp_value",
+    "CARD|NC_008596.1_3823614_3825143 Mycobacterium smegmatis 16S rRNA mutation in the rrsA gene conferring resistance to kanamycin A [Mycobacterium smegmatis str. MC2 155]\t   20554\t    1364\t    1529\t   15",
+    "CARD|AE014075.1_237159_240063 Escherichia coli 23S rRNA with mutation conferring resistance to clindamycin [Escherichia coli CFT073]\t  741851\t    1786\t    2904\t   50.83\t   58.54\t   86.82\t  170.82\t  34"
+   ],
+   "lines": 21,
+   "sha256": "3963c832500ddc76942ed60e5f340aedf4f51eff86734586a4c9f8a07d5a2ec1"
+  }
+ ],
+ "n_outputs": 4,
+ "output_bytes": 1410007,
+ "time": {
+  "elapsed": "0:02.25",
+  "max_rss_kb": "36444",
+  "cpu_pct": "322",
+  "exit_status": "0",
+  "user_s": "6.97",
+  "sys_s": "0.27",
+  "elapsed_s": 2.25,
+  "max_rss_mb": 35.6
+ },
+ "stdout_tail": "",
+ "stderr_tail": "# Running KMA.\n# Reading inputfile:\t/home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_1.fastq.gz /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/prokaryotes/candidatus_portiera_aleyrodidarum/illumina/fastq/test_2.fastq.gz\n# Phred scale:\t33\n#\n# Total time used for DB loading: 0.02 s.\n#\n# Finding k-mer ankers\n#\n# Total number of query fragment after trimming:\t97729\n#\n# Query converted\n#\n# Query ankered\n#\n# KMA mapping done\n#\n# Sort, output and select KMA alignments.\n# Total time for sorting and outputting KMA alignment\t0.02 s.\n#\n# Doing local assemblies of found templates, and output results\n# Total time used for local assembly: 0.55 s.\n#\n# Closing files\n",
+ "status": "ok",
+ "finished": "2026-11-03T10:03:48"
+}

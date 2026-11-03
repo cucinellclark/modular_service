@@ -1,0 +1,14 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "Plasmids and viruses in an assembly",
+  "description": "geNomad classifies contigs as plasmid/virus; CheckV assesses the predicted viruses.",
+  "inputs": {"contigs": {"type": "sequences.dna.contigs", "source": {"wsid": "/user@bvbrc/home/assembly/contigs.fasta"}}},
+  "steps": {
+    "classify": {"module": "genomad", "in": {"contigs": "$inputs.contigs"}},
+    "quality":  {"module": "checkv", "in": {"contigs": "classify.viruses"}}
+  },
+  "outputs": {"virus_summary": "classify.virus_summary", "plasmid_summary": "classify.plasmid_summary", "viruses": "classify.viruses",
+              "plasmids": "classify.plasmids", "virus_quality": "quality.quality"},
+  "template": {"label": "Mobile elements: plasmids and viruses (geNomad + CheckV)", "category": "annotation",
+               "expose": ["classify.params.filtering"]}
+}

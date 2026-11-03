@@ -1,0 +1,26 @@
+schema: modpipe/module/v1
+id: pilon
+version: 1
+label: "Pilon: short-read assembly polishing"
+description: Maps paired short reads to a draft assembly (BWA-MEM) and corrects SNPs, indels and gaps with Pilon.
+category: assembly
+tool: {id: pilon, binary: pilon, version: "1.24"}
+inputs:
+  - {id: draft, type: sequences.dna.contigs, requires: {compression: none}}
+  - {id: reads, type: reads.short.paired}
+outputs:
+  - {id: contigs, type: sequences.dna.contigs, path: out/pilon.fasta}
+  - {id: changes, type: report.text, path: out/pilon.changes}
+  - {id: variants, type: variants.vcf, path: out/pilon.vcf, attributes: {compression: none}}
+parameters:
+  - {id: fix, type: enum, enum: [all, snps, indels, gaps, local, bases], default: all, label: "What to fix (--fix)"}
+resources: {cpu: 8, memory: 32G, runtime: 6h}
+command: |
+  cp {{ inputs.draft | q }} draft.fa && bwa index draft.fa 2> bwa_index.log &&
+  bwa mem -t {{ cpu }} draft.fa {{ inputs.reads.r1 | q }} {{ inputs.reads.r2 | q }} | samtools sort -@ {{ [cpu - 1, 1] | max }} -o aln.bam - &&
+  samtools index aln.bam &&
+  _JAVA_OPTIONS=-Xmx{{ [memory_gb | int - 2, 2] | max }}g pilon --genome draft.fa --frags aln.bam --output pilon --outdir out
+  --changes --vcf --fix {{ params.fix }} --threads {{ cpu }}
+tests:
+  discovery_runs: [pilon_polish]
+provenance: {bvbrc_invocations: [p3x-assembly.py], nfcore: [pilon]}

@@ -1,0 +1,21 @@
+schema: modpipe/module/v1
+id: pangolin
+version: 1
+label: "Pangolin: SARS-CoV-2 lineage assignment"
+description: Assigns Pango lineages to SARS-CoV-2 genome sequences (pangolin-data bundled in the container).
+category: typing
+tool: {id: pangolin, binary: pangolin, version: 4.3.1}
+inputs:
+  - {id: genomes, type: sequences.dna}
+outputs:
+  - {id: lineages, type: table.csv.lineage, path: lineage_report.csv}
+parameters:
+  - {id: skip_scorpio, type: bool, default: true, label: "Skip scorpio constellation calls",
+     description: "scorpio fails in the current container; keep true until fixed"}
+resources: {cpu: 4, memory: 8G, runtime: 2h}
+command: |
+  pangolin {{ inputs.genomes | q }} --outfile {{ outputs.lineages }} -t {{ cpu }} --tempdir "$TMPDIR"
+  {% if params.skip_scorpio %}--skip-scorpio{% endif %}
+tests:
+  discovery_runs: [pangolin_skip_scorpio]
+provenance: {bvbrc_invocations: [ComprehensiveSARS2 report.tt], nfcore: [pangolin/run]}

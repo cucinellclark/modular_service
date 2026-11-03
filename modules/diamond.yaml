@@ -1,0 +1,29 @@
+schema: modpipe/module/v1
+id: diamond
+version: 1
+label: "DIAMOND: fast protein search (blastp / blastx)"
+description: Builds a DIAMOND database from subject proteins and searches protein (blastp) or DNA (blastx) queries.
+category: homology
+tool: {id: diamond, binary: diamond, version: "2.1"}
+inputs:
+  - {id: query, type: sequences}
+  - {id: subject, type: sequences.protein}
+outputs:
+  - {id: hits, type: homology.hits.tabular, path: hits.tsv,
+     description: "outfmt 6: qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen"}
+parameters:
+  - {id: sensitivity, type: enum, enum: [fast, default, mid-sensitive, sensitive, more-sensitive, very-sensitive, ultra-sensitive],
+     default: default, label: "Sensitivity mode"}
+  - {id: evalue, type: float, default: 0.001, min: 0, label: "E-value cutoff"}
+  - {id: max_target_seqs, type: int, default: 25, min: 1, label: "Maximum hits per query"}
+resources: {cpu: 8, memory: 16G, runtime: 6h}
+command: |
+  diamond makedb --in {{ inputs.subject | q }} -d subjectdb --threads {{ cpu }} --quiet &&
+  diamond {{ 'blastp' if inputs.query.attrs.get('alphabet') == 'protein' else 'blastx' }}
+  -q {{ inputs.query | q }} -d subjectdb -o {{ outputs.hits }} --threads {{ cpu }} --evalue {{ params.evalue }}
+  --max-target-seqs {{ params.max_target_seqs }} {% if params.sensitivity != 'default' %}--{{ params.sensitivity }}{% endif %}
+  --outfmt 6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen
+tests:
+  discovery_runs: [diamond_module]
+provenance: {nfcore: [diamond/blastp, diamond/makedb]}
+notes: "Crashes with 'Illegal instruction' on the dev login host; works on compute nodes."

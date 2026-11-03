@@ -40,8 +40,8 @@ types/
   wstypes.yaml                 type <-> BV-BRC workspace type mapping (+ observed production quirks)
 resources/
   databases.yaml               installed reference-database registry (paths, binds, versions, status)
-modules/                       20 module descriptors (v1): read QC, assembly, mapping, variants, taxonomy, annotation, typing, phylogeny
-pipelines/                     9 curated templates (modpipe list-templates); test inputs in tests/templates/
+modules/                       45 module descriptors (v1): read QC, assembly, mapping, variants, taxonomy, annotation, typing, expression, homology, phylogeny
+pipelines/                     16 curated templates (modpipe list-templates); test inputs in tests/templates/
 app_specs/ModularPipeline.json BV-BRC app spec
 service-scripts/App-ModularPipeline.pl  BV-BRC Perl shell (AppScript): preflight, staging, run, upload
 lib/modpipe/                   engine (Python): types, registries, templates, pipeline validation, CLI
@@ -109,17 +109,23 @@ sbatch tests/e2e/run_pipeline.sbatch tests/pipelines/wgs_portiera.json
 ```
 Validation runs on the host (Python 3.11, PyYAML, Jinja2) and in the container (Python 3.10).
 
-## Modules and templates (2026-11-03)
+## Modules and templates
 
 | Category | Modules |
 |---|---|
-| read QC | fastp, filtlong |
-| assembly | spades, flye, unicycler; assembly QC: quast |
-| mapping / variants | bwa_mem, minimap2, bcftools_call, freebayes |
+| read QC / host removal | fastp, trim_galore, fastqc, filtlong, hostile |
+| assembly / polishing | spades, megahit, flye, unicycler, racon, pilon; QC: quast |
+| mapping | bwa_mem, minimap2, hisat2, kma (gene databases: CARD, VFDB) |
+| variants | bcftools_call, freebayes, snippy |
 | taxonomy | kraken2, bracken |
-| annotation / typing | prodigal, amrfinder, mlst |
-| alignment / phylogeny | mafft, fasttree, iqtree2 |
+| SARS-CoV-2 / typing | freyja_variants, freyja_demix, pangolin, mlst |
+| annotation | prodigal, trnascan, minced, amrfinder, vigor4, genomad, checkv |
+| expression | stringtie, htseq_count |
+| homology / clustering | blast, diamond, mmseqs_search, mmseqs_cluster, cdhit |
+| alignment / phylogeny | mafft, fasttree, iqtree2, raxml_ng |
 | converters | seqtk_seq_fasta (reads -> FASTA), samtools_sort_index (SAM/BAM -> sorted, indexed BAM) |
 
-Templates: wgs_assembly_qc, multi_sample_assembly, long_read_assembly, hybrid_assembly,
-isolate_assembly_characterization, variant_calling, taxonomic_profile, align_and_tree, protein_phylogeny.
+Templates (`bin/modpipe list-templates`): wgs_assembly_qc, multi_sample_assembly, clean_assembly,
+long_read_assembly, polished_long_read_assembly, hybrid_assembly, isolate_assembly_characterization, variant_calling,
+taxonomic_profile, sars2_wastewater, rnaseq_expression, viral_genome_annotation, mobile_elements, protein_search,
+align_and_tree, protein_phylogeny.

@@ -1,0 +1,29 @@
+schema: modpipe/module/v1
+id: cdhit
+version: 1
+label: "CD-HIT: cluster sequences by identity"
+description: Clusters proteins (cd-hit) or nucleotides (cd-hit-est) at an identity threshold; writes representatives and .clstr membership.
+category: homology
+tool: {id: cd-hit, binary: cd-hit, version: 4.8.1}
+inputs:
+  - {id: sequences, type: sequences, requires: {compression: none}}
+outputs:
+  - id: clusters
+    type: homology.clusters
+    parts: {representatives: clusters.fasta, membership: clusters.fasta.clstr}
+parameters:
+  - {id: identity, type: float, default: 0.9, min: 0.4, max: 1, label: "Sequence identity threshold (-c)"}
+resources: {cpu: 4, memory: 8G, runtime: 4h}
+command: |
+  {% set c = params.identity %}
+  {% if inputs.sequences.attrs.get('alphabet') == 'protein' %}
+    {% set n = 5 if c >= 0.7 else (4 if c >= 0.6 else (3 if c >= 0.5 else 2)) %}
+    cd-hit -i {{ inputs.sequences | q }} -o {{ outputs.clusters.representatives }} -c {{ c }} -n {{ n }} -T {{ cpu }} -M 0 -d 0
+  {% else %}
+    {% if c < 0.8 %}{{ fail('cd-hit-est needs identity >= 0.8') }}{% endif %}
+    {% set n = 10 if c >= 0.95 else (8 if c >= 0.9 else (7 if c >= 0.88 else (6 if c >= 0.85 else 5))) %}
+    cd-hit-est -i {{ inputs.sequences | q }} -o {{ outputs.clusters.representatives }} -c {{ c }} -n {{ n }} -T {{ cpu }} -M 0 -d 0
+  {% endif %}
+tests:
+  discovery_runs: [cdhit_module]
+provenance: {nfcore: [cdhit/cdhit, cdhit/cdhitest]}

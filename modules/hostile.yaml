@@ -1,0 +1,33 @@
+schema: modpipe/module/v1
+id: hostile
+version: 1
+label: "Hostile: remove host (e.g. human) reads"
+description: Aligns reads to a host index and discards matches. Default index is human T2T+HLA (BV-BRC FastqUtils).
+category: read_qc
+tool: {id: hostile, binary: hostile, version: 1.1.0}
+inputs:
+  - {id: reads, type: reads.short}
+outputs:
+  - id: clean_reads
+    type: reads.short
+    type_from: {port: reads, map: {reads.short.paired: reads.short.paired, reads.short.single: reads.short.single}}
+    path: clean.fastq.gz
+    parts: {r1: clean_1.fastq.gz, r2: clean_2.fastq.gz}
+    attributes: {compression: gzip}
+  - {id: report, type: report.json, path: hostile.json}
+parameters:
+  - {id: index, type: database, db_type: index.bowtie2, default: hostile_human_t2t_hla, label: "Host index"}
+resources: {cpu: 8, memory: 16G, runtime: 4h}
+command: |
+  {% if inputs.reads.type == 'reads.short.interleaved' %}{{ fail('hostile needs paired (two files) or single-end reads, not interleaved') }}{% endif %}
+  {% set ext = '.fastq.gz' if inputs.reads.attrs.get('compression') == 'gzip' else '.fastq' %}
+  {% if inputs.reads.paired %}ln -s {{ inputs.reads.r1 | q }} reads_1{{ ext }} && ln -s {{ inputs.reads.r2 | q }} reads_2{{ ext }} &&
+  {% else %}ln -s {{ inputs.reads | q }} reads{{ ext }} &&{% endif %}
+  HOSTILE_CACHE_DIR={{ dbs.index | dirname | q }} hostile clean --index {{ dbs.index | basename | q }} --aligner bowtie2
+  --threads {{ cpu }} --out-dir out
+  {% if inputs.reads.paired %}--fastq1 reads_1{{ ext }} --fastq2 reads_2{{ ext }} > {{ outputs.report }}
+  && mv out/reads_1.clean_1.fastq.gz {{ outputs.clean_reads.r1 }} && mv out/reads_2.clean_2.fastq.gz {{ outputs.clean_reads.r2 }}
+  {% else %}--fastq1 reads{{ ext }} > {{ outputs.report }} && mv out/reads.clean.fastq.gz {{ outputs.clean_reads }}{% endif %}
+tests:
+  discovery_runs: [hostile_module]
+provenance: {bvbrc_invocations: [fastq_utils.py], nfcore: [hostile/clean]}

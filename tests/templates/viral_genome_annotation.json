@@ -1,0 +1,1 @@
+{"inputs": {"genome": {"fixture": "sarscov2_genome"}}, "params": {"annotate.params.reference_db": "sarscov2_db"}}

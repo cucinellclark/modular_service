@@ -1,0 +1,25 @@
+schema: modpipe/module/v1
+id: megahit
+version: 1
+label: "MEGAHIT: fast (meta)genome assembly"
+description: Memory-efficient de Bruijn graph assembler for metagenomes and large datasets.
+category: assembly
+tool: {id: megahit, binary: megahit, version: 1.2.9}
+inputs:
+  - {id: reads, type: reads.short}
+outputs:
+  - {id: contigs, type: sequences.dna.contigs, path: out/final.contigs.fa}
+  - {id: log, type: report.text, path: out/log}
+parameters:
+  - {id: preset, type: enum, enum: [default, meta-sensitive, meta-large], default: default, label: "Preset"}
+  - {id: min_contig_len, type: int, default: 200, min: 1, label: "Minimum contig length"}
+resources: {cpu: 16, memory: 64G, runtime: 12h}
+command: |
+  megahit -t {{ cpu }} -m {{ (memory_gb * 1024 ** 3 * 0.9) | int }} -o out --min-contig-len {{ params.min_contig_len }}
+  {% if params.preset != 'default' %}--presets {{ params.preset }}{% endif %}
+  {% if inputs.reads.type == 'reads.short.paired' %}-1 {{ inputs.reads.r1 | q }} -2 {{ inputs.reads.r2 | q }}
+  {% elif inputs.reads.type == 'reads.short.interleaved' %}--12 {{ inputs.reads | q }}
+  {% else %}-r {{ inputs.reads | q }}{% endif %}
+tests:
+  discovery_runs: [megahit_pe]
+provenance: {bvbrc_invocations: [p3x-assembly.py, MetagenomeBinning.pm], nfcore: [megahit]}

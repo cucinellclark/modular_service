@@ -1,0 +1,22 @@
+schema: modpipe/module/v1
+id: checkv
+version: 1
+label: "CheckV: viral genome completeness and contamination"
+description: Estimates completeness/contamination of viral contigs and separates proviral host regions.
+category: annotation
+tool: {id: checkv, binary: checkv, version: 0.7.0}
+inputs:
+  - {id: contigs, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - {id: quality, type: table.tsv.virus_quality, path: out/quality_summary.tsv}
+  - {id: completeness, type: table.tsv, path: out/completeness.tsv}
+  - {id: contamination, type: table.tsv, path: out/contamination.tsv}
+  - {id: viruses, type: sequences.dna.contigs, path: out/viruses.fna}
+  - {id: proviruses, type: sequences.dna.contigs, path: out/proviruses.fna}
+parameters:
+  - {id: db, type: database, db_type: database.checkv, default: checkv_db_1.0, label: "CheckV database"}
+resources: {cpu: 8, memory: 16G, runtime: 4h}
+command: checkv end_to_end {{ inputs.contigs | q }} out -t {{ cpu }} -d {{ dbs.db | q }}
+tests:
+  discovery_runs: [checkv_e2e]
+provenance: {bvbrc_invocations: [MetagenomeBinning.pm], nfcore: [checkv/endtoend]}

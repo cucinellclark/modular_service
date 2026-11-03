@@ -1,0 +1,28 @@
+schema: modpipe/module/v1
+id: vigor4
+version: 1
+label: "VIGOR4: viral genome annotation"
+description: Reference-based annotation of viral genomes (genes, mature peptides) with a virus-specific VIGOR database.
+category: annotation
+tool: {id: vigor4, binary: vigor4, version: 4.1.20220621}
+inputs:
+  - {id: genome, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - {id: gff, type: annotation.gff, path: vigor/out.gff3}
+  - {id: proteins, type: sequences.protein, path: vigor/out.pep}
+  - {id: cds, type: sequences.dna.genes, path: vigor/out.cds}
+  - {id: feature_table, type: table.tsv, path: vigor/out.tbl, description: "NCBI 5-column feature table"}
+  - {id: report, type: report.text, path: vigor/out.rpt}
+parameters:
+  - id: reference_db
+    type: enum
+    enum: [antennavirus_txid2560091_db, bandavirus_txid2733256_db, beidivirus_txid2501981_db, cicadellivirus_txid2948664_db, coguvirus_txid2560118_db, dengue_txid12637_db, embe_db, entovirus_txid2733257_db, feravirus_txid2501995_db, flua_db, flub_db, fluc_db, goukovirus_txid1980420_db, hantaviridae_db, hartmanivirus_txid2169607_db, hibeco_db, horwuvirus_txid2501976_db, hudivirus_txid2501977_db, hudovirus_txid2501978_db, inshuvirus_txid2501996_db, ixovirus_txid2733258_db, jonvirus_txid2501997_db, lassa_db, laulavirus_txid2560166_db, lentinuvirus_txid2733259_db, merbe_db, mobuvirus_txid2501979_db, monkeypox_db, nairoviridae_db, nobeco_db, orthophasmavirus_txid1980538_db, peribunyaviridae_db, phasivirus_txid1980421_db, phlebovirus_txid11584_db, pidchovirus_txid2501975_db, reptarenavirus_txid1653395_db, rsv_db, rtva_db, rtvb_db, rtvc_db, rtvf_db, rtvg_db, rubodvirus_txid2733260_db, sapo_db, sarbe_db, sarscov2_db, sawastrivirus_txid2560224_db, tenuivirus_txid12329_db, uukuvirus_txid2734594_db, veev_db, wenrivirus_txid2560254_db, wnvI_db, wnvII_db, wuhivirus_txid2501998_db, zikv_db]
+    default: sarscov2_db
+    label: "VIGOR reference database (virus)"
+    description: "e.g. sarscov2_db, flua_db, flub_db, rsv_db, monkeypox_db, dengue_txid12637_db, zikv_db"
+resources: {cpu: 1, memory: 8G, runtime: 2h}
+command: mkdir vigor && vigor4 -i {{ inputs.genome | q }} -o vigor/out -d {{ params.reference_db }}
+tests:
+  discovery_runs: [vigor4_module]
+provenance: {bvbrc_invocations: [bebop-pipelined.py, MetagenomeBinning.pm, run_sequence_submission.py]}
+notes: "Uses the VIGOR_DB bundled in the container (registry: vigor4_refdbs)."

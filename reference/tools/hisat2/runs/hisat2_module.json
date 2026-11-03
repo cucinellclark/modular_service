@@ -1,0 +1,135 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "hisat2_module",
+ "set": "modules_v2",
+ "tool": "hisat2",
+ "mode": "module_hisat2",
+ "description": "rendered from modules/hisat2.yaml (tools/module_discovery.py)",
+ "tool_version": "2.2.1",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "bio-compute-01",
+ "slurm_job": "21374971_4",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T10:03:40",
+ "inputs": {},
+ "prep": null,
+ "cmd": "hisat2-build -p 4 /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/homo_sapiens/genome/genome.fasta refidx > hisat2_build.log 2>&1 && hisat2 -p 4 -x refidx --summary-file summary.txt --new-summary -1 /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/homo_sapiens/illumina/fastq/test_rnaseq_1.fastq.gz -2 /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/homo_sapiens/illumina/fastq/test_rnaseq_2.fastq.gz | samtools sort -@ 3 -o aligned.bam - && samtools index aligned.bam",
+ "wall_s": 1.17,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "aligned.bam",
+   "size": 400214,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "bam",
+   "sha256": "e47beb58efcd55c70e688ec401d91a8da0b9775ab0dd7f81a842d8c9bce11e2f"
+  },
+  {
+   "path": "aligned.bam.bai",
+   "size": 160,
+   "new": true,
+   "kind": "index",
+   "sha256": "5d916bd20726f37d8ca598fe2f503791bb6da84d9549e95af03edec7f80dade3"
+  },
+  {
+   "path": "hisat2_build.log",
+   "size": 16880,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "Settings:",
+    "  Output files: \"refidx.*.ht2\"",
+    "  Line rate: 6 (line is 64 bytes)"
+   ],
+   "lines": 650,
+   "sha256": "1bdd99374a7af2d3a9ba769cebb7aa2aa2abe3ae7a1ea3427ad95589802be4df"
+  },
+  {
+   "path": "refidx.1.ht2",
+   "size": 4207867,
+   "new": true,
+   "kind": "index",
+   "sha256": "573469668b419dd331352284a0efe83011bf1ecb0fb870b4683be5f89fa56b8f"
+  },
+  {
+   "path": "refidx.2.ht2",
+   "size": 10008,
+   "new": true,
+   "kind": "index",
+   "sha256": "4127cd593c497004d5b187ed7172de8a9d70a28ff2959e623870f2ee77051105"
+  },
+  {
+   "path": "refidx.3.ht2",
+   "size": 17,
+   "new": true,
+   "kind": "index",
+   "sha256": "c3e23c37826e91356568469747e09fc8c8103c59845758e676a85ca4ce4a5bb1"
+  },
+  {
+   "path": "refidx.4.ht2",
+   "size": 10001,
+   "new": true,
+   "kind": "index",
+   "sha256": "85271c48b333c36bec6110d231e5bfd924fafad90a722abae0b727fc97830952"
+  },
+  {
+   "path": "refidx.5.ht2",
+   "size": 19749,
+   "new": true,
+   "kind": "index",
+   "sha256": "cd2212d118fc935f694263b415971aebe785e0884c9a3c1db47d9acc2c0094bb"
+  },
+  {
+   "path": "refidx.6.ht2",
+   "size": 10006,
+   "new": true,
+   "kind": "index",
+   "sha256": "168f7285e8d64aac7816bdfd6df760bcf65d829563d0596601e70b2b5896ef00"
+  },
+  {
+   "path": "refidx.7.ht2",
+   "size": 12,
+   "new": true,
+   "kind": "index",
+   "sha256": "ca888f40c3caca805b37a5434c75de5550616e0795e7602fb91156f22dd90851"
+  },
+  {
+   "path": "refidx.8.ht2",
+   "size": 8,
+   "new": true,
+   "kind": "index",
+   "sha256": "7c9fa136d4413fa6173637e883b6998d32e1d675f88cddff9dcbcf331820f4b8"
+  },
+  {
+   "path": "summary.txt",
+   "size": 384,
+   "new": true,
+   "kind": "text",
+   "preview": [
+    "HISAT2 summary stats:",
+    "\tTotal pairs: 4159",
+    "\t\tAligned concordantly or discordantly 0 time: 3640 (87.52%)"
+   ],
+   "lines": 11,
+   "sha256": "8ebc6e70684154def3b2ba923243a7ce0ef26ddd0c36054fa7d47314afe6a534"
+  }
+ ],
+ "n_outputs": 12,
+ "output_bytes": 4675306,
+ "time": {
+  "elapsed": "0:01.14",
+  "max_rss_kb": "98740",
+  "cpu_pct": "97",
+  "exit_status": "0",
+  "user_s": "0.53",
+  "sys_s": "0.58",
+  "elapsed_s": 1.14,
+  "max_rss_mb": 96.4
+ },
+ "stdout_tail": "",
+ "stderr_tail": "HISAT2 summary stats:\n\tTotal pairs: 4159\n\t\tAligned concordantly or discordantly 0 time: 3640 (87.52%)\n\t\tAligned concordantly 1 time: 517 (12.43%)\n\t\tAligned concordantly >1 times: 0 (0.00%)\n\t\tAligned discordantly 1 time: 2 (0.05%)\n\tTotal unpaired reads: 7280\n\t\tAligned 0 time: 5822 (79.97%)\n\t\tAligned 1 time: 1458 (20.03%)\n\t\tAligned >1 times: 0 (0.00%)\n\tOverall alignment rate: 30.01%\n[bam_sort_core] merging from 0 files and 3 in-memory blocks...\n",
+ "status": "ok",
+ "finished": "2026-11-03T10:03:41"
+}

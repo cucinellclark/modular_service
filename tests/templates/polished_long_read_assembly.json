@@ -1,0 +1,1 @@
+{"inputs": {"long_reads": {"fixture": "portiera_nanopore"}, "short_reads": {"fixture": "portiera_pe"}}, "params": {"assemble.params.genome_size": "360k"}}

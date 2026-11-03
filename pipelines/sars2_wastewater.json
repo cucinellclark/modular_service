@@ -1,0 +1,20 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "SARS-CoV-2 wastewater lineage abundance",
+  "description": "Per sample: fastp -> BWA-MEM against the SARS-CoV-2 reference -> Freyja variants -> Freyja lineage de-mixing. (No primer trimming yet.)",
+  "inputs": {
+    "samples": {"type": "reads.short.paired", "collection": true,
+                "source": {"paired_end_libs": [{"sample_id": "WW1", "read1": "/user@bvbrc/home/reads/WW1_R1.fastq.gz", "read2": "/user@bvbrc/home/reads/WW1_R2.fastq.gz"}]}},
+    "reference": {"type": "sequences.dna.contigs", "source": {"wsid": "/user@bvbrc/home/refs/MN908947.3.fasta"}}
+  },
+  "steps": {
+    "trim":     {"module": "fastp", "in": {"reads": "$inputs.samples"}},
+    "map":      {"module": "bwa_mem", "in": {"reads": "trim.trimmed_reads", "reference": "$inputs.reference"}},
+    "variants": {"module": "freyja_variants", "in": {"alignment": "map.alignment", "reference": "$inputs.reference"}},
+    "demix":    {"module": "freyja_demix", "in": {"variants": "variants.variants", "depths": "variants.depths"}}
+  },
+  "outputs": {"lineage_abundance": "demix.abundance", "variants": "variants.variants", "alignment": "map.alignment",
+              "trim_report": "trim.report_html"},
+  "template": {"label": "Wastewater SARS-CoV-2 lineages (Freyja)", "category": "typing",
+               "expose": ["variants.params.min_quality", "demix.params.eps", "demix.params.covcut", "demix.params.barcodes"]}
+}

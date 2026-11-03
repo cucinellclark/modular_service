@@ -1,0 +1,20 @@
+schema: modpipe/module/v1
+id: racon
+version: 1
+label: "Racon: long-read consensus polishing"
+description: Maps long reads to a draft assembly (minimap2) and polishes it with Racon.
+category: assembly
+tool: {id: racon, binary: racon, version: 1.5.0}
+inputs:
+  - {id: draft, type: sequences.dna.contigs}
+  - {id: reads, type: reads.long}
+outputs:
+  - {id: contigs, type: sequences.dna.contigs, path: polished.fasta}
+resources: {cpu: 8, memory: 16G, runtime: 4h}
+command: |
+  minimap2 -t {{ cpu }} -x {{ 'map-ont' if inputs.reads.type == 'reads.long.nanopore' else 'map-pb' }}
+  {{ inputs.draft | q }} {{ inputs.reads | q }} > overlaps.paf &&
+  racon -t {{ cpu }} {{ inputs.reads | q }} overlaps.paf {{ inputs.draft | q }} > {{ outputs.contigs }}
+tests:
+  discovery_runs: [racon_polish]
+provenance: {bvbrc_invocations: [p3x-assembly.py], nfcore: [racon]}

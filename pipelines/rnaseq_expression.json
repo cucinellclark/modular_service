@@ -1,0 +1,22 @@
+{
+  "schema": "modpipe/pipeline/v1",
+  "name": "RNA-seq expression quantification",
+  "description": "Per sample: fastp -> HISAT2 (sorted BAM) -> StringTie gene abundance + HTSeq-count read counts, against a reference genome and GTF.",
+  "inputs": {
+    "samples": {"type": "reads.short.paired", "collection": true,
+                "source": {"paired_end_libs": [{"sample_id": "ctrl1", "read1": "/user@bvbrc/home/rnaseq/ctrl1_R1.fastq.gz", "read2": "/user@bvbrc/home/rnaseq/ctrl1_R2.fastq.gz"}]}},
+    "reference": {"type": "sequences.dna.contigs", "source": {"wsid": "/user@bvbrc/home/refs/genome.fna"}},
+    "annotation": {"type": "annotation.gtf", "source": {"wsid": "/user@bvbrc/home/refs/genes.gtf"}}
+  },
+  "steps": {
+    "trim":   {"module": "fastp", "in": {"reads": "$inputs.samples"}},
+    "map":    {"module": "hisat2", "in": {"reads": "trim.trimmed_reads", "reference": "$inputs.reference"}},
+    "quant":  {"module": "stringtie", "in": {"alignment": "map.alignment", "annotation": "$inputs.annotation"}, "params": {"estimate_only": true}},
+    "counts": {"module": "htseq_count", "in": {"alignment": "map.alignment", "annotation": "$inputs.annotation"}}
+  },
+  "outputs": {"gene_abundance": "quant.gene_abundance", "gene_counts": "counts.counts", "mapping_summary": "map.summary",
+              "alignment": "map.alignment"},
+  "template": {"label": "RNA-seq expression (HISAT2 + StringTie + HTSeq)", "category": "expression",
+               "expose": ["map.params.strandedness", "map.params.no_spliced_alignment", "counts.params.stranded",
+                          "counts.params.feature_type", "counts.params.id_attribute"]}
+}

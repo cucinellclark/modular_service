@@ -1,0 +1,29 @@
+schema: modpipe/module/v1
+id: blast
+version: 1
+label: "BLAST+: search query sequences against subject sequences"
+description: Builds a BLAST database from the subject FASTA and searches it. Program follows the alphabets (blastn, blastp, blastx, tblastn).
+category: homology
+tool: {id: blastp, binary: blastp, version: 2.15.0}
+inputs:
+  - {id: query, type: sequences, requires: {compression: none}}
+  - {id: subject, type: sequences, requires: {compression: none}, description: "Sequences to search against (database is built from these)"}
+outputs:
+  - {id: hits, type: homology.hits.tabular, path: hits.tsv,
+     description: "outfmt 6: qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen stitle"}
+parameters:
+  - {id: evalue, type: float, default: 0.00001, min: 0, label: "E-value cutoff"}
+  - {id: max_target_seqs, type: int, default: 500, min: 1, label: "Maximum hits per query"}
+  - {id: min_identity, type: float, default: 0, min: 0, max: 100, advanced: true, label: "Minimum % identity (post-filter)"}
+resources: {cpu: 8, memory: 8G, runtime: 6h}
+command: |
+  {% set qp = inputs.query.attrs.get('alphabet') == 'protein' %}
+  {% set sp = inputs.subject.attrs.get('alphabet') == 'protein' %}
+  {% set prog = ('blastp' if sp else 'tblastn') if qp else ('blastx' if sp else 'blastn') %}
+  cp {{ inputs.subject | q }} subject.fa && makeblastdb -in subject.fa -dbtype {{ 'prot' if sp else 'nucl' }} -out subjectdb > makeblastdb.log &&
+  {{ prog }} -query {{ inputs.query | q }} -db subjectdb -evalue {{ params.evalue }} -max_target_seqs {{ params.max_target_seqs }}
+  -num_threads {{ cpu }} -outfmt '6 std qlen slen stitle'
+  {% if params.min_identity > 0 %}| awk -F'\t' '$3 >= {{ params.min_identity }}' > {{ outputs.hits }}{% else %}-out {{ outputs.hits }}{% endif %}
+tests:
+  discovery_runs: [blast_module]
+provenance: {bvbrc_invocations: [HomologySearch.pm, App-GenomeComparison.pl], nfcore: [blast/blastp, blast/blastn]}

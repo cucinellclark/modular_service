@@ -1,0 +1,90 @@
+{
+ "schema": "modpipe/discovery-run/v1",
+ "run_id": "hostile_module",
+ "set": "modules_v2",
+ "tool": "hostile",
+ "mode": "module_hostile",
+ "description": "rendered from modules/hostile.yaml (tools/module_discovery.py)",
+ "tool_version": "1.1.0",
+ "container": "/vol/patric3/production/containers/ubuntu-176-build12-2.sif",
+ "node": "lemon",
+ "slurm_job": "21374971_0",
+ "cpus": 4,
+ "mem_gb": 16,
+ "started": "2026-11-03T10:03:40",
+ "inputs": {},
+ "prep": null,
+ "cmd": "ln -s /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/sarscov2/illumina/fastq/test_1.fastq.gz reads_1.fastq.gz && ln -s /home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/sarscov2/illumina/fastq/test_2.fastq.gz reads_2.fastq.gz && HOSTILE_CACHE_DIR=/vol/bvbrc/production/application-backend/fastqutils/reference_indices/hostile_cache hostile clean --index human-t2t-hla --aligner bowtie2 --threads 4 --out-dir out --fastq1 reads_1.fastq.gz --fastq2 reads_2.fastq.gz > hostile.json && mv out/reads_1.clean_1.fastq.gz clean_1.fastq.gz && mv out/reads_2.clean_2.fastq.gz clean_2.fastq.gz",
+ "wall_s": 0.77,
+ "exit_code": 0,
+ "outputs": [
+  {
+   "path": "clean_1.fastq.gz",
+   "size": 7841,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@ERR5069949.2151832/1",
+    "TCATAAACCAAAGCACTCACAGTGTCAACAATTTCAGCAGGACAACGCCGACAAGTTCCGAGGAACATGTCTGGACCTATAGTTTTCATAAGTCTACACACTGAATTGAAATATTCTGGTTCTAGTGTGCCCTTAGTTAGCAATGTGCGT",
+    "+"
+   ],
+   "lines": 400,
+   "records": 100,
+   "residues": 13897,
+   "sha256": "bc2c6e506283d6c300e8ac4377a6e491d94335b0dcb717eb98756e986f9cc90d"
+  },
+  {
+   "path": "clean_2.fastq.gz",
+   "size": 7901,
+   "new": true,
+   "compressed": "gzip",
+   "kind": "fastq",
+   "preview": [
+    "@ERR5069949.2151832/2",
+    "ATGTGTACATTGGCGACCCTGCTCAATTACCTGCACCACGCACATTGCTAACTAAGGGCACACTAGAACCAGAATATTTCAATTCAGTGTGTAGACTTATGAAAACTATAGGTCCAGACATGTTCCTCGGAACTTGTCGGCGTTGTCCTG",
+    "+"
+   ],
+   "lines": 400,
+   "records": 100,
+   "residues": 13748,
+   "sha256": "9707b816eb3b15d91dedd0593fd5a494aaf91b7b1add9d94255b349c0f7a0453"
+  },
+  {
+   "path": "hostile.json",
+   "size": 812,
+   "new": true,
+   "kind": "json",
+   "preview": [
+    "[",
+    "    {",
+    "        \"version\": \"1.1.0\","
+   ],
+   "sha256": "f22960bc4d585a8cc32c2775e5d9c089ec387cc254bea9e20dd48577b57bb494"
+  },
+  {
+   "path": "reads_1.fastq.gz",
+   "symlink_to": "/home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/sarscov2/illumina/fastq/test_1.fastq.gz"
+  },
+  {
+   "path": "reads_2.fastq.gz",
+   "symlink_to": "/home/ac.cucinell/bvbrc-dev/ModularService/tests/fixtures/data/nfcore/sarscov2/illumina/fastq/test_2.fastq.gz"
+  }
+ ],
+ "n_outputs": 5,
+ "output_bytes": 16554,
+ "time": {
+  "elapsed": "0:00.71",
+  "max_rss_kb": "467928",
+  "cpu_pct": "66",
+  "exit_status": "0",
+  "user_s": "0.26",
+  "sys_s": "0.21",
+  "elapsed_s": 0.71,
+  "max_rss_mb": 457.0
+ },
+ "stdout_tail": "",
+ "stderr_tail": "10:03:41 INFO: Hostile version 1.1.0. Mode: paired short read (Bowtie2)\n10:03:41 INFO: Found cached standard index human-t2t-hla\n10:03:41 INFO: Cleaning\u2026\n10:03:41 INFO: Cleaning complete\n",
+ "status": "ok",
+ "finished": "2026-11-03T10:03:41"
+}

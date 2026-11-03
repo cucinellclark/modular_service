@@ -1,0 +1,13 @@
+# Inputs for tools/module_discovery.py -> tests/discovery/sets/09_modules_v2.yaml
+set: modules_v2
+resources: {cpu: 4, mem: 16G, time: "01:00:00"}
+runs:
+  - {run_id: hostile_module, module: hostile, inputs: {reads: [sarscov2_illumina_test_1, sarscov2_illumina_test_2]}, pairs: {reads: reads.short.paired}}
+  - {run_id: trim_galore_module, module: trim_galore, inputs: {reads: [portiera_illumina_1, portiera_illumina_2]}, pairs: {reads: reads.short.paired}}
+  - {run_id: fastqc_module, module: fastqc, inputs: {reads: [portiera_illumina_1, portiera_illumina_2]}, pairs: {reads: reads.short.paired}}
+  - {run_id: vigor4_module, module: vigor4, inputs: {genome: sarscov2_genome}}
+  - {run_id: hisat2_module, module: hisat2, inputs: {reads: [hs_rnaseq_1, hs_rnaseq_2], reference: hs_genome}, pairs: {reads: reads.short.paired}}
+  - {run_id: blast_module, module: blast, inputs: {query: sarscov2_proteome, subject: portiera_proteome}}
+  - {run_id: diamond_module, module: diamond, inputs: {query: portiera_proteome, subject: portiera_proteome}}
+  - {run_id: cdhit_module, module: cdhit, inputs: {sequences: portiera_proteome}}
+  - {run_id: kma_module, module: kma, inputs: {reads: [portiera_illumina_1, portiera_illumina_2]}, pairs: {reads: reads.short.paired}}

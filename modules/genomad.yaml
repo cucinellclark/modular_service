@@ -1,0 +1,29 @@
+schema: modpipe/module/v1
+id: genomad
+version: 1
+label: "geNomad: identify plasmids and viruses"
+description: Classifies sequences as chromosome, plasmid or virus (incl. proviruses) and annotates them.
+category: annotation
+tool: {id: genomad, binary: genomad, version: 1.12.0}
+inputs:
+  - {id: contigs, type: sequences.dna, requires: {compression: none}}
+outputs:
+  - {id: virus_summary, type: table.tsv.mobile_elements, path: out/genome_summary/genome_virus_summary.tsv}
+  - {id: plasmid_summary, type: table.tsv.mobile_elements, path: out/genome_summary/genome_plasmid_summary.tsv}
+  - {id: viruses, type: sequences.dna.contigs, path: out/genome_summary/genome_virus.fna}
+  - {id: plasmids, type: sequences.dna.contigs, path: out/genome_summary/genome_plasmid.fna}
+  - {id: virus_proteins, type: sequences.protein, path: out/genome_summary/genome_virus_proteins.faa}
+  - {id: summary, type: report.json, path: out/genome_summary/genome_summary.json}
+parameters:
+  - {id: db, type: database, db_type: database.genomad, default: genomad_db_1.9, label: "geNomad database"}
+  - {id: filtering, type: enum, enum: [default, conservative, relaxed], default: default, label: "Filtering preset"}
+resources: {cpu: 8, memory: 24G, runtime: 6h}
+command: |
+  ln -s {{ inputs.contigs | q }} genome.fna &&
+  genomad end-to-end --cleanup --threads {{ cpu }}
+  {% if params.filtering != 'default' %}--{{ params.filtering }}{% endif %}
+  genome.fna out {{ dbs.db | q }}
+tests:
+  discovery_runs: [genomad_e2e]
+  observed: {max_rss_mb: 18691, max_wall_s: 557, note: "DB load dominates memory even for a 30 kb genome"}
+provenance: {bvbrc_invocations: [App-Genomad.pl, App-MobileElementDetection.pl], nfcore: [genomad/endtoend]}

@@ -16,7 +16,7 @@ import shlex
 import shutil
 import subprocess
 
-from .template import Value, build_context, eval_when, output_value, render_command, resolve_output_type
+from .template import Value, build_context, db_context, eval_when, output_value, render_command, resolve_output_type
 from .util import parse_memory_gb, read_json, repo_path
 
 
@@ -221,14 +221,9 @@ class Materializer:
                     if vals:
                         input_types[pid] = vals[0].type
                 params = st["params"]
-                dbs = {}
-                for pid, spec in m.params.items():
-                    if spec["type"] == "database" and params.get(pid):
-                        e = self.dbs.get(params[pid])
-                        path = e.get("path", "")
-                        if e.get("location") == "repo_fixture":
-                            path = repo_path(path)
-                        dbs[pid] = path
+                dbs, db_files = db_context(m, params, self.dbs,
+                                           resolve=lambda e: repo_path(e["path"]) if e.get("location") == "repo_fixture"
+                                           else e.get("path", ""))
                 r = m.resources
                 job.cpu = max(1, min(r["cpu"], self.cores))
                 job.mem_gb = max(1, min(r["memory_gb"], self.mem_gb))
@@ -236,7 +231,7 @@ class Materializer:
                 for oid, op in m.outputs.items():
                     rt = resolve_output_type(m, op, input_types, self.ts) or op["type"]
                     rel_outputs[oid] = output_value(op, rt, self.ts)
-                ctx = build_context(m, inputs, rel_outputs, params, job.cpu, job.mem_gb, dbs)
+                ctx = build_context(m, inputs, rel_outputs, params, job.cpu, job.mem_gb, dbs, db_files)
                 job.command = render_command(m, ctx)
                 for oid, op in m.outputs.items():
                     rv = rel_outputs[oid]

@@ -1,0 +1,32 @@
+schema: modpipe/module/v1
+id: trim_galore
+version: 1
+label: "Trim Galore: adapter and quality trimming (Cutadapt)"
+description: Auto-detects adapters, trims low-quality ends and drops short reads; the BV-BRC FastqUtils default trimmer.
+category: read_qc
+tool: {id: trim_galore, binary: trim_galore, version: 0.6.5d}
+inputs:
+  - {id: reads, type: reads.short}
+outputs:
+  - id: trimmed_reads
+    type: reads.short
+    type_from: {port: reads, map: {reads.short.paired: reads.short.paired, reads.short.single: reads.short.single}}
+    path: out/reads_trimmed.fq.gz
+    parts: {r1: out/reads_1_val_1.fq.gz, r2: out/reads_2_val_2.fq.gz}
+    attributes: {compression: gzip}
+  - {id: report, type: report.text, path: out/reads_1.fastq.gz_trimming_report.txt, when: "inputs.reads.paired"}
+  - {id: report_single, type: report.text, path: out/reads.fastq.gz_trimming_report.txt, when: "not inputs.reads.paired"}
+parameters:
+  - {id: quality, type: int, default: 20, min: 0, max: 60, label: "Quality cutoff (-q)"}
+  - {id: length, type: int, default: 20, min: 1, label: "Minimum read length"}
+resources: {cpu: 4, memory: 8G, runtime: 4h}
+command: |
+  {% if inputs.reads.type == 'reads.short.interleaved' %}{{ fail('trim_galore needs paired (two files) or single-end reads, not interleaved') }}{% endif %}
+  {% if inputs.reads.paired %}ln -s {{ inputs.reads.r1 | q }} reads_1.fastq.gz && ln -s {{ inputs.reads.r2 | q }} reads_2.fastq.gz &&
+  trim_galore --paired --gzip --cores {{ [cpu // 2, 1] | max }} -q {{ params.quality }} --length {{ params.length }} -o out reads_1.fastq.gz reads_2.fastq.gz
+  {% else %}ln -s {{ inputs.reads | q }} reads.fastq.gz &&
+  trim_galore --gzip --cores {{ [cpu // 2, 1] | max }} -q {{ params.quality }} --length {{ params.length }} -o out reads.fastq.gz{% endif %}
+tests:
+  discovery_runs: [trim_galore_module]
+provenance: {bvbrc_invocations: [App-FastqUtils.pl, fastq_utils.py, p3x-assembly.py], nfcore: [trimgalore]}
+notes: "Inputs are linked as *.fastq.gz; trim_galore/cutadapt detect compression from content, so plain FASTQ also works."
