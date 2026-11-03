@@ -40,6 +40,10 @@ the signed-in user's BV-BRC token and write to their workspace.
 Pick **Graph editor** at the top of the page (code: BV-BRC-Web `public/js/p3/widget/modpipe/`). The first time, it opens
 the template that is selected in the form, with the inputs, options and parameters chosen there. Its own toolbar can
 load any template, start a new pipeline, and open or save pipelines in the workspace (JSON files with their layout).
+Custom pipelines are saved by default to the user's **`/<user>/home/pipeline`** folder, which is created the first time
+the Save dialog opens. Pipelines in that folder are listed as "[my pipelines]" in the editor's template dropdown and at
+the top of the Open dialog. Saving a pipeline that was opened from the workspace saves back to the same file
+(overwrite pre-ticked). The folder name is `PIPELINE_FOLDER` in `GraphEditor.js`.
 
 - **Palette** (left): tools by category with a search box. Drag a tool onto the canvas, or click it. When an output port is
   selected, the palette shows only the tools that can use that output, and clicking one adds it already connected.
