@@ -5,10 +5,11 @@ ModularService is a standard dev_container module (Makefile on `tools/Makefile.c
 ## What `make deploy-service` installs into `$(TARGET)` (e.g. /opt/p3/deployment)
 | Path | From | Purpose |
 |---|---|---|
-| `bin/App-ModularPipeline` | `service-scripts/App-ModularPipeline.pl` (wrap_perl; source in `plbin/`) | the service script the scheduler runs |
+| `bin/App-ModularPipeline`, `bin/App-ModularStep` | `service-scripts/App-*.pl` (wrap_perl; source in `plbin/`) | the service scripts the scheduler runs |
+| `lib/ModularPipeline/AppCommon.pm` | `lib/ModularPipeline/` | Perl code shared by both apps (found via `<plbin>/../lib`) |
 | `bin/modpipe` | `scripts/modpipe.py` (wrap_python3; source in `pybin/`) | the engine CLI the shell calls |
 | `lib/modpipe/` | `lib/modpipe/` | Python package (needs PyYAML + Jinja2; both are in the container's python3) |
-| `services/app_service/app_specs/ModularPipeline.json` | `app_specs/` | app definition |
+| `services/app_service/app_specs/ModularPipeline.json`, `ModularStep.json` | `app_specs/` | app definitions |
 | `services/modular_pipeline/{modules,types,resources,pipelines}` | repo dirs | module descriptors, type system, DB registry, curated templates |
 | `services/modular_pipeline/reference/tools/index.json`, `.../workspace_types_known.json` | `reference/` | tool versions (provenance), known workspace types |
 | `services/modular_pipeline/DEPLOYED_AT` | | deployment timestamp |

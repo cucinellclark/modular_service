@@ -1,0 +1,3 @@
+{"module": "minimap2", "reads": "/clark.cucinell@patricbrc.org/home/ModularService_tests/.ms3_fastp/trimmed_reads/SRR2838702",
+ "reference": {"genome_ids": ["511145.12"]}, "input_types": {"reference": "sequences.dna.contigs"},
+ "output_path": "/clark.cucinell@patricbrc.org/home/ModularService_tests", "output_file": "ms4_minimap2"}

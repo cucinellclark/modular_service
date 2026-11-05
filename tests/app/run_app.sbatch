@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run App-ModularPipeline as a real BV-BRC job would (minus the scheduler): inside the container, with production
+# Run App-ModularPipeline (or App-ModularStep, when the params have a "module" key) as a real BV-BRC job would (minus the scheduler): inside the container, with production
 # binds, KB_INTERACTIVE=1 (uses ~/.patric_token), writing results to the workspace output_path in the params file.
 #   sbatch [--cpus-per-task N --mem M] tests/app/run_app.sbatch tests/app/<name>.params.json
 #SBATCH --account=cli
@@ -14,6 +14,7 @@ set -uo pipefail
 REPO=${MODPIPE_REPO:-$SLURM_SUBMIT_DIR}
 SIF=${MODPIPE_SIF:-$(cat "$REPO/singularity_container_ref.txt")}
 PARAMS=$(readlink -f "$1")
+APP=${MODPIPE_APP:-$(python3 -c 'import json,sys; print("ModularStep" if "module" in json.load(open(sys.argv[1])) else "ModularPipeline")' "$PARAMS")}
 BINDS=()
 DATA_IMAGE=/vol/patric3/production/data-images/patric-data-2022-0119
 [[ -d $DATA_IMAGE ]] && BINDS+=(-B "$DATA_IMAGE:/opt/patric-common/data")
@@ -23,7 +24,7 @@ done
 for s in /disks/tmp /scratch/tmp /tmp; do [[ -d $s && -w $s ]] && { SCRATCH=$s; break; }; done
 WD=$SCRATCH/$USER/modpipe-app/$(basename "$(dirname "$PARAMS")")-$(basename "$PARAMS" .json)-$SLURM_JOB_ID
 mkdir -p "$WD"; BINDS+=(-B "$SCRATCH")
-echo "node=$(hostname) params=$PARAMS work=$WD"
+echo "node=$(hostname) app=$APP params=$PARAMS work=$WD"
 cd "$WD"
 # Auth: a token file from the UI API (MODPIPE_TOKEN_FILE) is passed via SINGULARITYENV_* (never on a command line);
 # otherwise KB_INTERACTIVE=1 makes AppScript use ~/.patric_token.
@@ -36,7 +37,7 @@ else
 fi
 singularity exec --env "$ENVS" \
     "${BINDS[@]}" "$SIF" bash -c "export PERL5LIB=/opt/p3/deployment/lib:\$PERL5LIB; \
-    perl $REPO/service-scripts/App-ModularPipeline.pl xx $REPO/app_specs/ModularPipeline.json $PARAMS" < /dev/null
+    perl $REPO/service-scripts/App-$APP.pl xx $REPO/app_specs/$APP.json $PARAMS" < /dev/null
 rc=$?
 echo "exit=$rc"
 if [[ -n ${MODPIPE_TOKEN_FILE:-} ]]; then

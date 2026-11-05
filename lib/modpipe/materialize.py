@@ -146,6 +146,10 @@ class Materializer:
                     "r1": self._localize(lib["read1"], dest), "r2": self._localize(lib["read2"], dest)})))
             for lib in src.get("single_end_libs") or []:
                 items.append((lib.get("sample_id"), self._value(t, attrs, path=self._localize(lib["read"], dest))))
+            plist = src.get("parts") or []
+            for it in (plist if isinstance(plist, list) else [plist]):
+                items.append((it.get("sample_id"), self._value(t, attrs, parts={
+                    k: self._localize(v, dest) for k, v in it.items() if k != "sample_id"})))
             for f in src.get("files") or []:
                 items.append((None, self._value(t, attrs, path=self._localize(f, dest))))
             for f in ([src["wsid"]] if src.get("wsid") else []) + (src.get("wsids") or []):

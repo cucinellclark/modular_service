@@ -12,6 +12,8 @@
                                             fill a curated template (pipelines/<template>.json)
   modpipe serve [--host H] [--port P] [--origin URL ...] [--self-signed | --tls-cert C --tls-key K]
                                             prototype API for the BV-BRC-Web ModularPipeline form
+  modpipe step-pipeline <params.json> [--ws-meta F] [--out F]
+                                            App-ModularStep params -> one-step pipeline (validated); errors as JSON
   modpipe run <pipeline.json> --workdir DIR [--executor snakemake|local] [--cores N] [--mem 64G]
                                             [--resume] [--dry-run]   execute (inside the BV-BRC container)
 """
@@ -246,6 +248,29 @@ def cmd_run(a):
     return 0
 
 
+def cmd_step_pipeline(a):
+    from .step import build
+    ts, dbs, mods = _ctx()
+    with open(a.params) as f:
+        params = json.load(f)
+    meta = {}
+    if a.ws_meta:
+        with open(a.ws_meta) as f:
+            meta = json.load(f)
+    p, iss = build(params, ts, mods, dbs, meta)
+    if p is None:
+        print(json.dumps({"ok": False, "errors": iss.errors, "warnings": iss.warnings}, indent=1))
+        return 1
+    iss.report(sys.stderr)
+    text = json.dumps(p, indent=1)
+    if a.out:
+        with open(a.out, "w") as f:
+            f.write(text + "\n")
+    else:
+        print(text)
+    return 0
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="modpipe", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -273,6 +298,11 @@ def main(argv=None):
     g.add_argument("--from", dest="from_", metavar="MODULE.OUTPUT")
     g.add_argument("--type")
     s.set_defaults(fn=cmd_compatible)
+    s = sub.add_parser("step-pipeline")
+    s.add_argument("params")
+    s.add_argument("--ws-meta", help="JSON file: {ws path: {type, meta}} for workspace paths in the params")
+    s.add_argument("--out")
+    s.set_defaults(fn=cmd_step_pipeline)
     s = sub.add_parser("run")
     s.add_argument("pipeline")
     s.add_argument("--workdir", required=True)

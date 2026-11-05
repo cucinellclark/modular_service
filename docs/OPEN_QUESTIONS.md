@@ -57,12 +57,23 @@
 - **Commented app spec**: `ComprehensiveSARS2Analysis.json` has `#` comments; `tools/summarize_app_specs.py`
   strips them. Nothing to decide.
 
+## Decided (2026-11-05, execution through GoWe)
+- **Per-tool execution via GoWe**: every module is registered as its own GoWe workflow (a generated CWL tool), and
+  pipelines are CWL workflows chaining them. Each tool runs the new **`ModularStep`** BV-BRC app (one module per
+  job), which is how it will run in production (GoWe's BV-BRC executor, `bvbrc_app_id: ModularStep`). Until the app
+  is registered with the BV-BRC scheduler, the same app runs on a GoWe worker. Built first: the app itself
+  (docs/SERVICE.md). Next: `modpipe export-cwl` / `compile`, then a GoWe server + workers on ash.
+- `ModularPipeline` (whole pipeline in one job) stays.
+
 ## Open: the user's decision
 - **Verify tokens in the modpipe API** (offered 2026-11-03; no answer yet). The API trusts the token's `un=` field.
   Behind dev-5 it is internet-reachable, so a forged token could queue jobs (they fail at staging) and list
   another user's jobs. The fix is to check each token with BV-BRC before use.
 
 ## Open: needs someone outside this project
+- **Undeclared app params**: ModularStep takes each port/parameter as a top-level key that the app spec doesn't
+  declare. AppScript keeps them (`raw_params`); whether `AppService.start_app` passes undeclared keys through needs
+  confirming with the BV-BRC maintainers. Fallback: nested `inputs`/`params` objects.
 - **Going live**: container build with this module, and app registration with the app service (BV-BRC maintainers).
   The prototype API and its direct Slurm submission are then replaced by `AppService.start_app2`.
 

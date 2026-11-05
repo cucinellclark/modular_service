@@ -149,6 +149,11 @@ The executor interface stays pluggable, but the production backend is
 **Snakemake codegen**, with a minimal **local runner** kept for unit tests and
 debugging. Whole services as nodes (child App jobs) are **out of scope**.
 
+> **2026-11-05: second execution path, per tool through GoWe.** `App-ModularStep` runs one module per BV-BRC job;
+> GoWe chains them (one CWL tool per module), passing data between steps as workspace output folders tagged with
+> modpipe metadata (docs/SERVICE.md). Validation stays here; GoWe only schedules. `ModularPipeline` (this
+> section's one-job Snakemake path) stays for whole pipelines.
+
 How it works: the engine emits one Snakemake rule per (step, sample) shape,
 plus a `config.json`, then runs
 `snakemake --cores $P3_ALLOCATED_CPU --resources mem_mb=...` inside the job.

@@ -1,0 +1,42 @@
+{
+  "id": "ModularStep",
+  "script": "App-ModularStep",
+  "label": "Modular pipeline step",
+  "description": "Run one tool module (fastp, SPAdes, QUAST, MAFFT, ...) on workspace data. Besides the parameters below, give each of the module's input ports and parameters as a top-level key named after it (see `modpipe show <module>`); input ports take workspace paths (files, or output folders of earlier ModularStep/ModularPipeline jobs) or pipeline source objects. GoWe workflows chain these steps.",
+  "default_memory": "8G",
+  "default_cpu": 2,
+  "parameters": [
+    {
+      "id": "module",
+      "label": "Module",
+      "required": 1,
+      "default": null,
+      "desc": "Module id (modules/<id>.yaml in the service).",
+      "type": "string"
+    },
+    {
+      "id": "input_types",
+      "label": "Input types",
+      "required": 0,
+      "default": null,
+      "desc": "Optional map of input port -> concrete data type (e.g. {\"reads\": \"reads.short.single\"}) for inputs whose type can't be inferred from the data.",
+      "type": "object"
+    },
+    {
+      "id": "output_path",
+      "label": "Output Folder",
+      "required": 1,
+      "default": null,
+      "desc": "Workspace folder for the results.",
+      "type": "folder"
+    },
+    {
+      "id": "output_file",
+      "label": "File Basename",
+      "required": 1,
+      "default": null,
+      "desc": "Name of the job result; outputs go to <output_path>/.<output_file>/<output port>[/<sample>]/",
+      "type": "wsid"
+    }
+  ]
+}

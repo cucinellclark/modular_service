@@ -12,7 +12,8 @@ UI_KEYS = {"positions", "disabled", "optional", "links", "viewport", "notes"}
 STEP_KEYS = {"module", "in", "params", "module_version", "description", "auto"}
 INPUT_KEYS = {"type", "source", "collection", "attributes", "description", "label"}
 SOURCE_KEYS = {"paired_end_libs", "single_end_libs", "srr_ids", "srr_libs", "wsid", "wsids", "files",
-               "genome_ids", "genome_group", "feature_group", "feature_ids", "fasta_data", "fixture", "database_file"}
+               "genome_ids", "genome_group", "feature_group", "feature_ids", "fasta_data", "fixture", "database_file",
+               "parts"}
 
 # Names that become directory names, Snakefile rule names and workspace paths.
 NAME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{0,63}$")
@@ -38,7 +39,7 @@ def _collection_size(src):
     if not isinstance(src, dict):
         return None
     n = 0
-    for k in ("paired_end_libs", "single_end_libs", "srr_libs", "files", "wsids", "genome_ids"):
+    for k in ("paired_end_libs", "single_end_libs", "srr_libs", "files", "wsids", "genome_ids", "parts"):
         if isinstance(src.get(k), list):
             n += len(src[k])
     if isinstance(src.get("srr_ids"), list):
@@ -134,6 +135,24 @@ class Validator:
                     iss.error(w, "paired reads need paired_end_libs, srr_ids/srr_libs (or fixture)")
                 if ts.is_a(t, "reads.short.single") and "paired_end_libs" in src:
                     iss.error(w, "single-end type but paired_end_libs given")
+                if "parts" in src:
+                    plist = src["parts"] if isinstance(src["parts"], list) else [src["parts"]]
+                    if ts.kind(t) != "files":
+                        iss.error(w, f"parts: {t} is not a multi-file type")
+                    else:
+                        known, need = set(ts.parts(t)), set(ts.required_parts(t))
+                        for i, it in enumerate(plist, 1):
+                            if not isinstance(it, dict):
+                                iss.error(w, f"parts item {i}: expected {{part: path}}")
+                                continue
+                            got = {k for k in it if k != "sample_id"}
+                            if got - known:
+                                iss.error(w, f"parts item {i}: unknown parts {sorted(got - known)} (parts of {t}: {sorted(known)})")
+                            if need - got:
+                                iss.error(w, f"parts item {i}: missing {sorted(need - got)}")
+                            for k in got:
+                                if not str(it[k] or "").strip():
+                                    iss.error(w, f"parts item {i}: {k} is empty")
                 if "database_file" in src:
                     dbid, _, key = str(src["database_file"]).partition(":")
                     e = self.dbs.get(dbid)
@@ -147,7 +166,9 @@ class Validator:
                 for gid in src.get("genome_ids") or []:
                     if not GENOME_ID_RE.match(str(gid)):
                         iss.error(w, f"bad genome id {gid!r} (expected e.g. 1206109.14)")
-                for lib in (src.get("paired_end_libs") or []) + (src.get("single_end_libs") or []) + (src.get("srr_libs") or []):
+                plist = src.get("parts") or []
+                for lib in ((src.get("paired_end_libs") or []) + (src.get("single_end_libs") or []) + (src.get("srr_libs") or [])
+                            + (plist if isinstance(plist, list) else [plist])):
                     sid = lib.get("sample_id") if isinstance(lib, dict) else None
                     if sid is not None and not SAMPLE_ID_RE.match(str(sid)):
                         iss.error(w, f"bad sample_id {sid!r} (letters, digits, . _ - ; max 128)")
