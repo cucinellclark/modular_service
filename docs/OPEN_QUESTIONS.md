@@ -62,7 +62,8 @@
   pipelines are CWL workflows chaining them. Each tool runs the new **`ModularStep`** BV-BRC app (one module per
   job), which is how it will run in production (GoWe's BV-BRC executor, `bvbrc_app_id: ModularStep`). Until the app
   is registered with the BV-BRC scheduler, the same app runs on a GoWe worker. Built first: the app itself
-  (docs/SERVICE.md). Next: `modpipe export-cwl` / `compile`, then a GoWe server + workers on ash.
+  (docs/SERVICE.md), then `modpipe export-cwl` (docs/GOWE.md). Next: `modpipe compile`, then a GoWe server + workers on
+  ash.
 - `ModularPipeline` (whole pipeline in one job) stays.
 
 ## Open: the user's decision
@@ -72,7 +73,7 @@
 
 ## Open: needs someone outside this project
 - **Undeclared app params**: ModularStep takes each port/parameter as a top-level key that the app spec doesn't
-  declare. AppScript keeps them (`raw_params`); whether `AppService.start_app` passes undeclared keys through needs
+  declare. AppScript keeps them (`raw_params`, with a warning; seen 2026-11-05); whether `AppService.start_app` passes undeclared keys through needs
   confirming with the BV-BRC maintainers. Fallback: nested `inputs`/`params` objects.
 - **Going live**: container build with this module, and app registration with the app service (BV-BRC maintainers).
   The prototype API and its direct Slurm submission are then replaced by `AppService.start_app2`.

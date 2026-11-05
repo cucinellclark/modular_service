@@ -57,6 +57,18 @@ class StepTests(unittest.TestCase):
         self.assertEqual(d["source"]["paired_end_libs"], [{"read1": FOLDER + "/trimmed_1.fastq.gz",
                                                            "read2": FOLDER + "/trimmed_2.fastq.gz", "sample_id": "S1"}])
 
+    def test_port_folder_expands_to_sample_folders(self):
+        port = "/u@bvbrc/home/x/.j1/trimmed_reads"
+        meta = dict(PAIRED_META)
+        s2 = port + "/S2"
+        meta[s2] = {"type": "folder", "meta": dict(PAIRED_META[FOLDER]["meta"], modpipe_sample="S2")}
+        meta[port] = {"type": "folder", "meta": {}, "children": [FOLDER, s2]}
+        p, errs = errors({"module": "fastqc", "reads": port}, meta)
+        self.assertEqual(errs, [])
+        libs = p["inputs"]["reads"]["source"]["paired_end_libs"]
+        self.assertEqual([l["sample_id"] for l in libs], ["S1", "S2"])
+        self.assertTrue(p["inputs"]["reads"]["collection"])
+
     def test_multi_part_folder_becomes_parts(self):
         p, errs = errors({"module": "samtools_coverage", "alignment": BAM}, BAM_META)
         self.assertEqual(errs, [])

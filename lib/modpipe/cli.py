@@ -14,6 +14,10 @@
                                             prototype API for the BV-BRC-Web ModularPipeline form
   modpipe step-pipeline <params.json> [--ws-meta F] [--out F]
                                             App-ModularStep params -> one-step pipeline (validated); errors as JSON
+  modpipe export-cwl [--out DIR] [--mode worker|bvbrc] [--image SIF] [--modpipe-home DIR] [module ...]
+                                            one CWL tool per module, running the ModularStep app (GoWe)
+  modpipe cwl-step <job.json> [--cores N] [--ram-mb M]
+                                            inside a CWL tool: run App-ModularStep for the job, write cwl.output.json
   modpipe run <pipeline.json> --workdir DIR [--executor snakemake|local] [--cores N] [--mem 64G]
                                             [--resume] [--dry-run]   execute (inside the BV-BRC container)
 """
@@ -271,6 +275,20 @@ def cmd_step_pipeline(a):
     return 0
 
 
+def cmd_export_cwl(a):
+    from .cwl import export
+    ts, dbs, mods = _ctx()
+    paths = export(mods, ts, dbs, a.out, modules=a.modules or None, mode=a.mode, image=a.image,
+                   modpipe_home=a.modpipe_home)
+    print(f"wrote {len(paths)} tool(s) to {a.out}")
+    return 0
+
+
+def cmd_cwl_step(a):
+    from .cwl import run_step
+    return run_step(a.job, cores=a.cores, ram_mb=a.ram_mb)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="modpipe", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -303,6 +321,18 @@ def main(argv=None):
     s.add_argument("--ws-meta", help="JSON file: {ws path: {type, meta}} for workspace paths in the params")
     s.add_argument("--out")
     s.set_defaults(fn=cmd_step_pipeline)
+    s = sub.add_parser("export-cwl")
+    s.add_argument("modules", nargs="*")
+    s.add_argument("--out", default="cwl/tools")
+    s.add_argument("--mode", choices=["worker", "bvbrc"], default="worker")
+    s.add_argument("--image", help="Apptainer image for worker mode (default: singularity_container_ref.txt)")
+    s.add_argument("--modpipe-home", help="path of this checkout as seen on the worker (default: this checkout)")
+    s.set_defaults(fn=cmd_export_cwl)
+    s = sub.add_parser("cwl-step")
+    s.add_argument("job")
+    s.add_argument("--cores")
+    s.add_argument("--ram-mb")
+    s.set_defaults(fn=cmd_cwl_step)
     s = sub.add_parser("run")
     s.add_argument("pipeline")
     s.add_argument("--workdir", required=True)

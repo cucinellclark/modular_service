@@ -67,6 +67,17 @@ def _from_path(path, ws_meta, ts, port_type, accept):
     attrs = _meta_json(meta, "modpipe_attrs") or {}
     sample = meta.get("modpipe_sample")
     files = _meta_json(meta, "modpipe_files")
+    if info.get("type") == "folder" and not t and info.get("children"):
+        # a port folder of a per-sample output: expand to its value folders (one per sample)
+        src, types, attrs = {}, set(), {}
+        for child in info["children"]:
+            frag, ct, ca = _from_path(child, ws_meta, ts, port_type, accept)
+            _merge(src, frag)
+            types.add(ct)
+            attrs.update(ca)
+        if len(types) != 1:
+            raise ValueError(f"{path}: the sample folders have different types {sorted(map(str, types))}")
+        return src, types.pop(), attrs
     if info.get("type") == "folder":
         if not t or not isinstance(files, dict) or not files:
             raise ValueError(f"{path} is a folder but not a modpipe output folder (no modpipe_type/modpipe_files metadata)")

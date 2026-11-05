@@ -1,0 +1,3 @@
+{"sequences": {"feature_group": "/clark.cucinell@patricbrc.org/home/Feature Groups/rpoB_feature_group_20"},
+ "input_types": {"sequences": "sequences.protein"}, "strategy": "auto",
+ "output_path": "/clark.cucinell@patricbrc.org/home/ModularService_tests", "output_file": "cwl1_mafft"}

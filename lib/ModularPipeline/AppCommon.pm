@@ -89,6 +89,20 @@ sub ws_metadata
         }
         my $m = $res->[0]->[0];
         $out{$p} = { type => $m->[1], meta => $m->[7] // {} };
+        # A port folder (<result>/<output>) of a per-sample output holds one value folder per sample: list them.
+        if ($m->[1] eq 'folder' && !($m->[7] // {})->{modpipe_type})
+        {
+            my $ls = eval { $ws->ls({ paths => [$p] }) } // {};
+            my @kids;
+            for my $c (@{$ls->{$p} // []})
+            {
+                next unless $c->[1] eq 'folder' && ($c->[7] // {})->{modpipe_type};
+                my $cp = "$c->[2]$c->[0]";
+                $out{$cp} = { type => 'folder', meta => $c->[7] };
+                push(@kids, $cp);
+            }
+            $out{$p}->{children} = [sort @kids] if @kids;
+        }
     }
     return \%out;
 }
@@ -367,6 +381,9 @@ sub run_and_upload
         }
         $ws->save_data_to_file($json->encode(\%values), {}, "$folder/outputs.json", "json", 1, 0, $token);
     }
+    # Local copy for a wrapper running this app (modpipe cwl-step reads it to report CWL outputs).
+    write_file("$top/modpipe_step_result.json", $json->encode({ result_folder => $folder, values => \%values,
+                                                                 ok => ($ok ? JSON::XS::true : JSON::XS::false) }));
     $ok or die "Pipeline execution failed; see pipeline_run.json in $folder\n";
     return { pipeline => $pipe->{name}, outputs => \@saved, values => \%values };
 }

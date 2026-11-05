@@ -12,6 +12,7 @@ nothing else in the service changes.
 |---|---|
 | Module granularity | **Underlying tools** (individual binaries), not whole App-* services |
 | Execution model | **Generated Snakemake** + local dev runner ([ARCHITECTURE §4](docs/ARCHITECTURE.md#4-execution-backends)) |
+| Per-tool execution (2026-11-05) | **GoWe**: one CWL tool per module (`modpipe export-cwl`) running the **ModularStep** app; on a GoWe worker until the app is registered ([GOWE.md](docs/GOWE.md), [SERVICE.md](docs/SERVICE.md)) |
 | Service nodes | **Not allowed**: tool modules only |
 | Scatter/gather | **In v1** |
 | Tools not in container | Separate source environment allowed for now; container-only eventually |
