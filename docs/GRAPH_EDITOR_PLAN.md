@@ -5,7 +5,9 @@
 >   would mean a dependency on the bundle.
 > - Pipeline outputs are marked on their output port ("saved as ..."), not drawn as separate sink nodes, to reduce
 >   clutter.
-> - Workspace save/open is built (M4).
+> - Workspace save/open is built (M4). Pipelines are saved by default to `/<user>/home/pipeline` and listed as
+>   "[my pipelines]" in the editor's template dropdown.
+> - Nodes added by an edit are moved down until they don't overlap other nodes (`PipelineModel.avoidOverlap`).
 > - Still open from M5: a minimap and help text in the site's docs.
 
 Goal: an interactive canvas where users string tool modules together. Connections are checked against the type

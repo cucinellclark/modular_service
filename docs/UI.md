@@ -1,11 +1,21 @@
-# Test UI: BV-BRC-Web "Modular Pipeline" form + modpipe API
+# Test UI: BV-BRC-Web "Modular Pipeline" page (form + graph editor) + modpipe API
 
-The form is a normal BV-BRC-Web service page (Dojo, `AppBase`, the same workspace selectors as every
-service), on the BV-BRC-Web branch **`modular-pipeline-ui`** (`cucinellclark/bvbrc_website`):
+The page is a normal BV-BRC-Web service page (Dojo, `AppBase`, the same workspace selectors as every
+service). It lives on the BV-BRC-Web branch **`modular-pipeline-ui`** (`cucinellclark/bvbrc_website`, based on
+`beta-stage`; the working checkout is `~/bvbrc-dev/Deployment/BV-BRC-Web`). It has three modes that share one
+pipeline: **Template form**, **Graph editor** and **JSON**.
 
-- `public/js/p3/widget/app/ModularPipeline.js` + `templates/ModularPipeline.html` (route `/app/ModularPipeline`)
-- `app.js`: new config `modularPipelineServiceURL` (default `http://localhost:8765`)
-- `views/bv-brc-header.ejs`: Services menu > Prototype > Modular Pipeline
+| file (BV-BRC-Web) | role |
+|---|---|
+| `public/js/p3/widget/app/ModularPipeline.js` + `templates/ModularPipeline.html` | page (route `/app/ModularPipeline`): modes, form, output folder, Run, job list |
+| `public/js/p3/widget/modpipe/GraphEditor.js` | graph editor: palette, canvas, inspector, live check, workspace save/open |
+| `public/js/p3/widget/modpipe/PipelineModel.js` | pipeline JSON model: edits, undo/redo, layout, overlap avoidance (UMD, no DOM) |
+| `public/js/p3/widget/modpipe/TypeLogic.js` | instant connection rule, mirrored from `types.py` (UMD) |
+| `public/js/p3/widget/modpipe/SourceEditor.js`, `ParamEditor.js` | input-source and parameter widgets shared by form and editor |
+| `public/js/p3/widget/modpipe/modpipe.css` | editor styles (loaded by the editor itself) |
+| `tests/modpipe/model_test.js` | Node tests for the model (run by `tests/unit/test_compat_parity.py`) |
+| `app.js`, `p3-web.conf.sample` | config `modularPipelineServiceURL` (default `http://localhost:8765`) |
+| `views/bv-brc-header.ejs` | Services menu > Prototype > Modular Pipeline |
 
 Because the ModularPipeline app is not registered with the production app service, the form talks to a
 small **modpipe API** (`bin/modpipe serve`, `lib/modpipe/api.py`) that lists templates, validates, and submits
@@ -30,7 +40,7 @@ the signed-in user's BV-BRC token and write to their workspace.
    `modularPipelineServiceURL` to `https://<host>:12005`.
 3. Run BV-BRC-Web from the `modular-pipeline-ui` branch with your `p3-web.conf` (add
    `"modularPipelineServiceURL": "http://localhost:8765"` if you need a different URL). Run it **unbuilt**
-   (development mode): the new widget isn't in the built release layers.
+   (development mode): the new widgets aren't in the built release layers.
    **dev-5 setup:** `https://dev-5.bv-brc.org` is an nginx/Cloudflare proxy that forwards plain HTTP to
    `ash:12005`. Run `bin/modpipe serve --host 0.0.0.0 --port 12005` (no TLS; the proxy terminates HTTPS) and set
    `modularPipelineServiceURL` to `https://dev-5.bv-brc.org`.
@@ -76,7 +86,6 @@ pair, and runs the editor's model tests (`tests/modpipe/model_test.js` in BV-BRC
   BV-BRC genome IDs/group, feature group/IDs, pasted FASTA, bundled reference). Collections get "+ Add sample".
 - **Options**: optional steps (checkboxes) and the template's exposed parameters (typed widgets; string
   parameters enforce their allowed pattern; database parameters list registry choices).
-- **Advanced JSON**: edit the instantiated pipeline directly (custom pipelines); Validate/Run use it as-is.
 - **Validate**: server-side check: errors, notes (e.g. auto-inserted converters), estimated CPUs/memory/runtime.
 - **Run**: submits; the **My Modular Pipeline jobs** panel (auto-refresh 20 s) shows Slurm state, pipeline
   status, a link to the result folder and the job log.
@@ -87,5 +96,25 @@ pair, and runs the editor's model tests (`tests/modpipe/model_test.js` in BV-BRC
 `POST /api/submit` (auth), `GET /api/jobs` (auth), `GET /api/jobs/<id>/log` (auth). See `lib/modpipe/api.py`;
 tests in `tests/unit/test_api.py`.
 
-Prototype limits: tokens are trusted as presented (workspace and data API still enforce access); a user only
-sees their own jobs; jobs run as the Unix user that runs `modpipe serve`.
+Prototype limits:
+- **Tokens are not verified.** The user is read from the token's `un=` field. The workspace and data APIs still
+  enforce access, so a forged token can't read or write anyone's data. But it can submit jobs to our Slurm account
+  (they fail at staging) and list another user's jobs. Through dev-5 the API is reachable from the internet, so run
+  it only while testing. Verifying tokens with BV-BRC is the planned fix (OPEN_QUESTIONS).
+- A user only sees their own jobs, and jobs run as the Unix user that runs `modpipe serve`.
+- The state directory (`MODPIPE_UI_STATE`, default `~/.modpipe-ui`) must be on a filesystem compute nodes can
+  see (`/home`, not `/tmp`): the job reads its params and writes its Slurm log there.
+
+## Testing the page without running the website
+`node --check` and the Node model tests cover the plain JS. For the widgets, a headless browser works:
+1. Install Playwright into a scratch venv (`pip install playwright`) and use the cached
+   `~/.cache/ms-playwright/chromium_headless_shell-*` browser via `executable_path`.
+2. Make a static page whose `js/` directory links Dojo/dijit/dojox/etc. from a checkout that has its submodules
+   (`~/bvbrc-dev/Copilot/Agents/bvbrc_website/public/js`), with `js/p3` pointing at the branch's `public/js/p3`.
+3. Set `window.App` (token, `docsServiceURL`, `user`, `modularPipelineServiceURL`) and stub `WorkspaceManager.api`
+   (plus `getObject`/`create`/`createFolder`/`getFolderContents` for an in-memory workspace), then instantiate
+   `p3/widget/app/ModularPipeline` or `p3/widget/modpipe/GraphEditor`.
+4. Run a test API with a fake `sbatch`/`sacct` on its PATH, so Run doesn't reach Slurm.
+
+Known noise in that setup: `registry.byClass is not a function` comes from existing site code and is not an error on
+the real site.

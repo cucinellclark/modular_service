@@ -31,6 +31,18 @@
   Re-runs use the current container and warn if a tool version changed; an incompatible descriptor version
   blocks the run until the pipeline is updated.
 
+## Decided (2026-11-03, UI)
+- Test UI: a **Dojo page in BV-BRC-Web** (like the production service forms), on the development branch
+  `modular-pipeline-ui`. It talks to the prototype **modpipe API** (`bin/modpipe serve`) because the app isn't
+  registered with the app service. On dev-5 the API is reached as `https://dev-5.bv-brc.org`, an nginx/Cloudflare
+  proxy that forwards plain HTTP to `ash:12005`.
+- Graph editor (docs/GRAPH_EDITOR_PLAN.md):
+  - a custom HTML/SVG canvas, not Cytoscape;
+  - a **mode on the same page** as the form;
+  - users can build pipelines **from scratch**;
+  - custom pipelines are saved as **JSON files in the workspace**, by default in **`/<user>/home/pipeline`**, and
+    are listed as "[my pipelines]" next to the templates.
+
 ## Resolved by investigation (2026-11-03)
 - **Workspace types**: `reference/workspace_types_known.json` (71 types) combines the 2021 registered list,
   types observed in production (QA outputs plus a 30k-object user workspace) and the bvbrc-mcp enum. The
@@ -45,14 +57,20 @@
 - **Commented app spec**: `ComprehensiveSARS2Analysis.json` has `#` comments; `tools/summarize_app_specs.py`
   strips them. Nothing to decide.
 
-## Open: needs someone outside this project
+## Open: the user's decision
+- **Verify tokens in the modpipe API** (offered 2026-11-03; no answer yet). The API trusts the token's `un=` field.
+  Behind dev-5 it is internet-reachable, so a forged token could queue jobs (they fail at staging) and list
+  another user's jobs. The fix is to check each token with BV-BRC before use.
 
-None.
+## Open: needs someone outside this project
+- **Going live**: container build with this module, and app registration with the app service (BV-BRC maintainers).
+  The prototype API and its direct Slurm submission are then replaced by `AppService.start_app2`.
 
 ## Follow-ups (for us, no decision needed)
 - **Indexing mechanism** (deferred with RASTtk): find how Genome Annotation loads a GTO into Solr (its
   `skip_indexing` / `indexing_url` params; `genomeObj2solr.pl` / `complete-load.pl` in app_service).
 - **RASTtk in-process wrapper** (deferred): `rast-*` CLIs default to the remote annotation service; modules
   would need a local `GenomeAnnotationImpl` wrapper.
+- **Graph editor M5 polish**: minimap, help page in the site docs.
 - **Resource cap numbers**: confirm the 32 CPU / 256 GB / 48 h cap against the largest current services'
   preflight values, and against Slurm partition limits.

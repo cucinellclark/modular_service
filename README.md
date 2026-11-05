@@ -17,6 +17,19 @@ nothing else in the service changes.
 | Tools not in container | Separate source environment allowed for now; container-only eventually |
 | Language | **Perl shell, Python core**: thin `App-ModularPipeline.pl` (AppScript) + Python engine |
 | Pipeline authors | **Both**: curated templates from devs plus a user-facing builder |
+| Test UI (2026-11-03) | Dojo page in BV-BRC-Web (branch `modular-pipeline-ui`): template form + **graph editor** + JSON, via the modpipe API ([UI.md](docs/UI.md)) |
+
+More decisions (types, databases, resources, versioning, UI): [OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md).
+
+## Status (2026-11-05)
+- The engine, 51 modules and 17 curated templates are lint-clean, and every template passes end-to-end runs in the
+  container on Slurm.
+- The BV-BRC service shell (`App-ModularPipeline.pl`) is tested end to end and deployable with `make deploy-service`.
+- The UI runs on dev-5 against `bin/modpipe serve` on ash. It has the form, the graph editor (instant plus server
+  checks, auto converters, workspace save/open in `home/pipeline`) and a job list. A graph-built pipeline has run
+  for real.
+- Not live yet: the app needs registration and a container build (BV-BRC maintainers). The API doesn't verify
+  tokens yet (see OPEN_QUESTIONS).
 
 ## Layout
 
@@ -46,7 +59,7 @@ modules/                       51 module descriptors (v1): read QC, assembly, ma
 pipelines/                     17 curated templates (modpipe list-templates); test inputs in tests/templates/
 app_specs/ModularPipeline.json BV-BRC app spec
 service-scripts/App-ModularPipeline.pl  BV-BRC Perl shell (AppScript): preflight, staging, run, upload
-lib/modpipe/                   engine (Python): types, registries, templates, pipeline validation, CLI
+lib/modpipe/                   engine (Python): types, registries, templates, pipeline validation, CLI, api.py (UI API)
 bin/modpipe                    CLI entry point (lint | validate | plan | run | instantiate | serve | list-modules | list-templates | show | compatible)
 reference/
   app_specs/                   snapshot of /opt/p3/deployment/services/app_service/app_specs (from container)
@@ -104,7 +117,10 @@ bin/modpipe lint                                   # validate all module descrip
 bin/modpipe validate pipelines/wgs_assembly_qc.json
 bin/modpipe plan pipelines/multi_sample_assembly.json   # resolved types, scatter/gather, job resources
 bin/modpipe compatible --from spades.contigs       # what can consume this output?
-python3 -m unittest discover -s tests/unit
+python3 -m unittest discover -s tests/unit -p 'test_*.py'   # incl. API and browser-parity tests (needs node)
+
+# prototype UI API (docs/UI.md); on ash for dev-5:
+bin/modpipe serve --host 0.0.0.0 --port 12005
 
 # execute (inside the container; tools come from the image)
 sbatch tests/e2e/run_pipeline.sbatch tests/pipelines/wgs_portiera.json

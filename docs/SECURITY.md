@@ -32,3 +32,15 @@ argument**. Unquoted values, values in double quotes (where `$(...)` still runs)
 Tests: `tests/unit/test_shell_safety.py` covers the lint (it catches unquoted, double-quoted and single-quoted
 values), the patterns, identifier and source-id rejection, and a real run whose input file is named
 `r 1;touch PWNED;$(touch PWNED2)`touch PWNED3`.fa` with a hostile parameter value. Nothing is executed.
+
+## Prototype API (`lib/modpipe/api.py`)
+- **Tokens never appear on a command line or in a log.** Each job's token is written to a mode-600 file in its job
+  directory and passed to the job by path (`MODPIPE_TOKEN_FILE`). The job reads it into the container environment
+  and deletes it. The request log records only method, path and status.
+- **CORS allowlist** (`--origin`, default `https://dev-5.bv-brc.org` and `http://localhost:3000`). Other sites' pages
+  can't call the API from a browser.
+- **Validated before Slurm.** A submitted pipeline is fully validated (the same checks as above) before `sbatch` runs.
+  `output_file` and `output_path` are pattern-checked. Template names are `[A-Za-z0-9_]+`, so paths can't be
+  traversed.
+- **Not yet: token verification.** The user is taken from the token text, which is the open item in
+  OPEN_QUESTIONS. Tests: `tests/unit/test_api.py` (auth, isolation, token not on the sbatch line, CORS).

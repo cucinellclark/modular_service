@@ -37,6 +37,17 @@ Status: draft for discussion. Choices still open are marked **OPEN**; see also
 Layout mirrors `App-TaxonomicClassification.pl` + `workflows/bvbrc_*`, which
 already use this split.
 
+**Prototype UI path (built 2026-11-03).** Until the app is registered with the production app service, a small
+HTTP API in the core (`lib/modpipe/api.py`, `bin/modpipe serve`) serves the BV-BRC-Web page and submits jobs
+itself:
+
+```
+  BV-BRC-Web /app/ModularPipeline  (Template form | Graph editor | JSON)   ← docs/UI.md
+        │  GET /api/templates, /api/catalog, /api/source_options; POST /api/validate (live, debounced)
+        ▼
+  modpipe API (Python)  ── POST /api/submit ──▶ sbatch tests/app/run_app.sbatch ──▶ App-ModularPipeline.pl
+```
+
 ## 2. Data type system
 
 **Defined in [`types/types.yaml`](../types/types.yaml)** (125 types, 54 formats). Workspace mapping is in
@@ -241,12 +252,19 @@ Example: [`pipelines/wgs_assembly_qc.json`](../pipelines/wgs_assembly_qc.json).
 5. Pipeline outputs reference existing ports.
 6. Resource estimate is within the scheduler's limits.
 
-Expose this as `modpipe validate pipeline.json`, and later as a lightweight
-service endpoint so the UI builder can validate live.
+Exposed as `modpipe validate pipeline.json` and as `POST /api/validate`. The graph editor calls it after every
+edit. Issues carry a location (`{severity, where, msg}`, e.g. `steps.qc.in.contigs`), so the UI can badge the
+step or port, and the response includes per-step resolved output types and scatter. Before validating, single
+available converters are inserted automatically (`auto_convert`), and editor state in the pipeline's `ui` key is
+applied (`apply_ui`: disabled optional steps are removed with bypass rewiring). Empty data choices are errors.
 
 ## 7. Discovery API (for the UI builder)
 
-> `bin/modpipe list-modules --json`, `show <module>` and `compatible --from <module>.<output>` are implemented.
+> Implemented: `bin/modpipe list-modules --json`, `show <module>`, `compatible --from <module>.<output>`, and for the UI
+> `GET /api/catalog` (types, converters, modules with ports and params, version hash),
+> `/api/templates[/<name>]` and `/api/source_options`. The connection rule (`TypeSystem.connection`: yes / maybe /
+> convert / no) is mirrored in the browser (`TypeLogic.js`) for instant checks while drawing.
+> `tests/unit/test_compat_parity.py` keeps the two in sync.
 
 - `modpipe list-modules [--category]`: module catalog with ports and params
   (JSON, same shape as app specs so existing UI form generators can be reused).
@@ -276,7 +294,7 @@ Genome Annotation's indexing path (to be located: `skip_indexing` / `indexing_ur
 (from `reference/tools/index.json`). Re-runs warn when a tool version changed; a descriptor with a
 different major version blocks the run until the pipeline is updated.
 
-## 9. Proposed repository layout (when we start coding)
+## 9. Repository layout (as first proposed; see README "Layout" for the current tree)
 
 ```
 ModularService/
