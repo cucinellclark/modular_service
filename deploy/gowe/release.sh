@@ -132,7 +132,19 @@ else
     mkdir -p "$DEST/bless"
     yes_flag=(); tty=/dev/tty
     if (( YES )); then yes_flag=(--yes); tty=/dev/null; fi
-    python3 -c 'import json,sys; [print(m, d["id"]) for m, d in sorted(json.load(open(sys.argv[1])).items())]' "$REG" |
+    # only this release's tools still awaiting a blessing: one already blessed (an earlier, interrupted run) is
+    # skipped, since blessing the same hash again is a CONFLICT
+    pending=$("$GOWE" --server "$SERVER" admin blessings --pending --json) || die "could not list pending blessings"
+    python3 -c '
+import json, sys
+reg = json.load(open(sys.argv[1]))
+pend = {p["workflow_id"] for p in json.loads(sys.argv[2]).get("pending") or []}
+for m, d in sorted(reg.items()):
+    if d["id"] in pend:
+        print(m, d["id"])
+    else:
+        print("   modpipe-%s (%s): already blessed, skipping" % (m, d["id"]), file=sys.stderr)
+' "$REG" "$pending" |
     while read -r mid wfid; do
         echo "-- modpipe-$mid ($wfid)"
         # report to the terminal and to bless/<module>.txt; the prompt (without --yes) reads the terminal
