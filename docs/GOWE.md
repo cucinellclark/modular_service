@@ -77,6 +77,22 @@ an output typed `Directory`/`Directory?` with a plain-name glob to `ws://<result
 exists. Before it, the executor matched output *file names* against globs and always made Files, so per-port
 folders couldn't be returned. Also unconfirmed: whether `start_app` passes undeclared params through (OPEN_QUESTIONS.md).
 
+## The GoWe server on ash (`:12007`)
+
+`~/GoWeServer/start_gowe_alpha.sh` starts `bin/gowe-server` from `~/bvbrc-dev/Copilot/Agents/GoWe` (branch
+`modular-step`). Set up for modpipe (2026-11-06):
+- `--worker-keys ~/GoWeServer/worker-keys.json`: workers must present a key (id `modpipe-slurm`, group `modpipe`);
+  the worker side reads `~/GoWeServer/modpipe-worker.key` (mode 600, outside every bind mount). Checked: no key or
+  a wrong key -> 401.
+- Tools registered as `modpipe-<module>` (51), next to the 30 Copilot workflows:
+  `bin/modpipe export-cwl && GOWE_SERVER=http://localhost:12007 deploy/gowe/register_tools.py`. Registration is
+  append-only: unchanged tools dedup, changed ones become a new version under the same name. The token comes from
+  `MODPIPE_TOKEN_FILE` (default `~/.patric_token`), never argv.
+- Parsed hints: `executor: worker`, `worker_group: modpipe`, `inject_bvbrc_token: true`, the production image.
+- Still to do: bless the tools (token injection; `--token-blessing enforce`), start workers
+  (`GOWE_SERVER=http://ash.cels.anl.gov:12007 GOWE_WORKER_KEY_FILE=~/GoWeServer/modpipe-worker.key sbatch
+  deploy/gowe/worker.sbatch`), submit.
+
 ## Testing without a GoWe server
 
 `tests/cwl/run_cwl.sbatch <tool-or-workflow.cwl> <job.json>` runs GoWe's standalone `cwl-runner` with Apptainer on a
