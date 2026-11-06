@@ -89,9 +89,34 @@ folders couldn't be returned. Also unconfirmed: whether `start_app` passes undec
   append-only: unchanged tools dedup, changed ones become a new version under the same name. The token comes from
   `MODPIPE_TOKEN_FILE` (default `~/.patric_token`), never argv.
 - Parsed hints: `executor: worker`, `worker_group: modpipe`, `inject_bvbrc_token: true`, the production image.
-- Still to do: bless the tools (token injection; `--token-blessing enforce`), start workers
+- Releases (`deploy/gowe/release.sh`, below) register and bless the tools; then start workers
   (`GOWE_SERVER=http://ash.cels.anl.gov:12007 GOWE_WORKER_KEY_FILE=~/GoWeServer/modpipe-worker.key sbatch
-  deploy/gowe/worker.sbatch`), submit.
+  deploy/gowe/worker.sbatch`) and submit.
+
+### Releases and blessing
+
+A blessing pins the tool document and the image sha256, but the code the tools run is bind-mounted from outside
+the image. So tools are only blessed for an immutable snapshot of a commit:
+
+```bash
+deploy/gowe/release.sh --dry-run    # checks + plan, changes nothing
+deploy/gowe/release.sh              # gowe prompts once per tool after printing its review report
+deploy/gowe/release.sh --yes        # no prompts (reports are still saved in the release)
+```
+1. checks: clean checkout, HEAD pushed, unit tests, GoWe healthy, `gowe` CLI logged in
+   (`~/.gowe/credentials.json`; `bin/gowe login < ~/.patric_token`);
+2. `git archive HEAD` -> `~/GoWeServer/modpipe/releases/<sha>/`, made read-only (reused if it exists);
+3. sha256 of the production image (cached in `~/GoWeServer/modpipe/image-sha256/`);
+4. `export-cwl --modpipe-home <snapshot>` into `<snapshot>/cwl/tools`, so the commit is part of each tool;
+5. register (`register_tools.py --json-out <snapshot>/registered.json`);
+6. `gowe admin bless <wf id> --image-sha256 <sha> --groups modpipe --note "modpipe <sha>"` per tool, by workflow
+   id (a name means "newest version"); reports in `<snapshot>/bless/`;
+7. `<snapshot>/RELEASE.json`; `~/GoWeServer/modpipe/current` -> this release.
+
+Submitting `modpipe-<module>` by name runs the newest registered version, i.e. the latest release. Older blessings
+stay valid (each points at its own frozen snapshot); revoke with `gowe admin unbless` if wanted. Workers bind
+`~/GoWeServer/modpipe/releases` (not the working checkout). Tested 2026-11-06 on a throwaway base: the snapshot is
+fully read-only, all tools validate, the engine runs from it without writing.
 
 ## Testing without a GoWe server
 
