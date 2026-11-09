@@ -16,3 +16,4 @@ __pycache__/
 .DS_Store
 cwl/tools/
 tests/cwl/logs/
+deploy/gowe/logs/

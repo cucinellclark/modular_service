@@ -98,7 +98,14 @@ folders couldn't be returned. Also unconfirmed: whether `start_app` passes undec
   blessings from an interrupted release of `c1c7ee334d` (amrfinder, bcftools_call, bcftools_consensus) are still
   active; harmless (by-name submission runs the newest version, and that snapshot is frozen), revoke with
   `gowe admin unbless <tb_id>` if wanted.
-- No worker has run a modpipe job through the server yet (next step).
+- Tools are registered **packed** (`gowe bundle`, as `gowe register` does). A bare tool is wrapped by the server
+  with its hints copied onto the step, and a step-level `DockerRequirement` on a token tool is refused at submit
+  (`TOKEN_TOOL_OVERRIDE_REFUSED`). Packing doesn't change the tool hash, so the blessings carry over; the 51 packed
+  versions are now the newest under each name. Exception: packed mafft is named `mafft` (`wf_4b41977e…`, first
+  registered by a `gowe submit --dry-run`), so `modpipe-mafft` by name still resolves to the refused bare version.
+- First runs through the server (2026-11-09, worker Slurm job on `lemon`): `mafft` (feature group ->
+  `.gowe1_mafft/alignment`, ~5 min) then `modpipe-fasttree` on that folder given as a plain workspace path
+  (`.gowe2_fasttree/tree/tree.nwk`). Both COMPLETED; no token in the task logs.
 
 ### Releases and blessing
 
@@ -159,10 +166,7 @@ Results 2026-11-05:
   specified in the app spec") and keeps them in `raw_params`.
 
 ## Next
-0. Start a worker (`deploy/gowe/worker.sbatch`, above) and submit `modpipe-mafft` (input as in
-   `tests/cwl/cwl1_mafft.json`), then `modpipe-fasttree` on its `alignment` folder: first end-to-end run through
-   the server (worker key, token injection into a blessed tool, code from the release snapshot). Then
-   `reads_chain.cwl` as a registered workflow.
+0. `reads_chain.cwl` as a registered workflow (steps passing `ws://` port folders through the server).
 1. `modpipe compile`: validated pipeline -> CWL workflow over these tools (scatter for sample collections, a
    per-step `output_file`, `input_types` from the plan's resolved types).
 2. The UI's submit goes to GoWe.
