@@ -92,6 +92,13 @@ folders couldn't be returned. Also unconfirmed: whether `start_app` passes undec
 - Releases (`deploy/gowe/release.sh`, below) register and bless the tools; then start workers
   (`GOWE_SERVER=http://ash.cels.anl.gov:12007 GOWE_WORKER_KEY_FILE=~/GoWeServer/modpipe-worker.key sbatch
   deploy/gowe/worker.sbatch`) and submit.
+- **Current release (2026-11-06): `21610b109b`**: `~/GoWeServer/modpipe/current -> releases/21610b109b`, 51 tools
+  registered and blessed (group `modpipe`, image sha256 `8d36e97e75ab…`), checked with `gowe admin blessings`.
+  The 51 tools registered earlier from the working checkout stay unblessed (they never get a token). Three
+  blessings from an interrupted release of `c1c7ee334d` (amrfinder, bcftools_call, bcftools_consensus) are still
+  active; harmless (by-name submission runs the newest version, and that snapshot is frozen), revoke with
+  `gowe admin unbless <tb_id>` if wanted.
+- No worker has run a modpipe job through the server yet (next step).
 
 ### Releases and blessing
 
@@ -103,6 +110,11 @@ deploy/gowe/release.sh --dry-run    # checks + plan, changes nothing
 deploy/gowe/release.sh              # gowe prompts once per tool after printing its review report
 deploy/gowe/release.sh --yes        # no prompts (reports are still saved in the release)
 ```
+Run it **on ash**: `GOWE_SERVER` defaults to `http://localhost:12007` (from another host set
+`GOWE_SERVER=http://ash.cels.anl.gov:12007`). Without `--yes` it needs a real terminal for the prompts (it reads
+`/dev/tty`); Claude Code's `!` commands have none, so use `--yes` there. Blessing gives tools the user's token, so
+it is the admin's action (Claude Code's permission check refuses to run it for you). The image hash (37 GB, a few
+minutes) is computed once and cached.
 1. checks: clean checkout, HEAD pushed, unit tests, GoWe healthy, `gowe` CLI logged in
    (`~/.gowe/credentials.json`; `bin/gowe login < ~/.patric_token`);
 2. `git archive HEAD` -> `~/GoWeServer/modpipe/releases/<sha>/`, made read-only (reused if it exists);
@@ -110,7 +122,9 @@ deploy/gowe/release.sh --yes        # no prompts (reports are still saved in the
 4. `export-cwl --modpipe-home <snapshot>` into `<snapshot>/cwl/tools`, so the commit is part of each tool;
 5. register (`register_tools.py --json-out <snapshot>/registered.json`);
 6. `gowe admin bless <wf id> --image-sha256 <sha> --groups modpipe --note "modpipe <sha>"` per tool, by workflow
-   id (a name means "newest version"); reports in `<snapshot>/bless/`;
+   id (a name means "newest version"), only for tools the server still lists as pending
+   (`gowe admin blessings --pending`): blessing an already-blessed hash is a `CONFLICT`, so an interrupted
+   release can simply be rerun; reports in `<snapshot>/bless/`;
 7. `<snapshot>/RELEASE.json`; `~/GoWeServer/modpipe/current` -> this release.
 
 Submitting `modpipe-<module>` by name runs the newest registered version, i.e. the latest release. Older blessings
@@ -145,7 +159,11 @@ Results 2026-11-05:
   specified in the app spec") and keeps them in `raw_params`.
 
 ## Next
+0. Start a worker (`deploy/gowe/worker.sbatch`, above) and submit `modpipe-mafft` (input as in
+   `tests/cwl/cwl1_mafft.json`), then `modpipe-fasttree` on its `alignment` folder: first end-to-end run through
+   the server (worker key, token injection into a blessed tool, code from the release snapshot). Then
+   `reads_chain.cwl` as a registered workflow.
 1. `modpipe compile`: validated pipeline -> CWL workflow over these tools (scatter for sample collections, a
    per-step `output_file`, `input_types` from the plan's resolved types).
-2. A dev GoWe server on ash with workers as Slurm jobs (`--token-blessing=dev`), tools registered by name.
-3. The UI's submit goes to GoWe.
+2. The UI's submit goes to GoWe.
+3. Small: `release.sh --dry-run` still creates the empty `image-sha256/` cache dir; check for a terminal up front.
