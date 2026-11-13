@@ -1,0 +1,16 @@
+{
+ "schema": "modpipe/pipeline/v1",
+ "name": "GoWe test: reads QC and coverage",
+ "description": "fastp (SRA) -> minimap2 to E. coli K-12 -> samtools coverage, then MultiQC over two reports of the same type (a list port with two sources). Real workspace data; used to test modpipe compile through GoWe.",
+ "inputs": {
+  "reads": {"type": "reads.short.paired", "source": {"srr_ids": ["SRR2838702"]}},
+  "reference": {"type": "sequences.dna.contigs", "source": {"genome_ids": ["511145.12"]}}
+ },
+ "steps": {
+  "trim": {"module": "fastp", "in": {"reads": "$inputs.reads"}},
+  "map": {"module": "minimap2", "in": {"reads": "trim.trimmed_reads", "reference": "$inputs.reference"}},
+  "cov": {"module": "samtools_coverage", "in": {"alignment": "map.alignment"}},
+  "summary": {"module": "multiqc", "in": {"reports": ["map.flagstat", "cov.stats"], "tables": ["cov.coverage"]}}
+ },
+ "outputs": {"alignment": "map.alignment", "coverage": "cov.coverage", "summary": "summary.report"}
+}

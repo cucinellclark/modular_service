@@ -23,6 +23,7 @@
 """
 import argparse
 import json
+import os
 import sys
 
 from .pipeline import Validator, auto_convert, load_pipeline
@@ -284,6 +285,39 @@ def cmd_export_cwl(a):
     return 0
 
 
+def cmd_compile(a):
+    from .compile import RUN_NAME_RE, CompileError, compile_pipeline, slug, write
+    from .step import is_ws_path
+    ts, dbs, mods = _ctx()
+    p = load_pipeline(a.pipeline)
+    name = a.name or slug(p.get("name"))
+    try:
+        if a.output_path and not is_ws_path(a.output_path):
+            raise CompileError([f"--output-path {a.output_path!r} is not a workspace path (/<user>@<domain>/...)"])
+        run_name = a.run_name or name.removeprefix("modpipe-")[:40]
+        if not RUN_NAME_RE.match(run_name):
+            raise CompileError([f"--run-name {run_name!r}: letters, digits, . _ - (max 64)"])
+        wf, job, info = compile_pipeline(p, ts, mods, dbs, tools_dir=a.tools, where=a.pipeline)
+        if a.output_path:
+            job["output_path"] = a.output_path.rstrip("/")
+        job["run_name"] = run_name
+        path = write(a.out, wf, job, info["tools_dir"], name)
+    except CompileError as e:
+        for x in e.warnings:
+            print(f"WARN  {x}", file=sys.stderr)
+        for x in e.errors:
+            print(f"ERROR {x}", file=sys.stderr)
+        return 1
+    for x in info["warnings"]:
+        print(f"WARN  {x}", file=sys.stderr)
+    print(f"wrote {path} ({len(wf['steps'])} steps: {' -> '.join(info['order'])}), {a.out}/job.json, "
+          f"{a.out}/tools -> {info['tools_dir']}")
+    if "output_path" not in job:
+        print(f"note: job.json has no output_path; add it (or pass --output-path)", file=sys.stderr)
+    print(f"submit: gowe submit {path} -i {os.path.join(a.out, 'job.json')}")
+    return 0
+
+
 def cmd_cwl_step(a):
     from .cwl import run_step
     return run_step(a.job, cores=a.cores, ram_mb=a.ram_mb)
@@ -328,6 +362,14 @@ def main(argv=None):
     s.add_argument("--image", help="Apptainer image for worker mode (default: singularity_container_ref.txt)")
     s.add_argument("--modpipe-home", help="path of this checkout as seen on the worker (default: this checkout)")
     s.set_defaults(fn=cmd_export_cwl)
+    s = sub.add_parser("compile", help="pipeline -> GoWe CWL workflow over the released per-module tools")
+    s.add_argument("pipeline")
+    s.add_argument("--out", required=True, help="output directory (workflow, job.json, tools link)")
+    s.add_argument("--tools", help="released tools dir (default: ~/GoWeServer/modpipe/current/cwl/tools, resolved)")
+    s.add_argument("--output-path", help="workspace folder for the results (job.json output_path)")
+    s.add_argument("--run-name", help="job name prefix: results in <output-path>/.<run-name>_<step>/")
+    s.add_argument("--name", help="workflow name (file name; GoWe registers it under this name)")
+    s.set_defaults(fn=cmd_compile)
     s = sub.add_parser("cwl-step")
     s.add_argument("job")
     s.add_argument("--cores")

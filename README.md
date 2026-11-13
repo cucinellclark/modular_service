@@ -32,7 +32,8 @@ More decisions (types, databases, resources, versioning, UI): [OPEN_QUESTIONS.md
 - Per-tool execution via GoWe: the **ModularStep** app runs one module per job (chains tested on Slurm), and
   `modpipe export-cwl` makes one CWL tool per module (tested with GoWe's `cwl-runner`). Release `38def09013` has all
   51 tools registered and blessed on the ash GoWe server (`deploy/gowe/release.sh`); mafft -> fasttree and the
-  fastp -> minimap2 -> samtools coverage chain have run through it on Slurm workers ([GOWE.md](docs/GOWE.md)).
+  fastp -> minimap2 -> samtools coverage chain have run through it on Slurm workers. `modpipe compile` turns a pipeline into a GoWe workflow over those tools
+  (two compiled test pipelines ran through the server) ([GOWE.md](docs/GOWE.md)).
 - Not live yet: the app needs registration and a container build (BV-BRC maintainers). The API doesn't verify
   tokens yet (see OPEN_QUESTIONS).
 

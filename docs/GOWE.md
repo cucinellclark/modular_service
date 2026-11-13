@@ -83,6 +83,39 @@ an output typed `Directory`/`Directory?` with a plain-name glob to `ws://<result
 exists. Before it, the executor matched output *file names* against globs and always made Files, so per-port
 folders couldn't be returned. Also unconfirmed: whether `start_app` passes undeclared params through (OPEN_QUESTIONS.md).
 
+## `modpipe compile`
+
+```bash
+bin/modpipe compile pipeline.json --out DIR --output-path /<user>@bvbrc/home/folder [--run-name NAME] [--tools DIR]
+gowe --server http://localhost:12007 submit DIR/<name>.cwl -i DIR/job.json
+```
+Validates the pipeline as `modpipe run` does (editor state, automatic converters; stops on errors), then writes
+`DIR/<name>.cwl` (name from the pipeline's `name`, `modpipe-<slug>`; GoWe registers it under the file name),
+`DIR/job.json` and `DIR/tools`, a symlink to the released tools, resolved (default the release `current` points
+at), so the workflow is pinned to a release and `gowe bundle` finds the tools by relative path
+(`lib/modpipe/compile.py`):
+
+| pipeline | workflow |
+|---|---|
+| step | one step running `tools/<module>.cwl` = one ModularStep job. No CWL `scatter`: ModularStep runs a sample collection inside the job (port folder of sample folders, expanded again by the next step) |
+| `$inputs.<name>` | workflow input `Any`; `job.json` gives `{type, source[, attributes]}`, so the type is explicit |
+| `<step>.<output>` | `<step>/<output>`, the upstream port folder's workspace path |
+| `[ref, ...]` (list port) | `source: [...]`, `linkMerge: merge_flattened`, `pickValue: all_non_null` (+ `MultipleInputFeatureRequirement`) |
+| step params | fixed step inputs (`default:`); module defaults for the rest |
+| `output_file` | `<run_name>_<step>`: results in `<output_path>/.<run_name>_<step>/<port>/` |
+| pipeline outputs | workflow outputs `string?` (workspace folders) |
+
+Refused up front: `fixture` sources (local test data), a module without a released tool or whose released tool has
+another module version than this checkout, and a list port fed by refs of different types (ModularStep takes one
+type per list port). Steps keep their blessings: the dry run passes the token check with the workflow-level
+requirements.
+
+Tested 2026-11-13 through the server (worker on `pear`), test pipelines in `tests/gowe/`:
+- `gowe_align_tree.json`: mafft -> fasttree on the rpoB feature group, COMPLETED (~2 min).
+- `gowe_reads_qc.json`: fastp (SRR2838702) -> minimap2 (511145.12) -> samtools coverage, plus multiqc over
+  `[map.flagstat, cov.stats]` (two sources merged into one list) and `[cov.coverage]`; 4/4 steps COMPLETED in
+  ~2.5 min, multiqc got both reports. No token in the task logs.
+
 ## The GoWe server on ash (`:12007`)
 
 `~/GoWeServer/start_gowe_alpha.sh` starts `bin/gowe-server` from `~/bvbrc-dev/Copilot/Agents/GoWe` (branch
@@ -194,8 +227,6 @@ Results 2026-11-05:
   specified in the app spec") and keeps them in `raw_params`.
 
 ## Next
-1. `modpipe compile`: validated pipeline -> CWL workflow over these tools (scatter for sample collections, a
-   per-step `output_file`, `input_types` from the plan's resolved types).
-2. The UI's submit goes to GoWe.
-3. Small: `release.sh` without `--yes` should check for a terminal up front. `~/GoWeServer/modpipe/image-sha256/`
+1. The UI's submit goes to GoWe (compile + `gowe submit` from the modpipe API, as the user).
+2. Small: `release.sh` without `--yes` should check for a terminal up front. `~/GoWeServer/modpipe/image-sha256/`
    (the old release cache) is unused and can be deleted.

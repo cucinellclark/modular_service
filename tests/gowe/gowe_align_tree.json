@@ -1,0 +1,14 @@
+{
+ "schema": "modpipe/pipeline/v1",
+ "name": "GoWe test: align and tree",
+ "description": "MAFFT -> FastTree on a protein feature group in the workspace. Used to test modpipe compile through GoWe.",
+ "inputs": {
+  "proteins": {"type": "sequences.protein",
+               "source": {"feature_group": "/clark.cucinell@patricbrc.org/home/Feature Groups/rpoB_feature_group_20"}}
+ },
+ "steps": {
+  "align": {"module": "mafft", "in": {"sequences": "$inputs.proteins"}, "params": {"strategy": "auto"}},
+  "tree": {"module": "fasttree", "in": {"alignment": "align.alignment"}, "params": {"model": "lg"}}
+ },
+ "outputs": {"alignment": "align.alignment", "tree": "tree.tree"}
+}
