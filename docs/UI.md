@@ -48,6 +48,9 @@ Three views (tabs):
   selection and the **run setup** when nothing is selected: inputs (data editors), the template's exposed options
   (`ui.expose`) and optional steps (`ui.optional`), results folder + run name (with the resulting path), live check
   summary (errors, notes, jobs, resources) and **Run** (enabled only when the check passes). Save / Save as / JSON.
+  The header always shows the run status and a **Run** button too (a selected step or input replaces the run-setup
+  panel): it submits when everything is set, otherwise opens the run setup and names what is missing. Inspectors
+  have a "‹ Run setup" link back.
 - **Runs**: list of the user's runs; the selected run shows its steps colored by state with timing, per-step log
   and output folders, the pipeline outputs, Cancel, "Open in Build" (rerun with changes), and the run folder. Polls
   every 10 s while active; Run opens the new run here.
