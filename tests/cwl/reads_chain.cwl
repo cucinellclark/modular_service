@@ -10,8 +10,8 @@ inputs:
   output_path: string
   run_name: string
 outputs:
-  coverage: {type: "Directory?", outputSource: cov/coverage}
-  alignment: {type: "Directory?", outputSource: map/alignment}
+  coverage: {type: "string?", outputSource: cov/coverage}
+  alignment: {type: "string?", outputSource: map/alignment}
 steps:
   trim:
     run: ../../cwl/tools/fastp.cwl

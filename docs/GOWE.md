@@ -26,9 +26,15 @@ Tool shape (`lib/modpipe/cwl.py`):
 | `input_types` | | `Any?` |
 | `output_path`, `output_file` | framework | `string` |
 
-Outputs: one `Directory?` per output port, the port folder `ws://<output_path>/.<output_file>/<port>`. A port folder
-holds the value itself, or one value folder per sample; ModularStep accepts either as an input (a port folder is
-expanded into its sample folders).
+Outputs: one per output port, the port folder `<output_path>/.<output_file>/<port>`. A port folder holds the value
+itself, or one value folder per sample; ModularStep accepts either as an input (a port folder is expanded into its
+sample folders). Worker mode: a `string?`, the plain workspace path. bvbrc mode: a `Directory?` (glob = port id).
+
+Why strings in worker mode (2026-11-09): a GoWe worker stages every File/Directory input. Given a `ws://` Directory
+it fails without `--workspace-stager`; with it, it downloads the whole folder and hands the step a *local* path,
+which has none of the `modpipe_*` metadata ModularStep types its inputs by ("cannot tell which kind of reads this
+is"), and every intermediate (BAMs) would move twice. A string is never staged; the step reads the workspace
+itself.
 
 Port types are `Any` on purpose. CWL's File/Directory can't express modpipe types (paired reads, BAM+index, abstract
 ports), and the step is validated again inside the job (`modpipe step-pipeline`). `modpipe compile` will run the
@@ -59,8 +65,8 @@ arguments: [--cores, $(runtime.cores), --ram-mb, $(runtime.ram)]
    are dropped;
 2. runs `App-ModularStep.pl` in `./app` with `P3_ALLOCATED_CPU`/`P3_ALLOCATED_MEMORY` from the CWL runtime and the
    token GoWe injects (`BVBRC_TOKEN`/`KB_AUTH_TOKEN`; never logged);
-3. reads the app's local `modpipe_step_result.json` and writes `cwl.output.json` (one `ws://` Directory per
-   produced port); exits non-zero if the app failed.
+3. reads the app's local `modpipe_step_result.json` and writes `cwl.output.json` (the workspace path of each
+   produced port, null for the others); exits non-zero if the app failed.
 
 The worker needs: the image, this checkout and the BV-BRC data folders bind-mounted (`--extra-bind`), network
 access, and the user's token. GoWe only injects the token into tools an admin has **blessed** (digest of the tool
@@ -166,7 +172,11 @@ Results 2026-11-05:
   specified in the app spec") and keeps them in `raw_params`.
 
 ## Next
-0. `reads_chain.cwl` as a registered workflow (steps passing `ws://` port folders through the server).
+0. Release the string-output tools (needs blessing) and rerun `reads_chain.cwl` through the server. Tested
+   2026-11-09: through the server with the Directory-output release, trim succeeded and map failed (worker staging,
+   above); with string outputs the chain passes under the standalone cwl-runner (job 21394736). Bundling note:
+   `gowe bundle` resolves `run:` paths relative to the workflow even when absolute (link the release's
+   `cwl/tools` next to the workflow).
 1. `modpipe compile`: validated pipeline -> CWL workflow over these tools (scatter for sample collections, a
    per-step `output_file`, `input_types` from the plan's resolved types).
 2. The UI's submit goes to GoWe.

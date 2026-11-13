@@ -31,7 +31,8 @@ class ExportTests(unittest.TestCase):
         self.assertEqual(t["inputs"]["length_required"], {"type": ["null", "int"], "doc": t["inputs"]["length_required"]["doc"],
                                                           "default": 50})
         self.assertEqual(set(t["outputs"]), set(MODS.get("fastp").outputs))
-        self.assertEqual(t["outputs"]["trimmed_reads"]["type"], ["null", "Directory"])
+        self.assertEqual(t["outputs"]["trimmed_reads"]["type"], ["null", "string"])   # a path: workers don't stage it
+        self.assertNotIn("outputBinding", t["outputs"]["trimmed_reads"])
         ex = t["hints"]["gowe:Execution"]
         self.assertEqual((ex["executor"], ex["inject_bvbrc_token"]), ("worker", True))
         self.assertEqual(t["hints"]["DockerRequirement"]["dockerPull"], "/img/x.sif")
@@ -42,6 +43,8 @@ class ExportTests(unittest.TestCase):
         t = tool_for(MODS.get("spades"), TS, DBS, mode="bvbrc")
         self.assertEqual(t["hints"], {"gowe:Execution": {"executor": "bvbrc", "bvbrc_app_id": "ModularStep"}})
         self.assertNotIn("requirements", t)
+        self.assertEqual(t["outputs"]["contigs"]["type"], ["null", "Directory"])
+        self.assertEqual(t["outputs"]["contigs"]["outputBinding"], {"glob": "contigs"})
         self.assertEqual(t["inputs"]["mode"]["type"][1]["type"], "enum")
 
     def test_optional_ports_and_param_types(self):
@@ -86,7 +89,7 @@ class ShimTests(unittest.TestCase):
     def test_cwl_outputs(self):
         res = {"result_folder": "/u@bvbrc/home/.j/", "values": {"tree": [{"folder": "/u@bvbrc/home/.j/tree"}]}}
         out = cwl_outputs(res, MODS.get("fasttree"))
-        self.assertEqual(out["tree"], {"class": "Directory", "location": "ws:///u@bvbrc/home/.j/tree", "basename": "tree"})
+        self.assertEqual(out["tree"], "/u@bvbrc/home/.j/tree")
         self.assertIsNone(out["log"])
 
 

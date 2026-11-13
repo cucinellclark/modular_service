@@ -10,8 +10,11 @@ Tool inputs mirror App-ModularStep's flat params (lib/modpipe/step.py):
     <parameter>               typed (int/float/boolean/string/enum), optional, module default as CWL default
     input_types               Any (optional {port: concrete type})
     output_path, output_file  the BV-BRC framework params
-Tool outputs: one `Directory?` per output port, the port's folder in the job result folder
-(ws://<output_path>/.<output_file>/<port>), holding one value folder per sample or the value itself.
+Tool outputs: one per output port, the port's folder in the job result folder (<output_path>/.<output_file>/<port>),
+holding one value folder per sample or the value itself. Worker mode: a `string?`, the plain workspace path. As a
+Directory a GoWe worker would download the folder for the next step and hand it a local copy without the modpipe_*
+metadata (and move every intermediate twice); the next step reads it from the workspace itself. bvbrc mode: a
+`Directory?` (glob = port id), which GoWe's BV-BRC executor resolves to ws://<result folder>/<port>.
 
 Modes:
     worker  run on a GoWe worker: Apptainer image + `modpipe cwl-step` (this checkout, bind-mounted) runs the app
@@ -89,10 +92,13 @@ def tool_for(mod, ts, dbs, mode="worker", image=None, modpipe_home=None):
 
     outputs = {}
     for oid, o in mod.outputs.items():
-        outputs[oid] = {"type": ["null", "Directory"], "outputBinding": {"glob": oid},
-                        "doc": f"modpipe type {o.get('type')}: folder <result>/{oid}, one value folder per sample "
-                               f"(or the value itself), tagged with modpipe_* workspace metadata",
-                        "modpipe:type": o.get("type")}
+        doc = (f"modpipe type {o.get('type')}: workspace folder <output_path>/.<output_file>/{oid}, one value folder "
+               f"per sample (or the value itself), tagged with modpipe_* workspace metadata")
+        if mode == "bvbrc":
+            outputs[oid] = {"type": ["null", "Directory"], "outputBinding": {"glob": oid}, "doc": doc}
+        else:       # a path string: never staged by a worker (see the module doc)
+            outputs[oid] = {"type": ["null", "string"], "doc": doc}
+        outputs[oid]["modpipe:type"] = o.get("type")
 
     label = mod.d.get("label") or mod.id
     doc = (mod.d.get("description") or label).strip()
@@ -177,14 +183,11 @@ def app_params(job):
 
 
 def cwl_outputs(result, mod):
-    """cwl.output.json content from the app's modpipe_step_result.json."""
+    """cwl.output.json content from the app's modpipe_step_result.json: the workspace path of each produced
+    port folder (a string; see the module doc), None for ports not produced."""
     folder = result["result_folder"].rstrip("/")
     values = result.get("values") or {}
-    out = {}
-    for oid in mod.outputs:
-        out[oid] = ({"class": "Directory", "location": f"ws://{folder}/{oid}", "basename": oid}
-                    if values.get(oid) else None)
-    return out
+    return {oid: (f"{folder}/{oid}" if values.get(oid) else None) for oid in mod.outputs}
 
 
 def run_step(job_path, cores=None, ram_mb=None, workdir="."):
