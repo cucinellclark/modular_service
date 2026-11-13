@@ -52,14 +52,16 @@ class CompileTests(unittest.TestCase):
         self.assertEqual(align["in"]["sequences"], "proteins")                 # pipeline input -> workflow input
         self.assertEqual(align["in"]["strategy"], {"default": "auto"})          # step param -> fixed step input
         self.assertEqual(tree["in"]["alignment"], "align/alignment")            # step ref -> upstream port folder
-        self.assertEqual(tree["in"]["output_file"], {"source": "run_name", "valueFrom": '$(self + "_tree")'})
+        self.assertEqual(tree["in"]["output_file"], {"default": "tree"})       # <run folder>/.tree/
+        self.assertEqual(tree["in"]["output_path"], "output_path")
         self.assertEqual(set(align["out"]), set(MODS.get("mafft").outputs))
         self.assertEqual(wf["outputs"]["tree"], {"type": "string?", "outputSource": "tree/tree",
                                                  "doc": wf["outputs"]["tree"]["doc"]})
         self.assertEqual(wf["inputs"]["proteins"]["type"], "Any")
         self.assertEqual(job["proteins"], {"type": "sequences.protein", "source": {
             "feature_group": "/clark.cucinell@patricbrc.org/home/Feature Groups/rpoB_feature_group_20"}})
-        self.assertNotIn("MultipleInputFeatureRequirement", wf["requirements"])
+        self.assertNotIn("requirements", wf)                                    # no expressions needed
+        self.assertNotIn("run_name", wf["inputs"])
         self.assertEqual(info["tools_dir"], os.path.realpath(self.tools))
 
     def test_list_port_merges_sources(self):
@@ -68,7 +70,7 @@ class CompileTests(unittest.TestCase):
         self.assertEqual(rep, {"source": ["map/flagstat", "cov/stats"], "linkMerge": "merge_flattened",
                                "pickValue": "all_non_null"})
         self.assertEqual(wf["steps"]["summary"]["in"]["tables"]["source"], ["cov/coverage"])
-        self.assertIn("MultipleInputFeatureRequirement", wf["requirements"])
+        self.assertEqual(wf["requirements"], {"MultipleInputFeatureRequirement": {}})
         self.assertEqual(job["reads"]["source"], {"srr_ids": ["SRR2838702"]})
 
     def test_refusals(self):
@@ -127,7 +129,8 @@ class CompileTests(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
         with open(os.path.join(out, "job.json")) as f:
             job = json.load(f)
-        self.assertEqual((job["output_path"], job["run_name"]), ("/u@bvbrc/home/x", "t1"))
+        self.assertEqual(job["output_path"], "/u@bvbrc/home/x/t1")              # the run folder
+        self.assertNotIn("run_name", job)
         self.assertTrue(os.path.exists(os.path.join(out, "modpipe-gowe-test-align-and-tree.cwl")))
         r = subprocess.run([os.path.join(REPO, "bin", "modpipe"), "compile", os.path.join(REPO, "tests", "gowe", "gowe_align_tree.json"),
                             "--out", out, "--tools", self.tools, "--output-path", "/tmp/x"], capture_output=True, text=True)

@@ -4,9 +4,12 @@
                       [--tls-cert C --tls-key K | --self-signed]
 
 The production app service does not know the ModularPipeline app yet, so this server stands in for it: it lists
-templates, validates pipelines, and submits jobs to Slurm by running App-ModularPipeline exactly like
-tests/app/run_app.sbatch does. Jobs run with the BV-BRC token sent by the browser (Authorization header) and
-write results to that user's workspace.
+templates, validates pipelines, and submits jobs. Two backends (--backend):
+  slurm  (default) run App-ModularPipeline as one Slurm job, exactly like tests/app/run_app.sbatch
+  gowe   compile the pipeline to a GoWe workflow (one ModularStep job per step) and submit it to the GoWe server
+         (--gowe-server) as the user; see lib/modpipe/gowe_backend.py and docs/GOWE.md
+Jobs run with the BV-BRC token sent by the browser (Authorization header) and write results to that user's
+workspace.
 
 Endpoints (JSON):
   GET  /api/health
@@ -19,8 +22,10 @@ Endpoints (JSON):
   POST /api/instantiate   {template, inputs, template_params}           -> {ok, errors, warnings, pipeline, resources}
   POST /api/validate      {pipeline}                                     -> same
   POST /api/submit        {pipeline | template+inputs+template_params, output_path, output_file}  (auth) -> {job}
-  GET  /api/jobs                      (auth) this user's jobs with Slurm state
-  GET  /api/jobs/<id>/log             (auth) tail of the job log
+  GET  /api/jobs                      (auth) this user's jobs with their state
+  GET  /api/jobs/<id>                 (auth, GoWe) one run: state, per-step state/timing/outputs, the pipeline
+  POST /api/jobs/<id>/cancel          (auth, GoWe) cancel the run
+  GET  /api/jobs/<id>/log[?step=<id>] (auth) tail of the job log (GoWe: per step)
 Prototype limits: the token is trusted as given (the workspace and data API enforce access); no rate limiting.
 """
 import datetime
@@ -34,6 +39,7 @@ import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
+from . import gowe_backend
 from .pipeline import Validator, auto_convert
 from .registry import DatabaseRegistry, ModuleRegistry
 from .templates import TemplateError, instantiate
@@ -44,6 +50,7 @@ STATE_DIR = os.environ.get("MODPIPE_UI_STATE", os.path.expanduser("~/.modpipe-ui
 _lock = threading.Lock()
 TOKEN_USER = re.compile(r"(?:^|\|)un=([^|]+)")
 JOB_ID = re.compile(r"^[a-f0-9]{12}$")
+CONFIG = {"backend": "slurm", "gowe_server": None}      # set by serve()
 
 
 class ApiError(Exception):
@@ -181,6 +188,8 @@ class Catalog:
                 ui["disabled"] = off
         if t.get("links"):
             ui["links"] = t["links"]
+        if t.get("expose"):
+            ui["expose"] = t["expose"]          # the options the run-setup panel shows
         if ui:
             p["ui"] = ui
         return {"template": name, "label": t.get("label") or p.get("name"), "pipeline": p,
@@ -271,6 +280,23 @@ def submit(cat, body, token, user):
     jid = uuid.uuid4().hex[:12]
     jdir = os.path.join(STATE_DIR, "jobs", jid)
     os.makedirs(jdir, mode=0o700)
+    if CONFIG["backend"] == "gowe":
+        try:
+            fields = gowe_backend.submit(CONFIG["gowe_server"], cat, res["pipeline"], body["output_path"],
+                                         body["output_file"], token, jdir)
+        except gowe_backend.GoweError as e:
+            import shutil
+            shutil.rmtree(jdir, ignore_errors=True)          # nothing was submitted
+            raise ApiError(e.status, e.msg, e.extra)
+        job = {"id": jid, "user": user, "name": p.get("name"), "template": body.get("template"),
+               "output_path": body["output_path"], "output_file": body["output_file"],
+               "submitted": datetime.datetime.now().isoformat(timespec="seconds"), "resources": res["resources"],
+               "pipeline": p, **fields, "warnings": res["warnings"] + [w for w in fields["warnings"] if w not in res["warnings"]]}
+        with _lock:
+            jobs = _load_jobs()
+            jobs.append(job)
+            _save_jobs(jobs)
+        return job
     params = {"pipeline": res["pipeline"], "output_path": body["output_path"], "output_file": body["output_file"],
               "keep_intermediates": bool(body.get("keep_intermediates"))}
     pfile = os.path.join(jdir, "params.json")
@@ -300,11 +326,45 @@ def submit(cat, body, token, user):
     return job
 
 
-def list_jobs(user):
+def _own_job(user, jid):
+    if not JOB_ID.match(jid or ""):
+        raise ApiError(404, "no such job")
     with _lock:
-        jobs = [j for j in _load_jobs() if j["user"] == user]
-    st = _slurm_state([j["slurm_id"] for j in jobs])
+        j = next((j for j in _load_jobs() if j["id"] == jid and j["user"] == user), None)
+    if not j:
+        raise ApiError(404, "no such job")
+    return j
+
+
+def job_detail(user, jid, token):
+    j = _own_job(user, jid)
+    if j.get("backend") != "gowe":
+        raise ApiError(400, "run details are only available for GoWe runs")
+    if not CONFIG["gowe_server"]:
+        raise ApiError(503, "this server has no --gowe-server")
+    return {**j, **gowe_backend.detail(CONFIG["gowe_server"], j, token)}
+
+
+def cancel_job(user, jid, token):
+    j = _own_job(user, jid)
+    if j.get("backend") != "gowe" or not CONFIG["gowe_server"]:
+        raise ApiError(400, "only GoWe runs can be cancelled here")
+    try:
+        gowe_backend.cancel(CONFIG["gowe_server"], j, token)
+    except gowe_backend.GoweError as e:
+        raise ApiError(e.status, e.msg)
+    return {"ok": True, "id": jid}
+
+
+def list_jobs(user, token=None):
+    with _lock:
+        jobs = [{k: v for k, v in j.items() if k != "pipeline"} for j in _load_jobs() if j["user"] == user]
+    st = _slurm_state([j["slurm_id"] for j in jobs if j.get("slurm_id")])
     for j in jobs:
+        if j.get("backend") == "gowe":
+            j.update(gowe_backend.status(CONFIG["gowe_server"] or "", j, token) if CONFIG["gowe_server"]
+                     else {"state": "UNKNOWN", "status_error": "this server has no --gowe-server"})
+            continue
         j.update(st.get(j["slurm_id"], {"state": "UNKNOWN"}))
         log = os.path.join(STATE_DIR, "jobs", j["id"], "slurm.out")
         if j.get("state") == "COMPLETED" and os.path.exists(log):
@@ -314,13 +374,15 @@ def list_jobs(user):
     return sorted(jobs, key=lambda j: j["submitted"], reverse=True)
 
 
-def job_log(user, jid):
-    if not JOB_ID.match(jid):
-        raise ApiError(404, "no such job")
-    with _lock:
-        j = next((j for j in _load_jobs() if j["id"] == jid and j["user"] == user), None)
-    if not j:
-        raise ApiError(404, "no such job")
+def job_log(user, jid, token=None, step=None):
+    j = _own_job(user, jid)
+    if j.get("backend") == "gowe":
+        if not CONFIG["gowe_server"]:
+            raise ApiError(503, "this server has no --gowe-server")
+        try:
+            return {"id": jid, "step": step, "log": gowe_backend.log(CONFIG["gowe_server"], j, token, step=step)}
+        except gowe_backend.GoweError as e:
+            raise ApiError(e.status, e.msg)
     log = os.path.join(STATE_DIR, "jobs", jid, "slurm.out")
     if not os.path.exists(log):
         return {"id": jid, "log": "(job has not started yet)"}
@@ -389,7 +451,7 @@ def make_handler(cat, origins):
             path, q = u.path.rstrip("/"), parse_qs(u.query)
             try:
                 if method == "GET" and path == "/api/health":
-                    return self._send(200, {"ok": True, "modules": len(cat.mods.modules)})
+                    return self._send(200, {"ok": True, "modules": len(cat.mods.modules), "backend": CONFIG["backend"]})
                 if method == "GET" and path == "/api/templates":
                     return self._send(200, cat.templates())
                 if method == "GET" and path == "/api/catalog":
@@ -425,12 +487,21 @@ def make_handler(cat, origins):
                     tok, user = self._auth()
                     return self._send(200, {"job": submit(cat, self._body(), tok, user)})
                 if method == "GET" and path == "/api/jobs":
-                    _, user = self._auth()
-                    return self._send(200, list_jobs(user))
+                    tok, user = self._auth()
+                    return self._send(200, list_jobs(user, tok))
                 m = re.match(r"^/api/jobs/([^/]+)/log$", path)
                 if method == "GET" and m:
-                    _, user = self._auth()
-                    return self._send(200, job_log(user, m.group(1)))
+                    tok, user = self._auth()
+                    step = (q.get("step") or [None])[0]
+                    return self._send(200, job_log(user, m.group(1), tok, step))
+                m = re.match(r"^/api/jobs/([^/]+)$", path)
+                if method == "GET" and m:
+                    tok, user = self._auth()
+                    return self._send(200, job_detail(user, m.group(1), tok))
+                m = re.match(r"^/api/jobs/([^/]+)/cancel$", path)
+                if method == "POST" and m:
+                    tok, user = self._auth()
+                    return self._send(200, cancel_job(user, m.group(1), tok))
                 raise ApiError(404, f"no route {method} {path}")
             except ApiError as e:
                 self._send(e.status, {"ok": False, "error": e.msg, **e.extra})
@@ -458,7 +529,11 @@ def self_signed_cert(hostname):
 DEFAULT_ORIGINS = ("https://dev-5.bv-brc.org", "http://localhost:3000")
 
 
-def serve(host="127.0.0.1", port=8765, origins=DEFAULT_ORIGINS, cert=None, key=None):
+def serve(host="127.0.0.1", port=8765, origins=DEFAULT_ORIGINS, cert=None, key=None, backend="slurm",
+          gowe_server=None):
+    if backend == "gowe" and not gowe_server:
+        raise SystemExit("--backend gowe needs --gowe-server URL (e.g. http://localhost:12007)")
+    CONFIG.update(backend=backend, gowe_server=gowe_server)
     cat = Catalog()
     httpd = ThreadingHTTPServer((host, port), make_handler(cat, set(origins)))
     scheme = "http"
@@ -469,7 +544,8 @@ def serve(host="127.0.0.1", port=8765, origins=DEFAULT_ORIGINS, cert=None, key=N
         ctx.load_cert_chain(cert, key)
         httpd.socket = ctx.wrap_socket(httpd.socket, server_side=True)
         scheme = "https"
-    print(f"[modpipe-api] serving on {scheme}://{host}:{port}  (CORS origins: {', '.join(origins)}; state: {STATE_DIR})", flush=True)
+    print(f"[modpipe-api] serving on {scheme}://{host}:{port}  (CORS origins: {', '.join(origins)}; state: {STATE_DIR}; "
+          f"backend: {backend}{' ' + gowe_server if gowe_server else ''})", flush=True)
     if cert:
         print(f"[modpipe-api] TLS certificate: {cert}", flush=True)
     try:

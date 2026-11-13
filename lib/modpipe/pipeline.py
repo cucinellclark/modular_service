@@ -8,7 +8,7 @@ from .util import Issues, fmt_runtime, parse_memory_gb, read_json
 
 PIPELINE_SCHEMA = "modpipe/pipeline/v1"
 TOP_KEYS = {"schema", "name", "description", "inputs", "outputs", "steps", "template", "ui"}
-UI_KEYS = {"positions", "disabled", "optional", "links", "viewport", "notes"}
+UI_KEYS = {"positions", "disabled", "optional", "links", "expose", "viewport", "notes"}
 STEP_KEYS = {"module", "in", "params", "module_version", "description", "auto"}
 INPUT_KEYS = {"type", "source", "collection", "attributes", "description", "label"}
 SOURCE_KEYS = {"paired_end_libs", "single_end_libs", "srr_ids", "srr_libs", "wsid", "wsids", "files",

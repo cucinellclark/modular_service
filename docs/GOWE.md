@@ -102,7 +102,7 @@ at), so the workflow is pinned to a release and `gowe bundle` finds the tools by
 | `<step>.<output>` | `<step>/<output>`, the upstream port folder's workspace path |
 | `[ref, ...]` (list port) | `source: [...]`, `linkMerge: merge_flattened`, `pickValue: all_non_null` (+ `MultipleInputFeatureRequirement`) |
 | step params | fixed step inputs (`default:`); module defaults for the rest |
-| `output_file` | `<run_name>_<step>`: results in `<output_path>/.<run_name>_<step>/<port>/` |
+| `output_path`, `output_file` | the run folder `<--output-path>/<run name>` and the step id: results in `<run folder>/.<step>/<port>/` (one folder per run; the Workspace creates the run folder with the first step's result folder). No expressions, so no workflow-level requirements |
 | pipeline outputs | workflow outputs `string?` (workspace folders) |
 
 Refused up front: `fixture` sources (local test data), a module without a released tool or whose released tool has
@@ -226,7 +226,19 @@ Results 2026-11-05:
 - AppScript only *warns* about params missing from the app spec ("provided in the job submission but not
   specified in the app spec") and keeps them in `raw_params`.
 
+## UI submit through GoWe
+
+`bin/modpipe serve --backend gowe --gowe-server http://localhost:12007` ([UI.md](UI.md)): `POST /api/submit`
+validates, compiles into the job's state folder, packs with `gowe bundle`, then registers
+(`POST /api/v1/workflows/`) and submits (`POST /api/v1/submissions/`) with the user's token as `Bearer`
+(`lib/modpipe/gowe_backend.py`). The run name is the job name with other characters replaced by `_`; a run folder
+that already exists is refused (409), since steps would write into it. `/api/jobs`
+reads each submission (state, `task_summary`, outputs) and `/api/jobs/<id>/log` each task's stdout/stderr tail,
+again as the user. Tested 2026-11-13 with a local API instance: `tests/gowe/gowe_align_tree.json` submitted
+through `/api/submit`, COMPLETED (2/2 steps, 31 s), outputs and logs through the API, no token on disk or in
+logs; no token -> 401, a `fixture` source -> 400 with the compile error.
+
 ## Next
-1. The UI's submit goes to GoWe (compile + `gowe submit` from the modpipe API, as the user).
+1. Run the UI on dev-5 with `--backend gowe` and submit from the browser.
 2. Small: `release.sh` without `--yes` should check for a terminal up front. `~/GoWeServer/modpipe/image-sha256/`
    (the old release cache) is unused and can be deleted.

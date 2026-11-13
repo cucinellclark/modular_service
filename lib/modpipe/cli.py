@@ -179,7 +179,8 @@ def cmd_serve(a):
             print("error: use either --self-signed or --tls-cert/--tls-key", file=sys.stderr)
             return 2
         cert, key = self_signed_cert(socket.getfqdn())
-    serve(a.host, a.port, a.origin or list(DEFAULT_ORIGINS), cert, key)
+    serve(a.host, a.port, a.origin or list(DEFAULT_ORIGINS), cert, key, backend=a.backend,
+          gowe_server=a.gowe_server or os.environ.get("GOWE_SERVER"))
     return 0
 
 
@@ -299,8 +300,7 @@ def cmd_compile(a):
             raise CompileError([f"--run-name {run_name!r}: letters, digits, . _ - (max 64)"])
         wf, job, info = compile_pipeline(p, ts, mods, dbs, tools_dir=a.tools, where=a.pipeline)
         if a.output_path:
-            job["output_path"] = a.output_path.rstrip("/")
-        job["run_name"] = run_name
+            job["output_path"] = f"{a.output_path.rstrip('/')}/{run_name}"     # the run folder
         path = write(a.out, wf, job, info["tools_dir"], name)
     except CompileError as e:
         for x in e.warnings:
@@ -366,8 +366,9 @@ def main(argv=None):
     s.add_argument("pipeline")
     s.add_argument("--out", required=True, help="output directory (workflow, job.json, tools link)")
     s.add_argument("--tools", help="released tools dir (default: ~/GoWeServer/modpipe/current/cwl/tools, resolved)")
-    s.add_argument("--output-path", help="workspace folder for the results (job.json output_path)")
-    s.add_argument("--run-name", help="job name prefix: results in <output-path>/.<run-name>_<step>/")
+    s.add_argument("--output-path", help="workspace folder for results; the run gets <output-path>/<run-name>/")
+    s.add_argument("--run-name", help="run folder name (default from the pipeline name): steps write "
+                                      "<output-path>/<run-name>/.<step>/")
     s.add_argument("--name", help="workflow name (file name; GoWe registers it under this name)")
     s.set_defaults(fn=cmd_compile)
     s = sub.add_parser("cwl-step")
@@ -393,6 +394,9 @@ def main(argv=None):
     s.add_argument("--tls-key", help="private key for --tls-cert")
     s.add_argument("--self-signed", action="store_true",
                    help="serve HTTPS with a self-signed certificate for this host (created once under ~/.modpipe-ui/tls)")
+    s.add_argument("--backend", choices=["slurm", "gowe"], default="slurm",
+                   help="slurm: one App-ModularPipeline Slurm job; gowe: compile + submit to GoWe as the user")
+    s.add_argument("--gowe-server", help="GoWe server URL for --backend gowe (or GOWE_SERVER)")
     s.set_defaults(fn=cmd_serve)
     s = sub.add_parser("list-templates")
     s.add_argument("--json", action="store_true")
