@@ -1,6 +1,6 @@
 #!/bin/bash
 # One GoWe worker for modpipe tools, as a Slurm job on a compute node:
-#   GOWE_SERVER=http://ash.cels.anl.gov:12007 sbatch deploy/gowe/worker.sbatch
+#   GOWE_SERVER=http://ash.cels.anl.gov:12007 sbatch deploy/gowe/worker.sbatch     (from the repo root, or set MODPIPE_REPO)
 # Group `modpipe` (the tools' gowe:Execution.worker_group), Apptainer runtime, production image, the released code
 # snapshots (deploy/gowe/release.sh: ~/GoWeServer/modpipe/releases, read-only) and the BV-BRC data folders
 # bind-mounted. MODPIPE_RELEASES overrides the releases folder (a dev checkout works too, for unreleased tools). The worker key (if the server uses --worker-keys) is read from
@@ -21,9 +21,12 @@ SERVER=${GOWE_SERVER:?set GOWE_SERVER, e.g. http://ash.cels.anl.gov:12007}
 for s in /disks/tmp /scratch/tmp /tmp; do [[ -d $s && -w $s ]] && { SCRATCH=$s; break; }; done
 WD=$SCRATCH/$USER/gowe-worker-$SLURM_JOB_ID
 mkdir -p "$WD/bin" && chmod 700 "$WD"
-# Compute nodes ship `singularity` only; the worker calls `apptainer` (same CLI).
+# Some compute nodes have only singularity-ce; the worker calls `apptainer`. The wrapper also maps the
+# APPTAINERENV_* tool environment (the injected token) to SINGULARITYENV_*, which a bare symlink would drop.
 if ! command -v apptainer >/dev/null && command -v singularity >/dev/null; then
-    ln -sf "$(command -v singularity)" "$WD/bin/apptainer"; export PATH=$WD/bin:$PATH
+    cp "${MODPIPE_REPO:-$SLURM_SUBMIT_DIR}/deploy/gowe/apptainer-on-singularity.sh" "$WD/bin/apptainer" || exit 1
+    chmod 755 "$WD/bin/apptainer"; export PATH=$WD/bin:$PATH
+    echo "apptainer: singularity wrapper ($(singularity --version))"
 fi
 ARGS=(--server "$SERVER" --name "modpipe-$SLURM_JOB_ID-$(hostname -s)" --group modpipe --runtime apptainer
       --workdir "$WD/tasks" --poll 5s --extra-bind "$RELEASES" --extra-bind "$SCRATCH"

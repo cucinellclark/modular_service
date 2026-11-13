@@ -22,7 +22,7 @@ nothing else in the service changes.
 
 More decisions (types, databases, resources, versioning, UI): [OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md).
 
-## Status (2026-11-06)
+## Status (2026-11-13)
 - The engine, 51 modules and 17 curated templates are lint-clean, and every template passes end-to-end runs in the
   container on Slurm.
 - The BV-BRC service shell (`App-ModularPipeline.pl`) is tested end to end and deployable with `make deploy-service`.
@@ -30,9 +30,9 @@ More decisions (types, databases, resources, versioning, UI): [OPEN_QUESTIONS.md
   checks, auto converters, workspace save/open in `home/pipeline`) and a job list. A graph-built pipeline has run
   for real.
 - Per-tool execution via GoWe: the **ModularStep** app runs one module per job (chains tested on Slurm), and
-  `modpipe export-cwl` makes one CWL tool per module (tested with GoWe's `cwl-runner`). Release `21610b109b` has all
-  51 tools registered and blessed on the ash GoWe server (`deploy/gowe/release.sh`). Not yet run through a worker
-  ([GOWE.md](docs/GOWE.md)).
+  `modpipe export-cwl` makes one CWL tool per module (tested with GoWe's `cwl-runner`). Release `38def09013` has all
+  51 tools registered and blessed on the ash GoWe server (`deploy/gowe/release.sh`); mafft -> fasttree and the
+  fastp -> minimap2 -> samtools coverage chain have run through it on Slurm workers ([GOWE.md](docs/GOWE.md)).
 - Not live yet: the app needs registration and a container build (BV-BRC maintainers). The API doesn't verify
   tokens yet (see OPEN_QUESTIONS).
 

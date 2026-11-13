@@ -109,6 +109,11 @@ folders couldn't be returned. Also unconfirmed: whether `start_app` passes undec
   (`TOKEN_TOOL_OVERRIDE_REFUSED`). Packing doesn't change the tool hash, so the blessings carry over; the 51 packed
   versions are now the newest under each name. Exception: packed mafft is named `mafft` (`wf_4b41977e…`, first
   registered by a `gowe submit --dry-run`), so `modpipe-mafft` by name still resolves to the refused bare version.
+- Release `38def09013` (2026-11-13, string outputs) is current, all 51 blessed. The reads chain ran through the
+  server (`modpipe-reads-chain`, `reads_chain.cwl` with `run:` pointing at the release's tools): fastp ->
+  minimap2 -> samtools coverage COMPLETED, each step given the previous step's workspace path
+  (`.gowewf4_*/…/SRR2838702/`), no token in the task logs. `gowe bundle` resolves `run:` paths relative to the
+  workflow even when absolute: link the release's `cwl/tools` next to the workflow.
 - First runs through the server (2026-11-09, worker Slurm job on `lemon`): `mafft` (feature group ->
   `.gowe1_mafft/alignment`, ~5 min) then `modpipe-fasttree` on that folder given as a plain workspace path
   (`.gowe2_fasttree/tree/tree.nwk`). Both COMPLETED; no token in the task logs.
@@ -145,6 +150,17 @@ stay valid (each points at its own frozen snapshot); revoke with `gowe admin unb
 `~/GoWeServer/modpipe/releases` (not the working checkout). Tested 2026-11-06 on a throwaway base: the snapshot is
 fully read-only, all tools validate, the engine runs from it without writing.
 
+### Worker notes
+- **Node runtimes differ**: `lemon` has Apptainer 1.5.3, `fir` only singularity-ce 3.10. GoWe passes the tool
+  environment, including the injected token, as `APPTAINERENV_*`, which singularity ignores; with a plain
+  `apptainer -> singularity` symlink the token was silently dropped ("cwl-step: no BV-BRC token in the
+  environment"). `worker.sbatch` and `run_cwl.sbatch` install `deploy/gowe/apptainer-on-singularity.sh` instead,
+  which copies `APPTAINERENV_*` to `SINGULARITYENV_*`. Submit `worker.sbatch` from the repo root (or set
+  `MODPIPE_REPO`).
+- **First token task per worker is slow**: before injecting the token the worker hashes the image to check it
+  against the blessing; for the 37 GB production `.sif` that is ~10 min, once per worker process.
+- A failed step's dependents are still dispatched (with null inputs) and fail too; read the first failure.
+
 ## Testing without a GoWe server
 
 `tests/cwl/run_cwl.sbatch <tool-or-workflow.cwl> <job.json>` runs GoWe's standalone `cwl-runner` with Apptainer on a
@@ -172,11 +188,6 @@ Results 2026-11-05:
   specified in the app spec") and keeps them in `raw_params`.
 
 ## Next
-0. Release the string-output tools (needs blessing) and rerun `reads_chain.cwl` through the server. Tested
-   2026-11-09: through the server with the Directory-output release, trim succeeded and map failed (worker staging,
-   above); with string outputs the chain passes under the standalone cwl-runner (job 21394736). Bundling note:
-   `gowe bundle` resolves `run:` paths relative to the workflow even when absolute (link the release's
-   `cwl/tools` next to the workflow).
 1. `modpipe compile`: validated pipeline -> CWL workflow over these tools (scatter for sample collections, a
    per-step `output_file`, `input_types` from the plan's resolved types).
 2. The UI's submit goes to GoWe.

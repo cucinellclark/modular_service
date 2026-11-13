@@ -27,7 +27,9 @@ ENVF=$WD/token.env
 ( umask 077; t=$(cat "${MODPIPE_TOKEN_FILE:-$HOME/.patric_token}"); printf 'KB_AUTH_TOKEN=%s\nBVBRC_TOKEN=%s\n' "$t" "$t" > "$ENVF" )
 # Compute nodes ship `singularity` only; cwl-runner calls `apptainer` (same CLI).
 if ! command -v apptainer >/dev/null && command -v singularity >/dev/null; then
-    mkdir -p "$WD/bin" && ln -sf "$(command -v singularity)" "$WD/bin/apptainer" && export PATH=$WD/bin:$PATH
+    # wrapper, not a symlink: it maps APPTAINERENV_* (the injected token) to SINGULARITYENV_*
+    mkdir -p "$WD/bin" && cp "$REPO/deploy/gowe/apptainer-on-singularity.sh" "$WD/bin/apptainer" \
+        && chmod 755 "$WD/bin/apptainer" && export PATH=$WD/bin:$PATH
 fi
 echo "node=$(hostname) cwl=$CWL job=$JOB work=$WD"
 cd "$WD"
