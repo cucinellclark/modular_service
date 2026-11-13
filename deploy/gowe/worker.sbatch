@@ -36,6 +36,10 @@ for d in /vol/bvbrc/production/application-backend /vol/blastdb/bvbrc-service /v
     [[ -d $d ]] && ARGS+=(--extra-bind "$d")
 done
 [[ -n ${GOWE_WORKER_KEY_FILE:-} ]] && ARGS+=(--worker-key-file "$GOWE_WORKER_KEY_FILE")
+# Persistent image sha256 cache (seeded by release.sh): skips the ~10 min hash of the 37 GB image before the first
+# token task. Must stay outside every bind (it is under ~/GoWeServer/modpipe, of which only releases/ is bound).
+DIGESTS=${MODPIPE_IMAGE_DIGESTS:-$HOME/GoWeServer/modpipe/image-digests.json}
+[[ -d $(dirname "$DIGESTS") ]] && ARGS+=(--image-digest-file "$DIGESTS")
 echo "node=$(hostname) server=$SERVER releases=$RELEASES work=$WD"
 "$GOWE_DIR/bin/gowe-worker" "${ARGS[@]}"
 rc=$?

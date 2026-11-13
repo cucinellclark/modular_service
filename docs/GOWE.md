@@ -136,7 +136,7 @@ minutes) is computed once and cached.
 1. checks: clean checkout, HEAD pushed, unit tests, GoWe healthy, `gowe` CLI logged in
    (`~/.gowe/credentials.json`; `bin/gowe login < ~/.patric_token`);
 2. `git archive HEAD` -> `~/GoWeServer/modpipe/releases/<sha>/`, made read-only (reused if it exists);
-3. sha256 of the production image (cached in `~/GoWeServer/modpipe/image-sha256/`);
+3. sha256 of the production image, from/into the workers' digest file `~/GoWeServer/modpipe/image-digests.json`;
 4. `export-cwl --modpipe-home <snapshot>` into `<snapshot>/cwl/tools`, so the commit is part of each tool;
 5. register (`register_tools.py --json-out <snapshot>/registered.json`);
 6. `gowe admin bless <wf id> --image-sha256 <sha> --groups modpipe --note "modpipe <sha>"` per tool, by workflow
@@ -157,8 +157,14 @@ fully read-only, all tools validate, the engine runs from it without writing.
   environment"). `worker.sbatch` and `run_cwl.sbatch` install `deploy/gowe/apptainer-on-singularity.sh` instead,
   which copies `APPTAINERENV_*` to `SINGULARITYENV_*`. Submit `worker.sbatch` from the repo root (or set
   `MODPIPE_REPO`).
-- **First token task per worker is slow**: before injecting the token the worker hashes the image to check it
-  against the blessing; for the 37 GB production `.sif` that is ~10 min, once per worker process.
+- **Image hash, once**: before injecting the token a worker checks the image's sha256 against the blessing; for
+  the 37 GB `.sif` that is ~10 min. GoWe branch `modular-step` adds a persistent cache:
+  `gowe-worker --image-digest-file F` reuses a digest recorded for the same image identity (real path, inode, size,
+  mtime, ctime; no device number, which differs per NFS client: 80 on ash, 74 on fir, everything else equal) and
+  records new ones. `release.sh` step 3 seeds it (`gowe-worker --record-image-digest`), `worker.sbatch` passes
+  `~/GoWeServer/modpipe/image-digests.json`. Replacing or modifying the image changes its identity, so it is hashed
+  again; the file must be mode 600, owned by the worker uid and outside every bind (checked), since whoever can
+  edit it can vouch for an image.
 - A failed step's dependents are still dispatched (with null inputs) and fail too; read the first failure.
 
 ## Testing without a GoWe server
@@ -191,4 +197,5 @@ Results 2026-11-05:
 1. `modpipe compile`: validated pipeline -> CWL workflow over these tools (scatter for sample collections, a
    per-step `output_file`, `input_types` from the plan's resolved types).
 2. The UI's submit goes to GoWe.
-3. Small: `release.sh --dry-run` still creates the empty `image-sha256/` cache dir; check for a terminal up front.
+3. Small: `release.sh` without `--yes` should check for a terminal up front. `~/GoWeServer/modpipe/image-sha256/`
+   (the old release cache) is unused and can be deleted.

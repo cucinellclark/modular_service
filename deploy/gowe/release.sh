@@ -15,7 +15,8 @@
 # Steps (stops at the first failure):
 #   1 checks: clean checkout, HEAD pushed to origin, unit tests, GoWe healthy, gowe CLI logged in
 #   2 snapshot: git archive HEAD -> $RELEASES/<sha>/, then chmod -R a-w (an existing snapshot is reused as-is)
-#   3 image sha256 (cached per image path + size + mtime)
+#   3 image sha256, from/into the workers' digest file $BASE/image-digests.json (gowe-worker --record-image-digest;
+#     workers read the same file, so none of them hashes the 37 GB image again)
 #   4 modpipe export-cwl --modpipe-home <snapshot> --out <snapshot>/cwl/tools (run from the snapshot)
 #   5 register as modpipe-<module> (register_tools.py; token from MODPIPE_TOKEN_FILE, never argv)
 #   6 gowe admin bless <wf id> --image-sha256 <sha> --groups modpipe --note "modpipe <sha>"
@@ -40,8 +41,10 @@ done
 REPO=$(cd "$(dirname "$0")/../.." && pwd)
 SERVER=${GOWE_SERVER:-http://localhost:12007}
 GOWE=${GOWE_DIR:-$HOME/bvbrc-dev/Copilot/Agents/GoWe}/bin/gowe
+GOWE_WORKER=${GOWE}-worker
 BASE=${MODPIPE_RELEASE_BASE:-$HOME/GoWeServer/modpipe}
 RELEASES=$BASE/releases
+DIGESTS=$BASE/image-digests.json
 IMAGE=$(cat "$REPO/singularity_container_ref.txt")
 GROUP=modpipe
 
@@ -65,6 +68,7 @@ if (( TESTS )); then
 fi
 curl -sf "$SERVER/api/v1/health" | grep -q '"healthy"' || die "GoWe at $SERVER is not healthy"
 [[ -x $GOWE ]] || die "no gowe CLI at $GOWE (set GOWE_DIR)"
+"$GOWE_WORKER" --help 2>&1 | grep -q -- -record-image-digest || die "$GOWE_WORKER has no --record-image-digest (rebuild GoWe branch modular-step)"
 [[ -s $HOME/.gowe/credentials.json ]] || die "the gowe CLI is not logged in; run:  $GOWE login < ~/.patric_token"
 [[ -r $IMAGE ]] || die "image $IMAGE not readable"
 echo "   ok: clean, pushed, server healthy, image $IMAGE"
@@ -87,17 +91,17 @@ else
 fi
 
 # ---------------------------------------------------------------- 3 image sha256
-say "3 image sha256"
-mkdir -p "$BASE/image-sha256"
-key=$(stat -c '%s-%Y' "$IMAGE")-$(printf '%s' "$IMAGE" | sha1sum | cut -c1-12)
-cache=$BASE/image-sha256/$key
-if [[ -s $cache ]]; then
-    IMG_SHA=$(cat "$cache"); echo "   cached: $IMG_SHA"
-elif (( DRY )); then
-    IMG_SHA="<sha256 of $IMAGE>"; echo "   (dry run) sha256sum $IMAGE"
+say "3 image sha256 (digest file $DIGESTS)"
+if (( DRY )); then
+    IMG_SHA="<sha256 of $IMAGE>"
+    echo "   (dry run) $GOWE_WORKER --image-digest-file $DIGESTS --record-image-digest $IMAGE"
 else
-    echo "   hashing $IMAGE ($(du -h "$IMAGE" | cut -f1)) ..."
-    IMG_SHA=$(sha256sum "$IMAGE" | cut -d' ' -f1); printf '%s\n' "$IMG_SHA" > "$cache"; echo "   $IMG_SHA"
+    # reuses the recorded digest while the image's identity is unchanged; otherwise hashes it (minutes for 37 GB)
+    out=$("$GOWE_WORKER" --log-level warn --image-digest-file "$DIGESTS" --record-image-digest "$IMAGE") \
+        || die "could not hash/record $IMAGE"
+    IMG_SHA=$(awk '$1 == "sha256" {print $2}' <<<"$out")
+    [[ $IMG_SHA =~ ^[0-9a-f]{64}$ ]] || die "unexpected output from --record-image-digest: $out"
+    echo "   $IMG_SHA"
 fi
 
 # ---------------------------------------------------------------- 4 export
