@@ -159,6 +159,8 @@ def _param_variants(module, dbreg, ts):
 
 def lint_render(module, ts, dbreg=None, max_renders=400):
     """Render the command for every input-type variant x parameter variant; return error strings."""
+    if not module.d.get("command"):
+        return []                       # service modules: no command (the BV-BRC app runs); nothing to render
     from .registry import DatabaseRegistry
     dbreg = dbreg or DatabaseRegistry()
     errs = []
@@ -259,6 +261,8 @@ def _intact(cmd, needle):
 def lint_shell_safety(module, ts, dbreg=None, max_renders=200):
     """Render with hostile values for every untrusted string (string params without a `pattern`, input paths,
     labels) and require each to survive shell word-splitting intact. Returns error strings."""
+    if not module.d.get("command"):
+        return []                       # service modules: no command to render
     from .registry import DatabaseRegistry
     dbreg = dbreg or DatabaseRegistry()
     errs = []

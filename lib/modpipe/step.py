@@ -126,6 +126,10 @@ def step_pipeline(params, ts, mods, ws_meta=None):
     if mod is None:
         iss.error("module", f"unknown module {mid!r}" if mid else "module is required")
         return None, iss
+    if mod.service:
+        iss.error("module", f"{mid} is a service module (BV-BRC app {mod.service['app']}); it runs as that app, "
+                            f"not inside ModularStep")
+        return None, iss
     accept = (read_yaml(repo_path("types", "wstypes.yaml")) or {}).get("accept") or {}
     input_types = params.get("input_types") or {}
     if not isinstance(input_types, dict):

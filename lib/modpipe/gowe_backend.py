@@ -99,9 +99,23 @@ def submit(server, cat, p, output_path, output_file, token, jdir):
     wfr = _call(server, "POST", "/api/v1/workflows/", token, {"name": name, "cwl": b.stdout})
     sub = _call(server, "POST", "/api/v1/submissions/", token, {"workflow_id": wfr["id"], "inputs": job})
     return {"backend": "gowe", "gowe_submission": sub["id"], "gowe_workflow": wfr["id"], "workflow_name": name,
-            "run_name": run_name, "steps": info["order"], "release_tools": info["tools_dir"],
+            "run_name": run_name, "steps": [sid for sid, _ in info["gowe_steps"]],
+            "step_modules": {sid: mid for sid, mid in info["gowe_steps"]}, "release_tools": info["tools_dir"],
             # the run folder: one result folder per step, .<step>/
             "result_folder": run_folder, "warnings": info["warnings"]}
+
+
+def _paths(outputs):
+    """CWL outputs -> {name: workspace path}: path strings as they are, File/Directory objects by location (a
+    service step's files are ws:// Files), values (e.g. a genome id) kept, nulls dropped."""
+    out = {}
+    for k, v in (outputs or {}).items():
+        if isinstance(v, dict) and v.get("location"):
+            loc = v["location"]
+            out[k] = loc[len("ws://"):] if loc.startswith("ws://") else loc
+        elif isinstance(v, str):
+            out[k] = v
+    return out
 
 
 def _parse_ts(s):
@@ -129,7 +143,7 @@ def status(server, job, token):
     return {"state": STATE_MAP.get(str(d.get("state", "")).upper(), d.get("state") or "UNKNOWN"), "elapsed": el,
             "steps_done": ts.get("success", 0), "steps_failed": ts.get("failed", 0),
             "steps_total": max(total, len(job.get("steps") or [])),
-            "outputs": {k: v for k, v in (d.get("outputs") or {}).items() if isinstance(v, str)}}
+            "outputs": _paths(d.get("outputs"))}
 
 
 def _tasks(server, job, token):
@@ -160,6 +174,7 @@ def detail(server, job, token):
     except GoweError as e:
         st["status_error"] = e.msg
     mods = {sid: (s or {}).get("module") for sid, s in ((job.get("pipeline") or {}).get("steps") or {}).items()}
+    mods.update(job.get("step_modules") or {})
     steps = []
     for sid in job.get("steps") or []:
         t = by_step.get(sid) or {}
@@ -168,7 +183,7 @@ def detail(server, job, token):
                       "started": t.get("started_at"), "completed": t.get("completed_at"),
                       "elapsed": _elapsed(t.get("started_at"), t.get("completed_at")) if t.get("started_at") else "",
                       "folder": f"{job.get('result_folder', '').rstrip('/')}/.{sid}",
-                      "outputs": {k: v for k, v in (t.get("outputs") or {}).items() if isinstance(v, str)}})
+                      "outputs": _paths(t.get("outputs"))})
     st["step_detail"] = steps
     return st
 

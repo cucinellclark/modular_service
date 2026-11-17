@@ -52,6 +52,8 @@ class ExportTests(unittest.TestCase):
         self.assertEqual(t["inputs"]["contigs"]["modpipe:cardinality"], "many")
         self.assertEqual(t["inputs"]["reference"]["type"], ["null", "Any"])         # optional port
         for m in MODS.modules.values():
+            if m.service:
+                continue                                                   # BV-BRC-executor tool (ServiceToolTests)
             t = tool_for(m, TS, DBS)
             names = set(t["inputs"])
             self.assertEqual(len(names), 1 + len(m.inputs) + len(m.params) + 3, m.id)   # no name collisions
@@ -60,7 +62,7 @@ class ExportTests(unittest.TestCase):
         d = tempfile.mkdtemp()
         try:
             paths = export(MODS, TS, DBS, d)
-            self.assertEqual(len(paths), len(MODS.modules))
+            self.assertEqual(len(paths), len(MODS.modules) + 2)          # + helper_value_file, helper_wait_genome
             with open(paths[0]) as f:
                 yaml.safe_load(f)
             if not os.access(GOWE_RUNNER, os.X_OK):
@@ -91,6 +93,27 @@ class ShimTests(unittest.TestCase):
         out = cwl_outputs(res, MODS.get("fasttree"))
         self.assertEqual(out["tree"], "/u@bvbrc/home/.j/tree")
         self.assertIsNone(out["log"])
+
+
+class ServiceToolTests(unittest.TestCase):
+    def test_annotation_tool(self):
+        t = tool_for(MODS.get("genome_annotation"), TS, DBS, image="/img/x.sif", modpipe_home="/repo")
+        self.assertEqual(t["hints"], {"gowe:Execution": {"executor": "bvbrc", "bvbrc_app_id": "GenomeAnnotation"}})
+        self.assertNotIn("requirements", t)                                # no container, no token injection
+        self.assertEqual(t["inputs"]["contigs"]["type"], "string")         # a workspace path
+        self.assertEqual(t["inputs"]["code"]["type"], ["null", "int"])     # int enum -> int for the app
+        self.assertEqual(t["inputs"]["skip_indexing"], {"type": "boolean", "default": False, "doc": "fixed by the modpipe module"})
+        self.assertEqual(t["outputs"]["genome"]["outputBinding"], {"glob": "$(inputs.output_file).genome"})
+        self.assertNotIn("genome_id", t["outputs"])                        # from the wait helper
+
+    def test_helpers(self):
+        from modpipe.cwl import helper_tool
+        v = helper_tool("helper_value_file", "/img/x.sif", "/repo")
+        self.assertEqual(v["baseCommand"], ["/repo/bin/modpipe", "gowe-helper", "value-file", "job.json"])
+        self.assertTrue(v["hints"]["gowe:Execution"]["inject_bvbrc_token"])
+        w = helper_tool("helper_wait_genome")
+        self.assertEqual(w["outputs"], {"genome_id": {"type": "string"}})
+        self.assertEqual(w["inputs"]["timeout"]["default"], 7200)
 
 
 if __name__ == "__main__":

@@ -11,10 +11,12 @@ from .util import Issues, parse_memory_gb, parse_runtime_s, read_json, read_yaml
 MODULE_SCHEMA = "modpipe/module/v1"
 ID_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 PARAM_TYPES = {"int", "float", "bool", "string", "enum", "database"}
-TOP_KEYS = {"schema", "id", "version", "label", "description", "category", "tool", "environment", "inputs",
+TOP_KEYS = {"schema", "id", "version", "label", "description", "category", "tool", "service", "environment", "inputs",
             "outputs", "parameters", "resources", "command", "adapter", "tests", "provenance", "notes"}
 IN_KEYS = {"id", "type", "required", "cardinality", "requires", "description", "label"}
-OUT_KEYS = {"id", "type", "type_from", "path", "parts", "required", "when", "attributes", "description", "label"}
+OUT_KEYS = {"id", "type", "type_from", "path", "parts", "required", "when", "attributes", "description", "label",
+            "indexed_genome"}
+SERVICE_KEYS = {"app", "fixed", "note"}
 PARAM_KEYS = {"id", "type", "default", "min", "max", "enum", "db_type", "label", "description", "required", "advanced",
               "pattern"}
 CONTROL_CHARS = re.compile(r"[\x00-\x1f\x7f]")
@@ -42,6 +44,12 @@ class Module:
         self.inputs = {p["id"]: p for p in d.get("inputs") or [] if isinstance(p, dict) and "id" in p}
         self.outputs = {p["id"]: p for p in d.get("outputs") or [] if isinstance(p, dict) and "id" in p}
         self.params = {p["id"]: p for p in d.get("parameters") or [] if isinstance(p, dict) and "id" in p}
+
+    @property
+    def service(self):
+        """The `service` section of a service module ({app, fixed}): a whole BV-BRC app run as one step through GoWe's
+        BV-BRC executor instead of a command in our container (docs/MODULE_SCHEMA.md "Service modules")."""
+        return self.d.get("service") or None
 
     @property
     def resources(self):
@@ -97,10 +105,25 @@ class ModuleRegistry:
             iss.error(w, f"file name must be {m.id}.yaml")
         if not isinstance(m.version, int) or m.version < 1:
             iss.error(w, "version must be a positive integer (descriptor major version)")
-        for k in ("label", "tool", "outputs", "resources"):
+        svc = d.get("service")
+        for k in ("label", "outputs", "resources") + (() if svc else ("tool",)):
             if not d.get(k):
                 iss.error(w, f"missing {k}")
-        if bool(d.get("command")) == bool(d.get("adapter")):
+        if svc is not None:
+            if d.get("command") or d.get("adapter"):
+                iss.error(w, "a service module has no `command` or `adapter` (the BV-BRC app does the work)")
+            if not isinstance(svc, dict) or not isinstance(svc.get("app"), str) or not svc.get("app"):
+                iss.error(f"{w}: service", "needs `app`, the BV-BRC app id (e.g. GenomeAnnotation)")
+            else:
+                for k in svc:
+                    if k not in SERVICE_KEYS:
+                        iss.error(f"{w}: service", f"unknown key {k!r}")
+                if not isinstance(svc.get("fixed") or {}, dict):
+                    iss.error(f"{w}: service", "`fixed` must map app parameter -> value")
+            for p in d.get("inputs") or []:
+                if isinstance(p, dict) and p.get("cardinality") == "many":
+                    iss.error(f"{w}: inputs.{p.get('id')}", "service module inputs take one value (cardinality one)")
+        elif bool(d.get("command")) == bool(d.get("adapter")):
             iss.error(w, "exactly one of `command` or `adapter` is required")
         tool = d.get("tool") or {}
         if tool.get("id") and self.tool_index:
@@ -213,8 +236,18 @@ class ModuleRegistry:
                         iss.error(pw, f"type_from.map target {b} is not a {t}")
         elif ts.is_abstract(t):
             iss.error(pw, f"output type {t} is abstract; give a concrete type or type_from")
+        if p.get("indexed_genome"):
+            if not m.service:
+                iss.error(pw, "indexed_genome outputs are only for service modules")
+            elif not ts.is_a(t, "bvbrc.genome_id"):
+                iss.error(pw, "an indexed_genome output has type bvbrc.genome_id")
+            elif p.get("path") or p.get("parts"):
+                iss.error(pw, "an indexed_genome output has no path (it is the genome id BV-BRC indexed)")
+            return
         if not p.get("path") and not p.get("parts"):
             iss.error(pw, "output needs `path` and/or `parts`")
+        if m.service and p.get("parts"):
+            iss.error(pw, "service module outputs are single files (`path`, with {name} for the job name)")
         if p.get("parts"):
             names = set(p["parts"])
             # every concrete type this output may resolve to must have these parts

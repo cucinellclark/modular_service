@@ -1,0 +1,65 @@
+schema: modpipe/module/v1
+id: genome_annotation
+version: 1
+label: "Genome annotation (BV-BRC service)"
+description: >-
+  Annotates one assembled genome with the BV-BRC Genome Annotation service (RASTtk recipe), run whole as one step:
+  gene calling, function assignment, specialty genes, AMR, quality. The genome is indexed as a private BV-BRC genome.
+  Runs only through GoWe (the workbench / modpipe compile); `modpipe run` cannot run service modules.
+category: annotation
+
+# A service module: the BV-BRC app does the work (GoWe's BV-BRC executor submits it as the user). Module parameters
+# and inputs are passed as app parameters of the same name; `fixed` adds app parameters the user does not set.
+service:
+  app: GenomeAnnotation
+  fixed: {skip_indexing: false, public: false, queue_nowait: false}
+  note: "Indexing stays on (decided 2026-11-03): annotated genomes are always indexed as private genomes."
+
+inputs:
+  - id: contigs
+    type: sequences.dna.contigs
+    description: "Assembled contigs of one genome (one file; a sample collection is not supported yet)"
+
+outputs:
+  # {name} is the step's job name (output_file); the app writes <output_path>/.<name>/<name>.<ext>
+  - {id: genome, type: annotation.gto, path: "{name}.genome", description: "Annotated genome (GTO, JSON)"}
+  - {id: genbank, type: annotation.genbank, path: "{name}.gb"}
+  - {id: gff, type: annotation.gff, path: "{name}.gff"}
+  - {id: features, type: annotation.feature_table, path: "{name}.features.txt"}
+  - {id: proteins, type: sequences.protein, path: "{name}.feature_protein.fasta", description: "Protein sequences of the annotated features"}
+  - {id: genes, type: sequences.dna.genes, path: "{name}.feature_dna.fasta", description: "Nucleotide sequences of the annotated features"}
+  - id: genome_id
+    type: bvbrc.genome_id
+    indexed_genome: true
+    description: >-
+      The BV-BRC genome id, available once BV-BRC has indexed the genome (a few minutes after the job; the pipeline
+      waits for it only where something uses this output)
+
+parameters:
+  - id: scientific_name
+    type: string
+    pattern: "^[A-Za-z0-9][A-Za-z0-9 ._()/'-]{0,127}$"
+    label: "Scientific name"
+    description: "Organism name, e.g. Escherichia coli K-12"
+  - id: taxonomy_id
+    type: int
+    min: 1
+    required: false
+    label: "NCBI taxonomy ID"
+    description: "Optional; e.g. 562 for Escherichia coli"
+  - id: code
+    type: enum
+    enum: [11, 4, 25, 1]
+    default: 11
+    label: "Genetic code"
+    description: "11 for most bacteria and archaea; 4 for Mycoplasma/Spiroplasma; 25 for candidate division SR1/Gracilibacteria"
+  - id: domain
+    type: enum
+    enum: [auto, Bacteria, Archaea]
+    default: auto
+    label: "Domain"
+
+resources: {cpu: 8, memory: 100G, runtime: 4h}   # informational: the BV-BRC service schedules its own job
+
+provenance:
+  bvbrc_invocations: [App-GenomeAnnotation.pl]

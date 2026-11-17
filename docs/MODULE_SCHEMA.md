@@ -86,6 +86,26 @@ lines). Chain several commands explicitly with `&&`. The command runs in the ste
 | `dbs.<param id>` | resolved filesystem path of a `database` parameter (registry `path`) |
 | `cpu`, `memory_gb` | the step's allocation |
 
+### Service modules (a whole BV-BRC app as one step)
+
+The exception to "modules are tools" (decided 2026-11-16): `modules/genome_annotation.yaml` runs the BV-BRC Genome
+Annotation service whole, as one step. A service module has a `service` section instead of `command`/`adapter`, and
+no `tool`:
+
+```yaml
+service:
+  app: GenomeAnnotation                      # BV-BRC app id
+  fixed: {skip_indexing: false}              # app parameters the user doesn't set
+outputs:
+  - {id: genome, type: annotation.gto, path: "{name}.genome"}       # {name} = the step's job name (output_file)
+  - {id: genome_id, type: bvbrc.genome_id, indexed_genome: true}    # the genome id, once BV-BRC has indexed it
+```
+Module parameters and inputs go to the app as parameters of the same name. Inputs take one value (one genome; a
+sample collection is refused by the validator). Outputs are single files of the app's result folder; an
+`indexed_genome` output has no path. Service modules run only through GoWe (GoWe's BV-BRC executor submits the app as
+the user; it appears in their BV-BRC jobs): `modpipe run` and the ModularStep app refuse them. What compile adds
+around them: [GOWE.md](GOWE.md#service-modules).
+
 ## Pipeline definition: JSON (`schema: modpipe/pipeline/v1`)
 
 ```json

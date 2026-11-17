@@ -105,6 +105,26 @@ at), so the workflow is pinned to a release and `gowe bundle` finds the tools by
 | `output_path`, `output_file` | the run folder `<--output-path>/<run name>` and the step id: results in `<run folder>/.<step>/<port>/` (one folder per run; the Workspace creates the run folder with the first step's result folder). No expressions, so no workflow-level requirements |
 | pipeline outputs | workflow outputs `string?` (workspace folders) |
 
+### Service modules
+
+A service module (e.g. `genome_annotation`, the BV-BRC Genome Annotation service run whole; MODULE_SCHEMA.md) is
+exported as a BV-BRC-executor tool (`hints: gowe:Execution {executor: bvbrc, bvbrc_app_id: GenomeAnnotation}`: GoWe
+submits the app as the user, no container, no token injection, no blessing). Its inputs are workspace path strings,
+its outputs the app's result files matched by name (`<run folder>/.<step>/<step>.genome`, `.gb`, `.gff`, ...), which
+GoWe returns as `ws://` Files. Compile adds:
+
+| situation | what compile does |
+|---|---|
+| input from a pipeline input | must be one workspace file (`wsids`); passed as a `<input>__file` string |
+| input from an upstream port folder | a `helper_value_file` step (`<step>_<port>_file`) finds its one file (descends one sample folder) |
+| a consumer of a service file output | gets the plain path (`valueFrom` strips `ws://`; adds the JS requirements) |
+| something uses an `indexed_genome` output (`genome_id`) | one `helper_wait_genome` step (`<step>_indexed`): reads the genome id from the GTO's workspace metadata, polls the data API until the genome record exists and its indexed features >= its CDS count (every 30 s, 2 h limit) |
+
+The helpers run `modpipe gowe-helper value-file|wait-genome` on a worker with the user's token, so they are
+released and blessed like the module tools (`cwl/tools/helper_*.cwl`). Tested 2026-11-16: GenomeAnnotation through
+GoWe's BV-BRC executor (job 23991090, 14 min; genome 562.236131 searchable a few minutes after the job; the
+indexer's own status stays `submitted`, so the data API is the check); both helpers against real workspace data.
+
 Refused up front: `fixture` sources (local test data), a module without a released tool or whose released tool has
 another module version than this checkout, and a list port fed by refs of different types (ModularStep takes one
 type per list port). Steps keep their blessings: the dry run passes the token check with the workflow-level

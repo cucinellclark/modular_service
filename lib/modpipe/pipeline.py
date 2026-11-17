@@ -298,6 +298,9 @@ class Validator:
                             iss.error(pw, f"step scatters over two collections ({scatter}, {b.collection}); "
                                           f"v1 supports one per step")
                         scatter = scatter or b.collection
+            if m.service and scatter:
+                iss.error(w, f"{m.id} runs the BV-BRC {m.service['app']} app on one genome; {scatter} is a sample "
+                             f"collection (one annotation per sample is not supported yet)")
             # params
             params = {}
             for k, v in (s.get("params") or {}).items():

@@ -156,6 +156,7 @@ class Catalog:
                 mods[m.id] = {
                     "id": m.id, "version": m.version, "label": d.get("label"), "description": d.get("description"),
                     "category": d.get("category"), "tool": d.get("tool"), "resources": d.get("resources"),
+                    "service": (d.get("service") or {}).get("app"),   # a whole BV-BRC app run as one step
                     "inputs": [{k: p.get(k) for k in ("id", "type", "required", "cardinality", "description", "requires")
                                 if p.get(k) is not None} for p in m.inputs.values()],
                     "outputs": [{k: p.get(k) for k in ("id", "type", "type_from", "description", "attributes", "when")

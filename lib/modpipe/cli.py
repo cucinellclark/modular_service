@@ -318,6 +318,11 @@ def cmd_compile(a):
     return 0
 
 
+def cmd_gowe_helper(a):
+    from .gowe_helper import main as helper_main
+    return helper_main(a.helper, a.job)
+
+
 def cmd_cwl_step(a):
     from .cwl import run_step
     return run_step(a.job, cores=a.cores, ram_mb=a.ram_mb)
@@ -371,6 +376,10 @@ def main(argv=None):
                                       "<output-path>/<run-name>/.<step>/")
     s.add_argument("--name", help="workflow name (file name; GoWe registers it under this name)")
     s.set_defaults(fn=cmd_compile)
+    s = sub.add_parser("gowe-helper", help="helper steps compile inserts around service modules (on a GoWe worker)")
+    s.add_argument("helper", choices=["value-file", "wait-genome"])
+    s.add_argument("job")
+    s.set_defaults(fn=cmd_gowe_helper)
     s = sub.add_parser("cwl-step")
     s.add_argument("job")
     s.add_argument("--cores")

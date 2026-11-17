@@ -79,6 +79,10 @@ def run_pipeline(ts, mods, dbs, pipeline, rundir, executor="snakemake", cores=No
     iss.report(sys.stderr)
     if not iss.ok:
         raise RunError(f"pipeline is invalid ({len(iss.errors)} errors)")
+    svc = [f"{sid} ({st['module']})" for sid, st in plan["steps"].items() if (mods.get(st["module"]).service)]
+    if svc:
+        raise RunError(f"steps {', '.join(svc)} use service modules (whole BV-BRC apps), which only run through GoWe: "
+                       f"use the workbench or `modpipe compile` + `gowe submit`")
     res = plan["resources"]
     cores = cores or int(os.environ.get("P3_ALLOCATED_CPU") or os.environ.get("SLURM_CPUS_PER_TASK") or res["cpu"])
     mem_gb = mem_gb or res["memory_gb"]
