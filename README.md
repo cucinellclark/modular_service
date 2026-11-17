@@ -13,7 +13,7 @@ nothing else in the service changes.
 | Module granularity | **Underlying tools** (individual binaries), not whole App-* services |
 | Execution model | **Generated Snakemake** + local dev runner ([ARCHITECTURE §4](docs/ARCHITECTURE.md#4-execution-backends)) |
 | Per-tool execution (2026-11-05) | **GoWe**: one CWL tool per module (`modpipe export-cwl`) running the **ModularStep** app; on a GoWe worker until the app is registered ([GOWE.md](docs/GOWE.md), [SERVICE.md](docs/SERVICE.md)) |
-| Service nodes | **Not allowed**: tool modules only |
+| Service nodes | **Tool modules only**, one exception (2026-11-17): BV-BRC Genome Annotation runs whole as a *service module* (GoWe only; [MODULE_SCHEMA.md](docs/MODULE_SCHEMA.md#service-modules-a-whole-bv-brc-app-as-one-step)) |
 | Scatter/gather | **In v1** |
 | Tools not in container | Separate source environment allowed for now; container-only eventually |
 | Language | **Perl shell, Python core**: thin `App-ModularPipeline.pl` (AppScript) + Python engine |
@@ -62,7 +62,7 @@ types/
   wstypes.yaml                 type <-> BV-BRC workspace type mapping (+ observed production quirks)
 resources/
   databases.yaml               installed reference-database registry (paths, binds, versions, status)
-modules/                       51 module descriptors (v1): read QC, assembly, mapping, variants, taxonomy, annotation, typing, expression, homology, phylogeny
+modules/                       53 module descriptors (v1): read QC, assembly, mapping, variants, taxonomy, annotation, typing, expression, homology, phylogeny
 pipelines/                     17 curated templates (modpipe list-templates); test inputs in tests/templates/
 app_specs/ModularPipeline.json BV-BRC app spec
 service-scripts/App-ModularPipeline.pl  BV-BRC Perl shell (AppScript): preflight, staging, run, upload
@@ -142,9 +142,9 @@ Validation runs on the host (Python 3.11, PyYAML, Jinja2) and in the container (
 | assembly / polishing | spades, megahit, flye, unicycler, racon, pilon; QC: quast |
 | mapping | bwa_mem, minimap2, hisat2, kma (gene databases: CARD, VFDB); ivar_trim (primers); samtools_coverage |
 | variants / consensus | bcftools_call, freebayes, snippy, ivar_variants, ivar_consensus, bcftools_consensus |
-| taxonomy | kraken2, bracken |
+| taxonomy | kraken2, bracken; mash_similar_genomes (Similar Genome Finder: mash against BV-BRC sketches) |
 | SARS-CoV-2 / typing | freyja_variants, freyja_demix, pangolin, mlst |
-| annotation | prodigal, trnascan, minced, amrfinder, vigor4, genomad, checkv |
+| annotation | prodigal, trnascan, minced, amrfinder, vigor4, genomad, checkv; genome_annotation (BV-BRC service module) |
 | expression | stringtie, htseq_count |
 | homology / clustering | blast, diamond, mmseqs_search, mmseqs_cluster, cdhit |
 | alignment / phylogeny | mafft, fasttree, iqtree2, raxml_ng |
@@ -153,4 +153,4 @@ Validation runs on the host (Python 3.11, PyYAML, Jinja2) and in the container (
 Templates (`bin/modpipe list-templates`): wgs_assembly_qc, multi_sample_assembly, clean_assembly,
 long_read_assembly, polished_long_read_assembly, hybrid_assembly, isolate_assembly_characterization, variant_calling,
 taxonomic_profile, sars2_wastewater, sars2_consensus, rnaseq_expression, viral_genome_annotation, mobile_elements, protein_search,
-align_and_tree, protein_phylogeny.
+align_and_tree, protein_phylogeny, assemble_and_annotate (GoWe only).

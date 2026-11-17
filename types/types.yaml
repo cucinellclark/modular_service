@@ -189,6 +189,7 @@ types:
   table.tsv.virus_quality:      {kind: file, format: tsv, description: "Viral genome completeness (CheckV)"}
   table.tsv.template_hits:      {kind: file, format: kma_res, description: "Read-mapping hits per reference template (kma .res)"}
   table.tsv.prophage:           {kind: file, format: tsv, description: "Prophage predictions (PhiSpy)"}
+  table.tsv.similar_genomes:    {kind: file, format: tsv, description: "Closest genomes by Mash distance (genome_id, distance, p_value, shared_hashes)"}
 
   # ---------------------------------------------------------------- taxonomy
   taxonomy:                     {abstract: true}

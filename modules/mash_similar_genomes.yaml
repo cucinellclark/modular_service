@@ -1,0 +1,45 @@
+schema: modpipe/module/v1
+id: mash_similar_genomes
+version: 1
+label: "Similar genome finder (Mash)"
+description: >-
+  Finds the BV-BRC genomes closest to a genome by Mash distance (MinHash, k=21, 1000 hashes), as BV-BRC's
+  Similar Genome Finder does, using mash directly against a sketch database. Writes a table of genome ids sorted by
+  distance (closest first).
+category: taxonomy
+tool: {id: mash, binary: mash, version: "2.3"}
+
+inputs:
+  - id: genome
+    type: sequences.dna
+    description: "One genome's nucleotide sequences, e.g. assembled contigs (all records are sketched together)"
+
+outputs:
+  - id: hits
+    type: table.tsv.similar_genomes
+    path: similar_genomes.tsv
+    description: "genome_id, distance, p_value, shared_hashes; closest first, at most max_hits rows"
+
+parameters:
+  - {id: db, type: database, db_type: database.mash, default: mash_bvbrc_repref, label: "Genomes to search",
+     description: "mash_bvbrc_repref (reference + representative genomes, fast) or mash_bvbrc_all (all bacterial/archaeal genomes, ~70 s, 8 GB RAM)"}
+  - {id: max_hits, type: int, default: 50, min: 1, max: 10000, label: "Maximum hits"}
+  - {id: max_distance, type: float, default: 1.0, min: 0, max: 1, label: "Maximum Mash distance",
+     description: "0.05 is roughly the species boundary (~95% ANI); 0.01 ~ 99% ANI"}
+  - {id: max_pvalue, type: float, default: 1.0, min: 0, max: 1, label: "Maximum p-value", advanced: true}
+
+resources: {cpu: 4, memory: 2G, runtime: 1h}   # mash_bvbrc_all raises memory through its database requirements
+
+# Sketch names are BV-BRC FASTA paths (.../genomes/<genome_id>/<genome_id>.fna): the genome id is the file name.
+command: |
+  mash dist -p {{ cpu }} -d {{ params.max_distance }} -v {{ params.max_pvalue }} {{ dbs.db | q }} {{ inputs.genome | q }} > mash_dist.tsv &&
+  awk -F'\t' -v OFS='\t' '{ n = $1; sub(/.*\//, "", n); sub(/\.(fna|fasta|fa)$/, "", n); print n, $3, $4, $5 }' mash_dist.tsv
+  | sort -t "$(printf '\t')" -k2,2g -k1,1 > sorted.tsv &&
+  awk -F'\t' -v OFS='\t' -v max={{ params.max_hits }} 'BEGIN { print "genome_id", "distance", "p_value", "shared_hashes" } NR <= max' sorted.tsv
+  > {{ outputs.hits }}
+
+tests:
+  observed: {max_rss_mb: 120, max_wall_s: 1.5, note: "Portiera contigs vs repref.msh (2026-11-17); all.msh: 70 s, 8.2 GB"}
+provenance:
+  bvbrc_invocations: [Minhash.compute_genome_distance_for_fasta2 (Similar Genome Finder), p3x-compute-genome-ingroup-outgroup.pl]
+  nfcore: [mash/dist]

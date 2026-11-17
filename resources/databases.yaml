@@ -24,6 +24,8 @@ binds:
   metagenome_dbs: {source: /vol/patric3/metagenome_dbs, target: [/vol/patric3/metagenome_dbs, /disks/patric-data/metagenome_dbs],
                    note: "kraken_db nodes have a local copy at /disks/patric-data/metagenome_dbs; AppConfig.metagenome_dbs points there"}
   blastdb: {source: /vol/blastdb/bvbrc-service, target: /vol/blastdb/bvbrc-service}
+  minhash: {source: /vol/patric3/production/data-images/patric-data-2022-0119/minhash, target: /vol/patric3/production/data-images/patric-data-2022-0119/minhash,
+            note: "Mash sketches at their host path (GoWe workers bind it as-is). Swap for production's current sketches later."}
 
 databases:
   # ------------------------------------------------------------------ taxonomy (Kraken2 / Bracken)
@@ -311,13 +313,30 @@ databases:
     version: v01
     tools: [rasttk]
     status: unverified
-  - id: mash_reference_sketch
+  - id: mash_bvbrc_repref
     type: database.mash
-    path: /opt/patric-common/data/minhash/combined/repref.msh
-    bind: data_image
-    version: "2021-1029"
-    description: AppConfig.mash_reference_sketch (reference/representative genomes); used for similar-genome finding
-    status: unverified
+    path: /vol/patric3/production/data-images/patric-data-2022-0119/minhash/combined/repref.msh
+    bind: minhash
+    version: "2022-0118"
+    label: "BV-BRC reference + representative genomes (2022)"
+    description: >-
+      Mash sketches (k=21, 1000 hashes) of BV-BRC reference/representative genomes, 6,928 genomes; production's
+      AppConfig.mash_reference_sketch. Out of date (BV-BRC now has ~47k): swap for the production sketch when available.
+    used_by: [p3x-compute-genome-ingroup-outgroup]
+    tools: [mash]
+    status: verified
+  - id: mash_bvbrc_all
+    type: database.mash
+    path: /vol/patric3/production/data-images/patric-data-2022-0119/minhash/combined/all.msh
+    bind: minhash
+    version: "2022-0118"
+    label: "All BV-BRC bacterial/archaeal genomes (2022)"
+    description: >-
+      Mash sketches of 518,022 BV-BRC genomes (2022; no viruses). 4.2 GB: ~70 s and ~8 GB RAM per query.
+      Out of date: swap for the production sketch when available.
+    requirements: {mem: 12G}
+    tools: [mash]
+    status: verified
   - id: seedtk_data
     type: database.seedtk
     path: /opt/patric-common/data/seedtk_data

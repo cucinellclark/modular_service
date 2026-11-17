@@ -32,7 +32,8 @@ ARGS=(--server "$SERVER" --name "modpipe-$SLURM_JOB_ID-$(hostname -s)" --group m
       --workdir "$WD/tasks" --poll 5s --extra-bind "$RELEASES" --extra-bind "$SCRATCH"
       # advertise the Slurm allocation, not the whole node (auto-detect would see every CPU/GB on the host)
       --max-cpus "${SLURM_CPUS_PER_TASK:-4}" --max-mem "${SLURM_MEM_PER_NODE:-16384}")
-for d in /vol/bvbrc/production/application-backend /vol/blastdb/bvbrc-service /vol/patric3/metagenome_dbs; do
+for d in /vol/bvbrc/production/application-backend /vol/blastdb/bvbrc-service /vol/patric3/metagenome_dbs \
+         /vol/patric3/production/data-images/patric-data-2022-0119/minhash; do
     [[ -d $d ]] && ARGS+=(--extra-bind "$d")
 done
 [[ -n ${GOWE_WORKER_KEY_FILE:-} ]] && ARGS+=(--worker-key-file "$GOWE_WORKER_KEY_FILE")
